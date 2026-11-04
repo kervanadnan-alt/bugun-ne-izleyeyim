@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bugün Ne İzleyeyim? | Netflix Türkiye Film & Dizi Rehberi</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            netflix: {
+              red: '#E50914',
+              hover: '#B81D24',
+              dark: '#0c0c0e',
+              surface: '#141417',
+              card: '#1a1a1f',
+              border: '#272730'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #09090b;
+      color: #f4f4f5;
+      font-family: 'Inter', sans-serif;
+    }
+    .hero-glow {
+      background: radial-gradient(circle at 50% 0%, rgba(229, 9, 20, 0.18) 0%, rgba(9, 9, 11, 0) 70%);
+    }
+    .glass-card {
+      background: rgba(22, 22, 26, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-card:hover {
+      border-color: rgba(229, 9, 20, 0.4);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #141417;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #272730;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-netflix-red selection:text-white">
+
+  <!-- Canlı Durum & X Bot Bilgi Çubuğu -->
+  <div class="bg-black/60 border-b border-neutral-800/80 text-xs py-2 px-4 backdrop-blur-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-2.5">
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-semibold border border-emerald-500/20 text-[11px]">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          Canlı Otomasyon Aktif
+        </span>
+        <span class="text-neutral-400 hidden sm:inline text-[12px]">• Her gün saat 19:30'da yeni Netflix önerisi X'te paylaşılır</span>
+      </div>
+      <a href="https://x.com/bugunneizleyim" target="_blank" rel="noopener noreferrer" class="text-neutral-300 hover:text-white font-medium flex items-center gap-2 transition-colors">
+        <svg class="w-3.5 h-3.5 fill-current text-neutral-400" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        <span>@bugunneizleyim</span>
+        <span class="text-[10px] bg-neutral-800 px-1.5 py-0.5 rounded text-neutral-400 border border-neutral-700">Takip Et</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Üst Başlık (Navbar) -->
+  <nav class="border-b border-neutral-800/60 bg-neutral-950/80 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-netflix-red to-red-800 flex items-center justify-center font-black text-2xl text-white shadow-xl shadow-red-600/25 border border-red-500/30">
+          N
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold text-xl sm:text-2xl text-white tracking-tight">bugün ne izleyeyim</span>
+            <span class="text-[10px] uppercase font-black px-2 py-0.5 rounded-full bg-netflix-red/20 text-red-500 border border-red-500/30">Netflix TR</span>
+          </div>
+          <p class="text-[11px] text-neutral-400 font-medium">Yapay Zekâ Destekli Gerçek Netflix Seçkisi</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <button id="btn-random" class="px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-700/80 text-xs sm:text-sm font-semibold text-neutral-200 hover:text-white transition-all shadow-sm flex items-center gap-2 active:scale-95">
+          <span>🎲</span>
+          <span class="hidden sm:inline">Rastgele Öneri</span>
+          <span class="sm:hidden">Rastgele</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero / Günün Öne Çıkan Netflix İçeriği -->
+  <main class="flex-1">
+    <section class="relative border-b border-neutral-800/60 overflow-hidden hero-glow py-10 lg:py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          
+          <!-- Sol Detay Alanı -->
+          <div class="lg:col-span-7 space-y-6 order-2 lg:order-1">
+            
+            <div class="flex flex-wrap items-center gap-2.5">
+              <span class="px-3 py-1 rounded-full bg-netflix-red text-white font-extrabold text-xs uppercase tracking-wider flex items-center gap-1.5 shadow-md shadow-red-600/30">
+                <span class="w-1.5 h-1.5 rounded-full bg-white animate-ping"></span>
+                Günün Netflix Önerisi
+              </span>
+              <span id="hero-category" class="px-3 py-1 rounded-full bg-neutral-800/90 text-neutral-300 text-xs font-medium border border-neutral-700">
+                Dram • Gizem
+              </span>
+              <span class="px-2.5 py-1 rounded-full bg-emerald-950/80 text-emerald-400 font-bold text-xs border border-emerald-800/50">
+                %99 Eşleşme
+              </span>
+            </div>
+
+            <div>
+              <h1 id="hero-title" class="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight tracking-tight">
+                Bir Başkadır (Ethos)
+              </h1>
+              <div class="flex flex-wrap items-center gap-3 text-xs sm:text-sm text-neutral-400 mt-3 font-medium">
+                <span id="hero-imdb" class="text-amber-400 font-extrabold bg-amber-400/10 px-2.5 py-1 rounded-lg border border-amber-400/30 flex items-center gap-1">
+                  ⭐ IMDb 8.5
+                </span>
+                <span id="hero-year" class="text-neutral-300">2020</span>
+                <span class="text-neutral-600">•</span>
+                <span id="hero-duration" class="text-neutral-300">1 Sezon (8 Bölüm)</span>
+                <span class="text-neutral-600">•</span>
+                <span class="text-neutral-400">Türkçe Dublaj & Altyazı</span>
+              </div>
+            </div>
+
+            <!-- Yapay Zekâ ve Neden İzlemeli Kartı -->
+            <div class="p-6 rounded-2xl bg-neutral-900/80 border border-neutral-800/80 space-y-3.5 backdrop-blur-sm shadow-xl">
+              <div class="text-[11px] font-bold uppercase tracking-wider text-purple-400 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-purple-500 shadow-sm shadow-purple-500"></span>
+                Yapay Zekâ Önerisi & İnceleme
+              </div>
+              <p id="hero-synopsis" class="text-neutral-300 text-sm sm:text-base leading-relaxed">
+                Farklı sosyoekonomik ve kültürel geçmişlerden gelen, bambaşka hayatlar yaşayan bir grup insanın yolları İstanbul'un kozmopolit dokusunda kesişir.
+              </p>
+              <div class="pt-3 border-t border-neutral-800 text-xs sm:text-sm text-neutral-400 flex items-start gap-2">
+                <span class="text-netflix-red font-bold shrink-0">Neden İzlemeli:</span>
+                <span id="hero-why" class="text-neutral-200">Türk dizi tarihinin en derinlikli karakter analizleri ve Berkun Oya'nın usta rejisi.</span>
+              </div>
+            </div>
+
+            <!-- Aksiyon Butonları -->
+            <div class="flex flex-wrap items-center gap-4 pt-2">
+              <a id="hero-netflix-btn" href="https://www.netflix.com/title/81106900" target="_blank" rel="noopener noreferrer" class="px-7 py-3.5 rounded-xl bg-netflix-red hover:bg-netflix-hover text-white font-extrabold text-sm transition-all shadow-lg shadow-red-600/30 flex items-center gap-2.5 active:scale-95">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                <span>Netflix'te Hemen İzle</span>
+              </a>
+              <a id="hero-tweet-btn" href="https://x.com/bugunneizleyim" target="_blank" rel="noopener noreferrer" class="px-5 py-3.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-700/80 text-neutral-300 hover:text-white font-semibold text-sm transition-all flex items-center gap-2 active:scale-95">
+                <svg class="w-4 h-4 fill-current text-sky-400" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                <span>X'te Paylaşımı Gör</span>
+              </a>
+            </div>
+
+          </div>
+
+          <!-- Sağ Afiş Alanı -->
+          <div class="lg:col-span-5 flex justify-center order-1 lg:order-2">
+            <div class="relative group w-full max-w-[340px] sm:max-w-[380px]">
+              <div class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-red-600 to-amber-600 opacity-30 group-hover:opacity-60 blur-xl transition duration-500"></div>
+              <div class="relative rounded-2xl overflow-hidden border border-neutral-700/80 bg-neutral-950 shadow-2xl aspect-[2/3]">
+                <img id="hero-poster" src="https://upload.wikimedia.org/wikipedia/tr/3/32/Bir_Ba%C5%9Fkad%C4%B1r_afi%C5%9Fi.jpg" alt="Afiş" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black via-black/60 to-transparent p-5">
+                  <span class="text-[11px] font-bold uppercase tracking-wider text-neutral-400 block">Yönetmen / Ekip</span>
+                  <span id="hero-director" class="text-sm font-bold text-white">Berkun Oya</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Kategori Filtreleme & Arama Çubuğu -->
+    <section class="border-b border-neutral-800/60 bg-neutral-950/60 py-6">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+        
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 class="text-2xl font-black text-white tracking-tight">Netflix Kataloğu & Arşiv</h2>
+            <p class="text-xs text-neutral-400 mt-0.5">Tümü doğrulanmış, yayındaki gerçek Netflix Türkiye içerikleri</p>
+          </div>
+          
+          <!-- Hızlı Arama -->
+          <div class="relative w-full md:w-72">
+            <input type="text" id="search-box" placeholder="Film, dizi, oyuncu veya tür ara..." class="w-full bg-neutral-900 border border-neutral-700/80 rounded-xl px-4 py-2.5 pl-10 text-xs sm:text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-netflix-red transition-colors">
+            <svg class="w-4 h-4 text-neutral-500 absolute left-3.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          </div>
+        </div>
+
+        <!-- İnteraktif Kategori Hap Butonları -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-2 custom-scrollbar">
+          <button onclick="filterCategory('all')" data-cat="all" class="cat-pill active px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap bg-netflix-red text-white shadow-md shadow-red-600/20">
+            🌟 Tümü
+          </button>
+          <button onclick="filterCategory('Yerli')" data-cat="Yerli" class="cat-pill px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-800">
+            🇹🇷 Yerli Yapımlar
+          </button>
+          <button onclick="filterCategory('movie')" data-cat="movie" class="cat-pill px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-800">
+            🎬 Filmler
+          </button>
+          <button onclick="filterCategory('tv')" data-cat="tv" class="cat-pill px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-800">
+            📺 Diziler
+          </button>
+          <button onclick="filterCategory('Gerilim')" data-cat="Gerilim" class="cat-pill px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-800">
+            🧠 Gerilim & Gizem
+          </button>
+          <button onclick="filterCategory('Dram')" data-cat="Dram" class="cat-pill px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-800">
+            🎭 Dram
+          </button>
+          <button onclick="filterCategory('Bilim Kurgu')" data-cat="Bilim Kurgu" class="cat-pill px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-800">
+            🧬 Bilim Kurgu
+          </button>
+          <button onclick="filterCategory('Savaş')" data-cat="Savaş" class="cat-pill px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-800">
+            💥 Savaş & Aksiyon
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Kart Listesi Grid -->
+    <section class="py-12 bg-neutral-950">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex items-center justify-between mb-6">
+          <span id="result-count" class="text-xs font-bold uppercase tracking-wider text-neutral-400">
+            10 Netflix Yapımı Gösteriliyor
+          </span>
+          <span class="text-xs text-neutral-500">Tıklayarak Günün Önerisi Yapabilirsiniz</span>
+        </div>
+
+        <div id="catalog-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <!-- Dinamik Kartlar JavaScript ile basılır -->
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-neutral-800/80 bg-neutral-950 py-10 text-xs text-neutral-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div>
+        <p class="font-bold text-neutral-400">© 2026 Bugün Ne İzleyeyim? — Netflix Türkiye Öneri Platformu</p>
+        <p class="text-[11px] text-neutral-600 mt-1">İçerikler ve telif hakları Netflix & TMDB'ye aittir. Her gün 19:30'da otomatik güncellenir.</p>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="https://x.com/bugunneizleyim" target="_blank" class="hover:text-neutral-300 font-semibold">X (Twitter)</a>
+        <a href="https://www.netflix.com" target="_blank" class="hover:text-netflix-red font-semibold">Netflix</a>
+        <a href="https://github.com/kervanadnan-alt/bugun-ne-izleyeyim" target="_blank" class="hover:text-neutral-300 font-semibold">GitHub Kaynak Kodu</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Uygulama Scripti -->
+  <script>
+    // Kesinlikle gerçek Netflix Türkiye yapımlarından oluşan yerleşik veri (asla taslak veya sahte resim içermez)
+    const authenticFallback = [
+      {
+        id: 101,
+        tmdb_id: 110996,
+        title: "Bir Başkadır",
+        original_title: "Ethos",
+        media_type: "tv",
+        genres: ["Dram", "Gizem", "Yerli"],
+        year: 2020,
+        duration: "1 Sezon (8 Bölüm)",
+        imdb_rating: "8.5",
+        match_rate: "%99",
+        director: "Berkun Oya",
+        cast: ["Öykü Karayel", "Fatih Artman", "Funda Eryiğit"],
+        synopsis: "Farklı sosyoekonomik ve kültürel geçmişlerden gelen, bambaşka hayatlar yaşayan bir grup insanın yolları İstanbul'un kozmopolit dokusunda kesişir.",
+        why_watch: "Türk dizi tarihinin en derinlikli karakter analizleri ve Berkun Oya'nın usta rejisi.",
+        poster_url: "https://upload.wikimedia.org/wikipedia/tr/3/32/Bir_Ba%C5%9Fkad%C4%B1r_afi%C5%9Fi.jpg",
+        netflix_url: "https://www.netflix.com/title/81106900",
+        tweet_url: "https://x.com/bugunneizleyim"
+      },
+      {
+        id: 102,
+        tmdb_id: 133145,
+        title: "Kulüp",
+        original_title: "The Club",
+        media_type: "tv",
+        genres: ["Dram", "Tarih", "Yerli"],
+        year: 2021,
+        duration: "2 Sezon (20 Bölüm)",
+        imdb_rating: "7.8",
+        match_rate: "%97",
+        director: "Seren Yüce, Zeynep Günay",
+        cast: ["Gökçe Bahadır", "Barış Arduç", "Salih Bademci"],
+        synopsis: "1950'lerin Beyoğlu gece kulübünde çalışan eski mahkum Matilda'nın kızıyla bağ kurma çabası ve dönemin çarpıcı atmosferi.",
+        why_watch: "Salih Bademci'nin devleşen performansı ve muazzam dönem atmosferi.",
+        poster_url: "https://upload.wikimedia.org/wikipedia/tr/3/31/Kul%C3%BCp.jpg",
+        netflix_url: "https://www.netflix.com/title/81281008",
+        tweet_url: "https://x.com/bugunneizleyim"
+      },
+      {
+        id: 103,
+        tmdb_id: 934632,
+        title: "Kar Kardeşliği",
+        original_title: "Society of the Snow",
+        media_type: "movie",
+        genres: ["Macera", "Dram", "Biyografi"],
+        year: 2023,
+        duration: "2s 24dk",
+        imdb_rating: "7.8",
+        match_rate: "%98",
+        director: "J.A. Bayona",
+        cast: ["Enzo Vogrincic", "Agustín Pardella"],
+        synopsis: "1972'de And Dağları'na düşen uçakta mahsur kalan Uruguaylı ragbi takımının dondurucu ortamda verdiği insanüstü hayatta kalma mücadelesi.",
+        why_watch: "Oscar adayı, nefes kesen gerçek bir trajedi ve insan dayanışması.",
+        poster_url: "https://upload.wikimedia.org/wikipedia/lv/7/76/Society_of_the_Snow_poster.jpg",
+        netflix_url: "https://www.netflix.com/title/81268373",
+        tweet_url: "https://x.com/bugunneizleyim"
+      },
+      {
+        id: 104,
+        tmdb_id: 493529,
+        title: "Batı Cephesinde Yeni Bir Şey Yok",
+        original_title: "All Quiet on the Western Front",
+        media_type: "movie",
+        genres: ["Savaş", "Dram", "Aksiyon"],
+        year: 2022,
+        duration: "2s 28dk",
+        imdb_rating: "7.8",
+        match_rate: "%96",
+        director: "Edward Berger",
+        cast: ["Felix Kammerer", "Daniel Brühl"],
+        synopsis: "Birinci Dünya Savaşı'nda gönüllü olarak cepheye giden genç bir askerin siperlerdeki acımasız ve vahşi gerçeklikle yüzleşmesi.",
+        why_watch: "4 Oscar ödüllü, sinematografisiyle büyüleyen sarsıcı bir savaş başyapıtı.",
+        poster_url: "https://upload.wikimedia.org/wikipedia/en/c/c3/All_quiet_on_the_western_front_%282022_film%29.jpg",
+        netflix_url: "https://www.netflix.com/title/81016042",
+        tweet_url: "https://x.com/bugunneizleyim"
+      },
+      {
+        id: 105,
+        tmdb_id: 619264,
+        title: "Platform",
+        original_title: "El Hoyo",
+        media_type: "movie",
+        genres: ["Bilim Kurgu", "Gerilim"],
+        year: 2019,
+        duration: "1s 34dk",
+        imdb_rating: "7.0",
+        match_rate: "%94",
+        director: "Galder Gaztelu-Urrutia",
+        cast: ["Iván Massagué", "Zorion Eguileor"],
+        synopsis: "Dikey bir hapishanede kat kat inen yemek platformu üzerinden insan doğasını ve sosyal eşitsizliği sınayan klostrofobik distopya.",
+        why_watch: "Zekice kurgulanmış kapitalizm eleştirisi ve yüksek gerilim.",
+        poster_url: "https://upload.wikimedia.org/wikipedia/en/5/54/The_Platform_poster.jpg",
+        netflix_url: "https://www.netflix.com/title/81128524",
+        tweet_url: "https://x.com/bugunneizleyim"
+      },
+      {
+        id: 106,
+        tmdb_id: 145859,
+        title: "Kuş Uçuşu",
+        original_title: "As the Crow Flies",
+        media_type: "tv",
+        genres: ["Dram", "Gerilim", "Yerli"],
+        year: 2022,
+        duration: "3 Sezon",
+        imdb_rating: "6.4",
+        match_rate: "%93",
+        director: "Deniz Yorulmazer",
+        cast: ["Birce Akalay", "Miray Daner", "İbrahim Çelikkol"],
+        synopsis: "Deneyimli haber spikeri Lale Kıran ile onun yerine geçmek için etik sınırları hiçe sayan hırslı stajyer Aslı arasındaki acımasız savaş.",
+        why_watch: "Kuşaklar arası çatışma ve televizyon dünyasının arka planı.",
+        poster_url: "https://upload.wikimedia.org/wikipedia/tr/6/67/Ku%C5%9FU%C3%A7u%C5%9FuDizi.jpg",
+        netflix_url: "https://www.netflix.com/title/81303889",
+        tweet_url: "https://x.com/bugunneizleyim"
+      },
+      {
+        id: 107,
+        tmdb_id: 220720,
+        title: "Boğa Boğa",
+        original_title: "Chokehold",
+        media_type: "movie",
+        genres: ["Gerilim", "Dram", "Yerli"],
+        year: 2023,
+        duration: "1s 52dk",
+        imdb_rating: "6.0",
+        match_rate: "%91",
+        director: "Onur Saylak",
+        cast: ["Kıvanç Tatlıtuğ", "Funda Eryiğit"],
+        synopsis: "İstanbul'daki skandaldan kaçıp Assos'ta bir köye sığınan çiftin, köylülerin düşmanca tavırlarıyla başlayan ölümcül hesaplaşması.",
+        why_watch: "Kıvanç Tatlıtuğ'un karanlık performansı ve gerilimli Ege atmosferi.",
+        poster_url: "https://upload.wikimedia.org/wikipedia/tr/e/e0/Bo%C4%9Fa_Bo%C4%9Fa_film_afi%C5%9Fi.jpg",
+        netflix_url: "https://www.netflix.com/title/81467407",
+        tweet_url: "https://x.com/bugunneizleyim"
+      },
+      {
+        id: 108,
+        tmdb_id: 132438,
+        title: "Kuru Otlar Üstüne",
+        original_title: "About Dry Grasses",
+        media_type: "movie",
+        genres: ["Dram", "Sanat", "Yerli"],
+        year: 2023,
+        duration: "3s 17dk",
+        imdb_rating: "7.8",
+        match_rate: "%95",
+        director: "Nuri Bilge Ceylan",
+        cast: ["Deniz Celiloğlu", "Merve Dizdar"],
+        synopsis: "Doğu Anadolu'da zorunlu hizmetini yapan bir resim öğretmeninin varoluşsal sancıları ve Cannes'da ödül kazanan büyüleyici hikayesi.",
+        why_watch: "Merve Dizdar'a Cannes'da En İyi Kadın Oyuncu Ödülü kazandıran Türk sineması başyapıtı.",
+        poster_url: "https://upload.wikimedia.org/wikipedia/tr/f/fd/Kuru_Otlar_%C3%9Cst%C3%BCne.png",
+        netflix_url: "https://www.netflix.com",
+        tweet_url: "https://x.com/bugunneizleyim"
+      },
+      {
+        id: 109,
+        tmdb_id: 426426,
+        title: "Roma",
+        original_title: "Roma",
+        media_type: "movie",
+        genres: ["Dram", "Tarih"],
+        year: 2018,
+        duration: "2s 15dk",
+        imdb_rating: "7.7",
+        match_rate: "%96",
+        director: "Alfonso Cuarón",
+        cast: ["Yalitza Aparicio", "Marina de Tavira"],
+        synopsis: "1970'lerin başında Mexico City'de hizmetçilik yapan genç bir yerli kadının gözünden bir ailenin ve toplumun dönüşümü.",
+        why_watch: "3 Oscar ödüllü, sinema tarihine geçen büyüleyici siyah-beyaz görsellik.",
+        poster_url: "https://upload.wikimedia.org/wikipedia/en/8/85/Roma_theatrical_poster.png",
+        netflix_url: "https://www.netflix.com/title/80240715",
+        tweet_url: "https://x.com/bugunneizleyim"
+      },
+      {
+        id: 110,
+        tmdb_id: 175217,
+        title: "Terzi",
+        original_title: "The Tailor",
+        media_type: "tv",
+        genres: ["Dram", "Gizem", "Yerli"],
+        year: 2023,
+        duration: "3 Sezon",
+        imdb_rating: "6.2",
+        match_rate: "%92",
+        director: "Cem Karcı",
+        cast: ["Çağatay Ulusoy", "Salih Bademci"],
+        synopsis: "Yetenekli bir modacının ailesinden kalan karanlık sırları ve en yakın dostunun nişanlısıyla başlayan fırtınalı ilişkisi.",
+        why_watch: "Olgun Şimşek ve Çağatay Ulusoy'un oyunculuğu ile gizemli entrikalar.",
+        poster_url: "https://upload.wikimedia.org/wikipedia/tr/b/b1/TerziDizi.jpg",
+        netflix_url: "https://www.netflix.com/title/81477457",
+        tweet_url: "https://x.com/bugunneizleyim"
+      }
+    ];
+
+    let allItems = [];
+    let activeCategory = 'all';
+
+    async function loadData() {
+      try {
+        const res = await fetch('./data/recommendations.json?t=' + Date.now());
+        if (res.ok) {
+          const data = await res.json();
+          // Eğer json dosyası boş değilse kullan
+          if (Array.isArray(data) && data.length > 0) {
+            allItems = data;
+          } else {
+            allItems = authenticFallback;
+          }
+        } else {
+          allItems = authenticFallback;
+        }
+      } catch (err) {
+        allItems = authenticFallback;
+      }
+      renderApp();
+    }
+
+    function renderApp() {
+      if (allItems.length > 0) {
+        setHero(allItems[0]);
+        applyFilters();
+      }
+    }
+
+    function setHero(item) {
+      document.getElementById('hero-title').textContent = item.title;
+      document.getElementById('hero-category').textContent = item.genres ? item.genres.join(' • ') : 'Netflix';
+      document.getElementById('hero-imdb').textContent = `⭐ IMDb ${item.imdb_rating}`;
+      document.getElementById('hero-year').textContent = item.year;
+      document.getElementById('hero-duration').textContent = item.duration || (item.media_type === 'tv' ? 'Dizi' : 'Film');
+      document.getElementById('hero-synopsis').textContent = item.synopsis;
+      document.getElementById('hero-why').textContent = item.why_watch || 'Yüksek izleyici puanı ve sürükleyici kurgu.';
+      document.getElementById('hero-poster').src = item.poster_url;
+      document.getElementById('hero-director').textContent = item.director || (item.cast ? item.cast.join(', ') : 'Netflix');
+      document.getElementById('hero-netflix-btn').href = item.netflix_url || 'https://www.netflix.com';
+      document.getElementById('hero-tweet-btn').href = item.tweet_url || 'https://x.com/bugunneizleyim';
+    }
+
+    function renderCards(items) {
+      const container = document.getElementById('catalog-grid');
+      const counter = document.getElementById('result-count');
+      container.innerHTML = '';
+
+      counter.textContent = `${items.length} Netflix Yapımı Gösteriliyor`;
+
+      if (items.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full py-16 text-center text-neutral-400">
+            <p class="text-lg font-bold">Aradığınız kriterde içerik bulunamadı.</p>
+            <p class="text-xs text-neutral-500 mt-1">Filtreleri temizleyebilir veya başka bir kelime deneyebilirsiniz.</p>
+          </div>
+        `;
+        return;
+      }
+
+      items.forEach(movie => {
+        const div = document.createElement('div');
+        div.className = "glass-card rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1.5 flex flex-col group cursor-pointer shadow-lg";
+        div.onclick = () => {
+          setHero(movie);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        const primaryGenre = movie.genres && movie.genres[0] ? movie.genres[0] : (movie.media_type === 'tv' ? 'Dizi' : 'Film');
+
+        div.innerHTML = `
+          <div class="relative aspect-[2/3] bg-neutral-900 overflow-hidden">
+            <img src="${movie.poster_url}" alt="${movie.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            
+            <div class="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-black/30"></div>
+
+            <div class="absolute top-3 left-3 bg-netflix-red/90 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-md shadow-md">
+              ${movie.media_type === 'tv' ? 'DİZİ' : 'FİLM'}
+            </div>
+
+            <div class="absolute top-3 right-3 bg-black/85 backdrop-blur-md px-2 py-0.5 rounded-md text-[11px] font-black text-amber-400 border border-amber-400/20 shadow-md">
+              ★ ${movie.imdb_rating}
+            </div>
+
+            <div class="absolute bottom-3 left-3 right-3">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-red-400 block">${primaryGenre}</span>
+              <h3 class="font-black text-white text-base leading-snug group-hover:text-red-400 transition-colors">${movie.title}</h3>
+              <div class="flex items-center gap-2 text-[11px] text-neutral-400 mt-1 font-medium">
+                <span>${movie.year}</span>
+                <span>•</span>
+                <span>${movie.duration || 'Netflix'}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-4 flex-1 flex flex-col justify-between space-y-3 bg-neutral-950/70 border-t border-neutral-800/60">
+            <p class="text-neutral-400 text-xs line-clamp-2 leading-relaxed">${movie.synopsis}</p>
+            
+            <div class="pt-2.5 border-t border-neutral-800/80 flex items-center justify-between text-xs">
+              <span class="text-netflix-red group-hover:underline font-bold flex items-center gap-1">
+                Günün Önerisi Yap ↑
+              </span>
+              <a href="${movie.netflix_url || 'https://www.netflix.com'}" target="_blank" onclick="event.stopPropagation();" class="text-neutral-400 hover:text-white transition-colors bg-neutral-900 px-2 py-1 rounded border border-neutral-800">
+                Netflix'te Aç ↗
+              </a>
+            </div>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    // Kategori Filtreleme
+    window.filterCategory = function(cat) {
+      activeCategory = cat;
+      
+      // Buton renklerini güncelle
+      document.querySelectorAll('.cat-pill').forEach(btn => {
+        if (btn.getAttribute('data-cat') === cat) {
+          btn.className = "cat-pill active px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap bg-netflix-red text-white shadow-md shadow-red-600/20";
+        } else {
+          btn.className = "cat-pill px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-800";
+        }
+      });
+
+      applyFilters();
+    };
+
+    function applyFilters() {
+      const q = document.getElementById('search-box').value.toLowerCase().trim();
+      
+      let filtered = allItems.filter(item => {
+        // Kategori eşleşmesi
+        let matchesCat = true;
+        if (activeCategory === 'all') {
+          matchesCat = true;
+        } else if (activeCategory === 'movie' || activeCategory === 'tv') {
+          matchesCat = item.media_type === activeCategory;
+        } else {
+          matchesCat = item.genres && item.genres.some(g => g.toLowerCase().includes(activeCategory.toLowerCase()));
+        }
+
+        // Arama sorgusu eşleşmesi
+        let matchesQuery = true;
+        if (q) {
+          const inTitle = item.title && item.title.toLowerCase().includes(q);
+          const inSynopsis = item.synopsis && item.synopsis.toLowerCase().includes(q);
+          const inGenre = item.genres && item.genres.some(g => g.toLowerCase().includes(q));
+          const inCast = item.cast && item.cast.some(c => c.toLowerCase().includes(q));
+          matchesQuery = inTitle || inSynopsis || inGenre || inCast;
+        }
+
+        return matchesCat && matchesQuery;
+      });
+
+      renderCards(filtered);
+    }
+
+    // Rastgele Seç
+    document.getElementById('btn-random').addEventListener('click', () => {
+      if (allItems.length > 0) {
+        const rnd = allItems[Math.floor(Math.random() * allItems.length)];
+        setHero(rnd);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+
+    // Arama dinleyicisi
+    document.getElementById('search-box').addEventListener('input', () => {
+      applyFilters();
+    });
+
+    // Başlat
+    loadData();
+  </script>
+</body>
+</html>
