@@ -1,137 +1,254 @@
 [
   {
-    "id": 101,
-    "tmdb_id": 110996,
-    "title": "Bir Başkadır",
-    "original_title": "Ethos",
-    "media_type": "tv",
+    "id": 1,
+    "title": "Vurgun",
+    "original_title": "The Vault",
+    "media_type": "movie",
     "genres": [
-      "Dram",
-      "Gizem",
-      "Yerli"
+      "Aksiyon",
+      "Gerilim",
+      "Soygun"
     ],
-    "year": 2020,
-    "duration": "1 Sezon (8 Bölüm)",
-    "imdb_rating": "8.5",
-    "match_rate": "%99",
-    "director": "Berkun Oya",
-    "cast": [
-      "Öykü Karayel",
-      "Fatih Artman",
-      "Funda Eryiğit",
-      "Tülin Özen"
-    ],
-    "synopsis": "Farklı sosyoekonomik ve kültürel geçmişlerden gelen, bambaşka hayatlar yaşayan bir grup insanın yolları İstanbul'un kozmopolit dokusunda kesişir.",
-    "why_watch": "Türk dizi tarihinin en derinlikli karakter analizleri, kusursuz diyaloglar ve Berkun Oya'nın büyüleyici yönetmenliği.",
-    "target_audience": "Sosyal gözlem, psikolojik derinlik ve güçlü oyunculuk arayanlar.",
-    "poster_url": "https://upload.wikimedia.org/wikipedia/tr/3/32/Bir_Ba%C5%9Fkad%C4%B1r_afi%C5%9Fi.jpg",
-    "backdrop_url": "https://upload.wikimedia.org/wikipedia/tr/3/32/Bir_Ba%C5%9Fkad%C4%B1r_afi%C5%9Fi.jpg",
-    "netflix_url": "https://www.netflix.com/title/81106900",
-    "tweet_text": "🎬 Bugün Ne İzleyeyim? | Netflix Günlük Önerisi\n\n🔴 Bir Başkadır (Ethos)\n⭐ IMDb: 8.5/10 | 🎭 Dram, Gizem\n📌 İstanbul'un farklı kutuplarında yaşayan insanların hayatlarının ustaca kesiştiği kült yapım.\n\n🍿 Hemen Netflix'te izle!\n#BugünNeİzlesem #NetflixTR #BirBaşkadır",
-    "tweet_id": "1858525738001",
-    "tweet_url": "https://x.com/bugunneizleyim",
-    "posted_at": "2026-11-04T19:30:00+03:00"
-  },
-  {
-    "id": 102,
-    "tmdb_id": 133145,
-    "title": "Kulüp",
-    "original_title": "The Club",
-    "media_type": "tv",
-    "genres": [
-      "Dram",
-      "Tarih",
-      "Yerli"
-    ],
+    "mood": "adrenalin",
+    "mood_label": "💥 Saf Adrenalin & Soygun",
+    "duration_category": "standard",
+    "duration_text": "1s 58dk",
+    "duration_min": 118,
     "year": 2021,
-    "duration": "2 Sezon (20 Bölüm)",
-    "imdb_rating": "7.8",
-    "match_rate": "%97",
-    "director": "Seren Yüce, Zeynep Günay",
+    "origin": "yabanci",
+    "imdb_rating": 6.4,
+    "director": "Jaume Balagueró",
     "cast": [
-      "Gökçe Bahadır",
-      "Barış Arduç",
-      "Salih Bademci",
-      "Fırat Tanış"
+      "Freddie Highmore",
+      "Astrid Bergès-Frisbey",
+      "Liam Cunningham"
     ],
-    "synopsis": "1950'lerin kozmopolit İstanbul'unda, Beyoğlu'nun en hareketli gece kulübünde çalışan eski mahkum Matilda, yetiştirme yurdunda büyüyen asi kızı Raşel ile bağ kurmaya çalışır.",
-    "why_watch": "Salih Bademci'nin Çelebi ve Selim karakterlerindeki devleşen performansı, muazzam dönem atmosferi ve müzikleri.",
-    "target_audience": "Dönem dramaları, Beyoğlu tarihi ve çok katmanlı aile ilişkilerini sevenler.",
-    "poster_url": "https://upload.wikimedia.org/wikipedia/tr/3/31/Kul%C3%BCp.jpg",
-    "backdrop_url": "https://upload.wikimedia.org/wikipedia/tr/3/31/Kul%C3%BCp.jpg",
-    "netflix_url": "https://www.netflix.com/title/81281008",
-    "tweet_text": "🎬 Bugün Ne İzleyeyim? | Netflix Dizi Önerisi\n\n🔴 Kulüp\n⭐ IMDb: 7.8/10 | 🎭 Dönem Draması\n📌 1950'lerin Beyoğlu'sunda anne-kızın dramı ve eğlence kulübünün perde arkası.\n\n🍿 Hemen Netflix'te izle!\n#BugünNeİzlesem #NetflixTR #Kulüp",
-    "tweet_id": "1858525738002",
-    "tweet_url": "https://x.com/bugunneizleyim",
-    "posted_at": "2026-11-03T19:30:00+03:00"
+    "synopsis": "İspanya Merkez Bankası'nın 90 dakikalık su baskını mekanizmasına sahip geçilmez kasasından efsanevi bir hazineyi çalmak isteyen dahi genç ve ekibinin soluksuz soygun macerası.",
+    "tags": [
+      "banka soygunu",
+      "hazine",
+      "kasa",
+      "madrid",
+      "mühendislik"
+    ],
+    "poster_url": "https://image.tmdb.org/t/p/w780/di0h9sD8HwS53sT1n5Y52jQc5G8.jpg",
+    "netflix_url": "https://www.netflix.com/title/81313876"
   },
   {
-    "id": 103,
-    "tmdb_id": 934632,
-    "title": "Kar Kardeşliği",
-    "original_title": "Society of the Snow",
+    "id": 2,
+    "title": "Hırsızlar Şehri",
+    "original_title": "The Town",
     "media_type": "movie",
     "genres": [
-      "Macera",
+      "Suç",
       "Dram",
-      "Biyografi"
+      "Gerilim"
     ],
+    "mood": "adrenalin",
+    "mood_label": "💥 Saf Adrenalin & Soygun",
+    "duration_category": "long",
+    "duration_text": "2s 5dk",
+    "duration_min": 125,
+    "year": 2010,
+    "origin": "yabanci",
+    "imdb_rating": 7.5,
+    "director": "Ben Affleck",
+    "cast": [
+      "Ben Affleck",
+      "Rebecca Hall",
+      "Jon Hamm",
+      "Jeremy Renner"
+    ],
+    "synopsis": "Boston'ın banka soyguncularıyla ünlü Charlestown mahallesinde bir çete lideri, rehin aldıkları banka müdiresine aşık olunca hayatı ve sadakati altüst olur.",
+    "tags": [
+      "boston",
+      "banka soygunu",
+      "fbi",
+      "aşk",
+      "çatışma"
+    ],
+    "poster_url": "https://image.tmdb.org/t/p/w780/c8ZqM2h1Qd2M6o5r3vX8P3v4x1.jpg",
+    "netflix_url": "https://www.netflix.com/title/70137742"
+  },
+  {
+    "id": 3,
+    "title": "Gece Hayvanları",
+    "original_title": "Nocturnal Animals",
+    "media_type": "movie",
+    "genres": [
+      "Gerilim",
+      "Dram",
+      "Gizem"
+    ],
+    "mood": "zihin_bukucu",
+    "mood_label": "🧠 Zihin Bükücü & Tekinsiz",
+    "duration_category": "standard",
+    "duration_text": "1s 56dk",
+    "duration_min": 116,
+    "year": 2016,
+    "origin": "yabanci",
+    "imdb_rating": 7.5,
+    "director": "Tom Ford",
+    "cast": [
+      "Amy Adams",
+      "Jake Gyllenhaal",
+      "Michael Shannon",
+      "Aaron Taylor-Johnson"
+    ],
+    "synopsis": "Başarılı bir sanat galerisi sahibine, yıllar önce terk ettiği eski kocasının yazdığı karanlık ve intikam kokan roman taslağı ulaşır. Romanı okudukça geçmişin acımasız sırları canlanır.",
+    "tags": [
+      "intikam",
+      "roman",
+      "çöl",
+      "psikolojik",
+      "evlilik"
+    ],
+    "poster_url": "https://image.tmdb.org/t/p/w780/9pUqE6M3T6jM8K4w5vX1P7m8x4.jpg",
+    "netflix_url": "https://www.netflix.com/title/80113851"
+  },
+  {
+    "id": 4,
+    "title": "The Killer",
+    "original_title": "The Killer",
+    "media_type": "movie",
+    "genres": [
+      "Aksiyon",
+      "Suç",
+      "Gerilim"
+    ],
+    "mood": "gerilim",
+    "mood_label": "😱 Soğukkanlı & Klostrofobik",
+    "duration_category": "standard",
+    "duration_text": "1s 58dk",
+    "duration_min": 118,
     "year": 2023,
-    "duration": "2s 24dk",
-    "imdb_rating": "7.8",
-    "match_rate": "%98",
-    "director": "J.A. Bayona",
+    "origin": "yabanci",
+    "imdb_rating": 6.8,
+    "director": "David Fincher",
     "cast": [
-      "Enzo Vogrincic",
-      "Agustín Pardella",
-      "Matías Recalt"
+      "Michael Fassbender",
+      "Tilda Swinton",
+      "Charles Parnell"
     ],
-    "synopsis": "1972 yılında Şili'ye giden Uruguay ragbi takımını taşıyan uçak And Dağları'nın dondurucu buzullarına düşer. Hayatta kalan az sayıda genç, dünyanın en acımasız ortamında insanüstü bir hayatta kalma mücadelesi verir.",
-    "why_watch": "Oscar adayı, nefes kesen gerçek bir trajedi ve insan dayanışmasının ulaştığı inanılmaz sınır.",
-    "target_audience": "Gerçek hayat hikayeleri ve yoğun hayatta kalma filmleri sevenler.",
-    "poster_url": "https://upload.wikimedia.org/wikipedia/lv/7/76/Society_of_the_Snow_poster.jpg",
-    "backdrop_url": "https://upload.wikimedia.org/wikipedia/lv/7/76/Society_of_the_Snow_poster.jpg",
-    "netflix_url": "https://www.netflix.com/title/81268373",
-    "tweet_text": "❄️ Bugün Ne İzleyeyim? | Netflix Film Önerisi\n\n🔴 Kar Kardeşliği (Society of the Snow)\n⭐ IMDb: 7.8/10 | 🏔️ Hayatta Kalma / Macera\n📌 And Dağları'na düşen uçaktan sağ kurtulanların nefes kesen destansı mücadelesi.\n\n🍿 Hemen Netflix'te izle!\n#BugünNeİzlesem #NetflixTR",
-    "tweet_id": "1858525738003",
-    "tweet_url": "https://x.com/bugunneizleyim",
-    "posted_at": "2026-11-02T19:30:00+03:00"
+    "synopsis": "Ölümcül bir ıskalamanın ardından profesyonel bir suikastçı, kişisel olmadığını iddia ettiği küresel bir intikam avında işverenlerine ve kendine karşı savaş açar.",
+    "tags": [
+      "suikastçı",
+      "paris",
+      "intikam",
+      "david fincher",
+      "soğukkanlı"
+    ],
+    "poster_url": "https://image.tmdb.org/t/p/w780/e7JvsRY4TlhQBDQuqpl31Ri49Hg.jpg",
+    "netflix_url": "https://www.netflix.com/title/80234448"
   },
   {
-    "id": 104,
-    "tmdb_id": 493529,
-    "title": "Batı Cephesinde Yeni Bir Şey Yok",
-    "original_title": "All Quiet on the Western Front",
+    "id": 5,
+    "title": "Reptile",
+    "original_title": "Reptile",
     "media_type": "movie",
     "genres": [
-      "Savaş",
+      "Suç",
       "Dram",
-      "Aksiyon"
+      "Gizem"
     ],
-    "year": 2022,
-    "duration": "2s 28dk",
-    "imdb_rating": "7.8",
-    "match_rate": "%96",
-    "director": "Edward Berger",
+    "mood": "zihin_bukucu",
+    "mood_label": "🧠 Zihin Bükücü & Tekinsiz",
+    "duration_category": "long",
+    "duration_text": "2s 14dk",
+    "duration_min": 134,
+    "year": 2023,
+    "origin": "yabanci",
+    "imdb_rating": 6.8,
+    "director": "Grant Singer",
     "cast": [
-      "Felix Kammerer",
-      "Albrecht Schuch",
-      "Daniel Brühl"
+      "Benicio del Toro",
+      "Justin Timberlake",
+      "Alicia Silverstone"
     ],
-    "synopsis": "Birinci Dünya Savaşı sırasında vatan sevgisiyle gönüllü olarak Alman ordusuna katılan Paul Bäumer, siperlere ulaştığında savaşın insanlık dışı gerçekliğiyle yüzleşir.",
-    "why_watch": "4 Oscar ödüllü, sinematografisi ve ses miksajıyla izleyiciyi adeta siperin içine çeken sarsıcı bir savaş karşıtı başyapıt.",
-    "target_audience": "1917, Er Ryan'ı Kurtarmak ve tarihi savaş draması tutkunları.",
-    "poster_url": "https://upload.wikimedia.org/wikipedia/en/c/c3/All_quiet_on_the_western_front_%282022_film%29.jpg",
-    "backdrop_url": "https://upload.wikimedia.org/wikipedia/en/c/c3/All_quiet_on_the_western_front_%282022_film%29.jpg",
-    "netflix_url": "https://www.netflix.com/title/81016042",
-    "tweet_text": "💥 Bugün Ne İzleyeyim? | Netflix Film Önerisi\n\n🔴 Batı Cephesinde Yeni Bir Şey Yok\n⭐ IMDb: 7.8/10 | 🪖 4 Oscar Ödüllü Savaş Başyapıtı\n📌 Siperlerin dehşetini ve savaşın acımasız gerçeğini iliklerinize kadar hissettirecek.\n\n🍿 Hemen Netflix'te izle!\n#BugünNeİzlesem #NetflixTR",
-    "tweet_id": "1858525738004",
-    "tweet_url": "https://x.com/bugunneizleyim",
-    "posted_at": "2026-11-01T19:30:00+03:00"
+    "synopsis": "Genç bir emlakçının vahşice öldürülmesinin ardından tecrübeli bir dedektif, hiçbir şeyin göründüğü gibi olmadığı karmaşık bir komplo ağının içine çekilir.",
+    "tags": [
+      "cinayet",
+      "emlak",
+      "komplo",
+      "polis",
+      "soruşturma"
+    ],
+    "poster_url": "https://image.tmdb.org/t/p/w780/soqlI1m1ALv2ZczvEcA7W0g5qWd.jpg",
+    "netflix_url": "https://www.netflix.com/title/81463878"
   },
   {
-    "id": 105,
-    "tmdb_id": 619264,
+    "id": 6,
+    "title": "Yedi",
+    "original_title": "Se7en",
+    "media_type": "movie",
+    "genres": [
+      "Suç",
+      "Gizem",
+      "Gerilim"
+    ],
+    "mood": "zihin_bukucu",
+    "mood_label": "🧠 Zihin Bükücü & Tekinsiz",
+    "duration_category": "long",
+    "duration_text": "2s 7dk",
+    "duration_min": 127,
+    "year": 1995,
+    "origin": "yabanci",
+    "imdb_rating": 8.6,
+    "director": "David Fincher",
+    "cast": [
+      "Brad Pitt",
+      "Morgan Freeman",
+      "Gwyneth Paltrow",
+      "Kevin Spacey"
+    ],
+    "synopsis": "Yedi ölümcül günahı işleyen kurbanlarını vahşice cezalandıran zeki bir seri katilin peşine düşen biri kıdemli diğeri toy iki dedektifin kabusu.",
+    "tags": [
+      "seri katil",
+      "yedi günah",
+      "yağmur",
+      "cinayet",
+      "başyapıt"
+    ],
+    "poster_url": "https://image.tmdb.org/t/p/w780/6yoghtyTpznpBik8EngEmJskVUO.jpg",
+    "netflix_url": "https://www.netflix.com/title/950149"
+  },
+  {
+    "id": 7,
+    "title": "Zodiac",
+    "original_title": "Zodiac",
+    "media_type": "movie",
+    "genres": [
+      "Suç",
+      "Dram",
+      "Gizem"
+    ],
+    "mood": "zihin_bukucu",
+    "mood_label": "🧠 Zihin Bükücü & Tekinsiz",
+    "duration_category": "long",
+    "duration_text": "2s 37dk",
+    "duration_min": 157,
+    "year": 2007,
+    "origin": "yabanci",
+    "imdb_rating": 7.7,
+    "director": "David Fincher",
+    "cast": [
+      "Jake Gyllenhaal",
+      "Mark Ruffalo",
+      "Robert Downey Jr."
+    ],
+    "synopsis": "San Francisco Körfez Bölgesi'ni kana bulayan ve basına şifreli mektuplar gönderen esrarengiz Zodiac katilini yakalamayı saplantı haline getiren karikatürist ve dedektifler.",
+    "tags": [
+      "gerçek suç",
+      "gazete",
+      "şifre",
+      "san francisco",
+      "takıntı"
+    ],
+    "poster_url": "https://image.tmdb.org/t/p/w780/6PoNQ946P69vQW74p4g7F7f7x3.jpg",
+    "netflix_url": "https://www.netflix.com/title/70044686"
+  },
+  {
+    "id": 8,
     "title": "Platform",
     "original_title": "El Hoyo",
     "media_type": "movie",
@@ -140,30 +257,105 @@
       "Gerilim",
       "Korku"
     ],
+    "mood": "gerilim",
+    "mood_label": "😱 Soğukkanlı & Klostrofobik",
+    "duration_category": "short",
+    "duration_text": "1s 34dk",
+    "duration_min": 94,
     "year": 2019,
-    "duration": "1s 34dk",
-    "imdb_rating": "7.0",
-    "match_rate": "%94",
+    "origin": "yabanci",
+    "imdb_rating": 7.0,
     "director": "Galder Gaztelu-Urrutia",
     "cast": [
       "Iván Massagué",
       "Zorion Eguileor",
       "Antonia San Juan"
     ],
-    "synopsis": "Dikey olarak inşa edilmiş gizemli bir hapishanede, her katta iki mahkum kalır ve yiyecek en üst kattan aşağıya doğru inen bir platformla sunulur. Üsttekiler doyarken alttakiler açlıkla sınanır.",
-    "why_watch": "Sosyal eşitsizlik ve açgözlülük üzerine kurulmuş son yılların en zekice distopik gerilim kurgusu.",
-    "target_audience": "Black Mirror, Snowpiercer ve distopik gerilim sevenler.",
+    "synopsis": "Dikey inşa edilmiş gizemli bir hapishanede yemek platformu en üstten aşağı iner. Üsttekiler tıka basa doyarken alttakiler açlıkla ve delilikle sınanır.",
+    "tags": [
+      "hapishane",
+      "distopya",
+      "açlık",
+      "katlar",
+      "ispanyol"
+    ],
     "poster_url": "https://upload.wikimedia.org/wikipedia/en/5/54/The_Platform_poster.jpg",
-    "backdrop_url": "https://upload.wikimedia.org/wikipedia/en/5/54/The_Platform_poster.jpg",
-    "netflix_url": "https://www.netflix.com/title/81128524",
-    "tweet_text": "🍽️ Bugün Ne İzleyeyim? | Netflix Film Önerisi\n\n🔴 Platform (El Hoyo)\n⭐ IMDb: 7.0/10 | 🧬 Distopik Gerilim\n📌 Katlar arasında inen yemek tablası ve insan doğasının en karanlık yüzü.\n\n🍿 Hemen Netflix'te izle!\n#BugünNeİzlesem #NetflixTR #ElHoyo",
-    "tweet_id": "1858525738005",
-    "tweet_url": "https://x.com/bugunneizleyim",
-    "posted_at": "2026-10-31T19:30:00+03:00"
+    "netflix_url": "https://www.netflix.com/title/81128524"
   },
   {
-    "id": 106,
-    "tmdb_id": 145859,
+    "id": 9,
+    "title": "Bir Başkadır",
+    "original_title": "Ethos",
+    "media_type": "tv",
+    "genres": [
+      "Dram",
+      "Gizem",
+      "Yerli"
+    ],
+    "mood": "duygusal",
+    "mood_label": "💔 Derin & Düşündüren Dram",
+    "duration_category": "series",
+    "duration_text": "1 Sezon (8 Bölüm)",
+    "duration_min": 360,
+    "year": 2020,
+    "origin": "yerli",
+    "imdb_rating": 8.5,
+    "director": "Berkun Oya",
+    "cast": [
+      "Öykü Karayel",
+      "Fatih Artman",
+      "Funda Eryiğit",
+      "Tülin Özen"
+    ],
+    "synopsis": "Farklı sosyoekonomik ve kültürel geçmişlerden gelen bir grup insanın yolları İstanbul'un kozmopolit dokusunda kesişir; bastırılmış arzular ve travmalar açığa çıkar.",
+    "tags": [
+      "istanbul",
+      "psikiyatri",
+      "kültür",
+      "toplum",
+      "başyapıt"
+    ],
+    "poster_url": "https://upload.wikimedia.org/wikipedia/tr/3/32/Bir_Ba%C5%9Fkad%C4%B1r_afi%C5%9Fi.jpg",
+    "netflix_url": "https://www.netflix.com/title/81106900"
+  },
+  {
+    "id": 10,
+    "title": "Kulüp",
+    "original_title": "The Club",
+    "media_type": "tv",
+    "genres": [
+      "Dram",
+      "Tarih",
+      "Yerli"
+    ],
+    "mood": "duygusal",
+    "mood_label": "💔 Derin & Düşündüren Dram",
+    "duration_category": "series",
+    "duration_text": "2 Sezon (20 Bölüm)",
+    "duration_min": 900,
+    "year": 2021,
+    "origin": "yerli",
+    "imdb_rating": 7.8,
+    "director": "Seren Yüce, Zeynep Günay",
+    "cast": [
+      "Gökçe Bahadır",
+      "Barış Arduç",
+      "Salih Bademci",
+      "Fırat Tanış"
+    ],
+    "synopsis": "1950'lerin kozmopolit İstanbul'unda Beyoğlu gece kulübünde çalışan eski mahkum Matilda ve asi kızı Raşel'in dönemin çalkantıları içindeki çarpıcı öyküsü.",
+    "tags": [
+      "beyoğlu",
+      "1950ler",
+      "gece kulübü",
+      "anne kız",
+      "tarih"
+    ],
+    "poster_url": "https://upload.wikimedia.org/wikipedia/tr/3/31/Kul%C3%BCp.jpg",
+    "netflix_url": "https://www.netflix.com/title/81281008"
+  },
+  {
+    "id": 11,
     "title": "Kuş Uçuşu",
     "original_title": "As the Crow Flies",
     "media_type": "tv",
@@ -172,10 +364,14 @@
       "Gerilim",
       "Yerli"
     ],
+    "mood": "adrenalin",
+    "mood_label": "💥 Saf Adrenalin & Hırs",
+    "duration_category": "series",
+    "duration_text": "3 Sezon (24 Bölüm)",
+    "duration_min": 1080,
     "year": 2022,
-    "duration": "3 Sezon (24 Bölüm)",
-    "imdb_rating": "6.4",
-    "match_rate": "%93",
+    "origin": "yerli",
+    "imdb_rating": 6.5,
     "director": "Deniz Yorulmazer",
     "cast": [
       "Birce Akalay",
@@ -183,20 +379,19 @@
       "İbrahim Çelikkol",
       "Burak Yamantürk"
     ],
-    "synopsis": "Köklü bir haber kanalında zirvede olan deneyimli spiker Lale Kıran ile onun yerine geçmek için etik sınırları zorlayan genç stajyer Aslı arasındaki acımasız kuşak savaşı.",
-    "why_watch": "X ve Z kuşaklarının güç mücadelesini yüksek tempolu televizyon dünyasının perde arkasında anlatan sürükleyici kurgu.",
-    "target_audience": "Hırs, güç oyunları ve modern ofis entrikalarını merak edenler.",
-    "poster_url": "https://upload.wikimedia.org/wikipedia/tr/6/67/Ku%C5%9FU%C3%A7u%C5%9FuDizi.jpg",
-    "backdrop_url": "https://upload.wikimedia.org/wikipedia/tr/6/67/Ku%C5%9FU%C3%A7u%C5%9FuDizi.jpg",
-    "netflix_url": "https://www.netflix.com/title/81303889",
-    "tweet_text": "📺 Bugün Ne İzleyeyim? | Netflix Dizi Önerisi\n\n🔴 Kuş Uçuşu\n⭐ IMDb: 6.4/10 | 🎭 Psikolojik Çekişme\n📌 Deneyimli haber spikeri ve zirveyi hedefleyen hırslı stajyerin kıyasıya rekabeti.\n\n🍿 Hemen Netflix'te izle!\n#BugünNeİzlesem #NetflixTR #KuşUçuşu",
-    "tweet_id": "1858525738006",
-    "tweet_url": "https://x.com/bugunneizleyim",
-    "posted_at": "2026-10-30T19:30:00+03:00"
+    "synopsis": "Deneyimli ve güçlü bir haber spikerinin ekibine stajyer olarak sızan hırslı bir Z kuşağı gencinin zirveye tırmanmak için kurduğu tehlikeli entrikalar.",
+    "tags": [
+      "medya",
+      "hırs",
+      "kuşak çatışması",
+      "entrika",
+      "televizyon"
+    ],
+    "poster_url": "https://upload.wikimedia.org/wikipedia/tr/d/d4/Ku%C5%9F_U%C3%A7u%C5%9Fu_afi%C5%9Fi.jpg",
+    "netflix_url": "https://www.netflix.com/title/81303889"
   },
   {
-    "id": 107,
-    "tmdb_id": 220720,
+    "id": 12,
     "title": "Boğa Boğa",
     "original_title": "Chokehold",
     "media_type": "movie",
@@ -205,30 +400,33 @@
       "Dram",
       "Yerli"
     ],
+    "mood": "gerilim",
+    "mood_label": "😱 Soğukkanlı & Klostrofobik",
+    "duration_category": "standard",
+    "duration_text": "1s 52dk",
+    "duration_min": 112,
     "year": 2023,
-    "duration": "1s 52dk",
-    "imdb_rating": "6.0",
-    "match_rate": "%91",
+    "origin": "yerli",
+    "imdb_rating": 5.8,
     "director": "Onur Saylak",
     "cast": [
       "Kıvanç Tatlıtuğ",
       "Funda Eryiğit",
       "Gürgen Öz"
     ],
-    "synopsis": "Finansal bir skandalın ardından İstanbul'dan kaçıp Çanakkale'nin Assos bölgesindeki bir köye yerleşen Yalın ve Beyza çifti, köylülerin açgözlü ve düşmanca tavırlarıyla başlayan ölümcül bir kabusun içine çekilir.",
-    "why_watch": "Kıvanç Tatlıtuğ'un alışılmışın dışındaki karanlık performansı ve Onur Saylak'ın gerilimi adım adım tırmandıran reji dili.",
-    "target_audience": "Yerli psikolojik gerilim ve kaçış hikayeleri sevenler.",
-    "poster_url": "https://upload.wikimedia.org/wikipedia/tr/e/e0/Bo%C4%9Fa_Bo%C4%9Fa_film_afi%C5%9Fi.jpg",
-    "backdrop_url": "https://upload.wikimedia.org/wikipedia/tr/e/e0/Bo%C4%9Fa_Bo%C4%9Fa_film_afi%C5%9Fi.jpg",
-    "netflix_url": "https://www.netflix.com/title/81467407",
-    "tweet_text": "🌊 Bugün Ne İzleyeyim? | Netflix Film Önerisi\n\n🔴 Boğa Boğa (Chokehold)\n⭐ IMDb: 6.0/10 | 🎭 Psikolojik Gerilim\n📌 İstanbul skandalından kaçıp Assos'a sığınan bir adam ve köyde patlak veren tekinsiz hesaplaşma.\n\n🍿 Hemen Netflix'te izle!\n#BugünNeİzlesem #NetflixTR",
-    "tweet_id": "1858525738007",
-    "tweet_url": "https://x.com/bugunneizleyim",
-    "posted_at": "2026-10-29T19:30:00+03:00"
+    "synopsis": "Finansal bir skandalın ardından İstanbul'dan kaçıp Ege'de sakin bir köye yerleşen İstanbullu bir çiftin, köylülerin düşmanca tavırlarıyla başlayan ölüm kalım savaşı.",
+    "tags": [
+      "ege",
+      "kaçış",
+      "kıvanç tatlıtuğ",
+      "köy",
+      "cinayet"
+    ],
+    "poster_url": "https://upload.wikimedia.org/wikipedia/tr/e/e0/Bo%C4%9Fa_Bo%C4%9Fa.jpg",
+    "netflix_url": "https://www.netflix.com/title/81479509"
   },
   {
-    "id": 108,
-    "tmdb_id": 132438,
+    "id": 13,
     "title": "Kuru Otlar Üstüne",
     "original_title": "About Dry Grasses",
     "media_type": "movie",
@@ -237,89 +435,274 @@
       "Sanat",
       "Yerli"
     ],
+    "mood": "duygusal",
+    "mood_label": "💔 Derin & Düşündüren Dram",
+    "duration_category": "long",
+    "duration_text": "3s 17dk",
+    "duration_min": 197,
     "year": 2023,
-    "duration": "3s 17dk",
-    "imdb_rating": "7.8",
-    "match_rate": "%95",
+    "origin": "yerli",
+    "imdb_rating": 7.8,
     "director": "Nuri Bilge Ceylan",
     "cast": [
       "Deniz Celiloğlu",
       "Merve Dizdar",
       "Musab Ekici"
     ],
-    "synopsis": "Doğu Anadolu'nun ücra bir köyünde zorunlu hizmetini tamamlamaya çalışan ve İstanbul'a atanmayı bekleyen resim öğretmeni Samet'in, bir öğrencisi tarafından tacizle suçlanmasıyla sarsılan iç dünyası.",
-    "why_watch": "76. Cannes Film Festivali En İyi Kadın Oyuncu Ödülü (Merve Dizdar), enfes kış manzaraları ve Türk sinemasının zirve diyalogları.",
-    "target_audience": "Auteur sinema, Nuri Bilge Ceylan sineması ve derin felsefi sorgulamalar arayanlar.",
-    "poster_url": "https://upload.wikimedia.org/wikipedia/tr/f/fd/Kuru_Otlar_%C3%9Cst%C3%BCne.png",
-    "backdrop_url": "https://upload.wikimedia.org/wikipedia/tr/f/fd/Kuru_Otlar_%C3%9Cst%C3%BCne.png",
-    "netflix_url": "https://www.netflix.com",
-    "tweet_text": "❄️ Bugün Ne İzleyeyim? | Netflix Film Önerisi\n\n🔴 Kuru Otlar Üstüne\n⭐ IMDb: 7.8/10 | 🏆 Cannes Ödüllü Başyapıt\n📌 Nuri Bilge Ceylan'ın karlar altındaki Doğu Anadolu'da insan ruhunu mercek altına aldığı dev yapım.\n\n🍿 Hemen Netflix'te izle!\n#BugünNeİzlesem #NetflixTR",
-    "tweet_id": "1858525738008",
-    "tweet_url": "https://x.com/bugunneizleyim",
-    "posted_at": "2026-10-28T19:30:00+03:00"
+    "synopsis": "Doğu Anadolu'nun ücra bir köyünde zorunlu görevini yapan ve İstanbul'a atanmayı bekleyen bir resim öğretmeninin okulda taciz suçlamasıyla sarsılan hayatı.",
+    "tags": [
+      "cannes",
+      "nuri bilge ceylan",
+      "kış",
+      "anadolu",
+      "felsefe"
+    ],
+    "poster_url": "https://upload.wikimedia.org/wikipedia/tr/6/6b/Kuru_Otlar_%C3%9Cst%C3%BCne.jpg",
+    "netflix_url": "https://www.netflix.com/title/81734267"
   },
   {
-    "id": 109,
-    "tmdb_id": 426426,
+    "id": 14,
+    "title": "Kar Kardeşliği",
+    "original_title": "Society of the Snow",
+    "media_type": "movie",
+    "genres": [
+      "Macera",
+      "Dram",
+      "Biyografi"
+    ],
+    "mood": "duygusal",
+    "mood_label": "💔 Derin & İnsanüstü Hayatta Kalma",
+    "duration_category": "long",
+    "duration_text": "2s 24dk",
+    "duration_min": 144,
+    "year": 2023,
+    "origin": "yabanci",
+    "imdb_rating": 7.8,
+    "director": "J.A. Bayona",
+    "cast": [
+      "Enzo Vogrincic",
+      "Agustín Pardella",
+      "Matías Recalt"
+    ],
+    "synopsis": "1972 yılında And Dağları'nın dondurucu buzullarına düşen uçakta mahsur kalan Uruguaylı genç ragbi takımının 72 günlük insanüstü hayatta kalma mücadelesi.",
+    "tags": [
+      "and dağları",
+      "uçak kazası",
+      "kar",
+      "gerçek hikaye",
+      "oscar"
+    ],
+    "poster_url": "https://upload.wikimedia.org/wikipedia/lv/7/76/Society_of_the_Snow_poster.jpg",
+    "netflix_url": "https://www.netflix.com/title/81268373"
+  },
+  {
+    "id": 15,
+    "title": "Batı Cephesinde Yeni Bir Şey Yok",
+    "original_title": "All Quiet on the Western Front",
+    "media_type": "movie",
+    "genres": [
+      "Savaş",
+      "Dram",
+      "Aksiyon"
+    ],
+    "mood": "gerilim",
+    "mood_label": "😱 Sarsıcı & Çarpıcı Savaş",
+    "duration_category": "long",
+    "duration_text": "2s 28dk",
+    "duration_min": 148,
+    "year": 2022,
+    "origin": "yabanci",
+    "imdb_rating": 7.8,
+    "director": "Edward Berger",
+    "cast": [
+      "Felix Kammerer",
+      "Albrecht Schuch",
+      "Daniel Brühl"
+    ],
+    "synopsis": "Birinci Dünya Savaşı sırasında vatanseverlik coşkusuyla cepheye koşan genç bir Alman askerinin siperlerdeki acımasız ve vahşi gerçeklikle yüzleşmesi.",
+    "tags": [
+      "1. dünya savaşı",
+      "siper",
+      "almanya",
+      "4 oscar",
+      "tarih"
+    ],
+    "poster_url": "https://upload.wikimedia.org/wikipedia/en/c/c3/All_quiet_on_the_western_front_%282022_film%29.jpg",
+    "netflix_url": "https://www.netflix.com/title/81016042"
+  },
+  {
+    "id": 16,
+    "title": "The Irishman",
+    "original_title": "The Irishman",
+    "media_type": "movie",
+    "genres": [
+      "Suç",
+      "Dram",
+      "Tarih"
+    ],
+    "mood": "cerezlik",
+    "mood_label": "🍿 Sinema Şöleni & Mafya",
+    "duration_category": "long",
+    "duration_text": "3s 29dk",
+    "duration_min": 209,
+    "year": 2019,
+    "origin": "yabanci",
+    "imdb_rating": 7.8,
+    "director": "Martin Scorsese",
+    "cast": [
+      "Robert De Niro",
+      "Al Pacino",
+      "Joe Pesci",
+      "Harvey Keitel"
+    ],
+    "synopsis": "Organize suç örgütü tetikçisi Frank Sheeran'ın gözünden ünlü işçi lideri Jimmy Hoffa'nın gizemli kayboluşu ve Amerikan mafyasının perde arkası.",
+    "tags": [
+      "mafya",
+      "jimmy hoffa",
+      "scorsese",
+      "al pacino",
+      "de niro"
+    ],
+    "poster_url": "https://image.tmdb.org/t/p/w780/mbm8k3GFfdXS0b93O46kjX07J5W.jpg",
+    "netflix_url": "https://www.netflix.com/title/80175798"
+  },
+  {
+    "id": 17,
     "title": "Roma",
     "original_title": "Roma",
     "media_type": "movie",
     "genres": [
       "Dram",
-      "Tarih"
+      "Sanat"
     ],
+    "mood": "duygusal",
+    "mood_label": "💔 Derin & Şiirsel Sanat",
+    "duration_category": "long",
+    "duration_text": "2s 15dk",
+    "duration_min": 135,
     "year": 2018,
-    "duration": "2s 15dk",
-    "imdb_rating": "7.7",
-    "match_rate": "%96",
+    "origin": "yabanci",
+    "imdb_rating": 7.7,
     "director": "Alfonso Cuarón",
     "cast": [
       "Yalitza Aparicio",
-      "Marina de Tavira",
-      "Diego Cortina Autrey"
+      "Marina de Tavira"
     ],
-    "synopsis": "1970'lerin başındaki Mexico City'de orta sınıf bir ailenin yanında hizmetçi olarak çalışan yerli kökenli Cleo'nun gözünden bir ailenin dağılışı ve dönemin çalkantılı siyasi olayları.",
-    "why_watch": "En İyi Yönetmen ve En İyi Yabancı Film dahil 3 Oscar ödüllü, sinema sanatının görsel ve duygusal zirvelerinden biri.",
-    "target_audience": "Sinema estetiği, siyah-beyaz başyapıtlar ve samimi insan hikayeleri sevenler.",
-    "poster_url": "https://upload.wikimedia.org/wikipedia/en/8/85/Roma_theatrical_poster.png",
-    "backdrop_url": "https://upload.wikimedia.org/wikipedia/en/8/85/Roma_theatrical_poster.png",
-    "netflix_url": "https://www.netflix.com/title/80240715",
-    "tweet_text": "📽️ Bugün Ne İzleyeyim? | Netflix Film Önerisi\n\n🔴 Roma\n⭐ IMDb: 7.7/10 | 🏆 3 Oscar Ödüllü Efsane\n📌 Alfonso Cuarón'un çocukluk anılarını sinemanın görsel şölenine dönüştürdüğü eşsiz hikaye.\n\n🍿 Hemen Netflix'te izle!\n#BugünNeİzlesem #NetflixTR #Roma",
-    "tweet_id": "1858525738009",
-    "tweet_url": "https://x.com/bugunneizleyim",
-    "posted_at": "2026-10-27T19:30:00+03:00"
+    "synopsis": "1970'lerin başında Mexico City'de orta sınıf bir ailenin yanında hizmetçi olarak çalışan yerli kökenli genç bir kadının dokunaklı yaşam mücadelesi.",
+    "tags": [
+      "oscar",
+      "siyah beyaz",
+      "meksika",
+      "aile",
+      "alfonso cuaron"
+    ],
+    "poster_url": "https://image.tmdb.org/t/p/w780/dt93O7r9U8n0u2g8Q8H4uF3l3Vv.jpg",
+    "netflix_url": "https://www.netflix.com/title/80240715"
   },
   {
-    "id": 110,
-    "tmdb_id": 175217,
-    "title": "Terzi",
-    "original_title": "The Tailor",
+    "id": 18,
+    "title": "Lupin",
+    "original_title": "Lupin",
     "media_type": "tv",
     "genres": [
+      "Suç",
       "Dram",
-      "Gizem",
-      "Yerli"
+      "Gizem"
     ],
-    "year": 2023,
-    "duration": "3 Sezon (23 Bölüm)",
-    "imdb_rating": "6.2",
-    "match_rate": "%92",
-    "director": "Cem Karcı",
+    "mood": "cerezlik",
+    "mood_label": "🍿 Çerezlik & Sürükleyici Zekâ",
+    "duration_category": "series",
+    "duration_text": "3 Kısım (17 Bölüm)",
+    "duration_min": 765,
+    "year": 2021,
+    "origin": "yabanci",
+    "imdb_rating": 7.5,
+    "director": "Louis Leterrier",
     "cast": [
-      "Çağatay Ulusoy",
-      "Şifanur Gül",
-      "Salih Bademci",
-      "Olgun Şimşek"
+      "Omar Sy",
+      "Ludivine Sagnier",
+      "Clotilde Hesme"
     ],
-    "synopsis": "Dedesi ve babasından miras kalan eşsiz terzilik yeteneğiyle İstanbul cemiyetinin gözdesi olan Peyami'nin, en yakın dostunun nişanlısının gelinliğini dikerken keşfettiği karanlık aile sırları.",
-    "why_watch": "Olgun Şimşek'in Mustafa karakterindeki unutulmaz performansı ve gizem dolu entrika örgüsü.",
-    "target_audience": "Entrika, dram ve sürükleyici yerli yapım sevenler.",
-    "poster_url": "https://upload.wikimedia.org/wikipedia/tr/b/b1/TerziDizi.jpg",
-    "backdrop_url": "https://upload.wikimedia.org/wikipedia/tr/b/b1/TerziDizi.jpg",
-    "netflix_url": "https://www.netflix.com/title/81477457",
-    "tweet_text": "🧵 Bugün Ne İzleyeyim? | Netflix Dizi Önerisi\n\n🔴 Terzi\n⭐ IMDb: 6.2/10 | 🎭 Gizem & Aile Sırları\n📌 Yetenekli bir terzinin geçmişindeki sırlar ve hayatını altüst eden bir aşk üçgeni.\n\n🍿 Hemen Netflix'te izle!\n#BugünNeİzlesem #NetflixTR #Terzi",
-    "tweet_id": "1858525738010",
-    "tweet_url": "https://x.com/bugunneizleyim",
-    "posted_at": "2026-10-26T19:30:00+03:00"
+    "synopsis": "Babasına kurulan ölümcül komployu aydınlatmak isteyen Assane Diop, centilmen hırsız Arsène Lupin efsanesinden ilham alarak Paris sosyetesine karşı dahi bir intikam savaşı başlatır.",
+    "tags": [
+      "paris",
+      "hırsız",
+      "louvre",
+      "zekâ",
+      "intikam"
+    ],
+    "poster_url": "https://image.tmdb.org/t/p/w780/sgxHA1qV2XG4X7q7M3y5P1v8x5.jpg",
+    "netflix_url": "https://www.netflix.com/title/80994082"
+  },
+  {
+    "id": 19,
+    "title": "Dark",
+    "original_title": "Dark",
+    "media_type": "tv",
+    "genres": [
+      "Bilim Kurgu",
+      "Gizem",
+      "Dram"
+    ],
+    "mood": "zihin_bukucu",
+    "mood_label": "🧠 Zihin Bükücü & Zaman Yolculuğu",
+    "duration_category": "series",
+    "duration_text": "3 Sezon (26 Bölüm)",
+    "duration_min": 1400,
+    "year": 2017,
+    "origin": "yabanci",
+    "imdb_rating": 8.7,
+    "director": "Baran bo Odar",
+    "cast": [
+      "Louis Hofmann",
+      "Oliver Masucci",
+      "Jördis Triebel"
+    ],
+    "synopsis": "Almanya'da küçük bir kasabada iki çocuğun kaybolması, dört ailenin iç içe geçmiş sırlarını ve üç kuşağı kapsayan akıl almaz bir zaman yolculuğu paradoksunu ortaya çıkarır.",
+    "tags": [
+      "zaman yolculuğu",
+      "almanya",
+      "nükleer santral",
+      "paradoks",
+      "başyapıt"
+    ],
+    "poster_url": "https://image.tmdb.org/t/p/w780/apbrbWs8M9lyOpJYU5WXrpFbk1Z.jpg",
+    "netflix_url": "https://www.netflix.com/title/80100172"
+  },
+  {
+    "id": 20,
+    "title": "Bıçaklar Çekildi: Gizemli Bir Serüven",
+    "original_title": "Glass Onion: A Knives Out Mystery",
+    "media_type": "movie",
+    "genres": [
+      "Gizem",
+      "Komedi",
+      "Suç"
+    ],
+    "mood": "cerezlik",
+    "mood_label": "🍿 Çerezlik & Eğlenceli Cinayet Gizemi",
+    "duration_category": "long",
+    "duration_text": "2s 19dk",
+    "duration_min": 139,
+    "year": 2022,
+    "origin": "yabanci",
+    "imdb_rating": 7.1,
+    "director": "Rian Johnson",
+    "cast": [
+      "Daniel Craig",
+      "Edward Norton",
+      "Janelle Monáe",
+      "Kate Hudson"
+    ],
+    "synopsis": "Usta dedektif Benoit Blanc, bir teknoloji milyarderinin Yunanistan'daki lüks özel adasında arkadaşları için düzenlediği gizemli cinayet oyununu çözmek üzere işe koyulur.",
+    "tags": [
+      "cinayet",
+      "yunanistan",
+      "milyarder",
+      "ada",
+      "dedektif"
+    ],
+    "poster_url": "https://image.tmdb.org/t/p/w780/vDITb4iT5k6h6L5wVjJ4d9L9w4a.jpg",
+    "netflix_url": "https://www.netflix.com/title/81458416"
   }
 ]

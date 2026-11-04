@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reji Odası | Bugün Ne İzleyeyim? (Özel Yönetim Paneli)</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            netflix: {
+              red: '#E50914',
+              hover: '#B81D24',
+              dark: '#08080a',
+              surface: '#121216',
+              card: '#18181f',
+              border: '#272732'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #08080a;
+      color: #f4f4f5;
+      font-family: 'Inter', sans-serif;
+    }
+    .glass {
+      background: rgba(18, 18, 24, 0.88);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #0d0d12;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #2a2a35;
+      border-radius: 9999px;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-8px); }
+      40%, 80% { transform: translateX(8px); }
+    }
+    .shake-anim {
+      animation: shake 0.4s ease-in-out;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-netflix-red selection:text-white">
+
+  <!-- 1. GİZLİ ŞİFRE GİRİŞ EKRANI (Varsayılan olarak açık, doğru şifre girilince kapanır) -->
+  <div id="auth-overlay" class="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4 backdrop-blur-xl">
+    <div id="auth-box" class="max-w-md w-full glass p-8 rounded-3xl border border-neutral-800 text-center space-y-6 shadow-2xl">
+      <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-netflix-red to-red-800 mx-auto flex items-center justify-center font-black text-3xl text-white shadow-xl shadow-red-600/30">
+        R
+      </div>
+      <div>
+        <h2 class="text-2xl font-black text-white tracking-tight">Reji Girişi</h2>
+        <p class="text-xs text-neutral-400 mt-1">Bu alan yalnızca editör erişimine açıktır. Lütfen reji şifrenizi giriniz.</p>
+      </div>
+
+      <form onsubmit="handleAuth(event)" class="space-y-4">
+        <div class="relative">
+          <input type="password" id="auth-password" placeholder="Reji Şifresi..." autofocus class="w-full bg-neutral-900 border border-neutral-700 rounded-2xl px-5 py-3.5 text-center text-sm text-white placeholder-neutral-500 tracking-widest focus:outline-none focus:border-netflix-red focus:ring-2 focus:ring-netflix-red/30 transition-all">
+        </div>
+        <p id="auth-error" class="hidden text-xs font-bold text-red-500">Hatalı şifre! Lütfen tekrar deneyiniz.</p>
+        <button type="submit" class="w-full py-3.5 rounded-2xl bg-netflix-red hover:bg-netflix-hover text-white text-sm font-extrabold transition-all shadow-lg shadow-red-600/30 active:scale-95">
+          Giriş Yap
+        </button>
+      </form>
+
+      <div class="pt-2 text-[11px] text-neutral-500">
+        <a href="./index.html" class="hover:text-neutral-300 underline">← Okuyucu Vitrinine Geri Dön</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. REJİ ÇALIŞMA ALANI (Şifre doğrulanınca görünür) -->
+  <div id="reji-app" class="hidden flex-1 flex flex-col">
+    
+    <!-- Üst Bar -->
+    <header class="border-b border-neutral-800 bg-neutral-950/90 sticky top-0 z-40 backdrop-blur-md">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 py-3.5 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-netflix-red to-red-800 flex items-center justify-center font-black text-xl text-white shadow-lg shadow-red-600/30">
+            R
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-extrabold text-lg text-white">Reji Odası</span>
+              <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-netflix-red/20 text-red-400 border border-red-500/30">Canlı Yayın Paneli</span>
+            </div>
+            <p class="text-[11px] text-neutral-400">Netflix TR İçerik Seçimi & X (Twitter) Yayın Masası</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <a href="./index.html" class="px-3 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-700 text-xs font-semibold text-neutral-300 hover:text-white transition-all flex items-center gap-1.5">
+            <span>Siteyi Aç ↗</span>
+          </a>
+          <button onclick="logout()" class="px-3 py-2 rounded-xl bg-red-950/40 hover:bg-red-900/60 border border-red-800/40 text-xs font-bold text-red-400 hover:text-white transition-all">
+            Çıkış Yap
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Ana Reji Grid -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+      
+      <!-- SOL: Canlı Netflix Kataloğu & Seçici (7 Kolon) -->
+      <div class="lg:col-span-7 space-y-6">
+        
+        <div class="glass p-5 rounded-2xl space-y-4">
+          <div>
+            <h2 class="text-xl font-black text-white flex items-center gap-2">
+              <span>🎬 Netflix Türkiye Kataloğunda Ara & Seç</span>
+            </h2>
+            <p class="text-xs text-neutral-400 mt-1">Ekran görüntülerinizdeki Top 10, gerilim, yerli ve kült filmleri anında sorgulayın.</p>
+          </div>
+
+          <!-- Arama Kutusu -->
+          <div class="relative">
+            <input type="text" id="reji-search" placeholder="Film, dizi, oyuncu veya tür yazın (örn: Vurgun, Lupin, Gece Hayvanları...)" class="w-full bg-neutral-900/90 border border-neutral-700 rounded-xl px-4 py-3 pl-10 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-netflix-red transition-all shadow-inner">
+            <svg class="w-4 h-4 text-neutral-400 absolute left-3.5 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          </div>
+
+          <!-- Hızlı Kategori Filtre Butonları -->
+          <div class="flex items-center gap-2 overflow-x-auto pb-1 custom-scrollbar">
+            <button onclick="setFilter('all')" data-cat="all" class="reji-cat-pill active px-3 py-1.5 rounded-lg text-xs font-bold bg-netflix-red text-white shadow-sm">
+              🌟 Tümü
+            </button>
+            <button onclick="setFilter('top10')" data-cat="top10" class="reji-cat-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-700">
+              🔟 Top 10 Listesi
+            </button>
+            <button onclick="setFilter('gerilim')" data-cat="gerilim" class="reji-cat-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-700">
+              🔪 Gerilim & Soygun
+            </button>
+            <button onclick="setFilter('yerli')" data-cat="yerli" class="reji-cat-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-700">
+              🇹🇷 Yerli Kuşağı
+            </button>
+            <button onclick="setFilter('kult')" data-cat="kult" class="reji-cat-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-700">
+              🏆 Kült Başyapıtlar
+            </button>
+          </div>
+        </div>
+
+        <!-- Film Listesi Grid -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between text-xs text-neutral-400 px-1">
+            <span id="reji-count">20 Netflix yapımı listeleniyor</span>
+            <span class="text-neutral-500">Seçmek için filme tıklayın ↓</span>
+          </div>
+
+          <div id="reji-movie-list" class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-h-[640px] overflow-y-auto pr-1 custom-scrollbar">
+            <!-- JS ile doldurulur -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SAĞ: Kuşak Seçimi, Otomatik Tweet & Yayın Butonları (5 Kolon) -->
+      <div class="lg:col-span-5 space-y-6">
+        
+        <!-- Seçilen Film Özeti -->
+        <div class="glass p-5 rounded-2xl space-y-4">
+          <div class="flex items-center justify-between border-b border-neutral-800 pb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-netflix-red flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-netflix-red animate-pulse"></span>
+              Seçili Yapım
+            </span>
+            <span id="selected-imdb" class="text-xs font-extrabold px-2 py-0.5 rounded bg-amber-400/10 text-amber-400 border border-amber-400/30">
+              ⭐ IMDb 6.4
+            </span>
+          </div>
+
+          <div class="flex gap-4 items-start">
+            <img id="selected-poster" src="https://image.tmdb.org/t/p/w780/di0h9sD8HwS53sT1n5Y52jQc5G8.jpg" alt="Afiş" class="w-20 h-28 object-cover rounded-xl border border-neutral-700 shrink-0 shadow-md">
+            <div class="space-y-1">
+              <h3 id="selected-title" class="text-lg font-black text-white leading-tight">Vurgun (The Vault)</h3>
+              <div id="selected-meta" class="text-xs text-neutral-400">2021 • Aksiyon, Gerilim, Soygun</div>
+              <p id="selected-synopsis" class="text-xs text-neutral-400 line-clamp-3 leading-relaxed mt-1">İspanya Merkez Bankası'nın geçilmez kasasından efsanevi hazineyi çalmak isteyen dahi genç ve ekibinin soluksuz soygun macerası.</p>
+            </div>
+          </div>
+
+          <!-- Kuşak Seçici -->
+          <div class="space-y-2 pt-2 border-t border-neutral-800">
+            <label class="text-xs font-bold text-neutral-300 block">Yayın Kuşağı Seçin:</label>
+            <div class="grid grid-cols-2 gap-2">
+              <button onclick="setConcept('Akşam Matinesi')" data-concept="Akşam Matinesi" class="concept-btn active p-2.5 rounded-xl border text-left text-xs transition-all bg-netflix-red/10 border-netflix-red text-white">
+                <span class="font-extrabold block text-sm">🌙 Akşam Matinesi</span>
+                <span class="text-[10px] text-neutral-400">Hafta içi sürükleyici gerilim</span>
+              </button>
+              <button onclick="setConcept('Pazar Sineması')" data-concept="Pazar Sineması" class="concept-btn p-2.5 rounded-xl border border-neutral-800 text-left text-xs transition-all bg-neutral-900/60 hover:bg-neutral-800 text-neutral-300">
+                <span class="font-extrabold block text-sm">🍿 Pazar Sineması</span>
+                <span class="text-[10px] text-neutral-400">Kült dev yapım & başyapıt</span>
+              </button>
+              <button onclick="setConcept('Yerli Köşesi')" data-concept="Yerli Köşesi" class="concept-btn p-2.5 rounded-xl border border-neutral-800 text-left text-xs transition-all bg-neutral-900/60 hover:bg-neutral-800 text-neutral-300">
+                <span class="font-extrabold block text-sm">🇹🇷 Yerli Köşesi</span>
+                <span class="text-[10px] text-neutral-400">Türk sinema ve dizileri</span>
+              </button>
+              <button onclick="setConcept('Gece Seansı')" data-concept="Gece Seansı" class="concept-btn p-2.5 rounded-xl border border-neutral-800 text-left text-xs transition-all bg-neutral-900/60 hover:bg-neutral-800 text-neutral-300">
+                <span class="font-extrabold block text-sm">⚡ Gece Seansı</span>
+                <span class="text-[10px] text-neutral-400">Adrenalin ve gizem</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Tweet Editörü & Karakter Sayacı -->
+        <div class="glass p-5 rounded-2xl space-y-3">
+          <div class="flex items-center justify-between">
+            <label class="text-xs font-bold uppercase tracking-wider text-sky-400 flex items-center gap-1.5">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              X (Twitter) Tweet Editörü
+            </label>
+            <span id="char-counter" class="text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+              218 / 280
+            </span>
+          </div>
+
+          <textarea id="tweet-textarea" rows="6" class="w-full bg-neutral-900/90 border border-neutral-700 rounded-xl p-3 text-xs sm:text-sm text-neutral-200 focus:outline-none focus:border-sky-500 transition-all font-mono leading-relaxed" oninput="updateCharCount()"></textarea>
+
+          <!-- Hızlı Etiket Ekleme Butonları -->
+          <div class="flex flex-wrap items-center gap-1.5 pt-1">
+            <button onclick="appendTag('#AkşamMatinesi')" class="text-[11px] px-2 py-0.5 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-300 border border-neutral-700">+ #AkşamMatinesi</button>
+            <button onclick="appendTag('#PazarSineması')" class="text-[11px] px-2 py-0.5 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-300 border border-neutral-700">+ #PazarSineması</button>
+            <button onclick="appendTag('#NetflixTR')" class="text-[11px] px-2 py-0.5 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-300 border border-neutral-700">+ #NetflixTR</button>
+            <button onclick="appendTag('#Neİzlesem')" class="text-[11px] px-2 py-0.5 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-300 border border-neutral-700">+ #Neİzlesem</button>
+          </div>
+
+          <!-- Aksiyon Butonları -->
+          <div class="space-y-2.5 pt-3">
+            
+            <!-- X'te Yayınla Butonu -->
+            <button onclick="shareOnX()" class="w-full py-3.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-white font-black text-sm transition-all shadow-lg shadow-sky-500/20 flex items-center justify-center gap-2 active:scale-95">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              <span>X'te (Twitter) Hemen Paylaş</span>
+            </button>
+
+            <div class="grid grid-cols-2 gap-2">
+              <button onclick="copyTweet()" class="py-2.5 px-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-700 text-xs font-semibold text-neutral-200 transition-all flex items-center justify-center gap-1.5 active:scale-95">
+                <span>📋 Metni Kopyala</span>
+              </button>
+              
+              <button onclick="promoteToHero()" class="py-2.5 px-3 rounded-xl bg-netflix-red hover:bg-netflix-hover text-white text-xs font-extrabold transition-all shadow-md shadow-red-600/20 flex items-center justify-center gap-1.5 active:scale-95">
+                <span>🌟 Site Manşetine Koy</span>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- Bildirim Kutusu (Toast) -->
+  <div id="toast" class="fixed bottom-6 right-6 bg-neutral-900 border border-neutral-700 text-white px-5 py-3 rounded-xl text-xs font-semibold shadow-2xl transition-all duration-300 translate-y-20 opacity-0 flex items-center gap-2 z-50">
+    <span id="toast-msg">İşlem başarıyla tamamlandı!</span>
+  </div>
+
+  <script>
+    // ŞİFRE KONTROLÜ (Varsayılan şifre: reji2026)
+    const REJI_PASS = "reji2026";
+
+    function checkAuth() {
+      if (sessionStorage.getItem('reji_authenticated') === 'true') {
+        document.getElementById('auth-overlay').classList.add('hidden');
+        document.getElementById('reji-app').classList.remove('hidden');
+        initReji();
+      }
+    }
+
+    function handleAuth(e) {
+      e.preventDefault();
+      const input = document.getElementById('auth-password').value;
+      const errorMsg = document.getElementById('auth-error');
+      const box = document.getElementById('auth-box');
+
+      if (input === REJI_PASS) {
+        sessionStorage.setItem('reji_authenticated', 'true');
+        document.getElementById('auth-overlay').classList.add('hidden');
+        document.getElementById('reji-app').classList.remove('hidden');
+        initReji();
+      } else {
+        errorMsg.classList.remove('hidden');
+        box.classList.add('shake-anim');
+        setTimeout(() => box.classList.remove('shake-anim'), 400);
+      }
+    }
+
+    function logout() {
+      sessionStorage.removeItem('reji_authenticated');
+      location.reload();
+    }
+
+    // REJİ UYGULAMA MANTIĞI
+    let catalog = [];
+    let currentItem = null;
+    let currentConcept = 'Akşam Matinesi';
+    let currentFilter = 'all';
+
+    async function initReji() {
+      try {
+        const res = await fetch('./data/recommendations.json?t=' + Date.now());
+        if (res.ok) {
+          catalog = await res.json();
+        }
+      } catch (e) {
+        console.error('Yükleme hatası:', e);
+      }
+
+      if (!catalog || catalog.length === 0) {
+        catalog = [
+          {
+            id: 1,
+            title: "Vurgun",
+            original_title: "The Vault",
+            media_type: "movie",
+            genres: ["Aksiyon", "Gerilim", "Soygun"],
+            year: 2021,
+            imdb_rating: "6.4",
+            synopsis: "İspanya Merkez Bankası'nın geçilmez kasasından efsanevi bir hazineyi çalmak isteyen dahi genç ve ekibinin soluksuz soygun macerası.",
+            poster_url: "https://image.tmdb.org/t/p/w780/di0h9sD8HwS53sT1n5Y52jQc5G8.jpg",
+            netflix_url: "https://www.netflix.com/title/81313876"
+          }
+        ];
+      }
+
+      selectMovie(catalog[0]);
+      renderRejiList();
+    }
+
+    function renderRejiList() {
+      const list = document.getElementById('reji-movie-list');
+      const countLabel = document.getElementById('reji-count');
+      const q = document.getElementById('reji-search').value.toLowerCase().trim();
+
+      let filtered = catalog.filter(item => {
+        let matchesCat = true;
+        if (currentFilter === 'top10') {
+          matchesCat = ['Vurgun', 'Hırsızlar Şehri', 'Lupin', 'Bir Başkadır', 'The Killer'].some(t => item.title.includes(t));
+        } else if (currentFilter === 'gerilim') {
+          matchesCat = item.genres && item.genres.some(g => g.toLowerCase().includes('gerilim') || g.toLowerCase().includes('suç') || g.toLowerCase().includes('soygun'));
+        } else if (currentFilter === 'yerli') {
+          matchesCat = item.origin === 'yerli' || (item.genres && item.genres.some(g => g.toLowerCase().includes('yerli')));
+        } else if (currentFilter === 'kult') {
+          matchesCat = ['The Irishman', 'Yedi', 'Zodiac', 'Batı Cephesinde Yeni Bir Şey Yok', 'Dark'].some(t => item.title.includes(t));
+        }
+
+        let matchesSearch = true;
+        if (q) {
+          matchesSearch = (item.title && item.title.toLowerCase().includes(q)) ||
+                          (item.synopsis && item.synopsis.toLowerCase().includes(q)) ||
+                          (item.genres && item.genres.some(g => g.toLowerCase().includes(q)));
+        }
+
+        return matchesCat && matchesSearch;
+      });
+
+      countLabel.textContent = `${filtered.length} Netflix yapımı listeleniyor`;
+      list.innerHTML = '';
+
+      if (filtered.length === 0) {
+        list.innerHTML = `<div class="col-span-full py-10 text-center text-xs text-neutral-500">Aramanıza uygun Netflix yapımı bulunamadı.</div>`;
+        return;
+      }
+
+      filtered.forEach(m => {
+        const isSelected = currentItem && currentItem.id === m.id;
+        const card = document.createElement('div');
+        card.className = `p-3.5 rounded-xl border transition-all cursor-pointer flex gap-3 items-center ${isSelected ? 'bg-netflix-red/15 border-netflix-red shadow-md' : 'bg-neutral-900/60 hover:bg-neutral-800/80 border-neutral-800'}`;
+        card.onclick = () => selectMovie(m);
+
+        card.innerHTML = `
+          <img src="${m.poster_url}" alt="${m.title}" class="w-14 h-20 object-cover rounded-lg shrink-0 border border-neutral-700">
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center justify-between gap-1">
+              <span class="text-[10px] font-bold text-red-400 uppercase">${m.genres ? m.genres[0] : 'Netflix'}</span>
+              <span class="text-[11px] font-bold text-amber-400">★ ${m.imdb_rating}</span>
+            </div>
+            <h4 class="text-sm font-black text-white truncate leading-snug">${m.title}</h4>
+            <p class="text-[11px] text-neutral-400 truncate mt-0.5">${m.year} • ${m.duration_text || 'Netflix'}</p>
+            <div class="mt-2 flex items-center justify-between">
+              <span class="text-[10px] font-semibold text-neutral-400 ${isSelected ? 'text-red-400 font-bold' : ''}">
+                ${isSelected ? '✓ Seçili' : 'Seç & Yayına Al →'}
+              </span>
+            </div>
+          </div>
+        `;
+        list.appendChild(card);
+      });
+    }
+
+    function selectMovie(m) {
+      currentItem = m;
+      document.getElementById('selected-poster').src = m.poster_url;
+      document.getElementById('selected-title').textContent = `${m.title} ${m.original_title && m.original_title !== m.title ? '(' + m.original_title + ')' : ''}`;
+      document.getElementById('selected-imdb').textContent = `⭐ IMDb ${m.imdb_rating}`;
+      document.getElementById('selected-meta').textContent = `${m.year} • ${m.genres ? m.genres.join(', ') : 'Netflix'}`;
+      document.getElementById('selected-synopsis').textContent = m.synopsis;
+
+      generateTweetTemplate();
+      renderRejiList();
+    }
+
+    function setConcept(c) {
+      currentConcept = c;
+      document.querySelectorAll('.concept-btn').forEach(btn => {
+        if (btn.getAttribute('data-concept') === c) {
+          btn.className = "concept-btn active p-2.5 rounded-xl border text-left text-xs transition-all bg-netflix-red/10 border-netflix-red text-white";
+        } else {
+          btn.className = "concept-btn p-2.5 rounded-xl border border-neutral-800 text-left text-xs transition-all bg-neutral-900/60 hover:bg-neutral-800 text-neutral-300";
+        }
+      });
+      generateTweetTemplate();
+    }
+
+    function generateTweetTemplate() {
+      if (!currentItem) return;
+
+      const title = currentItem.title;
+      const imdb = currentItem.imdb_rating;
+      const genres = currentItem.genres ? currentItem.genres.slice(0, 2).join(', ') : 'Film';
+      const shortSynopsis = currentItem.synopsis.length > 85 ? (currentItem.synopsis.substring(0, 85) + '...') : currentItem.synopsis;
+
+      let hook = "";
+      let tag = "";
+      if (currentConcept === 'Akşam Matinesi') {
+        hook = "🌙 Akşam Matinesi | Bu gece koltuğa çivilenmeye hazır olun!";
+        tag = "#AkşamMatinesi";
+      } else if (currentConcept === 'Pazar Sineması') {
+        hook = "🍿 Pazar Sineması | Haftanın ödüllü ve dev yapımı!";
+        tag = "#PazarSineması";
+      } else if (currentConcept === 'Yerli Köşesi') {
+        hook = "🇹🇷 Yerli Köşesi | Türk sinema ve dizi tarihinin zirvesi!";
+        tag = "#YerliSinema";
+      } else {
+        hook = "⚡ Gece Seansı | Yüksek adrenalin ve zihin bükücü gerilim!";
+        tag = "#GeceSeansı";
+      }
+
+      const tweet = `${hook}\n\n🔴 ${title}\n⭐ IMDb: ${imdb}/10 | 🎭 ${genres}\n📌 ${shortSynopsis}\n\n🍿 Hemen Netflix'te izle!\n${tag} #NetflixTR #Neİzlesem`;
+
+      document.getElementById('tweet-textarea').value = tweet;
+      updateCharCount();
+    }
+
+    function updateCharCount() {
+      const len = document.getElementById('tweet-textarea').value.length;
+      const counter = document.getElementById('char-counter');
+      counter.textContent = `${len} / 280`;
+      if (len > 280) {
+        counter.className = "text-xs font-bold px-2 py-0.5 rounded bg-red-500/20 text-red-400 border border-red-500/40";
+      } else {
+        counter.className = "text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30";
+      }
+    }
+
+    function appendTag(t) {
+      const txt = document.getElementById('tweet-textarea');
+      txt.value = txt.value.trim() + " " + t;
+      updateCharCount();
+    }
+
+    function shareOnX() {
+      const text = encodeURIComponent(document.getElementById('tweet-textarea').value);
+      const url = `https://twitter.com/intent/tweet?text=${text}`;
+      window.open(url, '_blank');
+      showToast('X (Twitter) paylaşım penceresi açıldı!');
+    }
+
+    function copyTweet() {
+      const text = document.getElementById('tweet-textarea').value;
+      navigator.clipboard.writeText(text);
+      showToast('Tweet metni panoya kopyalandı!');
+    }
+
+    function promoteToHero() {
+      if (!currentItem) return;
+      localStorage.setItem('featured_hero_id', currentItem.id);
+      showToast(`"${currentItem.title}" web sitesinde GÜNÜN MANŞETİ yapıldı!`);
+    }
+
+    function setFilter(cat) {
+      currentFilter = cat;
+      document.querySelectorAll('.reji-cat-pill').forEach(btn => {
+        if (btn.getAttribute('data-cat') === cat) {
+          btn.className = "reji-cat-pill active px-3 py-1.5 rounded-lg text-xs font-bold bg-netflix-red text-white shadow-sm";
+        } else {
+          btn.className = "reji-cat-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-700";
+        }
+      });
+      renderRejiList();
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toast-msg').textContent = msg;
+      t.classList.remove('translate-y-20', 'opacity-0');
+      setTimeout(() => {
+        t.classList.add('translate-y-20', 'opacity-0');
+      }, 3000);
+    }
+
+    document.getElementById('reji-search').addEventListener('input', renderRejiList);
+
+    // Açılışta kontrol et
+    checkAuth();
+  </script>
+</body>
+</html>
