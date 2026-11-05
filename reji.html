@@ -56,7 +56,7 @@
 </head>
 <body class="min-h-screen flex flex-col selection:bg-netflix-red selection:text-white">
 
-  <!-- GİRİŞ EKRANI (Tek Tıkla Giriş Destekli, Asla Takılmaz) -->
+  <!-- GİRİŞ EKRANI -->
   <div id="auth-overlay" class="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4 backdrop-blur-xl">
     <div id="auth-box" class="max-w-md w-full glass p-8 rounded-3xl border border-neutral-800 text-center space-y-6 shadow-2xl">
       <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-netflix-red to-red-800 mx-auto flex items-center justify-center font-black text-3xl text-white shadow-xl shadow-red-600/30">
@@ -261,19 +261,22 @@
 
       </div>
 
-      <!-- Planlanan Yayınlar Tablosu -->
+      <!-- Planlanan Yayınlar Tablosu (Gelişmiş Kart & Kalan Süre Görünümü) -->
       <div class="glass p-6 rounded-3xl space-y-4">
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-between border-b border-neutral-800 pb-3">
           <div>
             <h3 class="text-base font-extrabold text-white flex items-center gap-2">
-              <span>🗓️ Planlanan Yayınlar Takvimi (Editör Kuyruğu)</span>
+              <span>🗓️ Planlanan Yayınlar Takvimi (Editör Ajandası)</span>
             </h3>
-            <p class="text-xs text-neutral-400 mt-0.5">Tarihini ve saatini belirlediğiniz yapımlar burada sıraya alınır.</p>
+            <p class="text-xs text-neutral-400 mt-0.5">Yayın tarihi, saati ve kalan süreye göre sıralı yayın kuyruğunuz.</p>
           </div>
-          <span id="queue-count" class="text-xs font-bold px-2.5 py-1 rounded-full bg-neutral-800 text-neutral-300 border border-neutral-700">0 Planlanan Yayın</span>
+          <div class="flex items-center gap-2">
+            <span id="queue-count" class="text-xs font-bold px-3 py-1 rounded-full bg-neutral-800 text-neutral-300 border border-neutral-700">0 Planlanan Yayın</span>
+            <button onclick="clearAllQueue()" class="text-xs text-red-400 hover:text-red-300 underline px-2 py-1">Tümünü Temizle</button>
+          </div>
         </div>
 
-        <div id="queue-list" class="divide-y divide-neutral-800 max-h-72 overflow-y-auto custom-scrollbar"></div>
+        <div id="queue-list" class="space-y-3 max-h-96 overflow-y-auto custom-scrollbar"></div>
       </div>
 
     </main>
@@ -479,7 +482,7 @@
 
       let dateHook = "";
       if (dateVal && timeVal) {
-        const d = new Date(dateVal);
+        const d = new Date(dateVal + 'T' + timeVal);
         const dayName = d.toLocaleDateString('tr-TR', { weekday: 'long', day: 'numeric', month: 'long' });
         dateHook = `📅 ${dayName} | Saat ${timeVal}\n`;
       }
@@ -544,8 +547,12 @@
       showToast('Tweet metni panoya kopyalandı!');
     }
 
+    // YAYIN PLANINA EKLEME
     function addToScheduleQueue() {
-      if (!selectedItem) return;
+      if (!selectedItem) {
+        alert('Lütfen önce sol taraftan bir film seçin!');
+        return;
+      }
       const title = selectedItem.title || selectedItem.name;
       const dateVal = document.getElementById('schedule-date').value;
       const timeVal = document.getElementById('schedule-time').value;
@@ -566,13 +573,20 @@
       try {
         queue = JSON.parse(localStorage.getItem('reji_scheduled_queue') || '[]');
       } catch(e) {}
-      queue.unshift(queueItem);
+      
+      queue.push(queueItem);
+
+      // Tarih ve Saate göre küçükten büyüğe sırala (En yakın yayın en üstte)
+      queue.sort((a, b) => {
+        return new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`);
+      });
+
       try {
         localStorage.setItem('reji_scheduled_queue', JSON.stringify(queue));
       } catch(e) {}
 
       renderQueue();
-      showToast(`"${title}" ${dateVal} ${timeVal} için Yayın Planına Eklendi!`);
+      showToast(`"${title}" ${dateVal} ${timeVal} yayını için ajandaya eklendi!`);
     }
 
     function deleteQueueItem(id) {
@@ -588,6 +602,15 @@
       showToast('Yayın planından çıkarıldı.');
     }
 
+    function clearAllQueue() {
+      if (confirm('Tüm planlanan yayınları temizlemek istediğinize emin misiniz?')) {
+        localStorage.removeItem('reji_scheduled_queue');
+        renderQueue();
+        showToast('Tüm yayın planı temizlendi.');
+      }
+    }
+
+    // YAYIN PLANINI NET VE BÜYÜK KARTLARLA ÇİZDİRME
     function renderQueue() {
       const queueList = document.getElementById('queue-list');
       const countEl = document.getElementById('queue-count');
@@ -599,37 +622,68 @@
       countEl.textContent = `${queue.length} Planlanan Yayın`;
 
       if (queue.length === 0) {
-        queueList.innerHTML = `<div class="py-6 text-center text-xs text-neutral-500">Henüz planlanan bir yayın yok. Yukarıdan bir film seçip "Yayın Planına Ekle" butonuna basın.</div>`;
+        queueList.innerHTML = `<div class="py-8 text-center text-xs text-neutral-500 bg-neutral-900/40 rounded-2xl border border-neutral-800">Henüz planlanan bir yayın yok. Yukarıdan bir film seçip tarih/saat belirleyin ve <strong>"Yayın Planına Ekle"</strong> butonuna basın.</div>`;
         return;
       }
 
       queueList.innerHTML = '';
-      queue.forEach(item => {
-        const row = document.createElement('div');
-        row.className = "py-3 flex items-center justify-between gap-4";
-        row.innerHTML = `
-          <div class="flex items-center gap-3 min-w-0">
-            <img src="${item.poster}" class="w-10 h-14 object-cover rounded-lg border border-neutral-700 shrink-0">
-            <div class="min-w-0">
-              <div class="flex items-center gap-2">
-                <span class="text-xs font-black text-white truncate">${item.title}</span>
-                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-netflix-red/20 text-red-400 border border-red-500/30">${item.concept}</span>
+      const now = new Date();
+
+      queue.forEach((item, index) => {
+        const itemDateTime = new Date(`${item.date}T${item.time}`);
+        const formattedDate = itemDateTime.toLocaleDateString('tr-TR', { 
+          weekday: 'long', 
+          day: 'numeric', 
+          month: 'long', 
+          year: 'numeric' 
+        });
+
+        // Kalan Süre Hesaplama
+        const diffMs = itemDateTime - now;
+        const diffHours = Math.round(diffMs / (1000 * 60 * 60));
+        let timeRemainingBadge = "";
+
+        if (diffMs < 0) {
+          timeRemainingBadge = `<span class="px-2 py-0.5 rounded bg-neutral-800 text-neutral-400 text-[10px] font-bold">Geçmiş Yayın</span>`;
+        } else if (diffHours < 24) {
+          timeRemainingBadge = `<span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold animate-pulse">⏰ ${diffHours <= 0 ? 'Yayın Vakti Geldi!' : diffHours + ' saat kaldı'}</span>`;
+        } else {
+          const days = Math.floor(diffHours / 24);
+          timeRemainingBadge = `<span class="px-2 py-0.5 rounded bg-sky-500/20 text-sky-400 border border-sky-500/30 text-[10px] font-bold">📅 ${days} gün kaldı</span>`;
+        }
+
+        const card = document.createElement('div');
+        card.className = "p-4 rounded-2xl bg-neutral-900/80 border border-neutral-800 hover:border-neutral-700 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4";
+        
+        card.innerHTML = `
+          <div class="flex items-center gap-3.5 min-w-0">
+            <span class="w-6 h-6 rounded-full bg-neutral-800 text-neutral-400 flex items-center justify-center font-mono font-bold text-xs shrink-0">${index + 1}</span>
+            <img src="${item.poster}" class="w-12 h-16 object-cover rounded-xl border border-neutral-700 shrink-0 shadow-md">
+            <div class="min-w-0 space-y-1">
+              <div class="flex flex-wrap items-center gap-2">
+                <h4 class="text-sm font-black text-white truncate">${item.title}</h4>
+                <span class="text-[10px] font-black px-2 py-0.5 rounded bg-netflix-red/20 text-red-400 border border-red-500/30 uppercase">${item.concept}</span>
+                ${timeRemainingBadge}
               </div>
-              <div class="text-[11px] text-neutral-400 mt-0.5">
-                🗓️ ${item.date} • ⏰ ${item.time}
+              <div class="text-xs font-semibold text-amber-400 flex items-center gap-1.5">
+                <span>🗓️ ${formattedDate}</span>
+                <span class="text-white">•</span>
+                <span>⏰ Saat ${item.time}</span>
               </div>
             </div>
           </div>
-          <div class="flex items-center gap-2 shrink-0">
-            <button onclick="publishFromQueue('${encodeURIComponent(item.tweetText)}')" class="px-3 py-1.5 rounded-lg bg-sky-500 hover:bg-sky-400 text-white text-xs font-bold transition-all shadow-sm">
-              X'e Gönder
+
+          <div class="flex items-center gap-2 self-end sm:self-center shrink-0">
+            <button onclick="publishFromQueue('${encodeURIComponent(item.tweetText)}')" class="px-4 py-2 rounded-xl bg-sky-500 hover:bg-sky-400 text-white text-xs font-black transition-all shadow-md flex items-center gap-1.5 active:scale-95">
+              <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              <span>X'te Paylaş</span>
             </button>
-            <button onclick="deleteQueueItem(${item.id})" class="px-2 py-1.5 rounded-lg bg-neutral-800 hover:bg-red-900/60 text-neutral-400 hover:text-red-300 text-xs transition-all">
+            <button onclick="deleteQueueItem(${item.id})" class="p-2 rounded-xl bg-neutral-800 hover:bg-red-950/80 text-neutral-400 hover:text-red-400 text-xs transition-all border border-neutral-700" title="Plândan Çıkar">
               ✕
             </button>
           </div>
         `;
-        queueList.appendChild(row);
+        queueList.appendChild(card);
       });
     }
 
@@ -654,6 +708,8 @@
         searchReji(e.target.value.trim());
       }, 400);
     });
+
+    renderQueue();
   </script>
 </body>
 </html>
