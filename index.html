@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bugün Ne İzleyeyim? | Doğrulanmış Netflix Türkiye Canlı Keşif Motoru</title>
-  <meta name="description" content="Sadece Netflix Türkiye'de şu an gerçekten yayında olan, tam künyeli ve YZ incelemeli en iyi film ve diziler.">
+  <title>Bugün Ne İzleyeyim? | Canlı Netflix TR Gelişmiş Film & Dizi Keşif Motoru</title>
+  <meta name="description" content="Dedektif, İskandinav gerilimi, kült başyapıtlar, Türkçe dublaj/orijinal dil ayrımıyla 2 dakikada Netflix filmini seç ve izle.">
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script>
     tailwind.config = {
@@ -56,7 +56,7 @@
       background: #2a2a35;
       border-radius: 9999px;
     }
-    .genre-pill.active {
+    .pill-btn.active {
       background-color: #E50914 !important;
       color: #ffffff !important;
       border-color: #E50914 !important;
@@ -79,10 +79,10 @@
             Bugün Ne İzleyeyim?
             <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 uppercase tracking-widest flex items-center gap-1">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              Doğrulanmış Netflix TR
+              Netflix TR Canlı
             </span>
           </span>
-          <p class="text-[11px] text-neutral-400 hidden sm:block">Sadece Türkiye'de Gerçekten Yayında Olan Yapımlar</p>
+          <p class="text-[11px] text-neutral-400 hidden sm:block">Dedektif, İskandinav Gerilimi, Kült Başyapıtlar & Dublaj/Orijinal Ayrımı</p>
         </div>
       </div>
 
@@ -94,7 +94,7 @@
     </div>
   </header>
 
-  <!-- Hero Vitrin Alanı -->
+  <!-- Hero Vitrin Alanı: Doğrulanmış Film, Tam Künye ve YZ İncelemesi -->
   <section id="hero-section" class="relative hero-glow border-b border-neutral-800/60 transition-all duration-500 overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -103,7 +103,6 @@
         <div class="lg:col-span-8 space-y-5">
           
           <div class="flex flex-wrap items-center gap-2">
-            <!-- Netflix Doğrulama Rozeti -->
             <span id="hero-verify-badge" class="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-black uppercase tracking-wider border border-emerald-500/40 shadow-sm flex items-center gap-1.5">
               <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
               <span id="hero-verify-text">Netflix TR Doğrulandı</span>
@@ -116,7 +115,7 @@
               ⭐ Puan: Yükleniyor...
             </span>
             <span id="hero-year" class="px-2.5 py-1 rounded-full bg-neutral-900 text-neutral-300 text-xs font-bold border border-neutral-800">
-              📅 2025
+              📅 --
             </span>
             <span id="hero-duration" class="px-2.5 py-1 rounded-full bg-neutral-900 text-neutral-300 text-xs font-bold border border-neutral-800">
               ⏱️ --
@@ -135,7 +134,7 @@
             Netflix Türkiye kataloğundaki doğrulanmış yapımlar taranıyor...
           </p>
 
-          <!-- TAM FİLM KÜNYESİ -->
+          <!-- 🎬 TAM FİLM KÜNYESİ -->
           <div class="p-4 rounded-2xl bg-neutral-900/90 border border-neutral-800/80 space-y-2 text-xs sm:text-sm">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               <div>
@@ -143,7 +142,7 @@
                 <strong id="hero-director" class="text-neutral-200 font-semibold">Yükleniyor...</strong>
               </div>
               <div>
-                <span class="text-neutral-500 font-bold block text-[11px] uppercase tracking-wider">🌍 Ülke / Orijinal Dil</span>
+                <span class="text-neutral-500 font-bold block text-[11px] uppercase tracking-wider">🌍 Ülke & Dil Formatı</span>
                 <strong id="hero-country" class="text-neutral-200 font-semibold">Türkiye</strong>
               </div>
             </div>
@@ -154,7 +153,7 @@
             </div>
           </div>
 
-          <!-- YZ EDİTÖR İNCELEMESİ -->
+          <!-- 🤖 YZ EDİTÖR İNCELEMESİ -->
           <div class="p-4 rounded-2xl bg-gradient-to-br from-red-950/20 via-neutral-900/90 to-neutral-900/80 border border-red-500/20 space-y-2.5">
             <div class="flex items-center justify-between">
               <span class="text-xs font-black uppercase tracking-wider text-red-400 flex items-center gap-1.5">
@@ -172,7 +171,7 @@
             <div id="hero-ai-tags" class="flex flex-wrap gap-2 pt-1 text-[11px]"></div>
           </div>
 
-          <!-- Aksiyon Butonları (Doğrulanmış Netflix Butonu) -->
+          <!-- İzle Butonu -->
           <div class="flex flex-wrap items-center gap-3 pt-1">
             <a id="hero-netflix-link" href="https://www.netflix.com" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl bg-netflix-red hover:bg-netflix-hover text-white font-extrabold text-sm transition-all shadow-lg shadow-red-600/30 flex items-center gap-2 active:scale-95">
               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
@@ -196,68 +195,85 @@
     </div>
   </section>
 
-  <!-- GELİŞMİŞ VE DETAYLI FİLTRELEME ALANI -->
+  <!-- 🎯 "2 DAKİKADA FİLMİNİ BUL" VE KAPSAMLI FİLTRELEME MERKEZİ -->
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
     
     <div class="glass-panel p-5 sm:p-7 rounded-3xl space-y-6 shadow-2xl">
       
-      <!-- 1. Canlı Arama Çubuğu -->
+      <!-- 1. HIZLI SEÇİM KUŞAKLARI (İskandinav, Dedektif, Kült, Son Gösterimler) -->
+      <div class="space-y-2.5">
+        <div class="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-neutral-400">
+          <span class="flex items-center gap-1.5 text-red-400">
+            <span>🔥</span> Özel Tasnifli Kuşaklar & Temalar
+          </span>
+          <span class="text-[11px] lowercase text-neutral-500">tek tıkla hedefine ulaş</span>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <button onclick="setTheme('all')" data-theme="all" class="theme-pill active px-3.5 py-2 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">
+            🌟 Tüm Netflix TR
+          </button>
+          <button onclick="setTheme('dedektif')" data-theme="dedektif" class="theme-pill px-3.5 py-2 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">
+            🕵️ Dedektif & Polisiye Suç
+          </button>
+          <button onclick="setTheme('nordic')" data-theme="nordic" class="theme-pill px-3.5 py-2 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">
+            ❄️ İskandinav Gerilimi (Nordic Noir)
+          </button>
+          <button onclick="setTheme('soygun')" data-theme="soygun" class="theme-pill px-3.5 py-2 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">
+            🏦 Kusursuz Soygun & Banka İşi
+          </button>
+          <button onclick="setTheme('zihin')" data-theme="zihin" class="theme-pill px-3.5 py-2 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">
+            🧠 Zihin Bükücü & Ters Köşe
+          </button>
+          <button onclick="setTheme('kult')" data-theme="kult" class="theme-pill px-3.5 py-2 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">
+            🏆 Kült Başyapıtlar (IMDb 7.8+)
+          </button>
+          <button onclick="setTheme('yeniler')" data-theme="yeniler" class="theme-pill px-3.5 py-2 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">
+            🆕 Son Gösterimler & Yeniler
+          </button>
+          <button onclick="setTheme('yerli')" data-theme="yerli" class="theme-pill px-3.5 py-2 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">
+            🇹🇷 Sadece Yerli Sinema / Dizi
+          </button>
+        </div>
+      </div>
+
+      <!-- 2. Canlı Arama Çubuğu -->
       <div class="relative">
         <input type="text" id="live-search-box" placeholder="Canlı Netflix TR veritabanında arayın (film, dizi, oyuncu veya yönetmen...)" class="w-full bg-neutral-900/95 border border-neutral-700/80 rounded-2xl px-5 py-4 pl-12 text-sm sm:text-base text-white placeholder-neutral-500 focus:outline-none focus:border-netflix-red focus:ring-2 focus:ring-netflix-red/30 transition-all shadow-inner">
         <svg class="w-5 h-5 text-neutral-400 absolute left-4 top-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
         <button id="btn-clear-search" class="hidden absolute right-4 top-4 text-xs font-bold text-neutral-400 hover:text-white px-2.5 py-1 rounded bg-neutral-800">Temizle</button>
       </div>
 
-      <!-- 2. Detaylı Tür Seçici -->
-      <div class="space-y-2.5">
-        <div class="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-neutral-400">
-          <span class="flex items-center gap-1.5 text-red-400">
-            <span>🎭</span> Film & Dizi Türü Seçin
-          </span>
-          <span class="text-[11px] lowercase text-neutral-500">sadece Netflix Türkiye'dekiler listelenir</span>
-        </div>
-        <div class="flex flex-wrap gap-2">
-          <button data-genre="all" class="genre-pill active px-3.5 py-2 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🌟 Tüm Türler</button>
-          <button data-genre="53,9648" class="genre-pill px-3.5 py-2 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🔪 Gerilim & Gizem</button>
-          <button data-genre="28,12" class="genre-pill px-3.5 py-2 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">💥 Aksiyon & Macera</button>
-          <button data-genre="80" class="genre-pill px-3.5 py-2 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🎩 Suç & Soygun</button>
-          <button data-genre="18" class="genre-pill px-3.5 py-2 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">💔 Dram & Başyapıt</button>
-          <button data-genre="878,14" class="genre-pill px-3.5 py-2 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🧬 Bilim Kurgu & Fantastik</button>
-          <button data-genre="35" class="genre-pill px-3.5 py-2 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">😂 Komedi</button>
-          <button data-genre="27" class="genre-pill px-3.5 py-2 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🩸 Korku & Tekinsiz</button>
-          <button data-genre="10749" class="genre-pill px-3.5 py-2 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">💖 Romantik</button>
-          <button data-genre="99" class="genre-pill px-3.5 py-2 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">📜 Belgesel</button>
-          <button data-genre="10751,16" class="genre-pill px-3.5 py-2 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">👨‍👩‍👧‍👦 Aile & Animasyon</button>
-        </div>
-      </div>
-
-      <!-- 3. Çok Kademeli Detaylı Filtre Çubuğu -->
+      <!-- 3. NOKTA ATIŞI DARALTMA KONTROLLERİ (Dublaj/Orijinal, Dönem, Format, Puan, Sıralama) -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 pt-4 border-t border-neutral-800/80">
         
+        <!-- Dil & Dublaj Seçimi -->
         <div class="space-y-1.5">
-          <label class="text-[11px] font-bold uppercase text-neutral-400 block">1. Format</label>
+          <label class="text-[11px] font-bold uppercase text-neutral-400 block">1. Dil & Dublaj</label>
+          <select id="select-lang" class="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-3 py-2.5 text-xs font-semibold text-neutral-200 focus:outline-none focus:border-netflix-red">
+            <option value="all">🌐 Tüm Diller & Dublajlar</option>
+            <option value="tr_audio">🇹🇷 Türkçe Dublajlı / Yerli</option>
+            <option value="orig_en">🇺🇸 Orijinal İngilizce</option>
+            <option value="orig_nordic">❄️ Orijinal İskandinav Dili</option>
+            <option value="orig_es">🇪🇸 Orijinal İspanyolca</option>
+            <option value="orig_ko">🇰🇷 Orijinal Korece (K-Drama)</option>
+            <option value="orig_fr">🇫🇷 Orijinal Fransızca</option>
+          </select>
+        </div>
+
+        <!-- Format (Film / Dizi) -->
+        <div class="space-y-1.5">
+          <label class="text-[11px] font-bold uppercase text-neutral-400 block">2. Format</label>
           <select id="select-media-type" class="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-3 py-2.5 text-xs font-semibold text-neutral-200 focus:outline-none focus:border-netflix-red">
             <option value="movie">🎥 Sadece Filmler</option>
             <option value="tv">📺 Sadece Diziler</option>
           </select>
         </div>
 
+        <!-- Gösterim Dönemi -->
         <div class="space-y-1.5">
-          <label class="text-[11px] font-bold uppercase text-neutral-400 block">2. Köken / Ülke</label>
-          <select id="select-origin" class="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-3 py-2.5 text-xs font-semibold text-neutral-200 focus:outline-none focus:border-netflix-red">
-            <option value="all">🌍 Tüm Dünyadan</option>
-            <option value="tr">🇹🇷 Sadece Yerli (Türkçe)</option>
-            <option value="foreign">🌐 Yabancı / Uluslararası</option>
-            <option value="en">🇺🇸 Hollywood / İngilizce</option>
-            <option value="es">🇪🇸 İspanyolca Yapımlar</option>
-            <option value="fr">🇫🇷 Fransız Sineması</option>
-          </select>
-        </div>
-
-        <div class="space-y-1.5">
-          <label class="text-[11px] font-bold uppercase text-neutral-400 block">3. Çıkış Yılı</label>
+          <label class="text-[11px] font-bold uppercase text-neutral-400 block">3. Çıkış / Dönem</label>
           <select id="select-era" class="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-3 py-2.5 text-xs font-semibold text-neutral-200 focus:outline-none focus:border-netflix-red">
-            <option value="all">📅 Tüm Yayında Olanlar</option>
+            <option value="all">📅 Tüm Zamanlar</option>
             <option value="new">🆕 En Yeni (2024 - 2025)</option>
             <option value="modern">⏳ Modern (2018 - 2023)</option>
             <option value="2010s">🎞️ 2010 - 2017</option>
@@ -265,17 +281,19 @@
           </select>
         </div>
 
+        <!-- Puan Barajı -->
         <div class="space-y-1.5">
           <label class="text-[11px] font-bold uppercase text-neutral-400 block">4. Minimum Puan</label>
           <select id="select-vote" class="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-3 py-2.5 text-xs font-semibold text-neutral-200 focus:outline-none focus:border-netflix-red">
             <option value="0">Tüm Puanlar</option>
-            <option value="6.0">⭐ 6.0 ve Üzeri</option>
-            <option value="6.8">🌟 6.8 ve Üzeri (İyi)</option>
+            <option value="6.5">⭐ 6.5 ve Üzeri</option>
+            <option value="7.0">🌟 7.0 ve Üzeri (İyi)</option>
             <option value="7.5">🔥 7.5 ve Üzeri (Çok İyi)</option>
             <option value="8.0">🏆 8.0 ve Üzeri (Başyapıt)</option>
           </select>
         </div>
 
+        <!-- Sıralama -->
         <div class="space-y-1.5">
           <label class="text-[11px] font-bold uppercase text-neutral-400 block">5. Sıralama</label>
           <select id="select-sort" class="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-3 py-2.5 text-xs font-semibold text-neutral-200 focus:outline-none focus:border-netflix-red">
@@ -291,10 +309,10 @@
       <!-- Bilgi ve Sıfırlama -->
       <div class="flex items-center justify-between pt-2 text-xs">
         <span id="results-count" class="font-bold text-neutral-300">
-          Netflix Türkiye veritabanı doğrulanıyor...
+          Netflix Türkiye veritabanı taranıyor...
         </span>
         <button id="btn-reset-filters" class="text-xs font-bold text-red-400 hover:text-red-300 underline transition-all">
-          Tüm Filtreleri Temizle
+          Tüm Tercihleri Temizle
         </button>
       </div>
 
@@ -312,7 +330,7 @@
 
       <div id="loading-spinner" class="py-16 text-center space-y-3">
         <div class="w-10 h-10 border-4 border-netflix-red border-t-transparent rounded-full animate-spin mx-auto"></div>
-        <p class="text-xs text-neutral-400 font-semibold">Netflix Türkiye yayın akışı doğrulanıyor...</p>
+        <p class="text-xs text-neutral-400 font-semibold">Netflix Türkiye yayın akışı taranıyor...</p>
       </div>
 
       <!-- Kart Grid -->
@@ -332,7 +350,7 @@
         <div class="text-4xl">🔍</div>
         <h3 class="text-lg font-bold text-white">Bu Kriterlere Uygun Canlı Yapım Bulunamadı</h3>
         <p class="text-xs text-neutral-400 max-w-md mx-auto">
-          Lütfen seçtiğiniz filtreleri genişletin veya farklı bir arama kelimesi deneyin.
+          Lütfen seçtiğiniz filtreleri biraz genişletin veya farklı bir tema seçin.
         </p>
         <button onclick="resetFilters()" class="px-5 py-2.5 rounded-xl bg-netflix-red text-white text-xs font-bold hover:bg-netflix-hover transition-all">
           Filtreleri Sıfırla
@@ -352,14 +370,12 @@
     const TMDB_API_KEY = "65a75854bdb8832f10fc1687f4b299d5";
     const BASE_URL = "https://api.themoviedb.org/3";
     const IMG_BASE = "https://image.tmdb.org/t/p";
+    const TODAY_ISO = new Date().toISOString().split('T')[0];
 
     let currentLiveItems = [];
-    let activeGenre = 'all';
+    let activeTheme = 'all';
     let currentPage = 1;
     let searchDebounce = null;
-
-    // Bugünün tarihi (gelecekteki henüz çıkmamış filmleri elemek için)
-    const TODAY_ISO = new Date().toISOString().split('T')[0];
 
     async function fetchLiveNetflix(page = 1, append = false) {
       const spinner = document.getElementById('loading-spinner');
@@ -377,7 +393,7 @@
       }
 
       const mediaType = document.getElementById('select-media-type').value;
-      const origin = document.getElementById('select-origin').value;
+      const langChoice = document.getElementById('select-lang').value;
       const era = document.getElementById('select-era').value;
       const minVote = document.getElementById('select-vote').value;
       const sortBy = document.getElementById('select-sort').value;
@@ -388,31 +404,49 @@
       if (q) {
         url = `${BASE_URL}/search/${mediaType}?api_key=${TMDB_API_KEY}&language=tr-TR&query=${encodeURIComponent(q)}&page=${page}&include_adult=false`;
       } else {
-        // Kesin Netflix TR abonelik filtresi (with_watch_monetization_types=flatrate & provider 8)
         url = `${BASE_URL}/discover/${mediaType}?api_key=${TMDB_API_KEY}&language=tr-TR&watch_region=TR&with_watch_providers=8&with_watch_monetization_types=flatrate&sort_by=${sortBy}&page=${page}&include_adult=false`;
 
-        // Henüz çıkmamış / gelecekteki filmleri ele
         if (mediaType === 'movie') {
           url += `&primary_release_date.lte=${TODAY_ISO}`;
         } else {
           url += `&first_air_date.lte=${TODAY_ISO}`;
         }
 
-        // Sahte / yabancı spam kayıtları elemek için en az 20 oy barajı
         url += `&vote_count.gte=20`;
 
-        if (activeGenre !== 'all') {
-          url += `&with_genres=${activeGenre}`;
-        }
-
-        if (origin === 'tr') {
+        // Özel Tasnifli Temalar
+        if (activeTheme === 'dedektif') {
+          url += `&with_genres=80,9648`;
+        } else if (activeTheme === 'nordic') {
+          url += `&with_original_language=da|sv|no|is&with_genres=53|80|9648`;
+        } else if (activeTheme === 'soygun') {
+          url += `&with_genres=80,28`;
+        } else if (activeTheme === 'zihin') {
+          url += `&with_genres=53,878|9648`;
+        } else if (activeTheme === 'kult') {
+          url += `&vote_average.gte=7.8&vote_count.gte=100`;
+        } else if (activeTheme === 'yeniler') {
+          url += mediaType === 'movie' ? `&primary_release_date.gte=2024-01-01` : `&first_air_date.gte=2024-01-01`;
+        } else if (activeTheme === 'yerli') {
           url += `&with_original_language=tr`;
-        } else if (origin === 'foreign') {
-          url += `&without_original_language=tr`;
-        } else if (origin !== 'all') {
-          url += `&with_original_language=${origin}`;
         }
 
+        // Dil & Dublaj Seçimi
+        if (langChoice === 'tr_audio') {
+          url += `&with_original_language=tr`;
+        } else if (langChoice === 'orig_en') {
+          url += `&with_original_language=en`;
+        } else if (langChoice === 'orig_nordic') {
+          url += `&with_original_language=da|sv|no|is`;
+        } else if (langChoice === 'orig_es') {
+          url += `&with_original_language=es`;
+        } else if (langChoice === 'orig_ko') {
+          url += `&with_original_language=ko`;
+        } else if (langChoice === 'orig_fr') {
+          url += `&with_original_language=fr`;
+        }
+
+        // Dönem
         if (era === 'new') {
           url += mediaType === 'movie' ? `&primary_release_date.gte=2024-01-01` : `&first_air_date.gte=2024-01-01`;
         } else if (era === 'modern') {
@@ -434,11 +468,9 @@
         spinner.classList.add('hidden');
 
         if (data.results && data.results.length > 0) {
-          // Poster ve Türkçe/Latin başlık kontrolü yaparak filtrele
           const valid = data.results.filter(x => {
             if (!x.poster_path) return false;
             const title = x.title || x.name || '';
-            // Boş veya sadece tanımsız karakterleri filtrele
             return title.length > 0;
           });
 
@@ -477,12 +509,10 @@
       }
     }
 
-    // 🎬 DETAYLI KÜNYE & NETFLİX TR DOĞRULAMA
     async function loadDetailedCreditsAndAI(item, mediaType) {
       if (!item) return;
 
       const title = item.title || item.name || 'Netflix Yapımı';
-      const originalTitle = item.original_title || item.original_name || title;
       const date = item.release_date || item.first_air_date || '';
       const year = date ? date.split('-')[0] : '2025';
       const vote = item.vote_average ? item.vote_average.toFixed(1) : '7.5';
@@ -496,17 +526,14 @@
       document.getElementById('hero-poster').src = poster;
       document.getElementById('hero-badge-type').textContent = mediaType === 'tv' ? '📺 Netflix Dizisi' : '🎬 Netflix Filmi';
 
-      // Netflix Arama URL'si (Türkçe veya orijinal ada göre en net aramayı yapar)
       const searchQuery = encodeURIComponent(title);
       document.getElementById('hero-netflix-link').href = `https://www.netflix.com/search?q=${searchQuery}`;
 
-      // TMDB'den Detaylı Künye ve Sağlayıcı Doğrulaması Çek
       try {
         const detailsUrl = `${BASE_URL}/${mediaType}/${item.id}?api_key=${TMDB_API_KEY}&language=tr-TR&append_to_response=credits,watch/providers`;
         const res = await fetch(detailsUrl);
         const details = await res.json();
 
-        // 1. Netflix Türkiye Sağlayıcı Doğrulaması
         const trProviders = details['watch/providers']?.results?.TR;
         const isNetflixTR = trProviders?.flatrate?.some(p => p.provider_id === 8 || p.provider_name.toLowerCase().includes('netflix'));
         
@@ -519,13 +546,11 @@
           verifyText.textContent = "✔️ Netflix TR Doğrulandı";
           watchBtn.textContent = "▶️ Hemen Netflix'te İzle";
         } else {
-          // Türkiye'de doğrudan Netflix aboneliği doğrulanmadıysa net bilgi ver
           verifyBadge.className = "px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-400 text-xs font-bold uppercase tracking-wider border border-amber-500/40 shadow-sm flex items-center gap-1.5";
           verifyText.textContent = "🔍 Netflix'te Kontrol Et";
           watchBtn.textContent = "Netflix Kataloğunda Ara";
         }
 
-        // 2. Süre
         if (details.runtime) {
           const hours = Math.floor(details.runtime / 60);
           const mins = details.runtime % 60;
@@ -536,7 +561,6 @@
           document.getElementById('hero-duration').textContent = '⏱️ Standart Süre';
         }
 
-        // 3. Türler
         const genresContainer = document.getElementById('hero-genres');
         genresContainer.innerHTML = '';
         if (details.genres && details.genres.length > 0) {
@@ -548,7 +572,6 @@
           });
         }
 
-        // 4. Yönetmen
         let directorName = "Belirtilmemiş";
         if (details.credits && details.credits.crew) {
           const directorObj = details.credits.crew.find(c => c.job === 'Director' || c.department === 'Directing');
@@ -559,23 +582,20 @@
         }
         document.getElementById('hero-director').textContent = directorName;
 
-        // 5. Başrol Oyuncuları
         let castNames = "Oyuncu bilgisi mevcut değil";
         if (details.credits && details.credits.cast && details.credits.cast.length > 0) {
           castNames = details.credits.cast.slice(0, 5).map(a => a.name).join(', ');
         }
         document.getElementById('hero-cast').textContent = castNames;
 
-        // 6. Ülke
         let country = "Uluslararası";
         if (details.production_countries && details.production_countries.length > 0) {
           country = details.production_countries.map(c => c.name).join(', ');
         } else if (item.original_language === 'tr') {
-          country = "Türkiye";
+          country = "Türkiye (Türkçe Dublaj / Orijinal)";
         }
         document.getElementById('hero-country').textContent = country;
 
-        // 7. YZ İncelemesi
         generateAIReview(title, details.genres, directorName, castNames, overview, vote, country);
 
       } catch (err) {
@@ -607,7 +627,7 @@
 
       let audienceVerdict = "";
       if (genreNames.includes('Gerilim') || genreNames.includes('Gizem') || genreNames.includes('Suç')) {
-        audienceVerdict = "Ters köşeleri, klostrofobik atmosferi ve son ana kadar devam eden gizemi sevenler kaçırmamalı.";
+        audienceVerdict = "Dedektif soruşturmaları, ters köşeleri ve soluksuz suç gizemini sevenler kaçırmamalı.";
       } else if (genreNames.includes('Dram') || genreNames.includes('Aile')) {
         audienceVerdict = "Karakterlerin derinliği ve duygusal yoğunluğuyla izleyiciyi içine çeken dokunaklı bir insan hikayesi.";
       } else if (genreNames.includes('Aksiyon')) {
@@ -695,35 +715,34 @@
       });
     }
 
+    function setTheme(theme) {
+      activeTheme = theme;
+      document.querySelectorAll('.theme-pill').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-theme') === theme);
+      });
+      document.getElementById('live-search-box').value = '';
+      currentPage = 1;
+      fetchLiveNetflix(1);
+    }
+
     function resetFilters() {
       document.getElementById('live-search-box').value = '';
       document.getElementById('select-media-type').value = 'movie';
-      document.getElementById('select-origin').value = 'all';
+      document.getElementById('select-lang').value = 'all';
       document.getElementById('select-era').value = 'all';
       document.getElementById('select-vote').value = '0';
       document.getElementById('select-sort').value = 'popularity.desc';
-      activeGenre = 'all';
+      activeTheme = 'all';
 
-      document.querySelectorAll('.genre-pill').forEach(btn => {
-        btn.classList.toggle('active', btn.getAttribute('data-genre') === 'all');
+      document.querySelectorAll('.theme-pill').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-theme') === 'all');
       });
 
       currentPage = 1;
       fetchLiveNetflix(1);
     }
 
-    document.querySelectorAll('.genre-pill').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.genre-pill').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        activeGenre = btn.getAttribute('data-genre');
-        document.getElementById('live-search-box').value = '';
-        currentPage = 1;
-        fetchLiveNetflix(1);
-      });
-    });
-
-    ['select-media-type', 'select-origin', 'select-era', 'select-vote', 'select-sort'].forEach(id => {
+    ['select-media-type', 'select-lang', 'select-era', 'select-vote', 'select-sort'].forEach(id => {
       document.getElementById(id).addEventListener('change', () => {
         currentPage = 1;
         fetchLiveNetflix(1);
