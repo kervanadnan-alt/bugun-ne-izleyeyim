@@ -865,7 +865,27 @@
         creditsLine = `👥 Başroller: ${selectedItem.cast}\n`;
       }
 
-      const tweet = `${dateHook}${hook}\n\n🔴 ${title}\n⭐ Puan: ${vote}/10 ${selectedItem.runtime ? '• ⏱️ ' + selectedItem.runtime : ''}\n${creditsLine}📌 ${shortDesc}\n\n🍿 Hemen Netflix'te izle!\n${tag} #NetflixTR #Neİzlesem`;
+      // 280 Karakter Güvenlik Hesaplaması (X Premium zorunluluğunu engellemek için)
+      const baseFooter = `\n\n🍿 Hemen Netflix'te izle!\n${tag} #NetflixTR`;
+      let header = `${dateHook}${hook}\n\n🔴 ${title} (${vote}/10)\n`;
+      
+      // Başroller tek satıra sığıyorsa ekle, sığmıyorsa kısalt
+      let actorSnippet = "";
+      if (selectedItem.cast && selectedItem.cast !== "Oyuncu bilgisi mevcut değil") {
+        const top2 = selectedItem.cast.split(',').slice(0, 2).join(',');
+        actorSnippet = `👥 ${top2}\n`;
+      }
+
+      // Kalan karakteri hesaplayıp açıklamayı ona göre biç
+      const usedLen = (header + actorSnippet + baseFooter).length;
+      const maxDescLen = Math.max(40, 265 - usedLen);
+      
+      let safeDesc = overview;
+      if (safeDesc.length > maxDescLen) {
+        safeDesc = safeDesc.substring(0, maxDescLen - 3) + '...';
+      }
+
+      const tweet = `${header}${actorSnippet}📌 ${safeDesc}${baseFooter}`;
 
       document.getElementById('tweet-textarea').value = tweet;
       updateCharCount();
@@ -1078,7 +1098,7 @@
             <button onclick="startEditQueueItem(${item.id})" class="px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 text-xs font-bold transition-all flex items-center gap-1">
               <span>✏️ Düzenle</span>
             </button>
-            <button onclick="publishFromQueue('${encodeURIComponent(item.tweetText)}')" class="px-3 py-1.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-white text-xs font-black transition-all shadow-md flex items-center gap-1">
+            <button onclick="publishQueueById(${item.id})" class="px-3 py-1.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-white text-xs font-black transition-all shadow-md flex items-center gap-1 active:scale-95">
               <span>X'e Gönder</span>
             </button>
             <button onclick="deleteQueueItem(${item.id})" class="p-1.5 rounded-xl bg-neutral-800 hover:bg-red-950/80 text-neutral-400 hover:text-red-400 text-xs transition-all border border-neutral-700" title="Plândan Çıkar">
@@ -1090,10 +1110,32 @@
       });
     }
 
-    function publishFromQueue(text) {
-      const url = `https://twitter.com/intent/tweet?text=${text}`;
-      window.open(url, '_blank');
+    function publishQueueById(id) {
+      let queue = [];
+      try {
+        queue = JSON.parse(localStorage.getItem('reji_scheduled_queue') || '[]');
+      } catch(e) {}
+      const item = queue.find(x => x.id === id);
+      if (!item) return;
+      
+      const safeText = encodeURIComponent(item.tweetText);
+      const url = `https://x.com/intent/tweet?text=${safeText}`;
+      const win = window.open(url, '_blank');
+      if (!win) {
+        window.location.href = url;
+      }
       showToast('X paylaşım penceresi açıldı!');
+    }
+
+    function shareOnX() {
+      const text = document.getElementById('tweet-textarea').value;
+      const safeText = encodeURIComponent(text);
+      const url = `https://x.com/intent/tweet?text=${safeText}`;
+      const win = window.open(url, '_blank');
+      if (!win) {
+        window.location.href = url;
+      }
+      showToast('X (Twitter) paylaşım penceresi açıldı!');
     }
 
     function showToast(msg) {
