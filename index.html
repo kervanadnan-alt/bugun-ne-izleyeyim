@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bugün Ne İzleyeyim? | Canlı Netflix TR Mantıksal Film & Dizi Filtreleme Motoru</title>
-  <meta name="description" content="Ses/dublaj, ülke sineması (Amerikan, Avrupa, İran, İskandinav) ve konu (cinayet, aşk, bilim kurgu, ütopik, tarihi) ayrımıyla 2 dakikada filmini bul.">
+  <title>Bugün Ne İzleyeyim? | Canlı Netflix TR Mantıksal Film & Dizi Keşif Motoru</title>
+  <meta name="description" content="Ayrıştırılmış mantıksal filtreler: Seslendirme, Ülke Sineması (İskandinav, Afrika, İran vb.) ve Konu (Cinayet, Aşk, Bilim Kurgu vb.)">
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script>
     tailwind.config = {
@@ -94,7 +94,7 @@
     </div>
   </header>
 
-  <!-- Hero Vitrin Alanı: Seçilen Film, Künye & YZ İncelemesi -->
+  <!-- Hero Vitrin Alanı -->
   <section id="hero-section" class="relative hero-glow border-b border-neutral-800/60 transition-all duration-500 overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -143,7 +143,7 @@
               </div>
               <div>
                 <span class="text-neutral-500 font-bold block text-[11px] uppercase tracking-wider">🌍 Ülke & Sinema Ekolü</span>
-                <strong id="hero-country" class="text-neutral-200 font-semibold">Türkiye</strong>
+                <strong id="hero-country" class="text-neutral-200 font-semibold">Yükleniyor...</strong>
               </div>
             </div>
 
@@ -206,10 +206,10 @@
           <span class="flex items-center gap-1.5 text-red-400">
             <span>🎯</span> Popüler Konu & Tür Kuşakları
           </span>
-          <span class="text-[11px] lowercase text-neutral-500">tek tıkla konuya odaklan</span>
+          <span class="text-[11px] lowercase text-neutral-500">tek tıkla konuyu seç</span>
         </div>
         <div class="flex flex-wrap gap-2">
-          <button onclick="setTopic('all')" data-topic="all" class="topic-pill active px-3.5 py-2 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🌟 Tümü</button>
+          <button onclick="setTopic('all')" data-topic="all" class="topic-pill active px-3.5 py-2 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🌟 Tüm Konular</button>
           <button onclick="setTopic('cinayet')" data-topic="cinayet" class="topic-pill px-3.5 py-2 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🔪 Cinayet & Dedektif</button>
           <button onclick="setTopic('ask')" data-topic="ask" class="topic-pill px-3.5 py-2 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">❤️ Aşk & Romantizm</button>
           <button onclick="setTopic('bilimkurgu')" data-topic="bilimkurgu" class="topic-pill px-3.5 py-2 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🧬 Bilim Kurgu & Ütopik</button>
@@ -221,25 +221,38 @@
         </div>
       </div>
 
-      <!-- Canlı Arama Çubuğu -->
-      <div class="relative">
-        <input type="text" id="live-search-box" placeholder="Canlı Netflix TR veritabanında arayın (film, dizi, oyuncu veya yönetmen...)" class="w-full bg-neutral-900/95 border border-neutral-700/80 rounded-2xl px-5 py-4 pl-12 text-sm sm:text-base text-white placeholder-neutral-500 focus:outline-none focus:border-netflix-red focus:ring-2 focus:ring-netflix-red/30 transition-all shadow-inner">
-        <svg class="w-5 h-5 text-neutral-400 absolute left-4 top-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-        <button id="btn-clear-search" class="hidden absolute right-4 top-4 text-xs font-bold text-neutral-400 hover:text-white px-2.5 py-1 rounded bg-neutral-800">Temizle</button>
+      <!-- Serbest Arama Çubuğu -->
+      <div class="space-y-2">
+        <div class="relative">
+          <input type="text" id="live-search-box" placeholder="Canlı Netflix TR veritabanında arayın (film, oyuncu veya 'iskandinav cinayet', 'afrika gerilim', 'iran dram'...)" class="w-full bg-neutral-900/95 border border-neutral-700/80 rounded-2xl px-5 py-4 pl-12 text-sm sm:text-base text-white placeholder-neutral-500 focus:outline-none focus:border-netflix-red focus:ring-2 focus:ring-netflix-red/30 transition-all shadow-inner">
+          <svg class="w-5 h-5 text-neutral-400 absolute left-4 top-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <button id="btn-clear-search" class="hidden absolute right-4 top-4 text-xs font-bold text-neutral-400 hover:text-white px-2.5 py-1 rounded bg-neutral-800">Temizle</button>
+        </div>
+
+        <!-- Hızlı Örnek Arama Butonları -->
+        <div class="flex flex-wrap items-center gap-1.5 pt-1 text-[11px]">
+          <span class="text-neutral-500 font-semibold mr-1">💡 Hızlı Aramalar:</span>
+          <button onclick="applySmartQuery('iskandinav')" class="px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">❄️ iskandinav</button>
+          <button onclick="applySmartQuery('afrika')" class="px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🌍 afrika</button>
+          <button onclick="applySmartQuery('iran')" class="px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🇮🇷 iran</button>
+          <button onclick="applySmartQuery('kore gerilim')" class="px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🇰🇷 kore gerilim</button>
+          <button onclick="applySmartQuery('japon anime')" class="px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🇯🇵 japon anime</button>
+          <button onclick="applySmartQuery('türk soygun')" class="px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🇹🇷 türk soygun</button>
+        </div>
       </div>
 
-      <!-- 4 AYRI MANTIKSAL KUTU (Her Biri Tamamen Kendi Konusuna Özel) -->
+      <!-- 4 AYRI MANTIKSAL KUTU (HER BİRİ TAMAMEN BAĞIMSIZ) -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t border-neutral-800/80">
         
-        <!-- KUTU 1: SES / DUBLAJ SEÇENEĞİ -->
+        <!-- KUTU 1: SESLENDİRME SEÇENEĞİ (YABANCI FİLMLER İÇİN) -->
         <div class="space-y-1.5 p-3 rounded-2xl bg-neutral-900/60 border border-neutral-800">
-          <label class="text-[11px] font-black uppercase text-amber-400 block tracking-wider">🎧 1. Ses / Dublaj</label>
+          <label class="text-[11px] font-black uppercase text-amber-400 block tracking-wider">🎧 1. Seslendirme</label>
           <select id="select-audio" class="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-3 py-2 text-xs font-semibold text-neutral-200 focus:outline-none focus:border-netflix-red">
             <option value="all">Tüm Ses Seçenekleri</option>
-            <option value="tr_dub">🇹🇷 Türkçe Dublajlı / Yerli</option>
-            <option value="original">🗣️ Orijinal Seslendirme (Altyazılı)</option>
+            <option value="tr_dub">🇹🇷 Türkçe Dublajlı Filmler</option>
+            <option value="original">🗣️ Orijinal Kendi Dilinde (Altyazılı)</option>
           </select>
-          <span class="text-[10px] text-neutral-500 block leading-tight">Seslendirme formatı tercihi</span>
+          <span class="text-[10px] text-neutral-500 block leading-tight">Yabancı filmlerde ses formatı</span>
         </div>
 
         <!-- KUTU 2: ÜLKE SİNEMASI & KÖKEN -->
@@ -247,11 +260,13 @@
           <label class="text-[11px] font-black uppercase text-sky-400 block tracking-wider">🌍 2. Ülke / Sinema Ekolü</label>
           <select id="select-country" class="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-3 py-2 text-xs font-semibold text-neutral-200 focus:outline-none focus:border-netflix-red">
             <option value="all">Tüm Dünya Sineması</option>
-            <option value="US">🇺🇸 Amerikan / Hollywood</option>
+            <option value="nordic">❄️ İskandinav Sineması (İsveç, Norveç, Danimarka)</option>
+            <option value="africa">🌍 Afrika Sineması (Güney Afrika, Nijerya)</option>
             <option value="TR">🇹🇷 Türk / Yerli Sinema</option>
+            <option value="US">🇺🇸 Amerikan / Hollywood</option>
             <option value="europe">🇪🇺 Avrupa Sineması (Fransız, İspanyol, İtalyan, Alman)</option>
-            <option value="nordic">❄️ İskandinav Sineması (Danimarka, İsveç, Norveç, İzlanda)</option>
             <option value="IR">🇮🇷 İran & Ortadoğu Sineması</option>
+            <option value="JP">🇯🇵 Japon Sineması & Anime</option>
             <option value="KR">🇰🇷 Kore & Asya (K-Drama)</option>
             <option value="latin">💃 Latin Amerika Sineması</option>
           </select>
@@ -283,8 +298,9 @@
           <label class="text-[11px] font-black uppercase text-emerald-400 block tracking-wider">⏱️ 4. Format & Sıralama</label>
           <div class="grid grid-cols-2 gap-2">
             <select id="select-media-type" class="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-2 py-2 text-xs font-semibold text-neutral-200 focus:outline-none focus:border-netflix-red">
-              <option value="movie">🎥 Film</option>
-              <option value="tv">📺 Dizi</option>
+              <option value="both">🎬 Tümü (Film & Dizi)</option>
+              <option value="movie">🎥 Sadece Film</option>
+              <option value="tv">📺 Sadece Dizi</option>
             </select>
             <select id="select-sort" class="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-2 py-2 text-xs font-semibold text-neutral-200 focus:outline-none focus:border-netflix-red">
               <option value="popularity.desc">🔥 Popüler</option>
@@ -365,6 +381,59 @@
     let currentPage = 1;
     let searchDebounce = null;
 
+    // 🧠 GÜÇLÜ DOĞAL DİL PARSER (İskandinav, Afrika, İran, vb. Kusursuz Eşleştirme)
+    function parseNaturalQuery(text) {
+      const q = text.toLowerCase().trim();
+      let parsedCountry = null;
+      let parsedGenre = null;
+
+      // Ülke / Bölge Eşleştirmesi (Dil ve ülke kodlarını çoklu destekler)
+      if (q.includes('afrika') || q.includes('nijerya') || q.includes('güney afrika')) {
+        parsedCountry = 'africa';
+      } else if (q.includes('iskandinav') || q.includes('isveç') || q.includes('norveç') || q.includes('danimarka') || q.includes('izlanda')) {
+        parsedCountry = 'nordic';
+      } else if (q.includes('iran') || q.includes('fars')) {
+        parsedCountry = 'IR';
+      } else if (q.includes('japon') || q.includes('japonya') || q.includes('anime')) {
+        parsedCountry = 'JP';
+      } else if (q.includes('kore') || q.includes('güney kore')) {
+        parsedCountry = 'KR';
+      } else if (q.includes('fransız') || q.includes('fransa')) {
+        parsedCountry = 'FR';
+      } else if (q.includes('italyan') || q.includes('italya')) {
+        parsedCountry = 'IT';
+      } else if (q.includes('ispanyol') || q.includes('ispanya')) {
+        parsedCountry = 'ES';
+      } else if (q.includes('türk') || q.includes('yerli')) {
+        parsedCountry = 'TR';
+      } else if (q.includes('amerikan') || q.includes('hollywood')) {
+        parsedCountry = 'US';
+      }
+
+      // Konu / Tür Eşleştirmesi
+      if (q.includes('dedektif') || q.includes('polisiye') || q.includes('cinayet')) {
+        parsedGenre = '80,9648';
+      } else if (q.includes('korku')) {
+        parsedGenre = '27';
+      } else if (q.includes('gerilim') || q.includes('seri katil')) {
+        parsedGenre = '53';
+      } else if (q.includes('aşk') || q.includes('romantik')) {
+        parsedGenre = '10749';
+      } else if (q.includes('bilim kurgu') || q.includes('ütopik') || q.includes('distopik')) {
+        parsedGenre = '878';
+      } else if (q.includes('soygun') || q.includes('banka')) {
+        parsedGenre = '80,28';
+      } else if (q.includes('komedi') || q.includes('eğlence')) {
+        parsedGenre = '35';
+      } else if (q.includes('tarih') || q.includes('savaş')) {
+        parsedGenre = '36|10752';
+      } else if (q.includes('dram')) {
+        parsedGenre = '18';
+      }
+
+      return { parsedCountry, parsedGenre };
+    }
+
     async function fetchLiveNetflix(page = 1, append = false) {
       const spinner = document.getElementById('loading-spinner');
       const grid = document.getElementById('live-movie-grid');
@@ -380,73 +449,72 @@
         countEl.textContent = 'Doğrulanmış yayınlar taranıyor...';
       }
 
-      const mediaType = document.getElementById('select-media-type').value;
+      const mediaTypeChoice = document.getElementById('select-media-type').value;
       const audioChoice = document.getElementById('select-audio').value;
       const countryChoice = document.getElementById('select-country').value;
       const themeChoice = document.getElementById('select-theme').value;
       const sortBy = document.getElementById('select-sort').value;
-      const q = document.getElementById('live-search-box').value.trim();
+      const rawQuery = document.getElementById('live-search-box').value.trim();
+
+      // Film veya Dizi veya Her İkisi
+      const targetMediaType = mediaTypeChoice === 'both' ? 'movie' : mediaTypeChoice;
+
+      const { parsedCountry, parsedGenre } = parseNaturalQuery(rawQuery);
 
       let url = "";
 
-      if (q) {
-        url = `${BASE_URL}/search/${mediaType}?api_key=${TMDB_API_KEY}&language=tr-TR&query=${encodeURIComponent(q)}&page=${page}&include_adult=false`;
+      if (rawQuery && !parsedCountry && !parsedGenre) {
+        // İsim araması (örn: Mert Ramazan Demir veya Se7en)
+        url = `${BASE_URL}/search/${targetMediaType}?api_key=${TMDB_API_KEY}&language=tr-TR&query=${encodeURIComponent(rawQuery)}&page=${page}&include_adult=false`;
       } else {
-        url = `${BASE_URL}/discover/${mediaType}?api_key=${TMDB_API_KEY}&language=tr-TR&watch_region=TR&with_watch_providers=8&with_watch_monetization_types=flatrate&sort_by=${sortBy}&page=${page}&include_adult=false`;
+        // Canlı Discover Sorgusu
+        url = `${BASE_URL}/discover/${targetMediaType}?api_key=${TMDB_API_KEY}&language=tr-TR&watch_region=TR&with_watch_providers=8&with_watch_monetization_types=flatrate&sort_by=${sortBy}&page=${page}&include_adult=false`;
 
-        if (mediaType === 'movie') {
+        if (targetMediaType === 'movie') {
           url += `&primary_release_date.lte=${TODAY_ISO}`;
         } else {
           url += `&first_air_date.lte=${TODAY_ISO}`;
         }
 
-        url += `&vote_count.gte=15`;
-
-        // KUTU 1: SES / DUBLAJ
-        if (audioChoice === 'tr_dub') {
-          url += `&with_original_language=tr`;
+        // Ülke ve Kültür Filtresi (Kusursuz İskandinav & Afrika Desteği)
+        const finalCountry = parsedCountry || (countryChoice !== 'all' ? countryChoice : null);
+        if (finalCountry) {
+          if (finalCountry === 'nordic') {
+            // İskandinavya: Danca, İsveççe, Norveççe veya İzlandaca
+            url += `&with_original_language=da|sv|no|is`;
+          } else if (finalCountry === 'africa') {
+            // Afrika: G. Afrika, Nijerya (ZA, NG, KE, EG)
+            url += `&with_origin_country=ZA|NG|KE|EG`;
+          } else if (finalCountry === 'europe') {
+            url += `&with_origin_country=FR|DE|IT|ES|GB`;
+          } else if (finalCountry === 'latin') {
+            url += `&with_origin_country=MX|AR|BR|CO`;
+          } else if (finalCountry === 'TR') {
+            url += `&with_original_language=tr`;
+          } else {
+            url += `&with_origin_country=${finalCountry}`;
+          }
+        } else {
+          // Genel aramalarda spam kayıtları ele
+          url += `&vote_count.gte=10`;
         }
 
-        // KUTU 2: ÜLKE SİNEMASI & KÖKEN
-        if (countryChoice === 'US') {
-          url += `&with_origin_country=US`;
-        } else if (countryChoice === 'TR') {
-          url += `&with_origin_country=TR`;
-        } else if (countryChoice === 'IR') {
-          url += `&with_origin_country=IR`;
-        } else if (countryChoice === 'nordic') {
-          url += `&with_origin_country=DK|SE|NO|IS`;
-        } else if (countryChoice === 'europe') {
-          url += `&with_origin_country=FR|DE|IT|ES|GB`;
-        } else if (countryChoice === 'KR') {
-          url += `&with_origin_country=KR`;
-        } else if (countryChoice === 'latin') {
-          url += `&with_origin_country=MX|AR|BR|CO`;
-        }
-
-        // KUTU 3: KONU & TEMA
-        if (themeChoice === 'cinayet') {
-          url += `&with_genres=80,9648`;
-        } else if (themeChoice === 'ask') {
-          url += `&with_genres=10749`;
-        } else if (themeChoice === 'bilimkurgu') {
-          url += `&with_genres=878`;
-        } else if (themeChoice === 'tarihi') {
-          url += `&with_genres=36|10752`;
-        } else if (themeChoice === 'soygun') {
-          url += `&with_genres=80,28`;
-        } else if (themeChoice === 'zihin') {
-          url += `&with_genres=53,9648`;
-        } else if (themeChoice === 'dram') {
-          url += `&with_genres=18`;
-        } else if (themeChoice === 'aksiyon') {
-          url += `&with_genres=28`;
-        } else if (themeChoice === 'korku') {
-          url += `&with_genres=27`;
-        } else if (themeChoice === 'komedi') {
-          url += `&with_genres=35`;
-        } else if (themeChoice === 'belgesel') {
-          url += `&with_genres=99`;
+        // Konu & Tema
+        const finalGenre = parsedGenre || null;
+        if (finalGenre) {
+          url += `&with_genres=${finalGenre}`;
+        } else if (themeChoice !== 'all') {
+          if (themeChoice === 'cinayet') url += `&with_genres=80,9648`;
+          else if (themeChoice === 'ask') url += `&with_genres=10749`;
+          else if (themeChoice === 'bilimkurgu') url += `&with_genres=878`;
+          else if (themeChoice === 'tarihi') url += `&with_genres=36|10752`;
+          else if (themeChoice === 'soygun') url += `&with_genres=80,28`;
+          else if (themeChoice === 'zihin') url += `&with_genres=53,9648`;
+          else if (themeChoice === 'dram') url += `&with_genres=18`;
+          else if (themeChoice === 'aksiyon') url += `&with_genres=28`;
+          else if (themeChoice === 'korku') url += `&with_genres=27`;
+          else if (themeChoice === 'komedi') url += `&with_genres=35`;
+          else if (themeChoice === 'belgesel') url += `&with_genres=99`;
         }
       }
 
@@ -455,23 +523,31 @@
         const data = await response.json();
         spinner.classList.add('hidden');
 
-        if (data.results && data.results.length > 0) {
-          const valid = data.results.filter(x => {
-            if (!x.poster_path) return false;
-            const title = x.title || x.name || '';
-            return title.length > 0;
-          });
+        let validResults = (data.results || []).filter(x => x.poster_path && (x.title || x.name));
 
+        // Eğer filmde 0 sonuç çıktıysa ve kullanıcı arama yaptıysa (örn: İskandinav dizileri çok meşhurdur), otomatik Dizi araması da yap!
+        if (validResults.length === 0 && mediaTypeChoice === 'both') {
+          const tvUrl = url.replace('/discover/movie', '/discover/tv').replace('primary_release_date', 'first_air_date');
+          const tvRes = await fetch(tvUrl);
+          const tvData = await tvRes.json();
+          if (tvData.results && tvData.results.length > 0) {
+            validResults = tvData.results.filter(x => x.poster_path && (x.title || x.name));
+          }
+        }
+
+        if (validResults.length > 0) {
           if (append) {
-            currentLiveItems = [...currentLiveItems, ...valid];
+            currentLiveItems = [...currentLiveItems, ...validResults];
           } else {
-            currentLiveItems = valid;
+            currentLiveItems = validResults;
           }
 
-          renderLiveGrid(valid, mediaType, append);
+          renderLiveGrid(validResults, targetMediaType, append);
 
           if (!append && currentLiveItems.length > 0) {
-            loadDetailedCreditsAndAI(currentLiveItems[0], mediaType);
+            const firstItem = currentLiveItems[0];
+            const detectedType = firstItem.title ? 'movie' : 'tv';
+            loadDetailedCreditsAndAI(firstItem, detectedType);
           }
 
           if (data.page < data.total_pages) {
@@ -580,14 +656,16 @@
         if (details.production_countries && details.production_countries.length > 0) {
           country = details.production_countries.map(c => c.name).join(', ');
         } else if (item.original_language === 'tr') {
-          country = "Türkiye (Yerli / Türkçe)";
+          country = "Türkiye (Yerli Sinema)";
+        } else if (['da', 'sv', 'no', 'is'].includes(item.original_language)) {
+          country = "İskandinavya (Nordic Noir)";
         }
         document.getElementById('hero-country').textContent = country;
 
         generateAIReview(title, details.genres, directorName, castNames, overview, vote, country);
 
       } catch (err) {
-        console.error('Künye çekme hatası:', err);
+        console.error('Künye hatası:', err);
       }
     }
 
@@ -642,7 +720,7 @@
       `;
     }
 
-    function renderLiveGrid(items, mediaType, append = false) {
+    function renderLiveGrid(items, defaultMediaType, append = false) {
       const grid = document.getElementById('live-movie-grid');
       const countEl = document.getElementById('results-count');
       grid.classList.remove('hidden');
@@ -658,11 +736,12 @@
         const vote = m.vote_average ? m.vote_average.toFixed(1) : 'NR';
         const poster = `${IMG_BASE}/w780${m.poster_path}`;
         const overview = m.overview || 'Bu yapım şu an Netflix Türkiye kataloğunda yayındadır.';
+        const itemType = m.title ? 'movie' : 'tv';
 
         const card = document.createElement('div');
         card.className = "group relative rounded-2xl overflow-hidden bg-neutral-900/80 border border-neutral-800 hover:border-red-600/60 transition-all duration-300 hover:shadow-xl hover:shadow-red-600/10 cursor-pointer flex flex-col";
         card.onclick = () => {
-          loadDetailedCreditsAndAI(m, mediaType);
+          loadDetailedCreditsAndAI(m, itemType);
           window.scrollTo({ top: 0, behavior: 'smooth' });
         };
 
@@ -679,7 +758,7 @@
 
             <div class="absolute top-2.5 right-2.5">
               <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-black/70 backdrop-blur-md text-white border border-white/10 uppercase">
-                ${mediaType === 'tv' ? 'Dizi' : 'Film'}
+                ${itemType === 'tv' ? 'Dizi' : 'Film'}
               </span>
             </div>
 
@@ -707,6 +786,13 @@
       });
     }
 
+    function applySmartQuery(queryText) {
+      document.getElementById('live-search-box').value = queryText;
+      document.getElementById('btn-clear-search').classList.remove('hidden');
+      currentPage = 1;
+      fetchLiveNetflix(1);
+    }
+
     function setTopic(topic) {
       document.querySelectorAll('.topic-pill').forEach(btn => {
         btn.classList.toggle('active', btn.getAttribute('data-topic') === topic);
@@ -719,7 +805,7 @@
 
     function resetFilters() {
       document.getElementById('live-search-box').value = '';
-      document.getElementById('select-media-type').value = 'movie';
+      document.getElementById('select-media-type').value = 'both';
       document.getElementById('select-audio').value = 'all';
       document.getElementById('select-country').value = 'all';
       document.getElementById('select-theme').value = 'all';
@@ -772,8 +858,8 @@
     function pickRandom() {
       if (currentLiveItems.length > 0) {
         const rnd = currentLiveItems[Math.floor(Math.random() * currentLiveItems.length)];
-        const mediaType = document.getElementById('select-media-type').value;
-        loadDetailedCreditsAndAI(rnd, mediaType);
+        const itemType = rnd.title ? 'movie' : 'tv';
+        loadDetailedCreditsAndAI(rnd, itemType);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }
