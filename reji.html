@@ -470,9 +470,24 @@
       });
     }
 
-    function selectRejiItem(m) {
+    async function selectRejiItem(m) {
       selectedItem = m;
       const title = m.title || m.name || 'Netflix Yapımı';
+      const mediaType = m.media_type || (m.title ? 'movie' : 'tv');
+
+      // Detaylı credits çek (Yönetmen, Oyuncular)
+      try {
+        const detailsRes = await fetch();
+        const details = await detailsRes.json();
+        if (details.credits) {
+          selectedItem.director = details.credits.crew?.find(c => c.job === 'Director')?.name || '';
+          selectedItem.cast = details.credits.cast?.slice(0, 3).map(a => a.name).join(', ') || '';
+          selectedItem.runtime = details.runtime ?  : '';
+        }
+      } catch (e) {
+        console.warn('Credits çekilemedi:', e);
+      }
+
       const date = m.release_date || m.first_air_date || '';
       const year = date ? date.split('-')[0] : '2024';
       const vote = m.vote_average ? m.vote_average.toFixed(1) : '7.5';
