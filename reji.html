@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reji Odası | Netflix TR Canlı Yayın, Kuşak & X Zamanlama Masası</title>
+  <title>Reji Odası | Netflix TR Canlı Yayın, Gelişmiş Arama & X Zamanlama Masası</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script>
     tailwind.config = {
@@ -52,6 +52,13 @@
       background: #2a2a35;
       border-radius: 9999px;
     }
+    .topic-pill.active {
+      background-color: #E50914 !important;
+      color: #ffffff !important;
+      border-color: #E50914 !important;
+      font-weight: 700 !important;
+      box-shadow: 0 4px 14px rgba(229, 9, 20, 0.4);
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col selection:bg-netflix-red selection:text-white">
@@ -93,9 +100,9 @@
           <div>
             <div class="flex items-center gap-2">
               <span class="font-extrabold text-lg text-white">Reji Odası</span>
-              <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">X Yayın & Zamanlama Masası</span>
+              <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">X Yayın & Gelişmiş Arama Masası</span>
             </div>
-            <p class="text-[11px] text-neutral-400">Canlı Netflix TR Arama, Format & Tarih/Saat Zamanlama</p>
+            <p class="text-[11px] text-neutral-400">Canlı Netflix TR Detaylı Arama, Kuşak & Tarih/Saat Düzenleme</p>
           </div>
         </div>
 
@@ -112,45 +119,132 @@
 
     <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <!-- Düzenleme Modu Bildirimi (Varsayılan Gizli) -->
+      <div id="edit-mode-banner" class="hidden glass p-4 rounded-2xl border border-amber-500/40 bg-amber-500/10 flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <span class="text-xl">✏️</span>
+          <div>
+            <h4 class="text-xs font-black text-amber-400 uppercase tracking-wider">Planlanan Yayın Düzenleme Modu</h4>
+            <p id="edit-mode-desc" class="text-xs text-neutral-300">Şu anda planlanmış bir yayını düzenliyorsunuz.</p>
+          </div>
+        </div>
+        <button onclick="cancelEditMode()" class="px-3 py-1.5 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-neutral-300 text-xs font-bold transition-all">
+          Düzenlemeyi İptal Et
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
-        <!-- SOL: Canlı Netflix Arama (6 Kolon) -->
-        <div class="lg:col-span-6 space-y-5">
+        <!-- SOL: GELİŞMİŞ VE DETAYLI CANLI NETFLIX ARAMA (7 Kolon) -->
+        <div class="lg:col-span-7 space-y-5">
           
-          <div class="glass p-5 rounded-2xl space-y-3.5">
-            <div>
-              <h2 class="text-lg font-black text-white flex items-center gap-2">
-                <span>🔍 1. Netflix Türkiye Canlı Kataloğunda Ara</span>
-              </h2>
-              <p class="text-xs text-neutral-400">Film veya dizi adını yazın, canlı TMDB veritabanından seçin.</p>
+          <div class="glass p-5 rounded-2xl space-y-4">
+            
+            <div class="flex items-center justify-between">
+              <div>
+                <h2 class="text-base sm:text-lg font-black text-white flex items-center gap-2">
+                  <span>🔍 1. Netflix Türkiye Gelişmiş Canlı Arama</span>
+                </h2>
+                <p class="text-xs text-neutral-400 mt-0.5">Film, dizi, oyuncu veya serbestçe konu/ülke yazarak arayın.</p>
+              </div>
+              <button onclick="resetRejiFilters()" class="text-xs text-red-400 hover:text-red-300 underline font-semibold">
+                Sıfırla
+              </button>
             </div>
 
+            <!-- Serbest Arama Inputu -->
             <div class="relative">
-              <input type="text" id="reji-search" placeholder="Örn: Metruk Adam, Vurgun, Lupin, Se7en, Dark, Kulüp..." class="w-full bg-neutral-900/90 border border-neutral-700 rounded-xl px-4 py-3 pl-10 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-netflix-red transition-all shadow-inner">
+              <input type="text" id="reji-search" placeholder="İstediğinizi yazın (örn: iskandinav cinayet, afrika, iran dram, mert ramazan demir...)" class="w-full bg-neutral-900/95 border border-neutral-700 rounded-xl px-4 py-3 pl-10 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-netflix-red focus:ring-2 focus:ring-netflix-red/30 transition-all shadow-inner">
               <svg class="w-4 h-4 text-neutral-400 absolute left-3.5 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
             </div>
 
-            <div class="flex items-center gap-2 overflow-x-auto pb-1 custom-scrollbar">
-              <button onclick="rejiQuery('populer')" class="reji-pill active px-3 py-1.5 rounded-lg text-xs font-bold bg-netflix-red text-white">🔥 Popülerler</button>
-              <button onclick="rejiQuery('dedektif')" class="reji-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-700">🕵️ Dedektif</button>
-              <button onclick="rejiQuery('nordic')" class="reji-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-700">❄️ İskandinav</button>
-              <button onclick="rejiQuery('yerli')" class="reji-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-700">🇹🇷 Yerli</button>
+            <!-- Hızlı Arama Örnek Çipleri -->
+            <div class="flex flex-wrap items-center gap-1.5 text-[11px]">
+              <span class="text-neutral-500 font-semibold mr-1">💡 Hızlı:</span>
+              <button onclick="applyRejiSmartQuery('iskandinav')" class="px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">❄️ iskandinav</button>
+              <button onclick="applyRejiSmartQuery('afrika')" class="px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🌍 afrika</button>
+              <button onclick="applyRejiSmartQuery('iran')" class="px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🇮🇷 iran</button>
+              <button onclick="applyRejiSmartQuery('kore gerilim')" class="px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🇰🇷 kore gerilim</button>
+              <button onclick="applyRejiSmartQuery('türk soygun')" class="px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🇹🇷 türk soygun</button>
             </div>
+
+            <!-- Popüler Konu Hapları -->
+            <div class="space-y-1.5 pt-2 border-t border-neutral-800/60">
+              <span class="text-[11px] font-bold uppercase text-neutral-400 block tracking-wider">🎯 Konu Kuşakları</span>
+              <div class="flex flex-wrap gap-1.5">
+                <button onclick="setRejiTopic('all')" data-reji-topic="all" class="topic-pill active px-3 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800">🌟 Tümü</button>
+                <button onclick="setRejiTopic('cinayet')" data-reji-topic="cinayet" class="topic-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800">🔪 Cinayet & Dedektif</button>
+                <button onclick="setRejiTopic('ask')" data-reji-topic="ask" class="topic-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800">❤️ Aşk & Romantik</button>
+                <button onclick="setRejiTopic('bilimkurgu')" data-reji-topic="bilimkurgu" class="topic-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800">🧬 Bilim Kurgu</button>
+                <button onclick="setRejiTopic('tarihi')" data-reji-topic="tarihi" class="topic-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800">🏛️ Tarihi</button>
+                <button onclick="setRejiTopic('soygun')" data-reji-topic="soygun" class="topic-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800">🏦 Soygun</button>
+                <button onclick="setRejiTopic('komedi')" data-reji-topic="komedi" class="topic-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800">😂 Komedi</button>
+              </div>
+            </div>
+
+            <!-- Ayrıştırılmış 3 Detaylı Seçici Kutu -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-neutral-800/60">
+              
+              <!-- 1. Ülke Sineması -->
+              <div class="space-y-1">
+                <label class="text-[10px] font-bold uppercase text-sky-400 block tracking-wider">🌍 Ülke Sineması</label>
+                <select id="reji-select-country" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-2.5 py-2 text-xs font-semibold text-neutral-200 focus:outline-none focus:border-netflix-red">
+                  <option value="all">Tüm Dünya</option>
+                  <option value="nordic">❄️ İskandinav Sineması</option>
+                  <option value="africa">🌍 Afrika Sineması</option>
+                  <option value="TR">🇹🇷 Türk / Yerli</option>
+                  <option value="US">🇺🇸 Amerikan / Hollywood</option>
+                  <option value="europe">🇪🇺 Avrupa Sineması</option>
+                  <option value="IR">🇮🇷 İran & Ortadoğu</option>
+                  <option value="KR">🇰🇷 Kore & Asya</option>
+                  <option value="JP">🇯🇵 Japon Sineması</option>
+                </select>
+              </div>
+
+              <!-- 2. Format (Film / Dizi) -->
+              <div class="space-y-1">
+                <label class="text-[10px] font-bold uppercase text-emerald-400 block tracking-wider">⏱️ Format</label>
+                <select id="reji-select-media" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-2.5 py-2 text-xs font-semibold text-neutral-200 focus:outline-none focus:border-netflix-red">
+                  <option value="both">🎬 Tümü (Film & Dizi)</option>
+                  <option value="movie">🎥 Sadece Film</option>
+                  <option value="tv">📺 Sadece Dizi</option>
+                </select>
+              </div>
+
+              <!-- 3. Sıralama -->
+              <div class="space-y-1">
+                <label class="text-[10px] font-bold uppercase text-amber-400 block tracking-wider">🔥 Sıralama</label>
+                <select id="reji-select-sort" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-2.5 py-2 text-xs font-semibold text-neutral-200 focus:outline-none focus:border-netflix-red">
+                  <option value="popularity.desc">En Popülerler</option>
+                  <option value="vote_average.desc">En Yüksek Puan</option>
+                  <option value="primary_release_date.desc">En Yeniler</option>
+                </select>
+              </div>
+
+            </div>
+
           </div>
 
+          <!-- Film Listesi -->
           <div class="space-y-2">
             <div class="flex items-center justify-between text-xs text-neutral-400 px-1">
-              <span id="reji-count">Canlı Netflix verisi taranıyor...</span>
-              <span class="text-neutral-500">Seçmek için tıklayın ↓</span>
+              <span id="reji-count" class="font-bold text-neutral-300">Canlı Netflix verisi taranıyor...</span>
+              <span class="text-neutral-500">Seçmek için filme tıklayın ↓</span>
             </div>
 
-            <div id="reji-movie-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[580px] overflow-y-auto pr-1 custom-scrollbar"></div>
+            <div id="reji-movie-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[560px] overflow-y-auto pr-1 custom-scrollbar"></div>
+
+            <div id="reji-load-more" class="hidden text-center pt-2">
+              <button onclick="rejiLoadMore()" class="px-5 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-700 text-xs font-bold text-neutral-300">
+                Daha Fazla Yapım Göster ↓
+              </button>
+            </div>
           </div>
 
         </div>
 
-        <!-- SAĞ: Kuşak, Tarih/Saat & X Yayın Masası (6 Kolon) -->
-        <div class="lg:col-span-6 space-y-5">
+        <!-- SAĞ: Kuşak, Tarih/Saat & X Yayın Masası (5 Kolon) -->
+        <div class="lg:col-span-5 space-y-5">
           
           <div class="glass p-5 rounded-2xl space-y-4">
             <div class="flex items-center justify-between border-b border-neutral-800 pb-3">
@@ -166,9 +260,9 @@
             <div class="flex gap-4 items-start">
               <img id="selected-poster" src="" alt="Afiş" class="w-20 h-28 object-cover rounded-xl border border-neutral-700 shrink-0 shadow-md bg-neutral-900">
               <div class="space-y-1">
-                <h3 id="selected-title" class="text-lg font-black text-white leading-tight">Lütfen Bir Film Seçin</h3>
+                <h3 id="selected-title" class="text-lg font-black text-white leading-tight">Lütfen Sol Taraftan Bir Film Seçin</h3>
                 <div id="selected-meta" class="text-xs text-neutral-400">Netflix Türkiye</div>
-                <p id="selected-synopsis" class="text-xs text-neutral-400 line-clamp-2 leading-relaxed mt-1">Sol listeden bir film seçtiğinizde künyesi ve tweet taslağı anında üretilecektir.</p>
+                <p id="selected-synopsis" class="text-xs text-neutral-400 line-clamp-2 leading-relaxed mt-1">Film seçtiğinizde künyesi ve tweet taslağı anında üretilecektir.</p>
               </div>
             </div>
 
@@ -247,8 +341,9 @@
               </button>
 
               <div class="grid grid-cols-2 gap-2">
-                <button onclick="addToScheduleQueue()" class="py-2.5 px-3 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 text-xs font-bold transition-all flex items-center justify-center gap-1.5 active:scale-95">
-                  <span>📅 Yayın Planına Ekle</span>
+                <!-- Eğer düzenleme modundaysa Değişiklikleri Kaydet, değilse Yayın Planına Ekle -->
+                <button id="btn-save-queue" onclick="saveQueueAction()" class="py-2.5 px-3 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 text-xs font-bold transition-all flex items-center justify-center gap-1.5 active:scale-95">
+                  <span id="btn-save-queue-text">📅 Yayın Planına Ekle</span>
                 </button>
                 <button onclick="copyTweet()" class="py-2.5 px-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-700 text-xs font-semibold text-neutral-200 transition-all flex items-center justify-center gap-1.5 active:scale-95">
                   <span>📋 Metni Kopyala</span>
@@ -261,14 +356,14 @@
 
       </div>
 
-      <!-- Planlanan Yayınlar Tablosu (Gelişmiş Kart & Kalan Süre Görünümü) -->
-      <div class="glass p-6 rounded-3xl space-y-4">
+      <!-- Planlanan Yayınlar Tablosu (Düzenle & Sil & Kalan Süre Özellikli) -->
+      <div id="queue-section" class="glass p-6 rounded-3xl space-y-4">
         <div class="flex items-center justify-between border-b border-neutral-800 pb-3">
           <div>
             <h3 class="text-base font-extrabold text-white flex items-center gap-2">
               <span>🗓️ Planlanan Yayınlar Takvimi (Editör Ajandası)</span>
             </h3>
-            <p class="text-xs text-neutral-400 mt-0.5">Yayın tarihi, saati ve kalan süreye göre sıralı yayın kuyruğunuz.</p>
+            <p class="text-xs text-neutral-400 mt-0.5">Tarih, saat veya tweet içeriğini <strong>"✏️ Düzenle"</strong> ile anında güncelleyebilirsiniz.</p>
           </div>
           <div class="flex items-center gap-2">
             <span id="queue-count" class="text-xs font-bold px-3 py-1 rounded-full bg-neutral-800 text-neutral-300 border border-neutral-700">0 Planlanan Yayın</span>
@@ -290,17 +385,22 @@
     const TMDB_API_KEY = "65a75854bdb8832f10fc1687f4b299d5";
     const BASE_URL = "https://api.themoviedb.org/3";
     const IMG_BASE = "https://image.tmdb.org/t/p";
+    const TODAY_ISO = new Date().toISOString().split('T')[0];
 
     let liveItems = [];
     let selectedItem = null;
     let currentConcept = 'Akşam Matinesi';
-    let currentQueryType = 'populer';
+    let currentRejiTopic = 'all';
+    let rejiPage = 1;
     let searchDebounce = null;
+
+    // Düzenleme Takip Değişkeni (Eğer null değilse o ID'li yayın düzenleniyor)
+    let editingQueueId = null;
 
     function directAccess() {
       document.getElementById('auth-overlay').classList.add('hidden');
       setupInitialDate();
-      rejiQuery('populer');
+      rejiFetch(1);
       renderQueue();
     }
 
@@ -336,63 +436,149 @@
       generateTweetTemplate();
     }
 
-    async function rejiQuery(type) {
-      currentQueryType = type;
-      const countEl = document.getElementById('reji-count');
-      countEl.textContent = 'Canlı veritabanı taranıyor...';
+    // Doğal Dil Ayrıştırıcı
+    function parseRejiQuery(text) {
+      const q = text.toLowerCase().trim();
+      let parsedCountry = null;
+      let parsedGenre = null;
 
-      let url = "";
-      if (type === 'dedektif') {
-        url = `${BASE_URL}/discover/movie?api_key=${TMDB_API_KEY}&language=tr-TR&watch_region=TR&with_watch_providers=8&with_genres=80,9648&sort_by=popularity.desc&page=1`;
-      } else if (type === 'nordic') {
-        url = `${BASE_URL}/discover/movie?api_key=${TMDB_API_KEY}&language=tr-TR&watch_region=TR&with_watch_providers=8&with_original_language=da|sv|no|is&sort_by=popularity.desc&page=1`;
-      } else if (type === 'yerli') {
-        url = `${BASE_URL}/discover/movie?api_key=${TMDB_API_KEY}&language=tr-TR&watch_region=TR&with_watch_providers=8&with_original_language=tr&sort_by=popularity.desc&page=1`;
-      } else {
-        url = `${BASE_URL}/discover/movie?api_key=${TMDB_API_KEY}&language=tr-TR&watch_region=TR&with_watch_providers=8&with_watch_monetization_types=flatrate&sort_by=popularity.desc&page=1`;
+      if (q.includes('afrika') || q.includes('nijerya') || q.includes('güney afrika')) {
+        parsedCountry = 'africa';
+      } else if (q.includes('iskandinav') || q.includes('isveç') || q.includes('norveç') || q.includes('danimarka') || q.includes('izlanda')) {
+        parsedCountry = 'nordic';
+      } else if (q.includes('iran') || q.includes('fars')) {
+        parsedCountry = 'IR';
+      } else if (q.includes('japon') || q.includes('japonya') || q.includes('anime')) {
+        parsedCountry = 'JP';
+      } else if (q.includes('kore') || q.includes('güney kore')) {
+        parsedCountry = 'KR';
+      } else if (q.includes('türk') || q.includes('yerli')) {
+        parsedCountry = 'TR';
+      } else if (q.includes('amerikan') || q.includes('hollywood')) {
+        parsedCountry = 'US';
       }
 
-      try {
-        const res = await fetch(url);
-        const data = await res.json();
-        if (data.results && data.results.length > 0) {
-          liveItems = data.results.filter(x => x.poster_path);
-          renderRejiList(liveItems);
-          if (liveItems.length > 0 && !selectedItem) {
-            selectRejiItem(liveItems[0]);
-          }
-        }
-      } catch (e) {
-        console.error('Reji Canlı Sorgu Hatası:', e);
+      if (q.includes('dedektif') || q.includes('polisiye') || q.includes('cinayet')) {
+        parsedGenre = '80,9648';
+      } else if (q.includes('korku')) {
+        parsedGenre = '27';
+      } else if (q.includes('gerilim')) {
+        parsedGenre = '53';
+      } else if (q.includes('aşk') || q.includes('romantik')) {
+        parsedGenre = '10749';
+      } else if (q.includes('bilim kurgu')) {
+        parsedGenre = '878';
+      } else if (q.includes('soygun')) {
+        parsedGenre = '80,28';
+      } else if (q.includes('komedi')) {
+        parsedGenre = '35';
+      } else if (q.includes('tarih')) {
+        parsedGenre = '36|10752';
       }
+
+      return { parsedCountry, parsedGenre };
     }
 
-    async function searchReji(q) {
-      if (!q) {
-        rejiQuery(currentQueryType);
-        return;
-      }
+    // GELİŞMİŞ REJİ ARAMA MOTORU
+    async function rejiFetch(page = 1, append = false) {
       const countEl = document.getElementById('reji-count');
-      countEl.textContent = 'Canlı aranıyor...';
-      const url = `${BASE_URL}/search/multi?api_key=${TMDB_API_KEY}&language=tr-TR&query=${encodeURIComponent(q)}&page=1&include_adult=false`;
+      const loadMoreBtn = document.getElementById('reji-load-more');
+      countEl.textContent = 'Canlı veritabanı taranıyor...';
+
+      const mediaChoice = document.getElementById('reji-select-media').value;
+      const targetMedia = mediaChoice === 'both' ? 'movie' : mediaChoice;
+      const countryChoice = document.getElementById('reji-select-country').value;
+      const sortBy = document.getElementById('reji-select-sort').value;
+      const rawQ = document.getElementById('reji-search').value.trim();
+
+      const { parsedCountry, parsedGenre } = parseRejiQuery(rawQ);
+
+      let url = "";
+
+      if (rawQ && !parsedCountry && !parsedGenre) {
+        url = `${BASE_URL}/search/${targetMedia}?api_key=${TMDB_API_KEY}&language=tr-TR&query=${encodeURIComponent(rawQ)}&page=${page}&include_adult=false`;
+      } else {
+        url = `${BASE_URL}/discover/${targetMedia}?api_key=${TMDB_API_KEY}&language=tr-TR&watch_region=TR&with_watch_providers=8&with_watch_monetization_types=flatrate&sort_by=${sortBy}&page=${page}&include_adult=false`;
+
+        if (targetMedia === 'movie') {
+          url += `&primary_release_date.lte=${TODAY_ISO}`;
+        } else {
+          url += `&first_air_date.lte=${TODAY_ISO}`;
+        }
+
+        const finalCountry = parsedCountry || (countryChoice !== 'all' ? countryChoice : null);
+        if (finalCountry) {
+          if (finalCountry === 'nordic') url += `&with_original_language=da|sv|no|is`;
+          else if (finalCountry === 'africa') url += `&with_origin_country=ZA|NG|KE|EG`;
+          else if (finalCountry === 'europe') url += `&with_origin_country=FR|DE|IT|ES|GB`;
+          else if (finalCountry === 'TR') url += `&with_original_language=tr`;
+          else url += `&with_origin_country=${finalCountry}`;
+        } else {
+          url += `&vote_count.gte=10`;
+        }
+
+        const finalGenre = parsedGenre || null;
+        if (finalGenre) {
+          url += `&with_genres=${finalGenre}`;
+        } else if (currentRejiTopic !== 'all') {
+          if (currentRejiTopic === 'cinayet') url += `&with_genres=80,9648`;
+          else if (currentRejiTopic === 'ask') url += `&with_genres=10749`;
+          else if (currentRejiTopic === 'bilimkurgu') url += `&with_genres=878`;
+          else if (currentRejiTopic === 'tarihi') url += `&with_genres=36|10752`;
+          else if (currentRejiTopic === 'soygun') url += `&with_genres=80,28`;
+          else if (currentRejiTopic === 'komedi') url += `&with_genres=35`;
+        }
+      }
 
       try {
         const res = await fetch(url);
         const data = await res.json();
-        if (data.results) {
-          liveItems = data.results.filter(x => x.poster_path && (x.media_type === 'movie' || x.media_type === 'tv'));
-          renderRejiList(liveItems);
+        let valid = (data.results || []).filter(x => x.poster_path && (x.title || x.name));
+
+        // Eğer filmde 0 sonuç çıktıysa ve kullanıcı "Tümü" seçtiyse otomatik TV dizisi tara
+        if (valid.length === 0 && mediaChoice === 'both') {
+          const tvUrl = url.replace('/discover/movie', '/discover/tv').replace('primary_release_date', 'first_air_date');
+          const tvRes = await fetch(tvUrl);
+          const tvData = await tvRes.json();
+          if (tvData.results && tvData.results.length > 0) {
+            valid = tvData.results.filter(x => x.poster_path && (x.title || x.name));
+          }
         }
+
+        if (append) {
+          liveItems = [...liveItems, ...valid];
+        } else {
+          liveItems = valid;
+        }
+
+        renderRejiList(liveItems);
+
+        if (!append && liveItems.length > 0 && !selectedItem && !editingQueueId) {
+          selectRejiItem(liveItems[0]);
+        }
+
+        if (data.page < data.total_pages) {
+          loadMoreBtn.classList.remove('hidden');
+          rejiPage = data.page;
+        } else {
+          loadMoreBtn.classList.add('hidden');
+        }
+
       } catch (e) {
-        console.error(e);
+        console.error('Reji Canlı Sorgu Hatası:', e);
       }
     }
 
     function renderRejiList(items) {
       const list = document.getElementById('reji-movie-list');
       const countEl = document.getElementById('reji-count');
-      countEl.textContent = `${items.length} canlı yapım bulundu`;
+      countEl.textContent = `${items.length} canlı yapım listeleniyor`;
       list.innerHTML = '';
+
+      if (items.length === 0) {
+        list.innerHTML = `<div class="col-span-full py-8 text-center text-xs text-neutral-500">Aramanıza uygun Netflix Türkiye yapımı bulunamadı.</div>`;
+        return;
+      }
 
       items.forEach(m => {
         const title = m.title || m.name || 'İsimsiz';
@@ -400,6 +586,7 @@
         const year = date ? date.split('-')[0] : '2025';
         const vote = m.vote_average ? m.vote_average.toFixed(1) : 'NR';
         const poster = `${IMG_BASE}/w780${m.poster_path}`;
+        const isTv = !m.title;
 
         const isSelected = selectedItem && selectedItem.id === m.id;
         const card = document.createElement('div');
@@ -410,7 +597,7 @@
           <img src="${poster}" alt="${title}" class="w-12 h-16 object-cover rounded-lg shrink-0 border border-neutral-700">
           <div class="flex-1 min-w-0">
             <div class="flex items-center justify-between gap-1">
-              <span class="text-[9px] font-bold text-red-400 uppercase">Netflix TR</span>
+              <span class="text-[9px] font-bold text-red-400 uppercase">${isTv ? '📺 Dizi' : '🎬 Film'}</span>
               <span class="text-[10px] font-bold text-amber-400">★ ${vote}</span>
             </div>
             <h4 class="text-xs font-black text-white truncate leading-snug">${title}</h4>
@@ -454,7 +641,10 @@
         console.warn('Credits çekilemedi:', e);
       }
 
-      generateTweetTemplate();
+      // Eğer düzenleme modunda değilsek yeni tweet şablonu üret
+      if (!editingQueueId) {
+        generateTweetTemplate();
+      }
       renderRejiList(liveItems);
     }
 
@@ -547,8 +737,8 @@
       showToast('Tweet metni panoya kopyalandı!');
     }
 
-    // YAYIN PLANINA EKLEME
-    function addToScheduleQueue() {
+    // 💾 PLANLANAN YAYIN İŞLEMLERİ (EKLEME & DÜZELTME)
+    function saveQueueAction() {
       if (!selectedItem) {
         alert('Lütfen önce sol taraftan bir film seçin!');
         return;
@@ -559,34 +749,89 @@
       const text = document.getElementById('tweet-textarea').value;
       const poster = `${IMG_BASE}/w780${selectedItem.poster_path}`;
 
-      const queueItem = {
-        id: Date.now(),
-        title: title,
-        concept: currentConcept,
-        date: dateVal,
-        time: timeVal,
-        tweetText: text,
-        poster: poster
-      };
-
       let queue = [];
       try {
         queue = JSON.parse(localStorage.getItem('reji_scheduled_queue') || '[]');
       } catch(e) {}
-      
-      queue.push(queueItem);
 
-      // Tarih ve Saate göre küçükten büyüğe sırala (En yakın yayın en üstte)
-      queue.sort((a, b) => {
-        return new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`);
-      });
+      if (editingQueueId) {
+        // DÜZENLEME MODU: Mevcut kaydı güncelle
+        const idx = queue.findIndex(x => x.id === editingQueueId);
+        if (idx !== -1) {
+          queue[idx].title = title;
+          queue[idx].concept = currentConcept;
+          queue[idx].date = dateVal;
+          queue[idx].time = timeVal;
+          queue[idx].tweetText = text;
+          queue[idx].poster = poster;
+        }
+        showToast(`"${title}" yayını başarıyla güncellendi!`);
+        cancelEditMode();
+      } else {
+        // YENİ EKLEME MODU
+        const newItem = {
+          id: Date.now(),
+          title: title,
+          concept: currentConcept,
+          date: dateVal,
+          time: timeVal,
+          tweetText: text,
+          poster: poster
+        };
+        queue.push(newItem);
+        showToast(`"${title}" ${dateVal} ${timeVal} için ajandaya eklendi!`);
+      }
+
+      // Tarihe göre sırala
+      queue.sort((a, b) => new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`));
 
       try {
         localStorage.setItem('reji_scheduled_queue', JSON.stringify(queue));
       } catch(e) {}
 
       renderQueue();
-      showToast(`"${title}" ${dateVal} ${timeVal} yayını için ajandaya eklendi!`);
+    }
+
+    // ✏️ DÜZENLEME MODUNU BAŞLATMA
+    function startEditQueueItem(id) {
+      let queue = [];
+      try {
+        queue = JSON.parse(localStorage.getItem('reji_scheduled_queue') || '[]');
+      } catch(e) {}
+
+      const item = queue.find(x => x.id === id);
+      if (!item) return;
+
+      editingQueueId = id;
+
+      // Editör inputlarını seçilen yayınla doldur
+      document.getElementById('schedule-date').value = item.date;
+      document.getElementById('schedule-time').value = item.time;
+      document.getElementById('tweet-textarea').value = item.tweetText;
+      updateCharCount();
+
+      setConcept(item.concept);
+
+      // Seçili kart görüntüsünü güncelle
+      document.getElementById('selected-poster').src = item.poster;
+      document.getElementById('selected-title').textContent = item.title;
+      document.getElementById('selected-synopsis').textContent = "Düzenleme modunda yüklendi.";
+
+      // Banner ve Buton Güncellemesi
+      document.getElementById('edit-mode-banner').classList.remove('hidden');
+      document.getElementById('edit-mode-desc').textContent = `Şu an "${item.title}" yayınının tarih, saat ve tweetini düzenliyorsunuz.`;
+      document.getElementById('btn-save-queue-text').textContent = "💾 Değişiklikleri Kaydet";
+      document.getElementById('btn-save-queue').className = "py-2.5 px-3 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-300 text-xs font-black transition-all flex items-center justify-center gap-1.5 active:scale-95 animate-pulse";
+
+      // Sayfayı editör alanına kaydır
+      window.scrollTo({ top: 100, behavior: 'smooth' });
+    }
+
+    function cancelEditMode() {
+      editingQueueId = null;
+      document.getElementById('edit-mode-banner').classList.add('hidden');
+      document.getElementById('btn-save-queue-text').textContent = "📅 Yayın Planına Ekle";
+      document.getElementById('btn-save-queue').className = "py-2.5 px-3 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 text-xs font-bold transition-all flex items-center justify-center gap-1.5 active:scale-95";
     }
 
     function deleteQueueItem(id) {
@@ -600,6 +845,7 @@
       } catch(e) {}
       renderQueue();
       showToast('Yayın planından çıkarıldı.');
+      if (editingQueueId === id) cancelEditMode();
     }
 
     function clearAllQueue() {
@@ -607,10 +853,11 @@
         localStorage.removeItem('reji_scheduled_queue');
         renderQueue();
         showToast('Tüm yayın planı temizlendi.');
+        cancelEditMode();
       }
     }
 
-    // YAYIN PLANINI NET VE BÜYÜK KARTLARLA ÇİZDİRME
+    // YAYIN PLANINI ÇİZDİRME (DÜZENLE BUTONU DAHİL)
     function renderQueue() {
       const queueList = document.getElementById('queue-list');
       const countEl = document.getElementById('queue-count');
@@ -638,7 +885,6 @@
           year: 'numeric' 
         });
 
-        // Kalan Süre Hesaplama
         const diffMs = itemDateTime - now;
         const diffHours = Math.round(diffMs / (1000 * 60 * 60));
         let timeRemainingBadge = "";
@@ -652,8 +898,9 @@
           timeRemainingBadge = `<span class="px-2 py-0.5 rounded bg-sky-500/20 text-sky-400 border border-sky-500/30 text-[10px] font-bold">📅 ${days} gün kaldı</span>`;
         }
 
+        const isCurrentlyEditing = editingQueueId === item.id;
         const card = document.createElement('div');
-        card.className = "p-4 rounded-2xl bg-neutral-900/80 border border-neutral-800 hover:border-neutral-700 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4";
+        card.className = `p-4 rounded-2xl transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 border ${isCurrentlyEditing ? 'bg-amber-950/20 border-amber-500/60 shadow-lg' : 'bg-neutral-900/80 border-neutral-800 hover:border-neutral-700'}`;
         
         card.innerHTML = `
           <div class="flex items-center gap-3.5 min-w-0">
@@ -674,11 +921,14 @@
           </div>
 
           <div class="flex items-center gap-2 self-end sm:self-center shrink-0">
-            <button onclick="publishFromQueue('${encodeURIComponent(item.tweetText)}')" class="px-4 py-2 rounded-xl bg-sky-500 hover:bg-sky-400 text-white text-xs font-black transition-all shadow-md flex items-center gap-1.5 active:scale-95">
-              <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-              <span>X'te Paylaş</span>
+            <!-- ✏️ DÜZENLE BUTONU -->
+            <button onclick="startEditQueueItem(${item.id})" class="px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 text-xs font-bold transition-all flex items-center gap-1">
+              <span>✏️ Düzenle</span>
             </button>
-            <button onclick="deleteQueueItem(${item.id})" class="p-2 rounded-xl bg-neutral-800 hover:bg-red-950/80 text-neutral-400 hover:text-red-400 text-xs transition-all border border-neutral-700" title="Plândan Çıkar">
+            <button onclick="publishFromQueue('${encodeURIComponent(item.tweetText)}')" class="px-3 py-1.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-white text-xs font-black transition-all shadow-md flex items-center gap-1">
+              <span>X'e Gönder</span>
+            </button>
+            <button onclick="deleteQueueItem(${item.id})" class="p-1.5 rounded-xl bg-neutral-800 hover:bg-red-950/80 text-neutral-400 hover:text-red-400 text-xs transition-all border border-neutral-700" title="Plândan Çıkar">
               ✕
             </button>
           </div>
@@ -702,10 +952,49 @@
       }, 3000);
     }
 
+    // Filtre & Arama Fonksiyonları
+    function applyRejiSmartQuery(txt) {
+      document.getElementById('reji-search').value = txt;
+      rejiFetch(1);
+    }
+
+    function setRejiTopic(topic) {
+      currentRejiTopic = topic;
+      document.querySelectorAll('[data-reji-topic]').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-reji-topic') === topic);
+      });
+      document.getElementById('reji-search').value = '';
+      rejiFetch(1);
+    }
+
+    function resetRejiFilters() {
+      document.getElementById('reji-search').value = '';
+      document.getElementById('reji-select-country').value = 'all';
+      document.getElementById('reji-select-media').value = 'both';
+      document.getElementById('reji-select-sort').value = 'popularity.desc';
+      currentRejiTopic = 'all';
+
+      document.querySelectorAll('[data-reji-topic]').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-reji-topic') === 'all');
+      });
+
+      rejiFetch(1);
+    }
+
+    function rejiLoadMore() {
+      rejiFetch(rejiPage + 1, true);
+    }
+
+    ['reji-select-country', 'reji-select-media', 'reji-select-sort'].forEach(id => {
+      document.getElementById(id).addEventListener('change', () => {
+        rejiFetch(1);
+      });
+    });
+
     document.getElementById('reji-search').addEventListener('input', (e) => {
       clearTimeout(searchDebounce);
       searchDebounce = setTimeout(() => {
-        searchReji(e.target.value.trim());
+        rejiFetch(1);
       }, 400);
     });
 
