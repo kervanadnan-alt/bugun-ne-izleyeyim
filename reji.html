@@ -878,7 +878,7 @@
 
       // Kalan karakteri hesaplayıp açıklamayı ona göre biç
       const usedLen = (header + actorSnippet + baseFooter).length;
-      const maxDescLen = Math.max(40, 265 - usedLen);
+      const maxDescLen = Math.max(35, 230 - usedLen);
       
       let safeDesc = overview;
       if (safeDesc.length > maxDescLen) {
@@ -1119,23 +1119,33 @@
       if (!item) return;
       
       const safeText = encodeURIComponent(item.tweetText);
-      const url = `https://x.com/intent/tweet?text=${safeText}`;
+      let url = `https://x.com/intent/tweet?text=${safeText}`;
+      if (item.poster) {
+        url += `&url=${encodeURIComponent(item.poster)}`;
+      }
+
       const win = window.open(url, '_blank');
       if (!win) {
         window.location.href = url;
       }
-      showToast('X paylaşım penceresi açıldı!');
+      showToast('X açıldı: Afiş kartı otomatik eklendi!');
     }
 
     function shareOnX() {
       const text = document.getElementById('tweet-textarea').value;
       const safeText = encodeURIComponent(text);
-      const url = `https://x.com/intent/tweet?text=${safeText}`;
+      const posterUrl = selectedItem && selectedItem.poster_path ? `${IMG_BASE}/w780${selectedItem.poster_path}` : '';
+      
+      let url = `https://x.com/intent/tweet?text=${safeText}`;
+      if (posterUrl) {
+        url += `&url=${encodeURIComponent(posterUrl)}`;
+      }
+
       const win = window.open(url, '_blank');
       if (!win) {
         window.location.href = url;
       }
-      showToast('X (Twitter) paylaşım penceresi açıldı!');
+      showToast('X açıldı: Afiş kartı otomatik eklendi!');
     }
 
     function showToast(msg) {
