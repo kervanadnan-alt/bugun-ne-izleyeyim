@@ -686,13 +686,15 @@
         const details = await detailsRes.json();
 
         // 1. TAM VE GÜÇLÜ AÇIKLAMA (Boşsa en-US dilinden yedekle)
+        selectedItem.genres = details.genres || [];
         let fullOverview = details.overview || m.overview || '';
         if (!fullOverview || fullOverview.trim().length < 15) {
           try {
             const enRes = await fetch(`${BASE_URL}/${mediaType}/${m.id}?api_key=${TMDB_API_KEY}&language=en-US`);
             const enData = await enRes.json();
             if (enData.overview && enData.overview.trim().length > 10) {
-              fullOverview = `[Orijinal Özet] ${enData.overview}`;
+              // Otomatik Türkçe çeviri yap
+              fullOverview = await getTurkishOverview(enData.overview, details.genres, details.credits?.crew?.find(c => c.job === 'Director')?.name || '', '');
             }
           } catch(e) {}
         }
@@ -782,6 +784,61 @@
       generateTweetTemplate();
     }
 
+    
+    function getGenreHook(genres, concept) {
+      const gNames = (genres || []).map(g => g.name ? g.name.toLowerCase() : '').join(' ');
+      
+      if (concept === 'Pazar Sineması') {
+        return { hook: "🍿 Pazar Sineması | Haftanın ödüllü dev yapımı!", tag: "#PazarSineması" };
+      }
+      if (concept === 'Yerli Köşesi') {
+        return { hook: "🇹🇷 Yerli Köşesi | Türk sinema ve dizisinin en iyileri!", tag: "#YerliSinema" };
+      }
+      if (concept === 'İskandinav Gerilimi') {
+        return { hook: "❄️ İskandinav Noir | Kuzeyin karanlık ve tekinsiz cinayet gizemi!", tag: "#İskandinavGerilimi" };
+      }
+
+      // Akşam Matinesi veya Gece Seansı için tür bazlı akıllı başlık
+      if (gNames.includes('romantik') || gNames.includes('aşk')) {
+        return { hook: "🌙 Akşam Matinesi | Kalbe dokunan sürükleyici bir aşk hikayesi!", tag: "#RomantikFilm" };
+      }
+      if (gNames.includes('komedi')) {
+        return { hook: "🌙 Akşam Matinesi | Kahkaha dolu ve kafa dağıtmalık harika bir seyirlik!", tag: "#Komedi" };
+      }
+      if (gNames.includes('bilim kurgu') || gNames.includes('distopik')) {
+        return { hook: "🌙 Akşam Matinesi | Zihin açıcı ütopik bir bilim kurgu yolculuğu!", tag: "#BilimKurgu" };
+      }
+      if (gNames.includes('tarih') || gNames.includes('savaş')) {
+        return { hook: "🌙 Akşam Matinesi | Geçmişin derinliklerinde epik bir dönem hikayesi!", tag: "#TarihiFilm" };
+      }
+      if (gNames.includes('dram')) {
+        return { hook: "🌙 Akşam Matinesi | İnsan ruhuna dokunan etkileyici bir dram!", tag: "#DramFilmi" };
+      }
+      if (gNames.includes('suç') || gNames.includes('cinayet') || gNames.includes('dedektif') || gNames.includes('gizem') || gNames.includes('gerilim')) {
+        return { hook: "🌙 Akşam Matinesi | Soluksuz bir suç ve dedektif gizemi!", tag: "#AkşamMatinesi" };
+      }
+      return { hook: "🌙 Akşam Matinesi | Ekran başında kaçırılmayacak harika bir yapım!", tag: "#AkşamMatinesi" };
+    }
+
+
+    async function getTurkishOverview(text, genres, dirName, castNames) {
+      if (!text || text.trim().length === 0) {
+        const g = (genres || []).map(x => x.name).join(', ') || 'Sinema';
+        return `Yönetmen ${dirName} imzalı bu yapım, ${g} türünde merak uyandırıcı bir hikaye sunuyor.`;
+      }
+      try {
+        const trUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=tr&dt=t&q=${encodeURIComponent(text)}`;
+        const r = await fetch(trUrl);
+        const d = await r.json();
+        if (d && d[0]) {
+          return d[0].map(s => s[0]).join('');
+        }
+      } catch(e) {
+        console.warn('Otomatik çeviri yapılamadı:', e);
+      }
+      return text;
+    }
+
     function generateTweetTemplate() {
       if (!selectedItem) return;
       const title = selectedItem.title || selectedItem.name || 'Film';
@@ -799,24 +856,9 @@
         dateHook = `📅 ${dayName} | Saat ${timeVal}\n`;
       }
 
-      let hook = "";
-      let tag = "";
-      if (currentConcept === 'Akşam Matinesi') {
-        hook = "🌙 Akşam Matinesi | Bu gece soluksuz bir gerilim!";
-        tag = "#AkşamMatinesi";
-      } else if (currentConcept === 'Pazar Sineması') {
-        hook = "🍿 Pazar Sineması | Haftanın ödüllü dev yapımı!";
-        tag = "#PazarSineması";
-      } else if (currentConcept === 'Yerli Köşesi') {
-        hook = "🇹🇷 Yerli Köşesi | Türk sinema ve dizisinin en iyileri!";
-        tag = "#YerliSinema";
-      } else if (currentConcept === 'İskandinav Gerilimi') {
-        hook = "❄️ İskandinav Noir | Kuzeyin karanlık ve tekinsiz cinayet gizemi!";
-        tag = "#İskandinavGerilimi";
-      } else {
-        hook = "⚡ Gece Seansı | Yüksek adrenalin ve zihin bükücü!";
-        tag = "#GeceSeansı";
-      }
+      const hookObj = getGenreHook(selectedItem.genres, currentConcept);
+      const hook = hookObj.hook;
+      const tag = hookObj.tag;
 
       let creditsLine = "";
       if (selectedItem.cast && selectedItem.cast !== "Oyuncu bilgisi mevcut değil") {
