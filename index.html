@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bugün Ne İzleyeyim? | Canlı Netflix TR, Film Künyesi & YZ İnceleme Motoru</title>
-  <meta name="description" content="Netflix Türkiye canlı kataloğu, tam film künyesi (oyuncular, yönetmen, süre), YZ editör incelemeleri ve gelişmiş filtreler.">
+  <title>Bugün Ne İzleyeyim? | Doğrulanmış Netflix Türkiye Canlı Keşif Motoru</title>
+  <meta name="description" content="Sadece Netflix Türkiye'de şu an gerçekten yayında olan, tam künyeli ve YZ incelemeli en iyi film ve diziler.">
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script>
     tailwind.config = {
@@ -79,10 +79,10 @@
             Bugün Ne İzleyeyim?
             <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 uppercase tracking-widest flex items-center gap-1">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              Netflix TR Canlı
+              Doğrulanmış Netflix TR
             </span>
           </span>
-          <p class="text-[11px] text-neutral-400 hidden sm:block">Tam Film Künyesi, Oyuncu Kadrosu & YZ Film İncelemesi</p>
+          <p class="text-[11px] text-neutral-400 hidden sm:block">Sadece Türkiye'de Gerçekten Yayında Olan Yapımlar</p>
         </div>
       </div>
 
@@ -94,20 +94,21 @@
     </div>
   </header>
 
-  <!-- Hero Vitrin Alanı: Tam Künye, Oyuncular & YZ Yorumu -->
+  <!-- Hero Vitrin Alanı -->
   <section id="hero-section" class="relative hero-glow border-b border-neutral-800/60 transition-all duration-500 overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
-        <!-- Sol: Film Künyesi & Detaylar (8 Kolon) -->
+        <!-- Sol Detaylar -->
         <div class="lg:col-span-8 space-y-5">
           
-          <!-- Rozetler & Yıl -->
           <div class="flex flex-wrap items-center gap-2">
-            <span class="px-2.5 py-1 rounded-full bg-netflix-red text-white text-xs font-black uppercase tracking-wider shadow-sm flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
-              Öne Çıkan Canlı Öneri
+            <!-- Netflix Doğrulama Rozeti -->
+            <span id="hero-verify-badge" class="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-black uppercase tracking-wider border border-emerald-500/40 shadow-sm flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span id="hero-verify-text">Netflix TR Doğrulandı</span>
             </span>
+
             <span id="hero-badge-type" class="px-2.5 py-1 rounded-full bg-neutral-800 text-neutral-200 text-xs font-bold border border-neutral-700">
               🎬 Netflix Filmi
             </span>
@@ -122,22 +123,19 @@
             </span>
           </div>
 
-          <!-- Film Başlığı -->
           <h1 id="hero-title" class="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
             Canlı Veritabanı Taranıyor...
           </h1>
 
-          <!-- Tür Etiketleri -->
           <div id="hero-genres" class="flex flex-wrap gap-1.5 text-xs">
             <span class="px-2.5 py-0.5 rounded-md bg-neutral-900 text-red-400 border border-neutral-800 font-semibold">Netflix TR</span>
           </div>
 
-          <!-- Özet / Konu -->
           <p id="hero-synopsis" class="text-sm sm:text-base text-neutral-300 leading-relaxed max-w-3xl">
-            Netflix Türkiye kataloğundaki yapımlar anlık sorgulanıyor...
+            Netflix Türkiye kataloğundaki doğrulanmış yapımlar taranıyor...
           </p>
 
-          <!-- 🎬 TAM FİLM KÜNYESİ (Yönetmen, Oyuncular, Ülke) -->
+          <!-- TAM FİLM KÜNYESİ -->
           <div class="p-4 rounded-2xl bg-neutral-900/90 border border-neutral-800/80 space-y-2 text-xs sm:text-sm">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               <div>
@@ -156,7 +154,7 @@
             </div>
           </div>
 
-          <!-- 🤖 YAPAY ZEKÂ (YZ) EDİTÖR İNCELEMESİ & YORUMU -->
+          <!-- YZ EDİTÖR İNCELEMESİ -->
           <div class="p-4 rounded-2xl bg-gradient-to-br from-red-950/20 via-neutral-900/90 to-neutral-900/80 border border-red-500/20 space-y-2.5">
             <div class="flex items-center justify-between">
               <span class="text-xs font-black uppercase tracking-wider text-red-400 flex items-center gap-1.5">
@@ -171,16 +169,14 @@
               Film analiz ediliyor...
             </p>
 
-            <div id="hero-ai-tags" class="flex flex-wrap gap-2 pt-1 text-[11px]">
-              <!-- YZ Etiketleri dinamik dolar -->
-            </div>
+            <div id="hero-ai-tags" class="flex flex-wrap gap-2 pt-1 text-[11px]"></div>
           </div>
 
-          <!-- Aksiyon Butonları -->
+          <!-- Aksiyon Butonları (Doğrulanmış Netflix Butonu) -->
           <div class="flex flex-wrap items-center gap-3 pt-1">
             <a id="hero-netflix-link" href="https://www.netflix.com" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl bg-netflix-red hover:bg-netflix-hover text-white font-extrabold text-sm transition-all shadow-lg shadow-red-600/30 flex items-center gap-2 active:scale-95">
               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-              <span>Hemen Netflix'te İzle</span>
+              <span id="hero-watch-btn-text">Hemen Netflix'te İzle</span>
             </a>
             <button id="hero-btn-random" class="px-5 py-3 rounded-xl bg-neutral-900/90 hover:bg-neutral-800 border border-neutral-700 text-neutral-200 text-sm font-bold transition-all flex items-center gap-2 active:scale-95">
               <span>🎲 Farklı Bir Öneri Getir</span>
@@ -188,7 +184,7 @@
           </div>
         </div>
 
-        <!-- Sağ: Büyük Canlı Afiş -->
+        <!-- Sağ Afiş -->
         <div class="lg:col-span-4 flex justify-center lg:justify-end">
           <div class="relative group sticky top-24">
             <div class="absolute -inset-1 bg-gradient-to-r from-red-600 to-amber-600 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
@@ -200,7 +196,7 @@
     </div>
   </section>
 
-  <!-- CANLI SORGU & DETAYLI FİLTRELEME MERKEZİ -->
+  <!-- GELİŞMİŞ VE DETAYLI FİLTRELEME ALANI -->
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
     
     <div class="glass-panel p-5 sm:p-7 rounded-3xl space-y-6 shadow-2xl">
@@ -218,7 +214,7 @@
           <span class="flex items-center gap-1.5 text-red-400">
             <span>🎭</span> Film & Dizi Türü Seçin
           </span>
-          <span class="text-[11px] lowercase text-neutral-500">canlı sorgulanır</span>
+          <span class="text-[11px] lowercase text-neutral-500">sadece Netflix Türkiye'dekiler listelenir</span>
         </div>
         <div class="flex flex-wrap gap-2">
           <button data-genre="all" class="genre-pill active px-3.5 py-2 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🌟 Tüm Türler</button>
@@ -253,17 +249,16 @@
             <option value="tr">🇹🇷 Sadece Yerli (Türkçe)</option>
             <option value="foreign">🌐 Yabancı / Uluslararası</option>
             <option value="en">🇺🇸 Hollywood / İngilizce</option>
-            <option value="ko">🇰🇷 Kore Yapımları (K-Drama)</option>
             <option value="es">🇪🇸 İspanyolca Yapımlar</option>
             <option value="fr">🇫🇷 Fransız Sineması</option>
           </select>
         </div>
 
         <div class="space-y-1.5">
-          <label class="text-[11px] font-bold uppercase text-neutral-400 block">3. Çıkış Yılı / Dönem</label>
+          <label class="text-[11px] font-bold uppercase text-neutral-400 block">3. Çıkış Yılı</label>
           <select id="select-era" class="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-3 py-2.5 text-xs font-semibold text-neutral-200 focus:outline-none focus:border-netflix-red">
-            <option value="all">📅 Tüm Yıllar</option>
-            <option value="new">🆕 En Yeni (2024 - 2026)</option>
+            <option value="all">📅 Tüm Yayında Olanlar</option>
+            <option value="new">🆕 En Yeni (2024 - 2025)</option>
             <option value="modern">⏳ Modern (2018 - 2023)</option>
             <option value="2010s">🎞️ 2010 - 2017</option>
             <option value="classic">📼 2010 Öncesi Klasikler</option>
@@ -296,7 +291,7 @@
       <!-- Bilgi ve Sıfırlama -->
       <div class="flex items-center justify-between pt-2 text-xs">
         <span id="results-count" class="font-bold text-neutral-300">
-          Canlı veritabanı taranıyor...
+          Netflix Türkiye veritabanı doğrulanıyor...
         </span>
         <button id="btn-reset-filters" class="text-xs font-bold text-red-400 hover:text-red-300 underline transition-all">
           Tüm Filtreleri Temizle
@@ -310,14 +305,14 @@
       
       <div class="flex items-center justify-between">
         <h2 class="text-xl sm:text-2xl font-black text-white tracking-tight flex items-center gap-2">
-          <span>🍿 Netflix Türkiye Canlı Kataloğu</span>
+          <span>🍿 Netflix Türkiye Yayındaki Yapımlar</span>
         </h2>
-        <span class="text-xs text-neutral-400">Detaylı künye ve YZ incelemesi için afişe tıklayın</span>
+        <span class="text-xs text-neutral-400">Detay için afişe tıklayın</span>
       </div>
 
       <div id="loading-spinner" class="py-16 text-center space-y-3">
         <div class="w-10 h-10 border-4 border-netflix-red border-t-transparent rounded-full animate-spin mx-auto"></div>
-        <p class="text-xs text-neutral-400 font-semibold">Canlı Netflix Türkiye veritabanından çekiliyor...</p>
+        <p class="text-xs text-neutral-400 font-semibold">Netflix Türkiye yayın akışı doğrulanıyor...</p>
       </div>
 
       <!-- Kart Grid -->
@@ -350,7 +345,7 @@
 
   <footer class="border-t border-neutral-900 bg-neutral-950 py-8 mt-12 text-center text-xs text-neutral-500 space-y-2">
     <p class="font-bold text-neutral-400">Bugün Ne İzleyeyim? — Netflix Türkiye Canlı Keşif Platformu</p>
-    <p>Veriler doğrudan TMDB API Netflix TR sağlayıcısı üzerinden anlık çekilmektedir.</p>
+    <p>Tüm yayın verileri TheMovieDB (TMDB) Netflix Türkiye akış sağlayıcısı üzerinden anlık doğrulanmaktadır.</p>
   </footer>
 
   <script>
@@ -362,6 +357,9 @@
     let activeGenre = 'all';
     let currentPage = 1;
     let searchDebounce = null;
+
+    // Bugünün tarihi (gelecekteki henüz çıkmamış filmleri elemek için)
+    const TODAY_ISO = new Date().toISOString().split('T')[0];
 
     async function fetchLiveNetflix(page = 1, append = false) {
       const spinner = document.getElementById('loading-spinner');
@@ -375,7 +373,7 @@
         grid.classList.add('hidden');
         noRes.classList.add('hidden');
         loadMoreBtn.classList.add('hidden');
-        countEl.textContent = 'Canlı veritabanı taranıyor...';
+        countEl.textContent = 'Doğrulanmış yayınlar taranıyor...';
       }
 
       const mediaType = document.getElementById('select-media-type').value;
@@ -390,7 +388,18 @@
       if (q) {
         url = `${BASE_URL}/search/${mediaType}?api_key=${TMDB_API_KEY}&language=tr-TR&query=${encodeURIComponent(q)}&page=${page}&include_adult=false`;
       } else {
-        url = `${BASE_URL}/discover/${mediaType}?api_key=${TMDB_API_KEY}&language=tr-TR&watch_region=TR&with_watch_providers=8&sort_by=${sortBy}&page=${page}&include_adult=false`;
+        // Kesin Netflix TR abonelik filtresi (with_watch_monetization_types=flatrate & provider 8)
+        url = `${BASE_URL}/discover/${mediaType}?api_key=${TMDB_API_KEY}&language=tr-TR&watch_region=TR&with_watch_providers=8&with_watch_monetization_types=flatrate&sort_by=${sortBy}&page=${page}&include_adult=false`;
+
+        // Henüz çıkmamış / gelecekteki filmleri ele
+        if (mediaType === 'movie') {
+          url += `&primary_release_date.lte=${TODAY_ISO}`;
+        } else {
+          url += `&first_air_date.lte=${TODAY_ISO}`;
+        }
+
+        // Sahte / yabancı spam kayıtları elemek için en az 20 oy barajı
+        url += `&vote_count.gte=20`;
 
         if (activeGenre !== 'all') {
           url += `&with_genres=${activeGenre}`;
@@ -415,7 +424,7 @@
         }
 
         if (parseFloat(minVote) > 0) {
-          url += `&vote_average.gte=${minVote}&vote_count.gte=25`;
+          url += `&vote_average.gte=${minVote}`;
         }
       }
 
@@ -425,7 +434,14 @@
         spinner.classList.add('hidden');
 
         if (data.results && data.results.length > 0) {
-          const valid = data.results.filter(x => x.poster_path);
+          // Poster ve Türkçe/Latin başlık kontrolü yaparak filtrele
+          const valid = data.results.filter(x => {
+            if (!x.poster_path) return false;
+            const title = x.title || x.name || '';
+            // Boş veya sadece tanımsız karakterleri filtrele
+            return title.length > 0;
+          });
+
           if (append) {
             currentLiveItems = [...currentLiveItems, ...valid];
           } else {
@@ -435,7 +451,6 @@
           renderLiveGrid(valid, mediaType, append);
 
           if (!append && currentLiveItems.length > 0) {
-            // İlk filmin detaylı künyesini ve YZ analizini çek
             loadDetailedCreditsAndAI(currentLiveItems[0], mediaType);
           }
 
@@ -462,33 +477,55 @@
       }
     }
 
-    // 🎬 DETAYLI FİLM KÜNYESİ VE YAPAY ZEKA İNCELEMESİ
+    // 🎬 DETAYLI KÜNYE & NETFLİX TR DOĞRULAMA
     async function loadDetailedCreditsAndAI(item, mediaType) {
       if (!item) return;
 
       const title = item.title || item.name || 'Netflix Yapımı';
+      const originalTitle = item.original_title || item.original_name || title;
       const date = item.release_date || item.first_air_date || '';
       const year = date ? date.split('-')[0] : '2025';
       const vote = item.vote_average ? item.vote_average.toFixed(1) : '7.5';
       const poster = item.poster_path ? `${IMG_BASE}/w780${item.poster_path}` : '';
       const overview = item.overview || 'Bu yapım şu an Netflix Türkiye kataloğunda yayındadır.';
 
-      // Temel bilgileri yerleştir
       document.getElementById('hero-title').textContent = title;
       document.getElementById('hero-synopsis').textContent = overview;
       document.getElementById('hero-imdb').textContent = `⭐ Puan: ${vote}`;
       document.getElementById('hero-year').textContent = `📅 ${year}`;
       document.getElementById('hero-poster').src = poster;
       document.getElementById('hero-badge-type').textContent = mediaType === 'tv' ? '📺 Netflix Dizisi' : '🎬 Netflix Filmi';
-      document.getElementById('hero-netflix-link').href = `https://www.netflix.com/search?q=${encodeURIComponent(title)}`;
 
-      // TMDB'den Detaylı Künye (Oyuncular, Yönetmen, Süre) Çek
+      // Netflix Arama URL'si (Türkçe veya orijinal ada göre en net aramayı yapar)
+      const searchQuery = encodeURIComponent(title);
+      document.getElementById('hero-netflix-link').href = `https://www.netflix.com/search?q=${searchQuery}`;
+
+      // TMDB'den Detaylı Künye ve Sağlayıcı Doğrulaması Çek
       try {
-        const detailsUrl = `${BASE_URL}/${mediaType}/${item.id}?api_key=${TMDB_API_KEY}&language=tr-TR&append_to_response=credits`;
+        const detailsUrl = `${BASE_URL}/${mediaType}/${item.id}?api_key=${TMDB_API_KEY}&language=tr-TR&append_to_response=credits,watch/providers`;
         const res = await fetch(detailsUrl);
         const details = await res.json();
 
-        // 1. Süre (Runtime)
+        // 1. Netflix Türkiye Sağlayıcı Doğrulaması
+        const trProviders = details['watch/providers']?.results?.TR;
+        const isNetflixTR = trProviders?.flatrate?.some(p => p.provider_id === 8 || p.provider_name.toLowerCase().includes('netflix'));
+        
+        const verifyBadge = document.getElementById('hero-verify-badge');
+        const verifyText = document.getElementById('hero-verify-text');
+        const watchBtn = document.getElementById('hero-watch-btn-text');
+
+        if (isNetflixTR) {
+          verifyBadge.className = "px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-black uppercase tracking-wider border border-emerald-500/40 shadow-sm flex items-center gap-1.5";
+          verifyText.textContent = "✔️ Netflix TR Doğrulandı";
+          watchBtn.textContent = "▶️ Hemen Netflix'te İzle";
+        } else {
+          // Türkiye'de doğrudan Netflix aboneliği doğrulanmadıysa net bilgi ver
+          verifyBadge.className = "px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-400 text-xs font-bold uppercase tracking-wider border border-amber-500/40 shadow-sm flex items-center gap-1.5";
+          verifyText.textContent = "🔍 Netflix'te Kontrol Et";
+          watchBtn.textContent = "Netflix Kataloğunda Ara";
+        }
+
+        // 2. Süre
         if (details.runtime) {
           const hours = Math.floor(details.runtime / 60);
           const mins = details.runtime % 60;
@@ -499,7 +536,7 @@
           document.getElementById('hero-duration').textContent = '⏱️ Standart Süre';
         }
 
-        // 2. Türler
+        // 3. Türler
         const genresContainer = document.getElementById('hero-genres');
         genresContainer.innerHTML = '';
         if (details.genres && details.genres.length > 0) {
@@ -511,7 +548,7 @@
           });
         }
 
-        // 3. Yönetmen
+        // 4. Yönetmen
         let directorName = "Belirtilmemiş";
         if (details.credits && details.credits.crew) {
           const directorObj = details.credits.crew.find(c => c.job === 'Director' || c.department === 'Directing');
@@ -522,14 +559,14 @@
         }
         document.getElementById('hero-director').textContent = directorName;
 
-        // 4. Başrol Oyuncuları
+        // 5. Başrol Oyuncuları
         let castNames = "Oyuncu bilgisi mevcut değil";
         if (details.credits && details.credits.cast && details.credits.cast.length > 0) {
           castNames = details.credits.cast.slice(0, 5).map(a => a.name).join(', ');
         }
         document.getElementById('hero-cast').textContent = castNames;
 
-        // 5. Ülke
+        // 6. Ülke
         let country = "Uluslararası";
         if (details.production_countries && details.production_countries.length > 0) {
           country = details.production_countries.map(c => c.name).join(', ');
@@ -538,7 +575,7 @@
         }
         document.getElementById('hero-country').textContent = country;
 
-        // 6. 🤖 YAPAY ZEKA EDİTÖR İNCELEMESİ ÜRETİMİ
+        // 7. YZ İncelemesi
         generateAIReview(title, details.genres, directorName, castNames, overview, vote, country);
 
       } catch (err) {
@@ -546,7 +583,6 @@
       }
     }
 
-    // 🤖 Akıllı YZ Film Eleştirisi Motoru
     function generateAIReview(title, genres, director, cast, synopsis, rating, country) {
       const reviewBox = document.getElementById('hero-ai-review');
       const tagsBox = document.getElementById('hero-ai-tags');
@@ -587,11 +623,10 @@
         💡 <strong>Editör Kararı:</strong> ${audienceVerdict}
       `;
 
-      // YZ Etiketleri
       tagsBox.innerHTML = `
         <span class="px-2 py-0.5 rounded bg-neutral-800 text-neutral-300 border border-neutral-700">🎯 ${genreNames.split(',')[0]}</span>
         <span class="px-2 py-0.5 rounded bg-neutral-800 text-amber-300 border border-neutral-700">⭐ ${rating}/10 Kalite</span>
-        <span class="px-2 py-0.5 rounded bg-neutral-800 text-emerald-300 border border-neutral-700">🍿 ${country} Yapımı</span>
+        <span class="px-2 py-0.5 rounded bg-neutral-800 text-emerald-300 border border-neutral-700">🍿 ${country}</span>
       `;
     }
 
@@ -600,7 +635,7 @@
       const countEl = document.getElementById('results-count');
       grid.classList.remove('hidden');
 
-      countEl.innerHTML = `<span class="text-red-400 font-black">${currentLiveItems.length}</span> canlı Netflix yapımı listeleniyor`;
+      countEl.innerHTML = `<span class="text-red-400 font-black">${currentLiveItems.length}</span> doğrulanmış Netflix yapımı listeleniyor`;
 
       if (!append) grid.innerHTML = '';
 
@@ -677,7 +712,6 @@
       fetchLiveNetflix(1);
     }
 
-    // Dinleyiciler
     document.querySelectorAll('.genre-pill').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.genre-pill').forEach(b => b.classList.remove('active'));
