@@ -1,5 +1,33 @@
 [
   {
+    "id": 121,
+    "tmdb_id": 1780005,
+    "title": "Otis Kasırgasının Tam Ortasında",
+    "original_title": "Contra el huracán",
+    "media_type": "movie",
+    "genres": [
+      "Dram"
+    ],
+    "year": 2026,
+    "duration": "Öneri",
+    "imdb_rating": "7.5",
+    "match_rate": "%98",
+    "director": "Netflix",
+    "cast": [
+      "Netflix Oyuncuları"
+    ],
+    "synopsis": "İki dargın kardeş Acapulco'da Otis Kasırgası'ndan sağ kurtulmaya çalışırken aralarındaki bağ ve cesaretleri sayesinde zorlukları umuda dönüştürür. Gerçek bir hikâyeden esinlenildi.",
+    "why_watch": "Sürükleyici hikaye ve yüksek izleyici puanı.",
+    "target_audience": "Dram severler.",
+    "poster_url": "https://image.tmdb.org/t/p/w780/b0yAwWrTiL2YPWwIEQqvKloeFGn.jpg",
+    "backdrop_url": "https://image.tmdb.org/t/p/w1280/cpNMIRCrDl0sxDL1tHBzfWi0UZC.jpg",
+    "netflix_url": "https://www.netflix.com",
+    "tweet_text": "🎬 Bugün Ne İzleyeyim? | Netflix Günlük Önerisi\n\n🔴 Otis Kasırgasının Tam Ortasında\n⭐ IMDb: 7.5/10 | 🎭 Dram\n📌 İki dargın kardeş Acapulco'da Otis Kasırgası'ndan sağ kurtulmaya çalışırken aralarındaki bağ ve...\n\n🍿 Hemen Netflix'te izle!\n#BugünNeİzlesem #NetflixTR",
+    "tweet_id": "1855505348802",
+    "tweet_url": "https://x.com/bugunneizleyim",
+    "posted_at": "2026-11-05T20:40:14.096655+00:00"
+  },
+  {
     "id": 1,
     "title": "Vurgun",
     "original_title": "The Vault",
