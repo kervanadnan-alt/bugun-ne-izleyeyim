@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bu satır görselin Amazon/IMDb tarafından 403 ile engellenmesini önler: -->
+  <meta name="referrer" content="no-referrer">
   <title>Bugün Ne İzlesem? | Günlük Film Tavsiyeleri</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -187,15 +189,15 @@
     <div class="card" id="movieCard">
       <div class="poster-wrap">
         <span class="badge" id="movieImdb">★ 7.5</span>
-        <img id="moviePoster" src="posters/iskandalo.jpg" alt="Film Afişi">
+        <img id="moviePoster" referrerpolicy="no-referrer" src="" alt="Film Afişi">
       </div>
       <div class="content">
         <div>
           <div class="meta-tag" id="movieSchedule">🗓️ AKŞAM MATİNESİ | 19:45</div>
-          <h2 class="title" id="movieTitle">Iskandalo (1979)</h2>
-          <div class="platform" id="moviePlatform">🍿 Kült Sinema / Arşiv</div>
-          <p class="overview" id="movieOverview">Skandallarla sarsılan bir ailenin ve yasak bir ilişkinin çarpıcı anatomisi...</p>
-          <div class="cast" id="movieCast"><strong>Oyuncular:</strong> Lorna Tolentino, Celia Rodriguez</div>
+          <h2 class="title" id="movieTitle">Yükleniyor...</h2>
+          <div class="platform" id="moviePlatform"></div>
+          <p class="overview" id="movieOverview"></p>
+          <div class="cast" id="movieCast"></div>
         </div>
 
         <div class="actions">
@@ -226,14 +228,16 @@
             document.getElementById('movieOverview').textContent = movie.overview;
             document.getElementById('movieCast').innerHTML = `<strong>Oyuncular:</strong> ${movie.cast}`;
             
-            const posterSrc = movie.poster_file || movie.poster_url;
-            document.getElementById('moviePoster').src = posterSrc;
+            const imgEl = document.getElementById('moviePoster');
+            imgEl.referrerPolicy = "no-referrer";
+            imgEl.src = movie.poster_url;
+            
             document.getElementById('moviePlatform').textContent = movie.platform ? `🍿 ${movie.platform}` : '';
             
             document.getElementById('btnShareX').onclick = () => {
               const text = `📅 Akşam Matinesi | Saat 19:45\n\n🔴 ${movie.title} (${movie.imdb}/10)\n👥 ${movie.cast}\n📌 ${movie.overview}\n\n${movie.platform ? '🍿 ' + movie.platform + '\n' : ''}#Sinema #FilmÖnerisi #AkşamMatinesi`;
               navigator.clipboard.writeText(text);
-              alert("Tweet metni panoya kopyalandı! X açılıyor, afiş görselini ekleyerek yapıştırıp paylaşabilirsiniz.");
+              alert("Tweet metni panoya kopyalandı! X açılıyor, yapıştırıp paylaşabilirsiniz.");
               window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
             };
           }
