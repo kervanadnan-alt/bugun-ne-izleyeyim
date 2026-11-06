@@ -1,0 +1,32 @@
+[
+  {
+    "title": "Iskandalo",
+    "year": 1979,
+    "imdb": "7.5",
+    "cast": "Lorna Tolentino, Celia Rodriguez",
+    "overview": "Skandallarla sarsılan bir ailenin ve yasak bir ilişkinin çarpıcı anatomisi...",
+    "poster_file": "posters/iskandalo.jpg",
+    "platform": "Kült Sinema / Arşiv",
+    "posted": false
+  },
+  {
+    "title": "12 Angry Men",
+    "year": 1957,
+    "imdb": "9.0",
+    "cast": "Henry Fonda, Lee J. Cobb, Martin Balsam",
+    "overview": "Bir cinayet davasında 12 jüri üyesinin vicdan, adalet ve mantık savaşı.",
+    "poster_file": "posters/12_angry_men.jpg",
+    "platform": "MUBI / TV+",
+    "posted": false
+  },
+  {
+    "title": "Cinema Paradiso",
+    "year": 1988,
+    "imdb": "8.5",
+    "cast": "Philippe Noiret, Salvatore Cascio",
+    "overview": "Küçük bir İtalyan kasabasında sinema tutkusu ve ömürlük bir dostluğun masalı.",
+    "poster_file": "posters/cinema_paradiso.jpg",
+    "platform": "BluTV",
+    "posted": false
+  }
+]
