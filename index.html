@@ -3,249 +3,404 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Bu satır görselin Amazon/IMDb tarafından 403 ile engellenmesini önler: -->
   <meta name="referrer" content="no-referrer">
-  <title>Bugün Ne İzlesem? | Günlük Film Tavsiyeleri</title>
+  <title>Bugün Ne İzlesem? | Film Seçkisi & Reji</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #0b0f19;
-      --card-bg: #141b2d;
+      --card: #141b2d;
       --border: rgba(255, 255, 255, 0.08);
+      --accent: #e50914;
       --text: #f8fafc;
       --muted: #94a3b8;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background: radial-gradient(circle at 50% 0%, #1e1b4b 0%, var(--bg) 70%);
+      background: radial-gradient(circle at 50% 0%, #1e1b4b 0%, var(--bg) 80%);
       color: var(--text);
       min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+    .wrapper { max-width: 1100px; margin: 0 auto; }
+    
+    /* Header & Nav */
+    header {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      padding: 3rem 1rem;
-    }
-    header {
-      text-align: center;
+      gap: 1.5rem;
       margin-bottom: 2.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.5rem;
     }
-    header h1 {
-      font-size: 2.4rem;
+    @media(min-width: 768px) {
+      header { flex-direction: row; justify-content: space-between; align-items: center; }
+    }
+    .brand h1 {
+      font-size: 2rem;
       font-weight: 800;
       letter-spacing: -0.5px;
-      margin-bottom: 0.5rem;
-      background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
+      background: linear-gradient(135deg, #fff 40%, var(--muted) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    header p {
+    .brand p { color: var(--muted); font-size: 0.9rem; margin-top: 0.2rem; }
+    
+    .tabs { display: flex; gap: 0.5rem; }
+    .tab-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
       color: var(--muted);
-      font-size: 1rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
     }
-    .container {
+    .tab-btn.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    /* Arama & Kontroller */
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    @media(min-width: 600px) {
+      .controls { flex-direction: row; }
+    }
+    .search-box {
+      flex: 1;
+      position: relative;
+    }
+    .search-box input {
       width: 100%;
-      max-width: 860px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 0.85rem 1rem 0.85rem 2.8rem;
+      border-radius: 12px;
+      color: #fff;
+      font-size: 0.95rem;
+      outline: none;
     }
-    .card {
-      background: var(--card-bg);
+    .search-box input:focus { border-color: rgba(255, 255, 255, 0.3); }
+    .search-box svg {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+    }
+
+    /* Günün Öne Çıkanı (Hero) */
+    .hero-card {
+      background: var(--card);
       border: 1px solid var(--border);
       border-radius: 20px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.6);
+      margin-bottom: 3rem;
+      box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
     }
-    @media (min-width: 720px) {
-      .card {
-        flex-direction: row;
-        min-height: 440px;
-      }
+    @media(min-width: 768px) {
+      .hero-card { flex-direction: row; }
     }
-    .poster-wrap {
+    .hero-poster {
       flex: 0 0 320px;
-      position: relative;
       background: #0f172a;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 380px;
+      min-height: 400px;
+      position: relative;
     }
-    .poster-wrap img {
+    .hero-poster img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
     }
-    .badge {
-      position: absolute;
-      top: 14px;
-      left: 14px;
-      background: rgba(15, 23, 42, 0.88);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(8px);
-      padding: 0.35rem 0.75rem;
-      border-radius: 30px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: #fbbf24;
-      z-index: 2;
-    }
-    .content {
-      padding: 2.2rem;
+    .hero-content {
+      padding: 2.5rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       flex: 1;
     }
-    .meta-tag {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: #f43f5e;
-      font-weight: 700;
-      margin-bottom: 0.6rem;
-    }
-    .title {
-      font-size: 1.9rem;
-      font-weight: 800;
-      line-height: 1.2;
-      margin-bottom: 0.6rem;
-    }
-    .platform {
+    .badge {
       display: inline-block;
-      font-size: 0.9rem;
-      color: #38bdf8;
-      font-weight: 600;
-      margin-bottom: 1.2rem;
+      background: rgba(234, 179, 8, 0.15);
+      color: #facc15;
+      padding: 0.3rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
     }
-    .overview {
-      color: #cbd5e1;
-      font-size: 0.98rem;
-      line-height: 1.65;
-      margin-bottom: 1.5rem;
+    .hero-title { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .hero-meta { color: #38bdf8; font-weight: 600; font-size: 0.95rem; margin-bottom: 1rem; }
+    .hero-overview { color: #cbd5e1; line-height: 1.6; margin-bottom: 1.5rem; font-size: 1rem; }
+    .hero-cast { color: var(--muted); font-size: 0.9rem; margin-bottom: 2rem; }
+
+    /* Film Izgarası (Katalog) */
+    .section-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 1.2rem; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, min-min(240px, 1fr));
+      gap: 1.5rem;
     }
-    .cast {
-      font-size: 0.9rem;
-      color: var(--muted);
-      margin-bottom: 2rem;
-      line-height: 1.5;
+    @media(min-width: 500px) {
+      .grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
     }
-    .cast strong { color: #e2e8f0; }
-    .actions {
+    .movie-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
       display: flex;
-      gap: 0.85rem;
-      flex-wrap: wrap;
+      flex-direction: column;
+      transition: transform 0.2s;
     }
-    .btn {
+    .movie-item:hover { transform: translateY(-4px); }
+    .item-poster {
+      width: 100%;
+      height: 300px;
+      background: #0f172a;
+      overflow: hidden;
+    }
+    .item-poster img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .item-info {
+      padding: 1rem;
       flex: 1;
-      min-width: 140px;
-      padding: 0.85rem 1.25rem;
-      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .item-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .item-meta { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.8rem; }
+    
+    /* Reji Masası Tablosu */
+    .reji-panel {
+      display: none;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      overflow-x: auto;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--border); }
+    th { color: var(--muted); font-size: 0.85rem; text-transform: uppercase; }
+    .status-tag {
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .st-posted { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
+    .st-queue { background: rgba(234, 179, 8, 0.2); color: #facc15; }
+
+    /* Butonlar */
+    .btn {
+      padding: 0.75rem 1.2rem;
+      border-radius: 10px;
       font-weight: 700;
       font-size: 0.9rem;
-      text-decoration: none;
+      cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
-      cursor: pointer;
       border: none;
-      transition: all 0.2s;
+      text-decoration: none;
     }
-    .btn-x {
-      background: #000;
-      color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    .btn-x:hover {
-      background: #18181b;
-      border-color: rgba(255, 255, 255, 0.4);
-    }
-    .btn-reji {
-      background: rgba(255, 255, 255, 0.08);
-      color: #fff;
-    }
-    .btn-reji:hover {
-      background: rgba(255, 255, 255, 0.15);
-    }
-    footer {
-      margin-top: 3.5rem;
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
+    .btn-x { background: #000; color: #fff; border: 1px solid rgba(255,255,255,0.2); }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>Bugün Ne İzlesem?</h1>
-    <p>Her Akşam 19:45'te X (@GizliAnu) Akışında Yeni Bir Başyapıt</p>
-  </header>
-
-  <div class="container">
-    <div class="card" id="movieCard">
-      <div class="poster-wrap">
-        <span class="badge" id="movieImdb">★ 7.5</span>
-        <img id="moviePoster" referrerpolicy="no-referrer" src="" alt="Film Afişi">
+  <div class="wrapper">
+    <header>
+      <div class="brand">
+        <h1>Bugün Ne İzlesem?</h1>
+        <p>Her Akşam 19:45'te X (@GizliAnu) Yayını & Film Seçkisi</p>
       </div>
-      <div class="content">
-        <div>
-          <div class="meta-tag" id="movieSchedule">🗓️ AKŞAM MATİNESİ | 19:45</div>
-          <h2 class="title" id="movieTitle">Yükleniyor...</h2>
-          <div class="platform" id="moviePlatform"></div>
-          <p class="overview" id="movieOverview"></p>
-          <div class="cast" id="movieCast"></div>
-        </div>
+      <div class="tabs">
+        <button class="tab-btn active" id="tabCatalog" onclick="switchView('catalog')">Film Kataloğu</button>
+        <button class="tab-btn" id="tabReji" onclick="switchView('reji')">🎬 Reji Masası</button>
+      </div>
+    </header>
 
-        <div class="actions">
-          <button class="btn btn-x" id="btnShareX">
-            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            X'te Paylaş (Kopyala)
-          </button>
-          <a href="reji.html" class="btn btn-reji">Reji Masası</a>
+    <!-- KATALOG GÖRÜNÜMÜ -->
+    <main id="catalogView">
+      <div class="controls">
+        <div class="search-box">
+          <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <input type="text" id="searchInput" placeholder="Film adı veya oyuncu ara..." oninput="handleSearch()">
         </div>
       </div>
-    </div>
+
+      <!-- Günün Filmi (Hero) -->
+      <div class="hero-card" id="heroCard">
+        <div class="hero-poster">
+          <img id="heroImg" src="" alt="Afiş">
+        </div>
+        <div class="hero-content">
+          <div>
+            <span class="badge" id="heroImdb">★ 0.0</span>
+            <div style="font-size:0.8rem; font-weight:700; color:var(--accent); text-transform:uppercase; margin-bottom:0.4rem;">GÜNÜN FİLMİ | 19:45</div>
+            <h2 class="hero-title" id="heroTitle">Yükleniyor...</h2>
+            <div class="hero-meta" id="heroPlatform"></div>
+            <p class="hero-overview" id="heroOverview"></p>
+            <div class="hero-cast" id="heroCast"></div>
+          </div>
+          <div>
+            <button class="btn btn-x" id="btnShare">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              X'te Paylaş (Metni Kopyala)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-title">Kütüphanedeki Tüm Filmler</h3>
+      <div class="grid" id="movieGrid"></div>
+    </main>
+
+    <!-- REJİ MASASI GÖRÜNÜMÜ -->
+    <section class="reji-panel" id="rejiView">
+      <h2 style="font-size:1.4rem; font-weight:800; margin-bottom:0.5rem;">🎬 Reji Yayın Kuyruğu</h2>
+      <p style="color:var(--muted); font-size:0.9rem; margin-bottom:1.5rem;">Sıradaki paylaşımlar ve film durumları</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Film</th>
+            <th>Puan</th>
+            <th>Platform</th>
+            <th>Durum</th>
+          </tr>
+        </thead>
+        <tbody id="rejiTableBody"></tbody>
+      </table>
+    </section>
   </div>
 
-  <footer>
-    Tüm hakları saklıdır &copy; 2026 Bugün Ne İzlesem
-  </footer>
-
   <script>
+    let allMovies = [];
+
+    // Görsel Yolunu Bulma (Yerel dosya veya URL)
+    function resolvePoster(m) {
+      if (m.poster_file) {
+        return m.poster_file.replace('posters/', ''); // Önce ana dizine bak
+      }
+      return m.poster_url || 'iskandalo.jpg';
+    }
+
     async function init() {
       try {
-        const res = await fetch('data/recommendations.json');
-        if (res.ok) {
-          const list = await res.json();
-          const movie = list.find(m => !m.posted) || list[0];
-          if (movie) {
-            document.getElementById('movieTitle').textContent = `${movie.title} (${movie.year || ''})`;
-            document.getElementById('movieImdb').textContent = `★ ${movie.imdb}`;
-            document.getElementById('movieOverview').textContent = movie.overview;
-            document.getElementById('movieCast').innerHTML = `<strong>Oyuncular:</strong> ${movie.cast}`;
-            
-            const imgEl = document.getElementById('moviePoster');
-            imgEl.referrerPolicy = "no-referrer";
-            imgEl.src = movie.poster_url;
-            
-            document.getElementById('moviePlatform').textContent = movie.platform ? `🍿 ${movie.platform}` : '';
-            
-            document.getElementById('btnShareX').onclick = () => {
-              const text = `📅 Akşam Matinesi | Saat 19:45\n\n🔴 ${movie.title} (${movie.imdb}/10)\n👥 ${movie.cast}\n📌 ${movie.overview}\n\n${movie.platform ? '🍿 ' + movie.platform + '\n' : ''}#Sinema #FilmÖnerisi #AkşamMatinesi`;
-              navigator.clipboard.writeText(text);
-              alert("Tweet metni panoya kopyalandı! X açılıyor, yapıştırıp paylaşabilirsiniz.");
-              window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
-            };
-          }
-        }
-      } catch (e) {
-        console.error("Veri yüklenemedi:", e);
+        let res = await fetch('data/recommendations.json');
+        if (!res.ok) res = await fetch('recommendations.json');
+        allMovies = await res.json();
+
+        renderHero();
+        renderGrid(allMovies);
+        renderReji();
+      } catch (err) {
+        console.error("Yükleme hatası:", err);
       }
     }
+
+    function renderHero() {
+      const movie = allMovies.find(m => !m.posted) || allMovies[0];
+      if (!movie) return;
+
+      document.getElementById('heroTitle').textContent = `${movie.title} (${movie.year || ''})`;
+      document.getElementById('heroImdb').textContent = `★ ${movie.imdb}`;
+      document.getElementById('heroPlatform').textContent = movie.platform ? `🍿 ${movie.platform}` : '';
+      document.getElementById('heroOverview').textContent = movie.overview;
+      document.getElementById('heroCast').innerHTML = `<strong>Oyuncular:</strong> ${movie.cast}`;
+      
+      const img = document.getElementById('heroImg');
+      img.src = resolvePoster(movie);
+      img.onerror = () => { img.src = movie.poster_url || 'posters/iskandalo.jpg'; };
+
+      document.getElementById('btnShare').onclick = () => {
+        const text = `📅 Akşam Matinesi | Saat 19:45\n\n🔴 ${movie.title} (${movie.imdb}/10)\n👥 ${movie.cast}\n📌 ${movie.overview}\n\n${movie.platform ? '🍿 ' + movie.platform + '\n' : ''}#Sinema #FilmÖnerisi #AkşamMatinesi`;
+        navigator.clipboard.writeText(text);
+        alert("Metin panoya kopyalandı! X açılıyor...");
+        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+      };
+    }
+
+    function renderGrid(movies) {
+      const grid = document.getElementById('movieGrid');
+      grid.innerHTML = '';
+      movies.forEach(m => {
+        const card = document.createElement('div');
+        card.className = 'movie-item';
+        card.innerHTML = `
+          <div class="item-poster">
+            <img src="${resolvePoster(m)}" onerror="this.onerror=null;this.src='${m.poster_url || ''}'" alt="${m.title}">
+          </div>
+          <div class="item-info">
+            <div>
+              <div class="item-title">${m.title} (${m.year || ''})</div>
+              <div class="item-meta">★ ${m.imdb} | ${m.platform || 'Arşiv'}</div>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function renderReji() {
+      const tbody = document.getElementById('rejiTableBody');
+      tbody.innerHTML = '';
+      allMovies.forEach(m => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${m.title}</strong> (${m.year || ''})</td>
+          <td>★ ${m.imdb}</td>
+          <td>${m.platform || '-'}</td>
+          <td><span class="status-tag ${m.posted ? 'st-posted' : 'st-queue'}">${m.posted ? 'Paylaşıldı' : 'Sırada'}</span></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function handleSearch() {
+      const q = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = allMovies.filter(m => 
+        m.title.toLowerCase().includes(q) || 
+        (m.cast && m.cast.toLowerCase().includes(q))
+      );
+      renderGrid(filtered);
+    }
+
+    function switchView(view) {
+      if (view === 'catalog') {
+        document.getElementById('catalogView').style.display = 'block';
+        document.getElementById('rejiView').style.display = 'none';
+        document.getElementById('tabCatalog').classList.add('active');
+        document.getElementById('tabReji').classList.remove('active');
+      } else {
+        document.getElementById('catalogView').style.display = 'none';
+        document.getElementById('rejiView').style.display = 'block';
+        document.getElementById('tabCatalog').classList.remove('active');
+        document.getElementById('tabReji').classList.add('active');
+      }
+    }
+
     init();
   </script>
 </body>
