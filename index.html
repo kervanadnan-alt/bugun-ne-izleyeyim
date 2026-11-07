@@ -448,6 +448,57 @@
     let currentPage = 1;
     let searchDebounce = null;
     let activeShelfMode = 'populer';
+
+// Filmin platformuna göre doğrudan resmi izleme/arama bağlantısı üretir
+function getPlatformWatchUrl(title, platformName) {
+  const query = encodeURIComponent(title);
+  const plat = (platformName || '').toLowerCase();
+
+  if (plat.includes('prime') || plat.includes('amazon')) {
+    return {
+      url: `https://www.primevideo.com/search/ref=atv_nb_sr?phrase=${query}`,
+      label: 'Prime Video\'da İzle',
+      icon: '▶️',
+      colorClass: 'bg-sky-600 hover:bg-sky-500 text-white'
+    };
+  }
+
+  if (plat.includes('mubi')) {
+    return {
+      url: `https://mubi.com/tr/search/films?query=${query}`,
+      label: 'MUBI\'de İzle',
+      icon: '▶️',
+      colorClass: 'bg-amber-600 hover:bg-amber-500 text-white'
+    };
+  }
+
+  if (plat.includes('blu') || plat.includes('blutv')) {
+    return {
+      url: `https://www.blutv.com/ara?q=${query}`,
+      label: 'BluTV\'de İzle',
+      icon: '▶️',
+      colorClass: 'bg-cyan-600 hover:bg-cyan-500 text-white'
+    };
+  }
+
+  if (plat.includes('disney')) {
+    return {
+      url: `https://www.disneyplus.com/search?q=${query}`,
+      label: 'Disney+\'ta İzle',
+      icon: '▶️',
+      colorClass: 'bg-blue-700 hover:bg-blue-600 text-white'
+    };
+  }
+
+  // Varsayılan veya Netflix:
+  return {
+    url: `https://www.netflix.com/search?q=${query}`,
+    label: 'Netflix\'te İzle',
+    icon: '▶️',
+    colorClass: 'bg-red-600 hover:bg-red-500 text-white'
+  };
+}
+    
 function goToReji() {
   const pin = prompt("🔒 Reji Masası Yönetici PIN Kodunu Girin:");
   if (pin === "1945") {
