@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bugün Ne İzlesem? | Netflix & TMDb Film Seçkisi</title>
+  <meta name="referrer" content="no-referrer">
+  <title>Bugün Ne İzlesem? | TMDb & Netflix Film Seçkisi</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -31,7 +32,7 @@
       display: flex;
       flex-direction: column;
       gap: 1.2rem;
-      margin-bottom: 2.5rem;
+      margin-bottom: 2rem;
       border-bottom: 1px solid var(--border);
       padding-bottom: 1.5rem;
     }
@@ -66,29 +67,42 @@
       border-color: var(--accent);
     }
 
-    .search-bar {
-      margin-bottom: 2rem;
-      position: relative;
-    }
-    .search-bar input {
-      width: 100%;
+    /* Gelişmiş Filtreleme Alanı */
+    .filter-panel {
       background: var(--card);
       border: 1px solid var(--border);
-      padding: 0.9rem 1rem 0.9rem 3rem;
-      border-radius: 12px;
-      color: #fff;
-      font-size: 1rem;
-      outline: none;
-      transition: border-color 0.2s;
+      border-radius: 16px;
+      padding: 1.2rem;
+      margin-bottom: 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
     }
-    .search-bar input:focus { border-color: rgba(255, 255, 255, 0.3); }
-    .search-bar svg {
-      position: absolute;
-      left: 1.1rem;
-      top: 50%;
-      transform: translateY(-50%);
+    @media(min-width: 768px) {
+      .filter-panel {
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        align-items: center;
+      }
+    }
+    .filter-group label {
+      display: block;
+      font-size: 0.8rem;
       color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
     }
+    .filter-control {
+      width: 100%;
+      background: #090d16;
+      border: 1px solid var(--border);
+      color: #fff;
+      padding: 0.75rem 0.9rem;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      outline: none;
+    }
+    .filter-control:focus { border-color: rgba(255,255,255,0.3); }
 
     /* Hero Kartı */
     .hero-card {
@@ -195,6 +209,31 @@
       padding: 2rem;
       overflow-x: auto;
     }
+    .auth-box {
+      max-width: 380px;
+      margin: 3rem auto;
+      text-align: center;
+      background: #090d16;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+    }
+    .auth-box h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+    .auth-box p { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .auth-box input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border-radius: 10px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: #fff;
+      font-size: 1.1rem;
+      letter-spacing: 4px;
+      text-align: center;
+      outline: none;
+      margin-bottom: 1.2rem;
+    }
+
     table { width: 100%; border-collapse: collapse; }
     th, td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--border); }
     th { color: var(--muted); font-size: 0.85rem; text-transform: uppercase; }
@@ -217,18 +256,52 @@
     <header>
       <div class="brand">
         <h1>Bugün Ne İzlesem?</h1>
-        <p>Her Akşam 19:45'te X (@GizliAnu) Yayını & TMDb / Netflix Seçkisi</p>
+        <p>Her Akşam 19:45'te X (@GizliAnu) Yayını & TMDb / Netflix Kataloğu</p>
       </div>
       <div class="nav-tabs">
         <button class="tab-btn active" id="tabCatalog" onclick="switchView('catalog')">Film Kataloğu</button>
-        <button class="tab-btn" id="tabReji" onclick="switchView('reji')">🎬 Reji Masası</button>
+        <button class="tab-btn" id="tabReji" onclick="switchView('reji')">🔒 Reji Masası</button>
       </div>
     </header>
 
+    <!-- KATALOG EKRANI -->
     <main id="catalogView">
-      <div class="search-bar">
-        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-        <input type="text" id="searchInput" placeholder="Netflix kataloğunda film ara..." oninput="filterMovies()">
+      <div class="filter-panel">
+        <div class="filter-group">
+          <label>Arama</label>
+          <input type="text" id="searchInput" class="filter-control" placeholder="Film adı ara..." oninput="applyFilters()">
+        </div>
+        <div class="filter-group">
+          <label>Tür (Kategori)</label>
+          <select id="genreFilter" class="filter-control" onchange="applyFilters()">
+            <option value="">Tüm Türler</option>
+            <option value="28">Aksiyon</option>
+            <option value="18">Dram</option>
+            <option value="35">Komedi</option>
+            <option value="878">Bilim Kurgu</option>
+            <option value="53">Gerilim</option>
+            <option value="27">Korku</option>
+            <option value="10749">Romantik</option>
+            <option value="99">Belgesel</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Minimum Puan</label>
+          <select id="scoreFilter" class="filter-control" onchange="applyFilters()">
+            <option value="0">Tüm Puanlar</option>
+            <option value="7.0">★ 7.0+</option>
+            <option value="7.5">★ 7.5+</option>
+            <option value="8.0">★ 8.0+</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Sıralama</label>
+          <select id="sortFilter" class="filter-control" onchange="applyFilters()">
+            <option value="pop_desc">En Popüler</option>
+            <option value="score_desc">En Yüksek Puan</option>
+            <option value="date_desc">En Yeniler</option>
+          </select>
+        </div>
       </div>
 
       <!-- Günün Filmi (Hero) -->
@@ -253,48 +326,63 @@
         </div>
       </div>
 
-      <h3 class="section-title">Netflix & Popüler Seçki</h3>
+      <h3 class="section-title">Seçilen Kriterlere Göre Filmler</h3>
       <div class="grid" id="movieGrid"></div>
     </main>
 
+    <!-- REJİ MASASI (GÜVENLİ) -->
     <section class="reji-box" id="rejiView">
-      <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.4rem;">🎬 Reji Masası</h2>
-      <p style="color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem;">TMDb üzerinden çekilen canlı yayın kuyruğu</p>
-      <table>
-        <thead>
-          <tr>
-            <th>Film Başlığı</th>
-            <th>TMDb Puanı</th>
-            <th>Yıl</th>
-            <th>Durum</th>
-          </tr>
-        </thead>
-        <tbody id="rejiTableBody"></tbody>
-      </table>
+      <div class="auth-box" id="authBox">
+        <h3>🔒 Reji Girişi</h3>
+        <p>Yayın masasına yalnızca yönetici erişebilir. Lütfen PIN kodunu girin:</p>
+        <input type="password" id="pinInput" maxlength="6" placeholder="PIN Kodu" onkeydown="if(event.key==='Enter') verifyPin()">
+        <button class="btn btn-x" style="width: 100%; justify-content: center;" onclick="verifyPin()">Giriş Yap</button>
+      </div>
+
+      <div id="rejiContent" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+          <div>
+            <h2 style="font-size: 1.5rem; font-weight: 800;">🎬 Reji Yayın Masası</h2>
+            <p style="color: var(--muted); font-size: 0.95rem;">19:45 Paylaşım Kuyruğu</p>
+          </div>
+          <button class="btn" style="background: rgba(239,68,68,0.2); color:#f87171;" onclick="lockReji()">Çıkış Yap</button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Film Başlığı</th>
+              <th>TMDb Puanı</th>
+              <th>Yıl</th>
+              <th>Yayın Durumu</th>
+            </tr>
+          </thead>
+          <tbody id="rejiTableBody"></tbody>
+        </table>
+      </div>
     </section>
 
     <footer>
-      Tüm hakları saklıdır &copy; 2026 Bugün Ne İzlesem &bull; TMDb API & Netflix
+      Tüm hakları saklıdır &copy; 2026 Bugün Ne İzlesem &bull; TMDb API & Netflix TR
     </footer>
   </div>
 
   <script>
     const TMDB_API_KEY = "65a75854bdb8832f10fc1687f4b299d5";
     const IMG_BASE = "https://image.tmdb.org/t/p/w500";
-    let movies = [];
+    const REJI_PIN = "1945"; // Reji PIN Kodu
+    let allMovies = [];
+    let isRejiUnlocked = false;
 
     async function fetchMovies() {
       try {
-        // Netflix Türkiye'de (provider_id=8) yayınlanan popüler ve yüksek puanlı filmleri çeker
         const url = `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_API_KEY}&with_watch_providers=8&watch_region=TR&language=tr-TR&sort_by=popularity.desc&page=1`;
         const res = await fetch(url);
         const data = await res.json();
         
         if (data.results && data.results.length > 0) {
-          movies = data.results.filter(m => m.poster_path);
-          renderHero(movies[0]);
-          renderGrid(movies);
-          renderReji();
+          allMovies = data.results.filter(m => m.poster_path);
+          renderHero(allMovies[0]);
+          applyFilters();
         }
       } catch (err) {
         console.error("TMDb API hatası:", err);
@@ -317,10 +405,38 @@
       };
     }
 
+    function applyFilters() {
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const genre = document.getElementById('genreFilter').value;
+      const minScore = parseFloat(document.getElementById('scoreFilter').value);
+      const sortBy = document.getElementById('sortFilter').value;
+
+      let filtered = allMovies.filter(m => {
+        const matchesSearch = m.title.toLowerCase().includes(search);
+        const matchesGenre = genre ? m.genre_ids.includes(parseInt(genre)) : true;
+        const matchesScore = m.vote_average >= minScore;
+        return matchesSearch && matchesGenre && matchesScore;
+      });
+
+      if (sortBy === 'score_desc') {
+        filtered.sort((a, b) => b.vote_average - a.vote_average);
+      } else if (sortBy === 'date_desc') {
+        filtered.sort((a, b) => (b.release_date || '').localeCompare(a.release_date || ''));
+      } else {
+        filtered.sort((a, b) => b.popularity - a.popularity);
+      }
+
+      renderGrid(filtered);
+    }
+
     function renderGrid(list) {
       const grid = document.getElementById('movieGrid');
       grid.innerHTML = '';
-      list.forEach((m, idx) => {
+      if (list.length === 0) {
+        grid.innerHTML = '<p style="color:var(--muted); grid-column: 1/-1; text-align:center; padding: 2rem;">Kriterlere uygun film bulunamadı.</p>';
+        return;
+      }
+      list.forEach((m) => {
         const year = m.release_date ? m.release_date.split('-')[0] : '';
         const div = document.createElement('div');
         div.className = 'movie-card';
@@ -341,23 +457,38 @@
     function renderReji() {
       const tbody = document.getElementById('rejiTableBody');
       tbody.innerHTML = '';
-      movies.forEach((m, idx) => {
+      allMovies.forEach((m, idx) => {
         const year = m.release_date ? m.release_date.split('-')[0] : '';
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td><strong>${m.title}</strong></td>
           <td>★ ${m.vote_average.toFixed(1)}</td>
           <td>${year}</td>
-          <td><span class="status-badge ${idx === 0 ? 'st-posted' : 'st-queue'}">${idx === 0 ? 'Bugünün Filmi' : 'Sırada'}</span></td>
+          <td><span class="status-badge ${idx === 0 ? 'st-posted' : 'st-queue'}">${idx === 0 ? 'Bugünün Filmi (19:45)' : 'Sırada'}</span></td>
         `;
         tbody.appendChild(tr);
       });
     }
 
-    function filterMovies() {
-      const q = document.getElementById('searchInput').value.toLowerCase();
-      const filtered = movies.filter(m => m.title.toLowerCase().includes(q));
-      renderGrid(filtered);
+    function verifyPin() {
+      const pin = document.getElementById('pinInput').value;
+      if (pin === REJI_PIN) {
+        isRejiUnlocked = true;
+        document.getElementById('authBox').style.display = 'none';
+        document.getElementById('rejiContent').style.display = 'block';
+        renderReji();
+      } else {
+        alert("Hatalı PIN Kodu!");
+        document.getElementById('pinInput').value = '';
+      }
+    }
+
+    function lockReji() {
+      isRejiUnlocked = false;
+      document.getElementById('pinInput').value = '';
+      document.getElementById('authBox').style.display = 'block';
+      document.getElementById('rejiContent').style.display = 'none';
+      switchView('catalog');
     }
 
     function switchView(tab) {
@@ -371,6 +502,11 @@
         document.getElementById('rejiView').style.display = 'block';
         document.getElementById('tabCatalog').classList.remove('active');
         document.getElementById('tabReji').classList.add('active');
+
+        if (!isRejiUnlocked) {
+          document.getElementById('authBox').style.display = 'block';
+          document.getElementById('rejiContent').style.display = 'none';
+        }
       }
     }
 
