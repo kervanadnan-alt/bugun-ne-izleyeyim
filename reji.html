@@ -3762,18 +3762,24 @@ Gemini bir yapay zeka modeli olduğu için hata yapabilir.
     let searchDebounce = null;
     let editingQueueId = null;
 
-    function directAccess() {
+function function directAccess() {
       const pwd = document.getElementById('auth-password').value.trim();
+      // 1945, 1234 veya reji2026 yazıldığında ya da boş bırakılsa dahi kilidi açar
       if (pwd === '1945' || pwd === '1234' || pwd === 'reji2026' || pwd === '') {
-        document.getElementById('auth-overlay').classList.add('hidden');
+        const overlay = document.getElementById('auth-overlay');
+        if (overlay) {
+          overlay.style.display = 'none';
+          overlay.classList.add('hidden');
+        }
         setupInitialDate();
         rejiFetch(1);
         renderQueue();
       } else {
-        alert('Hatalı şifre!');
+        alert('Hatalı şifre! (Varsayılan PIN: 1945)');
+        document.getElementById('auth-password').value = '';
       }
     }
-
+     
     function logout() {
       location.reload();
     }
