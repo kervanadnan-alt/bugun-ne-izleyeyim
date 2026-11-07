@@ -3,15 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="referrer" content="no-referrer">
-  <title>Bugün Ne İzlesem? | Günlük Film Tavsiyeleri</title>
+  <title>Bugün Ne İzlesem? | Netflix & TMDb Film Seçkisi</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #090d16;
-      --card: #151c2e;
+      --card: #141b2d;
       --card-hover: #1c263e;
       --border: rgba(255, 255, 255, 0.08);
       --accent: #e50914;
@@ -21,12 +20,12 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background: radial-gradient(circle at 50% 0%, #1e1b4b 0%, var(--bg) 75%);
+      background: radial-gradient(circle at 50% 0%, #1e1b4b 0%, var(--bg) 80%);
       color: var(--text);
       min-height: 100vh;
       padding: 2.5rem 1rem;
     }
-    .wrapper { max-width: 1080px; margin: 0 auto; }
+    .wrapper { max-width: 1100px; margin: 0 auto; }
     
     header {
       display: flex;
@@ -67,7 +66,6 @@
       border-color: var(--accent);
     }
 
-    /* Arama Barı */
     .search-bar {
       margin-bottom: 2rem;
       position: relative;
@@ -92,7 +90,7 @@
       color: var(--muted);
     }
 
-    /* Günün Öne Çıkanı (Hero Kartı) */
+    /* Hero Kartı */
     .hero-card {
       background: var(--card);
       border: 1px solid var(--border);
@@ -141,14 +139,12 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.8px;
-      color: #f43f5e;
+      color: var(--accent);
       margin-bottom: 0.4rem;
     }
     .hero-title { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; line-height: 1.2; }
     .hero-platform { font-size: 0.95rem; font-weight: 600; color: #38bdf8; margin-bottom: 1.2rem; }
     .hero-overview { color: #cbd5e1; font-size: 1rem; line-height: 1.65; margin-bottom: 1.5rem; }
-    .hero-cast { font-size: 0.9rem; color: var(--muted); margin-bottom: 2rem; }
-    .hero-cast strong { color: #e2e8f0; }
 
     .btn {
       padding: 0.85rem 1.4rem;
@@ -164,9 +160,9 @@
       transition: all 0.2s;
     }
     .btn-x { background: #000; color: #fff; border: 1px solid rgba(255,255,255,0.25); }
-    .btn-x:hover { background: #1a1a1a; border-color: rgba(255,255,255,0.4); }
+    .btn-x:hover { background: #1a1a1a; }
 
-    /* Film Kataloğu */
+    /* Film Izgarası */
     .section-title { font-size: 1.35rem; font-weight: 800; margin-bottom: 1.2rem; }
     .grid {
       display: grid;
@@ -181,15 +177,16 @@
       display: flex;
       flex-direction: column;
       transition: transform 0.2s, background 0.2s;
+      cursor: pointer;
     }
     .movie-card:hover { transform: translateY(-4px); background: var(--card-hover); }
-    .card-img-wrap { width: 100%; height: 310px; background: #0b1120; overflow: hidden; }
+    .card-img-wrap { width: 100%; height: 320px; background: #0b1120; overflow: hidden; }
     .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
     .card-body { padding: 1.1rem; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
     .card-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.35rem; }
     .card-sub { font-size: 0.85rem; color: var(--muted); }
 
-    /* Reji Masası Paneli */
+    /* Reji Paneli */
     .reji-box {
       display: none;
       background: var(--card);
@@ -220,7 +217,7 @@
     <header>
       <div class="brand">
         <h1>Bugün Ne İzlesem?</h1>
-        <p>Her Akşam 19:45'te X (@GizliAnu) Akışında Yeni Bir Film</p>
+        <p>Her Akşam 19:45'te X (@GizliAnu) Yayını & TMDb / Netflix Seçkisi</p>
       </div>
       <div class="nav-tabs">
         <button class="tab-btn active" id="tabCatalog" onclick="switchView('catalog')">Film Kataloğu</button>
@@ -228,26 +225,24 @@
       </div>
     </header>
 
-    <!-- KATALOG EKRANI -->
     <main id="catalogView">
       <div class="search-bar">
         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-        <input type="text" id="searchInput" placeholder="Film adı veya oyuncu ara..." oninput="filterMovies()">
+        <input type="text" id="searchInput" placeholder="Netflix kataloğunda film ara..." oninput="filterMovies()">
       </div>
 
       <!-- Günün Filmi (Hero) -->
       <div class="hero-card">
         <div class="hero-poster">
-          <img id="heroImg" src="posters/iskandalo.jpg" alt="Afiş">
+          <img id="heroImg" src="" alt="Afiş">
         </div>
         <div class="hero-content">
           <div>
-            <span class="badge" id="heroImdb">★ 7.5</span>
+            <span class="badge" id="heroImdb">★ 0.0</span>
             <div class="tag">AKŞAM MATİNESİ | 19:45</div>
             <h2 class="hero-title" id="heroTitle">Yükleniyor...</h2>
-            <div class="hero-platform" id="heroPlatform">🍿 Kült Sinema</div>
+            <div class="hero-platform" id="heroPlatform">🍿 Netflix Türkiye</div>
             <p class="hero-overview" id="heroOverview"></p>
-            <div class="hero-cast" id="heroCast"></div>
           </div>
           <div>
             <button class="btn btn-x" id="btnShare">
@@ -258,20 +253,19 @@
         </div>
       </div>
 
-      <h3 class="section-title">Kütüphanedeki Filmler</h3>
+      <h3 class="section-title">Netflix & Popüler Seçki</h3>
       <div class="grid" id="movieGrid"></div>
     </main>
 
-    <!-- REJİ MASASI EKRANI -->
     <section class="reji-box" id="rejiView">
-      <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.4rem;">🎬 Reji Yayın Masası</h2>
-      <p style="color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem;">recommendations.json içeriği ve 19:45 tweet durumu</p>
+      <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.4rem;">🎬 Reji Masası</h2>
+      <p style="color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem;">TMDb üzerinden çekilen canlı yayın kuyruğu</p>
       <table>
         <thead>
           <tr>
             <th>Film Başlığı</th>
-            <th>IMDb</th>
-            <th>Platform</th>
+            <th>TMDb Puanı</th>
+            <th>Yıl</th>
             <th>Durum</th>
           </tr>
         </thead>
@@ -280,67 +274,64 @@
     </section>
 
     <footer>
-      Tüm hakları saklıdır &copy; 2026 Bugün Ne İzlesem
+      Tüm hakları saklıdır &copy; 2026 Bugün Ne İzlesem &bull; TMDb API & Netflix
     </footer>
   </div>
 
   <script>
-    let movieList = [];
+    const TMDB_API_KEY = "65a75854bdb8832f10fc1687f4b299d5";
+    const IMG_BASE = "https://image.tmdb.org/t/p/w500";
+    let movies = [];
 
-    function getPosterPath(m) {
-      if (m.poster_file) return m.poster_file;
-      if (m.poster_url && !m.poster_url.includes('amazon.com')) return m.poster_url;
-      return 'posters/iskandalo.jpg';
-    }
-
-    async function loadData() {
+    async function fetchMovies() {
       try {
-        let res = await fetch('data/recommendations.json');
-        if (!res.ok) res = await fetch('recommendations.json');
-        movieList = await res.json();
-
-        renderHero();
-        renderGrid(movieList);
-        renderReji();
+        // Netflix Türkiye'de (provider_id=8) yayınlanan popüler ve yüksek puanlı filmleri çeker
+        const url = `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_API_KEY}&with_watch_providers=8&watch_region=TR&language=tr-TR&sort_by=popularity.desc&page=1`;
+        const res = await fetch(url);
+        const data = await res.json();
+        
+        if (data.results && data.results.length > 0) {
+          movies = data.results.filter(m => m.poster_path);
+          renderHero(movies[0]);
+          renderGrid(movies);
+          renderReji();
+        }
       } catch (err) {
-        console.error("Film verisi okunamadı:", err);
+        console.error("TMDb API hatası:", err);
       }
     }
 
-    function renderHero() {
-      const movie = movieList.find(m => !m.posted) || movieList[0];
+    function renderHero(movie) {
       if (!movie) return;
-
-      document.getElementById('heroTitle').textContent = `${movie.title} (${movie.year || ''})`;
-      document.getElementById('heroImdb').textContent = `★ ${movie.imdb}`;
-      document.getElementById('heroPlatform').textContent = movie.platform ? `🍿 ${movie.platform}` : '';
-      document.getElementById('heroOverview').textContent = movie.overview;
-      document.getElementById('heroCast').innerHTML = `<strong>Oyuncular:</strong> ${movie.cast}`;
-      
-      const img = document.getElementById('heroImg');
-      img.src = getPosterPath(movie);
+      const year = movie.release_date ? movie.release_date.split('-')[0] : '';
+      document.getElementById('heroTitle').textContent = `${movie.title} (${year})`;
+      document.getElementById('heroImdb').textContent = `★ ${movie.vote_average.toFixed(1)}`;
+      document.getElementById('heroOverview').textContent = movie.overview || "Özet bulunmuyor.";
+      document.getElementById('heroImg').src = IMG_BASE + movie.poster_path;
 
       document.getElementById('btnShare').onclick = () => {
-        const text = `📅 Akşam Matinesi | Saat 19:45\n\n🔴 ${movie.title} (${movie.imdb}/10)\n👥 ${movie.cast}\n📌 ${movie.overview}\n\n${movie.platform ? '🍿 ' + movie.platform + '\n' : ''}#Sinema #FilmÖnerisi #AkşamMatinesi`;
+        const text = `📅 Akşam Matinesi | Saat 19:45\n\n🔴 ${movie.title} (${movie.vote_average.toFixed(1)}/10)\n📌 ${movie.overview ? movie.overview.substring(0, 160) + '...' : ''}\n\n🍿 Netflix Türkiye\n#Sinema #FilmÖnerisi #AkşamMatinesi`;
         navigator.clipboard.writeText(text);
-        alert("Tweet metni kopyalandı! X açılıyor, yapıştırıp paylaşabilirsiniz.");
+        alert("Tweet metni panoya kopyalandı! X açılıyor...");
         window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
       };
     }
 
-    function renderGrid(data) {
+    function renderGrid(list) {
       const grid = document.getElementById('movieGrid');
       grid.innerHTML = '';
-      data.forEach(m => {
+      list.forEach((m, idx) => {
+        const year = m.release_date ? m.release_date.split('-')[0] : '';
         const div = document.createElement('div');
         div.className = 'movie-card';
+        div.onclick = () => { renderHero(m); window.scrollTo({ top: 0, behavior: 'smooth' }); };
         div.innerHTML = `
           <div class="card-img-wrap">
-            <img src="${getPosterPath(m)}" alt="${m.title}">
+            <img src="${IMG_BASE + m.poster_path}" alt="${m.title}">
           </div>
           <div class="card-body">
-            <div class="card-title">${m.title} (${m.year || ''})</div>
-            <div class="card-sub">★ ${m.imdb} &bull; ${m.platform || 'Arşiv'}</div>
+            <div class="card-title">${m.title} (${year})</div>
+            <div class="card-sub">★ ${m.vote_average.toFixed(1)} &bull; Netflix</div>
           </div>
         `;
         grid.appendChild(div);
@@ -350,24 +341,22 @@
     function renderReji() {
       const tbody = document.getElementById('rejiTableBody');
       tbody.innerHTML = '';
-      movieList.forEach(m => {
+      movies.forEach((m, idx) => {
+        const year = m.release_date ? m.release_date.split('-')[0] : '';
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td><strong>${m.title}</strong> (${m.year || ''})</td>
-          <td>★ ${m.imdb}</td>
-          <td>${m.platform || '-'}</td>
-          <td><span class="status-badge ${m.posted ? 'st-posted' : 'st-queue'}">${m.posted ? 'Paylaşıldı' : 'Sırada'}</span></td>
+          <td><strong>${m.title}</strong></td>
+          <td>★ ${m.vote_average.toFixed(1)}</td>
+          <td>${year}</td>
+          <td><span class="status-badge ${idx === 0 ? 'st-posted' : 'st-queue'}">${idx === 0 ? 'Bugünün Filmi' : 'Sırada'}</span></td>
         `;
         tbody.appendChild(tr);
       });
     }
 
     function filterMovies() {
-      const query = document.getElementById('searchInput').value.toLowerCase();
-      const filtered = movieList.filter(m => 
-        m.title.toLowerCase().includes(query) || 
-        (m.cast && m.cast.toLowerCase().includes(query))
-      );
+      const q = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = movies.filter(m => m.title.toLowerCase().includes(q));
       renderGrid(filtered);
     }
 
@@ -385,7 +374,7 @@
       }
     }
 
-    loadData();
+    fetchMovies();
   </script>
 </body>
 </html>
