@@ -108,6 +108,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
+        <!-- Sol Detaylar -->
         <div class="lg:col-span-8 space-y-5">
           
           <div class="flex flex-wrap items-center gap-2">
@@ -183,7 +184,7 @@
           <div class="flex flex-wrap items-center gap-3 pt-1">
             <a id="hero-netflix-link" href="#" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl bg-netflix-red hover:bg-netflix-hover text-white font-extrabold text-sm transition-all shadow-lg shadow-red-600/30 flex items-center gap-2 active:scale-95">
               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-              <span id="hero-watch-btn-text">Hemen İzle</span>
+              <span id="hero-watch-btn-text">Platformda Ara / İzle</span>
             </a>
             <button id="hero-btn-random" class="px-5 py-3 rounded-xl bg-neutral-900/90 hover:bg-neutral-800 border border-neutral-700 text-neutral-200 text-sm font-bold transition-all flex items-center gap-2 active:scale-95">
               <span>🎲 Farklı Bir Öneri Getir</span>
@@ -203,9 +204,10 @@
     </div>
   </section>
 
-  <!-- ANA VİTRİN -->
+  <!-- ANA VİTRİN: SIRALAMA & TASNİF MERKEZİ -->
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
     
+    <!-- 1. BÜYÜK TASNİF VE SIRALAMA SEKMELERİ -->
     <div class="glass-panel p-5 sm:p-7 rounded-3xl space-y-6 shadow-2xl">
       
       <div>
@@ -214,6 +216,7 @@
       </div>
 
       <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
+        
         <button onclick="setShelf('populer')" id="shelf-populer" class="shelf-tab active p-3 rounded-2xl border border-neutral-800 bg-neutral-900 hover:bg-neutral-800/80 text-left transition-all">
           <span class="text-lg block">🔥</span>
           <strong class="text-xs sm:text-sm font-black text-white block mt-1">Şu Anda Popüler</strong>
@@ -243,6 +246,7 @@
           <strong class="text-xs sm:text-sm font-black text-white block mt-1">Diziler Sıralaması</strong>
           <span class="text-[10px] text-neutral-400 block mt-0.5">Mini diziler ve sezonlar</span>
         </button>
+
       </div>
 
       <!-- Serbest Arama Çubuğu -->
@@ -279,10 +283,10 @@
         </div>
       </div>
 
-      <!-- 5 Ayrıştırılmış Mantıksal Filtre Kutusu -->
+      <!-- 5 Ayrıştırılmış Mantıksal Filtre Kutusu (PLATFORM EKLENDİ) -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 pt-4 border-t border-neutral-800/80">
         
-        <!-- Platform Seçici -->
+        <!-- KUTU 1: YAYIN PLATFORMU (YENİ EKLENDİ) -->
         <div class="space-y-1.5 p-3 rounded-2xl bg-neutral-900/60 border border-neutral-800">
           <label class="text-[11px] font-black uppercase text-red-500 block tracking-wider">🍿 1. Platform</label>
           <select id="select-platform" class="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-3 py-2 text-xs font-semibold text-neutral-200 focus:outline-none focus:border-netflix-red">
@@ -293,9 +297,10 @@
             <option value="337">Disney+</option>
             <option value="all">🌐 Tüm Platformlar / Arşiv</option>
           </select>
-          <span class="text-[10px] text-neutral-500 block leading-tight">Yayın servisi</span>
+          <span class="text-[10px] text-neutral-500 block leading-tight">Yayınlandığı servis</span>
         </div>
 
+        <!-- KUTU 2: SESLENDİRME -->
         <div class="space-y-1.5 p-3 rounded-2xl bg-neutral-900/60 border border-neutral-800">
           <label class="text-[11px] font-black uppercase text-amber-400 block tracking-wider">🎧 2. Seslendirme</label>
           <select id="select-audio" class="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-3 py-2 text-xs font-semibold text-neutral-200 focus:outline-none focus:border-netflix-red">
@@ -306,6 +311,7 @@
           <span class="text-[10px] text-neutral-500 block leading-tight">Ses formatı</span>
         </div>
 
+        <!-- KUTU 3: ÜLKE SİNEMASI -->
         <div class="space-y-1.5 p-3 rounded-2xl bg-neutral-900/60 border border-neutral-800">
           <label class="text-[11px] font-black uppercase text-sky-400 block tracking-wider">🌍 3. Ülke / Ekol</label>
           <select id="select-country" class="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-3 py-2 text-xs font-semibold text-neutral-200 focus:outline-none focus:border-netflix-red">
@@ -323,6 +329,7 @@
           <span class="text-[10px] text-neutral-500 block leading-tight">Çekildiği ülke</span>
         </div>
 
+        <!-- KUTU 4: KONU & TEMA -->
         <div class="space-y-1.5 p-3 rounded-2xl bg-neutral-900/60 border border-neutral-800">
           <label class="text-[11px] font-black uppercase text-rose-400 block tracking-wider">🎭 4. Konu & Tema</label>
           <select id="select-theme" class="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-3 py-2 text-xs font-semibold text-neutral-200 focus:outline-none focus:border-netflix-red">
@@ -342,6 +349,7 @@
           <span class="text-[10px] text-neutral-500 block leading-tight">İşlenen hikaye</span>
         </div>
 
+        <!-- KUTU 5: FORMAT & SIRALAMA -->
         <div class="space-y-1.5 p-3 rounded-2xl bg-neutral-900/60 border border-neutral-800">
           <label class="text-[11px] font-black uppercase text-emerald-400 block tracking-wider">⏱️ 5. Format & Sıra</label>
           <div class="grid grid-cols-2 gap-1.5">
@@ -361,6 +369,7 @@
 
       </div>
 
+      <!-- Bilgi ve Sıfırlama -->
       <div class="flex items-center justify-between pt-2 text-xs">
         <span id="results-count" class="font-bold text-neutral-300">
           Veritabanı taranıyor...
@@ -374,6 +383,7 @@
 
     <!-- FİLM LİSTESİ VİTRİNİ -->
     <div class="space-y-4">
+      
       <div class="flex items-center justify-between">
         <h2 id="catalog-title" class="text-xl sm:text-2xl font-black text-white tracking-tight flex items-center gap-2">
           <span>🍿 Platformda Yayındaki Yapımlar</span>
@@ -386,14 +396,17 @@
         <p class="text-xs text-neutral-400 font-semibold">Yayın akışı taranıyor...</p>
       </div>
 
+      <!-- Kart Grid -->
       <div id="live-movie-grid" class="hidden grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6"></div>
 
+      <!-- Sayfalama -->
       <div id="load-more-container" class="hidden text-center pt-6">
         <button id="btn-load-more" class="px-8 py-3.5 rounded-2xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-700 text-sm font-bold text-white transition-all shadow-md active:scale-95">
           Daha Fazla Yapım Göster (Sayfa <span id="current-page-num">2</span>) ↓
         </button>
       </div>
 
+      <!-- Sonuç Bulunamadı -->
       <div id="no-results" class="hidden glass-panel rounded-3xl p-12 text-center space-y-4">
         <div class="text-4xl">🔍</div>
         <h3 class="text-lg font-bold text-white">Bu Kriterlere Uygun Canlı Yapım Bulunamadı</h3>
@@ -404,6 +417,7 @@
           Filtreleri Sıfırla
         </button>
       </div>
+
     </div>
 
   </main>
@@ -550,6 +564,7 @@
       } else {
         url = `${BASE_URL}/discover/${targetMediaType}?api_key=${TMDB_API_KEY}&language=tr-TR&sort_by=${sortBy}&page=${page}&include_adult=false`;
 
+        // Dinamik Platform Seçimi
         if (platformChoice !== 'all') {
           url += `&watch_region=TR&with_watch_providers=${platformChoice}&with_watch_monetization_types=flatrate`;
         }
@@ -560,16 +575,19 @@
           url += `&first_air_date.lte=${TODAY_ISO}`;
         }
 
+        // Kült Modu
         if (activeShelfMode === 'kult' || sortBy === 'vote_average.desc') {
           url += `&vote_average.gte=7.5&vote_count.gte=50`;
         } else {
           url += `&vote_count.gte=10`;
         }
 
+        // Seslendirme
         if (audioChoice === 'tr_dub') {
           url += `&with_original_language=tr`;
         }
 
+        // Ülke Sineması
         const finalCountry = parsedCountry || (countryChoice !== 'all' ? countryChoice : null);
         if (finalCountry) {
           if (finalCountry === 'nordic') {
@@ -587,6 +605,7 @@
           }
         }
 
+        // Konu & Tema
         const finalGenre = parsedGenre || null;
         if (finalGenre) {
           url += `&with_genres=${finalGenre}`;
@@ -721,6 +740,7 @@
         }
         document.getElementById('hero-synopsis').textContent = fullOverview;
 
+        // Platform Tespiti
         const trProviders = details['watch/providers']?.results?.TR;
         let detectedPlatform = currentPlatformName;
         if (trProviders?.flatrate && trProviders.flatrate.length > 0) {
@@ -985,3 +1005,5 @@
   </script>
 </body>
 </html>
+index.html
+index.html görüntüleniyor.
