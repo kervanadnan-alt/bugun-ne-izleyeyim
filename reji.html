@@ -2499,15 +2499,16 @@ HTML
     let editingQueueId = null;
 
     function directAccess() {
-      const pwd = document.getElementById('auth-password').value.trim();
-      if (pwd === '1945' || pwd === '1234' || pwd === 'reji2026' || pwd === '') {
-        document.getElementById('auth-overlay').classList.add('hidden');
-        setupInitialDate();
-        rejiFetch(1);
-        renderQueue();
-      } else {
-        alert('Hatalı şifre!');
+      // Şifre ekranını doğrudan ve zorla ekrandan siler
+      const overlay = document.getElementById('auth-overlay');
+      if (overlay) {
+        overlay.remove(); // Ekranı HTML'den tamamen kaldırır, takılma ihtimali sıfırdır
       }
+
+      // Hata korumalı başlatma
+      try { setupInitialDate(); } catch(e) { console.warn(e); }
+      try { rejiFetch(1); } catch(e) { console.warn(e); }
+      try { renderQueue(); } catch(e) { console.warn(e); }
     }
 
     function logout() {
