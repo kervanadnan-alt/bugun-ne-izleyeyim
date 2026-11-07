@@ -3365,8 +3365,7 @@ Gemini bir yapay zeka modeli olduğu için hata yapabilir.
       </div>
 
       <div class="space-y-4">
-        <input type="password" id="auth-password" placeholder="Şifre: 1945 veya 1234" autofocus class="w-full bg-neutral-900 border border-neutral-700 rounded-2xl px-5 py-3.5 text-center text-sm text-white placeholder-neutral-500 tracking-widest focus:outline-none focus:border-netflix-red focus:ring-2 focus:ring-netflix-red/30 transition-all">
-        
+                <input type="password" id="auth-password" placeholder="Şifrenia: " autofocus onkeydown="if(event.key==='Enter') directAccess()" class="w-full bg-neutral-900 border border-neutral-700 rounded-2xl px-5 py-3.5 text-center text-sm text-white placeholder-neutral-500 tracking-widest focus:outline-none focus:border-netflix-red focus:ring-2 focus:ring-netflix-red/30 transition-all">
         <button onclick="directAccess()" class="w-full py-3.5 rounded-2xl bg-netflix-red hover:bg-netflix-hover text-white text-sm font-extrabold transition-all shadow-lg shadow-red-600/30 active:scale-95">
           Reji Masasına Giriş Yap →
         </button>
