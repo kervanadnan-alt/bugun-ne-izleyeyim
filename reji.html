@@ -223,17 +223,21 @@
               <button onclick="applyRejiSmartQuery('türk soygun')" class="px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🇹🇷 türk soygun</button>
             </div>
 
-            <!-- Popüler Konu Hapları -->
+            <!-- 7 Günlük Hızlı Konu Filtreleri -->
             <div class="space-y-1.5 pt-2 border-t border-neutral-800/60">
-              <span class="text-[11px] font-bold uppercase text-neutral-400 block tracking-wider">🎯 Konu Kuşakları</span>
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-bold uppercase text-neutral-400 block tracking-wider">🎯 7 Günlük Konu & Tür Filtreleri</span>
+                <span class="text-[10px] text-neutral-500">Kuşağa göre tıkla</span>
+              </div>
               <div class="flex flex-wrap gap-1.5">
-                <button onclick="setRejiTopic('all')" data-reji-topic="all" class="topic-pill active px-3 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800">🌟 Tümü</button>
-                <button onclick="setRejiTopic('cinayet')" data-reji-topic="cinayet" class="topic-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800">🔪 Cinayet & Dedektif</button>
-                <button onclick="setRejiTopic('ask')" data-reji-topic="ask" class="topic-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800">❤️ Aşk</button>
-                <button onclick="setRejiTopic('bilimkurgu')" data-reji-topic="bilimkurgu" class="topic-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800">🧬 Bilim Kurgu</button>
-                <button onclick="setRejiTopic('tarihi')" data-reji-topic="tarihi" class="topic-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800">🏛️ Tarihi</button>
-                <button onclick="setRejiTopic('soygun')" data-reji-topic="soygun" class="topic-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800">🏦 Soygun</button>
-                <button onclick="setRejiTopic('komedi')" data-reji-topic="komedi" class="topic-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800">😂 Komedi</button>
+                <button type="button" onclick="setRejiTopic('all')" data-reji-topic="all" class="topic-pill active px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800">🌟 Tümü</button>
+                <button type="button" onclick="setRejiTopic('zihin')" data-reji-topic="zihin" class="topic-pill px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800">🧠 Pzt: Zihin Bükücü</button>
+                <button type="button" onclick="setRejiTopic('dunya')" data-reji-topic="dunya" class="topic-pill px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800">🌍 Salı: Dünya Sineması</button>
+                <button type="button" onclick="setRejiTopic('kult')" data-reji-topic="kult" class="topic-pill px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800">🏛️ Çrş: Kült Klasik</button>
+                <button type="button" onclick="setRejiTopic('yerli')" data-reji-topic="yerli" class="topic-pill px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800">🇹🇷 Prş: Yerli Köşesi</button>
+                <button type="button" onclick="setRejiTopic('gerilim')" data-reji-topic="gerilim" class="topic-pill px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800">🩸 Cuma: Gerilim & Suç</button>
+                <button type="button" onclick="setRejiTopic('misir')" data-reji-topic="misir" class="topic-pill px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800">🍿 Cmt: Mısır / Bilim Kurgu</button>
+                <button type="button" onclick="setRejiTopic('dram')" data-reji-topic="dram" class="topic-pill px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800">🏆 Paz: Ödüllü Başyapıt</button>
               </div>
             </div>
 
@@ -385,10 +389,29 @@
 
               <textarea id="tweet-textarea" rows="6" class="w-full bg-neutral-900/90 border border-neutral-700 rounded-xl p-3 text-xs sm:text-sm text-neutral-200 focus:outline-none focus:border-sky-500 transition-all font-mono leading-relaxed" oninput="updateCharCount()"></textarea>
 
-              <div class="flex flex-wrap items-center gap-1.5 pt-1">
-                <button onclick="appendTag('#AkşamMatinesi')" class="text-[11px] px-2 py-0.5 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-300 border border-neutral-700">+ #AkşamMatinesi</button>
-                <button onclick="appendTag('#PazarSineması')" class="text-[11px] px-2 py-0.5 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-300 border border-neutral-700">+ #PazarSineması</button>
-                <button onclick="appendTag('#FilmÖnerisi')" class="text-[11px] px-2 py-0.5 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-300 border border-neutral-700">+ #FilmÖnerisi</button>
+              <!-- Manuel Platform Seçici Butonları -->
+              <div class="p-2.5 rounded-xl bg-neutral-900/90 border border-neutral-800 space-y-1.5">
+                <div class="flex items-center justify-between text-[11px]">
+                  <span class="font-bold text-neutral-400">🍿 Tweet Platformunu Değiştir:</span>
+                  <span id="current-tweet-platform-badge" class="font-extrabold text-amber-400">Amazon Prime Video</span>
+                </div>
+                <div class="flex flex-wrap items-center gap-1.5 text-[11px]">
+                  <button type="button" onclick="changeTweetPlatform('Prime Video')" class="px-2.5 py-1 rounded-lg bg-sky-950/60 hover:bg-sky-900/80 text-sky-400 border border-sky-800/60 font-bold transition-all">🟦 Prime Video</button>
+                  <button type="button" onclick="changeTweetPlatform('Netflix')" class="px-2.5 py-1 rounded-lg bg-red-950/60 hover:bg-red-900/80 text-red-400 border border-red-800/60 font-bold transition-all">🟥 Netflix</button>
+                  <button type="button" onclick="changeTweetPlatform('MUBI')" class="px-2.5 py-1 rounded-lg bg-amber-950/60 hover:bg-amber-900/80 text-amber-400 border border-amber-800/60 font-bold transition-all">🟨 MUBI</button>
+                  <button type="button" onclick="changeTweetPlatform('BluTV')" class="px-2.5 py-1 rounded-lg bg-cyan-950/60 hover:bg-cyan-900/80 text-cyan-400 border border-cyan-800/60 font-bold transition-all">🔷 BluTV</button>
+                  <button type="button" onclick="changeTweetPlatform('Disney+')" class="px-2.5 py-1 rounded-lg bg-blue-950/60 hover:bg-blue-900/80 text-blue-400 border border-blue-800/60 font-bold transition-all">🌐 Disney+</button>
+                  <button type="button" onclick="changeTweetPlatform('Sinema Arşivi')" class="px-2.5 py-1 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-neutral-300 border border-neutral-700 font-semibold transition-all">⚪ Arşiv / Tüm</button>
+                </div>
+              </div>
+
+              <!-- Hızlı Etiket Ekleme -->
+              <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
+                <span class="text-[10px] text-neutral-500 font-bold mr-1">Etiket:</span>
+                <button type="button" onclick="appendTag('#AkşamMatinesi')" class="text-[11px] px-2 py-0.5 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-300 border border-neutral-700">+ #AkşamMatinesi</button>
+                <button type="button" onclick="appendTag('#FilmÖnerisi')" class="text-[11px] px-2 py-0.5 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-300 border border-neutral-700">+ #FilmÖnerisi</button>
+                <button type="button" onclick="appendTag('#Sinema')" class="text-[11px] px-2 py-0.5 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-300 border border-neutral-700">+ #Sinema</button>
+                <button type="button" onclick="appendTag('#KültFilm')" class="text-[11px] px-2 py-0.5 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-300 border border-neutral-700">+ #KültFilm</button>
               </div>
 
               <div class="space-y-2.5 pt-3">
@@ -597,12 +620,29 @@
         if (finalGenre) {
           url += `&with_genres=${finalGenre}`;
         } else if (currentRejiTopic !== 'all') {
-          if (currentRejiTopic === 'cinayet') url += `&with_genres=80,9648`;
-          else if (currentRejiTopic === 'ask') url += `&with_genres=10749`;
-          else if (currentRejiTopic === 'bilimkurgu') url += `&with_genres=878`;
-          else if (currentRejiTopic === 'tarihi') url += `&with_genres=36|10752`;
-          else if (currentRejiTopic === 'soygun') url += `&with_genres=80,28`;
-          else if (currentRejiTopic === 'komedi') url += `&with_genres=35`;
+          if (currentRejiTopic === 'zihin') {
+            url += `&with_genres=53,9648`; // Psikolojik gerilim & gizem
+          } else if (currentRejiTopic === 'gerilim') {
+            url += `&with_genres=27,53`;   // Korku & Suç & Gerilim
+          } else if (currentRejiTopic === 'misir') {
+            url += `&with_genres=878,28`;  // Bilim kurgu & Macera
+          } else if (currentRejiTopic === 'dram') {
+            url += `&with_genres=18&vote_average.gte=7.5`; // Derin Dram & Yüksek Puan
+          } else if (currentRejiTopic === 'kult') {
+            url += `&vote_average.gte=7.8&vote_count.gte=50`; // Kült Başyapıtlar
+          } else if (currentRejiTopic === 'cinayet') {
+            url += `&with_genres=80,9648`;
+          } else if (currentRejiTopic === 'ask') {
+            url += `&with_genres=10749`;
+          } else if (currentRejiTopic === 'bilimkurgu') {
+            url += `&with_genres=878`;
+          } else if (currentRejiTopic === 'tarihi') {
+            url += `&with_genres=36|10752`;
+          } else if (currentRejiTopic === 'soygun') {
+            url += `&with_genres=80,28`;
+          } else if (currentRejiTopic === 'komedi') {
+            url += `&with_genres=35`;
+          }
         }
       }
 
@@ -801,6 +841,42 @@
       renderRejiList(liveItems);
     }
 
+        // 7 GÜNLÜK AKILLI PLATFORM BİLGİSİ
+    function getPlatformFooter(platformName) {
+      const p = (platformName || '').toLowerCase();
+      if (p.includes('prime') || p.includes('amazon')) {
+        return { text: "🍿 Amazon Prime Video'da izleyebilirsiniz.", tag: "#PrimeVideo" };
+      }
+      if (p.includes('mubi')) {
+        return { text: "🍿 MUBI Türkiye'de izleyebilirsiniz.", tag: "#MUBI" };
+      }
+      if (p.includes('blu') || p.includes('blutv')) {
+        return { text: "🍿 BluTV'de izleyebilirsiniz.", tag: "#BluTV" };
+      }
+      if (p.includes('disney')) {
+        return { text: "🍿 Disney+'ta izleyebilirsiniz.", tag: "#DisneyPlus" };
+      }
+      if (p.includes('netflix')) {
+        return { text: "🍿 Netflix Türkiye'de izleyebilirsiniz.", tag: "#NetflixTR" };
+      }
+      return { text: "🍿 Sinema arşivinde veya dijital platformlarda izleyebilirsiniz.", tag: "#Sinema" };
+    }
+
+    function changeTweetPlatform(pName) {
+      if (!selectedItem) {
+        showToast('Lütfen önce bir film seçin!');
+        return;
+      }
+      selectedItem.platformName = pName;
+      const tagEl = document.getElementById('selected-platform-tag');
+      if (tagEl) tagEl.textContent = `🍿 ${pName}`;
+      const badgeEl = document.getElementById('current-tweet-platform-badge');
+      if (badgeEl) badgeEl.textContent = pName;
+      generateTweetTemplate();
+      showToast(`Platform "${pName}" olarak güncellendi!`);
+    }
+
+    // 7 GÜNLÜK KUŞAK SEÇİMİ VE OTOMATİK LİSTE FİLTRELEME
     function setConcept(c) {
       currentConcept = c;
       document.querySelectorAll('.concept-btn').forEach(btn => {
@@ -810,6 +886,24 @@
           btn.className = "concept-btn p-2.5 rounded-xl border border-neutral-800 text-left text-xs transition-all bg-neutral-900/60 hover:bg-neutral-800 text-neutral-300";
         }
       });
+
+      // Kuşağa göre sol taraftaki film listesini anında filtrele:
+      if (c === 'Zihin Bükücü') {
+        setRejiTopic('zihin', false);
+      } else if (c === 'Dünya Sineması') {
+        setRejiTopic('dunya', false);
+      } else if (c === 'Kült Klasik') {
+        setRejiTopic('kult', false);
+      } else if (c === 'Yerli Köşesi') {
+        setRejiTopic('yerli', false);
+      } else if (c === 'Cuma Gerilimi') {
+        setRejiTopic('gerilim', false);
+      } else if (c === 'Mısır Gecesi') {
+        setRejiTopic('misir', false);
+      } else if (c === 'Pazar Sineması') {
+        setRejiTopic('dram', false);
+      }
+
       generateTweetTemplate();
     }
 
@@ -875,10 +969,20 @@
 
       const hookObj = getGenreHook(selectedItem.genres, currentConcept);
       const hook = hookObj.hook;
-      const tag = hookObj.tag;
+      const conceptTag = hookObj.tag;
 
-      const platName = selectedItem.platformName || document.getElementById('reji-select-platform').options[document.getElementById('reji-select-platform').selectedIndex].text;
-      const baseFooter = `\n\n🍿 ${platName}'de izleyebilirsiniz.\n${tag} #FilmÖnerisi`;
+      // Dinamik Platform Seçimi
+      const platSelect = document.getElementById('reji-select-platform');
+      let chosenPlatform = selectedItem.platformName;
+      if (!chosenPlatform) {
+        chosenPlatform = platSelect ? platSelect.options[platSelect.selectedIndex].text : 'Platform';
+      }
+      const platObj = getPlatformFooter(chosenPlatform);
+
+      const badgeEl = document.getElementById('current-tweet-platform-badge');
+      if (badgeEl) badgeEl.textContent = chosenPlatform;
+
+      const baseFooter = `\n\n${platObj.text}\n${conceptTag} ${platObj.tag}`;
       let header = `${dateHook}${hook}\n\n🔴 ${title} (${vote}/10)\n`;
       
       let actorSnippet = "";
@@ -1202,13 +1306,38 @@
       rejiFetch(1);
     }
 
-    function setRejiTopic(topic) {
+    function setRejiTopic(topic, triggerFetch = true) {
       currentRejiTopic = topic;
       document.querySelectorAll('[data-reji-topic]').forEach(btn => {
         btn.classList.toggle('active', btn.getAttribute('data-reji-topic') === topic);
       });
-      document.getElementById('reji-search').value = '';
-      rejiFetch(1);
+
+      // Konuya göre dropdown filtrelerini de senkronize et
+      const countryEl = document.getElementById('reji-select-country');
+      const sortEl = document.getElementById('reji-select-sort');
+      const searchEl = document.getElementById('reji-search');
+      if (searchEl) searchEl.value = '';
+
+      if (topic === 'dunya') {
+        if (countryEl) countryEl.value = 'europe';
+        if (sortEl) sortEl.value = 'popularity.desc';
+      } else if (topic === 'yerli') {
+        if (countryEl) countryEl.value = 'TR';
+        if (sortEl) sortEl.value = 'popularity.desc';
+      } else if (topic === 'kult') {
+        if (countryEl) countryEl.value = 'all';
+        if (sortEl) sortEl.value = 'vote_average.desc';
+      } else if (topic === 'dram') {
+        if (countryEl) countryEl.value = 'all';
+        if (sortEl) sortEl.value = 'vote_average.desc';
+      } else {
+        if (countryEl) countryEl.value = 'all';
+        if (sortEl) sortEl.value = 'popularity.desc';
+      }
+
+      if (triggerFetch) {
+        rejiFetch(1);
+      }
     }
 
     function resetRejiFilters() {
