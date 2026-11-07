@@ -2,6 +2,13 @@
 <html lang="tr">
 <head>
   <script>
+  // index.html üzerinden 1945 girilerek gelinmediyse vitrine geri atar:
+  if (sessionStorage.getItem("reji_auth") !== "ok") {
+    alert("Yetkisiz Giriş! Lütfen vitrindeki Reji butonunu kullanın.");
+    window.location.href = "./index.html";
+  }
+</script>
+  <script>
   // Eğer index sayfasından şifreyle gelinmediyse doğrudan PIN sor:
   if (sessionStorage.getItem("reji_auth") !== "ok") {
     const pin = prompt("🔒 Reji Masası Yönetici PIN Kodunu Girin:");
@@ -3366,17 +3373,7 @@ Gemini bir yapay zeka modeli olduğu için hata yapabilir.
 </head>
 <body class="min-h-screen flex flex-col selection:bg-netflix-red selection:text-white">
 
-  <!-- GİRİŞ EKRANI -->
-  <div id="auth-overlay" class="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4 backdrop-blur-xl">
-    <div id="auth-box" class="max-w-md w-full glass p-8 rounded-3xl border border-neutral-800 text-center space-y-6 shadow-2xl">
-      <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-netflix-red to-red-800 mx-auto flex items-center justify-center font-black text-3xl text-white shadow-xl shadow-red-600/30">
-        R
-      </div>
-      <div>
-        <h2 class="text-2xl font-black text-white tracking-tight">Reji Girişi</h2>
-        <p class="text-xs text-neutral-400 mt-1">Yalnızca editör erişimine açıktır.</p>
-      </div>
-
+  
       <div class="space-y-4">
                 <input type="password" id="auth-password" placeholder="Şifreniz: " autofocus onkeydown="if(event.key==='Enter') directAccess()" class="w-full bg-neutral-900 border border-neutral-700 rounded-2xl px-5 py-3.5 text-center text-sm text-white placeholder-neutral-500 tracking-widest focus:outline-none focus:border-netflix-red focus:ring-2 focus:ring-netflix-red/30 transition-all">
         <button onclick="directAccess()" class="w-full py-3.5 rounded-2xl bg-netflix-red hover:bg-netflix-hover text-white text-sm font-extrabold transition-all shadow-lg shadow-red-600/30 active:scale-95">
