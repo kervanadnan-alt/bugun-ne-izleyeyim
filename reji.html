@@ -1,14 +1,7 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <script>
-  // index.html üzerinden 1945 girilerek gelinmediyse vitrine geri atar:
-  if (sessionStorage.getItem("reji_auth") !== "ok") {
-    alert("Yetkisiz Giriş! Lütfen vitrindeki Reji butonunu kullanın.");
-    window.location.href = "./index.html";
-  }
-</script>
-  <script>
+   <script>
   // Eğer index sayfasından şifreyle gelinmediyse doğrudan PIN sor:
   if (sessionStorage.getItem("reji_auth") !== "ok") {
     const pin = prompt("🔒 Reji Masası Yönetici PIN Kodunu Girin:");
@@ -18,6 +11,13 @@
       alert("Yetkisiz Giriş! Vitrine yönlendiriliyorsunuz.");
       window.location.href = "./index.html";
     }
+  }
+</script>
+   <script>
+  // index.html üzerinden 1945 girilerek gelinmediyse vitrine geri atar:
+  if (sessionStorage.getItem("reji_auth") !== "ok") {
+    alert("Yetkisiz Giriş! Lütfen vitrindeki Reji butonunu kullanın.");
+    window.location.href = "./index.html";
   }
 </script>
   <meta charset="UTF-8">
