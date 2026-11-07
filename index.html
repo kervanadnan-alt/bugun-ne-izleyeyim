@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reji Odası | Çoklu Platform Canlı Yayın, Genişletilmiş Künye & X Masası</title>
+  <title>Bugün Ne İzleyeyim? | Canlı Platform Seçkisi, Yeni Eklenenler & Kült Filmler</title>
+  <meta name="description" content="Netflix, Prime Video, MUBI, BluTV ve Disney+ yeni eklenenler, popülerlik sıralaması ve tüm zamanların kült başyapıtları.">
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script>
     tailwind.config = {
@@ -33,12 +34,15 @@
   <style>
     body {
       background-color: #08080a;
-      color: #f4f4f5;
+      color: #f3f4f6;
       font-family: 'Inter', sans-serif;
     }
-    .glass {
+    .hero-glow {
+      background: radial-gradient(circle at 50% 20%, rgba(229, 9, 20, 0.22) 0%, rgba(8, 8, 10, 0) 70%);
+    }
+    .glass-panel {
       background: rgba(18, 18, 24, 0.88);
-      backdrop-filter: blur(14px);
+      backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.08);
     }
     .custom-scrollbar::-webkit-scrollbar {
@@ -46,390 +50,368 @@
       height: 6px;
     }
     .custom-scrollbar::-webkit-scrollbar-track {
-      background: #0d0d12;
+      background: #0f0f13;
     }
     .custom-scrollbar::-webkit-scrollbar-thumb {
       background: #2a2a35;
       border-radius: 9999px;
+    }
+    .shelf-tab.active {
+      background-color: #E50914 !important;
+      color: #ffffff !important;
+      border-color: #E50914 !important;
+      font-weight: 800 !important;
+      box-shadow: 0 4px 16px rgba(229, 9, 20, 0.45);
     }
     .topic-pill.active {
       background-color: #E50914 !important;
       color: #ffffff !important;
       border-color: #E50914 !important;
       font-weight: 700 !important;
-      box-shadow: 0 4px 14px rgba(229, 9, 20, 0.4);
     }
   </style>
 </head>
 <body class="min-h-screen flex flex-col selection:bg-netflix-red selection:text-white">
 
-  <!-- GİRİŞ EKRANI -->
-  <div id="auth-overlay" class="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4 backdrop-blur-xl">
-    <div id="auth-box" class="max-w-md w-full glass p-8 rounded-3xl border border-neutral-800 text-center space-y-6 shadow-2xl">
-      <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-netflix-red to-red-800 mx-auto flex items-center justify-center font-black text-3xl text-white shadow-xl shadow-red-600/30">
-        R
-      </div>
-      <div>
-        <h2 class="text-2xl font-black text-white tracking-tight">Reji Girişi</h2>
-        <p class="text-xs text-neutral-400 mt-1">Yalnızca editör erişimine açıktır.</p>
+  <!-- Üst Menü -->
+  <header class="border-b border-neutral-800/80 bg-neutral-950/90 sticky top-0 z-50 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 py-3.5 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-netflix-red to-red-800 flex items-center justify-center font-black text-2xl text-white shadow-lg shadow-red-600/30 tracking-tighter">
+          N
+        </div>
+        <div>
+          <span class="font-black text-lg sm:text-xl tracking-tight text-white flex items-center gap-1.5">
+            Bugün Ne İzleyeyim?
+            <span id="header-platform-badge" class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 uppercase tracking-widest flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              Çoklu Platform Canlı
+            </span>
+          </span>
+          <p class="text-[11px] text-neutral-400 hidden sm:block">Yeni Eklenenler, Güncel Sıralama ve Kült Başyapıtlar</p>
+        </div>
       </div>
 
-      <div class="space-y-4">
-        <input type="password" id="auth-password" placeholder="Şifre: 1945 veya 1234" autofocus class="w-full bg-neutral-900 border border-neutral-700 rounded-2xl px-5 py-3.5 text-center text-sm text-white placeholder-neutral-500 tracking-widest focus:outline-none focus:border-netflix-red focus:ring-2 focus:ring-netflix-red/30 transition-all">
-        
-        <button onclick="directAccess()" class="w-full py-3.5 rounded-2xl bg-netflix-red hover:bg-netflix-hover text-white text-sm font-extrabold transition-all shadow-lg shadow-red-600/30 active:scale-95">
-          Reji Masasına Giriş Yap →
+      <div class="flex items-center gap-3">
+        <button id="btn-quick-random" class="px-3.5 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-700 text-xs sm:text-sm font-semibold text-neutral-200 hover:text-white transition-all flex items-center gap-1.5 shadow-sm active:scale-95">
+          <span>🎲 Rastgele Öner</span>
         </button>
-      </div>
-
-      <div class="pt-2 text-[11px] text-neutral-500">
-        <a href="./index.html" class="hover:text-neutral-300 underline">← Okuyucu Vitrinine Geri Dön</a>
+        <a href="./reji.html" class="px-3.5 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-700 text-xs sm:text-sm font-bold text-red-400 hover:text-red-300 transition-all flex items-center gap-1.5 shadow-sm">
+          <span>🎬 Reji Masası</span>
+        </a>
       </div>
     </div>
-  </div>
+  </header>
 
-  <!-- REJİ ÇALIŞMA ALANI -->
-  <div id="reji-app" class="flex-1 flex flex-col">
-    
-    <header class="border-b border-neutral-800 bg-neutral-950/90 sticky top-0 z-40 backdrop-blur-md">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 py-3.5 flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-netflix-red to-red-800 flex items-center justify-center font-black text-xl text-white shadow-lg shadow-red-600/30">
-            R
+  <!-- Hero Vitrin Alanı -->
+  <section id="hero-section" class="relative hero-glow border-b border-neutral-800/60 transition-all duration-500 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <div class="lg:col-span-8 space-y-5">
+          
+          <div class="flex flex-wrap items-center gap-2">
+            <span id="hero-verify-badge" class="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-black uppercase tracking-wider border border-emerald-500/40 shadow-sm flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span id="hero-verify-text">Platform Doğrulandı</span>
+            </span>
+
+            <span id="hero-badge-type" class="px-2.5 py-1 rounded-full bg-neutral-800 text-neutral-200 text-xs font-bold border border-neutral-700">
+              🎬 Sinema Filmi
+            </span>
+            <span id="hero-imdb" class="px-2.5 py-1 rounded-full bg-amber-400/10 text-amber-400 text-xs font-black border border-amber-400/30">
+              ⭐ Puan: Yükleniyor...
+            </span>
+            <span id="hero-year" class="px-2.5 py-1 rounded-full bg-neutral-900 text-neutral-300 text-xs font-bold border border-neutral-800">
+              📅 --
+            </span>
+            <span id="hero-duration" class="px-2.5 py-1 rounded-full bg-neutral-900 text-neutral-300 text-xs font-bold border border-neutral-800">
+              ⏱️ --
+            </span>
           </div>
-          <div>
-            <div class="flex items-center gap-2">
-              <span class="font-extrabold text-lg text-white">Reji Odası</span>
-              <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Genişletilmiş Editör Paneli</span>
+
+          <h1 id="hero-title" class="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
+            Canlı Veritabanı Taranıyor...
+          </h1>
+
+          <div id="hero-genres" class="flex flex-wrap gap-1.5 text-xs">
+            <span class="px-2.5 py-0.5 rounded-md bg-neutral-900 text-red-400 border border-neutral-800 font-semibold">Film Seçkisi</span>
+          </div>
+
+          <p id="hero-synopsis" class="text-sm sm:text-base text-neutral-300 leading-relaxed max-w-3xl">
+            Katalogdaki doğrulanmış yapımlar taranıyor...
+          </p>
+
+          <!-- TAM FİLM KÜNYESİ -->
+          <div class="p-4 rounded-2xl bg-neutral-900/90 border border-neutral-800/80 space-y-2 text-xs sm:text-sm">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <div>
+                <span class="text-neutral-500 font-bold block text-[11px] uppercase tracking-wider">🎬 Yönetmen</span>
+                <strong id="hero-director" class="text-neutral-200 font-semibold">Yükleniyor...</strong>
+              </div>
+              <div>
+                <span class="text-neutral-500 font-bold block text-[11px] uppercase tracking-wider">🌍 Ülke & Sinema Ekolü</span>
+                <strong id="hero-country" class="text-neutral-200 font-semibold">Yükleniyor...</strong>
+              </div>
             </div>
-            <p class="text-[11px] text-neutral-400">Çoklu Platform Arama, Geniş Film Künyesi & X Zamanlama Masası</p>
+
+            <div class="pt-1 border-t border-neutral-800/60">
+              <span class="text-neutral-500 font-bold block text-[11px] uppercase tracking-wider mb-0.5">🌟 Başrol Oyuncuları</span>
+              <strong id="hero-cast" class="text-neutral-200 font-semibold block leading-relaxed">Oyuncu kadrosu yükleniyor...</strong>
+            </div>
+          </div>
+
+          <!-- YZ EDİTÖR İNCELEMESİ -->
+          <div class="p-4 rounded-2xl bg-gradient-to-br from-red-950/20 via-neutral-900/90 to-neutral-900/80 border border-red-500/20 space-y-2.5">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black uppercase tracking-wider text-red-400 flex items-center gap-1.5">
+                <span>🤖</span> YZ Editör İncelemesi & "Neden İzlemelisin?"
+              </span>
+              <span class="text-[10px] px-2 py-0.5 rounded bg-red-500/10 text-red-400 font-bold border border-red-500/20">
+                Akıllı Eleştiri
+              </span>
+            </div>
+            
+            <p id="hero-ai-review" class="text-xs sm:text-sm text-neutral-300 leading-relaxed italic">
+              Film analiz ediliyor...
+            </p>
+
+            <div id="hero-ai-tags" class="flex flex-wrap gap-2 pt-1 text-[11px]"></div>
+          </div>
+
+          <!-- İzle Butonu -->
+          <div class="flex flex-wrap items-center gap-3 pt-1">
+            <a id="hero-netflix-link" href="#" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl bg-netflix-red hover:bg-netflix-hover text-white font-extrabold text-sm transition-all shadow-lg shadow-red-600/30 flex items-center gap-2 active:scale-95">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              <span id="hero-watch-btn-text">Hemen İzle</span>
+            </a>
+            <button id="hero-btn-random" class="px-5 py-3 rounded-xl bg-neutral-900/90 hover:bg-neutral-800 border border-neutral-700 text-neutral-200 text-sm font-bold transition-all flex items-center gap-2 active:scale-95">
+              <span>🎲 Farklı Bir Öneri Getir</span>
+            </button>
           </div>
         </div>
 
-        <div class="flex items-center gap-3">
-          <a href="./index.html" class="px-3 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-700 text-xs font-semibold text-neutral-300 hover:text-white transition-all flex items-center gap-1.5">
-            <span>Siteyi Aç ↗</span>
-          </a>
-          <button onclick="logout()" class="px-3 py-2 rounded-xl bg-red-950/40 hover:bg-red-900/60 border border-red-800/40 text-xs font-bold text-red-400 hover:text-white transition-all">
-            Kapat
-          </button>
+        <!-- Sağ Afiş -->
+        <div class="lg:col-span-4 flex justify-center lg:justify-end">
+          <div class="relative group sticky top-24">
+            <div class="absolute -inset-1 bg-gradient-to-r from-red-600 to-amber-600 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
+            <img id="hero-poster" src="" alt="Afiş" class="relative w-64 sm:w-72 h-92 sm:h-104 object-cover rounded-2xl border border-neutral-700 shadow-2xl bg-neutral-900">
+          </div>
         </div>
+
       </div>
-    </header>
+    </div>
+  </section>
 
-    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+  <!-- ANA VİTRİN -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    
+    <div class="glass-panel p-5 sm:p-7 rounded-3xl space-y-6 shadow-2xl">
       
-      <!-- Düzenleme Modu Bildirimi -->
-      <div id="edit-mode-banner" class="hidden glass p-4 rounded-2xl border border-amber-500/40 bg-amber-500/10 flex items-center justify-between gap-4">
-        <div class="flex items-center gap-3">
-          <span class="text-xl">✏️</span>
-          <div>
-            <h4 class="text-xs font-black text-amber-400 uppercase tracking-wider">Planlanan Yayın Düzenleme Modu</h4>
-            <p id="edit-mode-desc" class="text-xs text-neutral-300">Şu anda planlanmış bir yayını düzenliyorsunuz.</p>
-          </div>
-        </div>
-        <button onclick="cancelEditMode()" class="px-3 py-1.5 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-neutral-300 text-xs font-bold transition-all">
-          Düzenlemeyi İptal Et
+      <div>
+        <span class="text-xs font-black uppercase text-red-500 tracking-wider block mb-1">⚡ Ana Sıralama & Tasnif</span>
+        <h2 class="text-lg sm:text-xl font-black text-white">Canlı Yayın & Sıralama Kuşakları</h2>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
+        <button onclick="setShelf('populer')" id="shelf-populer" class="shelf-tab active p-3 rounded-2xl border border-neutral-800 bg-neutral-900 hover:bg-neutral-800/80 text-left transition-all">
+          <span class="text-lg block">🔥</span>
+          <strong class="text-xs sm:text-sm font-black text-white block mt-1">Şu Anda Popüler</strong>
+          <span class="text-[10px] text-neutral-400 block mt-0.5">Canlı trend yapımlar</span>
+        </button>
+
+        <button onclick="setShelf('yeniler')" id="shelf-yeniler" class="shelf-tab p-3 rounded-2xl border border-neutral-800 bg-neutral-900 hover:bg-neutral-800/80 text-left transition-all">
+          <span class="text-lg block">🆕</span>
+          <strong class="text-xs sm:text-sm font-black text-white block mt-1">Yeni Eklenenler</strong>
+          <span class="text-[10px] text-neutral-400 block mt-0.5">En son çıkan dizi & film</span>
+        </button>
+
+        <button onclick="setShelf('kult')" id="shelf-kult" class="shelf-tab p-3 rounded-2xl border border-neutral-800 bg-neutral-900 hover:bg-neutral-800/80 text-left transition-all">
+          <span class="text-lg block">🏆</span>
+          <strong class="text-xs sm:text-sm font-black text-white block mt-1">Kült Başyapıtlar</strong>
+          <span class="text-[10px] text-neutral-400 block mt-0.5">IMDb 7.8+ zirvedekiler</span>
+        </button>
+
+        <button onclick="setShelf('filmler')" id="shelf-filmler" class="shelf-tab p-3 rounded-2xl border border-neutral-800 bg-neutral-900 hover:bg-neutral-800/80 text-left transition-all">
+          <span class="text-lg block">🎥</span>
+          <strong class="text-xs sm:text-sm font-black text-white block mt-1">Filmler Sıralaması</strong>
+          <span class="text-[10px] text-neutral-400 block mt-0.5">Yalnızca sinema filmleri</span>
+        </button>
+
+        <button onclick="setShelf('diziler')" id="shelf-diziler" class="shelf-tab p-3 rounded-2xl border border-neutral-800 bg-neutral-900 hover:bg-neutral-800/80 text-left transition-all">
+          <span class="text-lg block">📺</span>
+          <strong class="text-xs sm:text-sm font-black text-white block mt-1">Diziler Sıralaması</strong>
+          <span class="text-[10px] text-neutral-400 block mt-0.5">Mini diziler ve sezonlar</span>
         </button>
       </div>
 
-      <!-- SEÇİLEN FİLMİN KÜNYE KARTI -->
-      <div class="glass p-6 sm:p-7 rounded-3xl border border-neutral-800 shadow-2xl relative overflow-hidden">
+      <!-- Serbest Arama Çubuğu -->
+      <div class="space-y-2 pt-2 border-t border-neutral-800/60">
+        <div class="relative">
+          <input type="text" id="live-search-box" placeholder="Katalogda arayın (film/dizi adı veya 'iskandinav cinayet', 'afrika', 'iran dram'...)" class="w-full bg-neutral-900/95 border border-neutral-700/80 rounded-2xl px-5 py-4 pl-12 text-sm sm:text-base text-white placeholder-neutral-500 focus:outline-none focus:border-netflix-red focus:ring-2 focus:ring-netflix-red/30 transition-all shadow-inner">
+          <svg class="w-5 h-5 text-neutral-400 absolute left-4 top-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <button id="btn-clear-search" class="hidden absolute right-4 top-4 text-xs font-bold text-neutral-400 hover:text-white px-2.5 py-1 rounded bg-neutral-800">Temizle</button>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-1.5 pt-1 text-[11px]">
+          <span class="text-neutral-500 font-semibold mr-1">💡 Hızlı:</span>
+          <button onclick="applySmartQuery('iskandinav')" class="px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">❄️ iskandinav</button>
+          <button onclick="applySmartQuery('afrika')" class="px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🌍 afrika</button>
+          <button onclick="applySmartQuery('iran')" class="px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🇮🇷 iran</button>
+          <button onclick="applySmartQuery('kore gerilim')" class="px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🇰🇷 kore gerilim</button>
+          <button onclick="applySmartQuery('türk soygun')" class="px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🇹🇷 türk soygun</button>
+        </div>
+      </div>
+
+      <!-- Popüler Konu Hapları -->
+      <div class="space-y-2 pt-2 border-t border-neutral-800/60">
+        <span class="text-xs font-bold uppercase tracking-wider text-neutral-400 block">🎯 Konu & Tema Kuşakları</span>
+        <div class="flex flex-wrap gap-2">
+          <button onclick="setTopic('all')" data-topic="all" class="topic-pill active px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🌟 Tümü</button>
+          <button onclick="setTopic('cinayet')" data-topic="cinayet" class="topic-pill px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🔪 Cinayet & Dedektif</button>
+          <button onclick="setTopic('ask')" data-topic="ask" class="topic-pill px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">❤️ Aşk & Romantizm</button>
+          <button onclick="setTopic('bilimkurgu')" data-topic="bilimkurgu" class="topic-pill px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🧬 Bilim Kurgu & Ütopik</button>
+          <button onclick="setTopic('tarihi')" data-topic="tarihi" class="topic-pill px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🏛️ Tarihi & Dönem</button>
+          <button onclick="setTopic('soygun')" data-topic="soygun" class="topic-pill px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🏦 Soygun & Banka İşi</button>
+          <button onclick="setTopic('zihin')" data-topic="zihin" class="topic-pill px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🧠 Zihin Bükücü & Ters Köşe</button>
+          <button onclick="setTopic('komedi')" data-topic="komedi" class="topic-pill px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">😂 Komedi</button>
+          <button onclick="setTopic('korku')" data-topic="korku" class="topic-pill px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🩸 Korku & Gerilim</button>
+        </div>
+      </div>
+
+      <!-- 5 Ayrıştırılmış Mantıksal Filtre Kutusu -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 pt-4 border-t border-neutral-800/80">
         
-        <div class="flex items-center justify-between border-b border-neutral-800/80 pb-4 mb-5">
-          <div class="flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full bg-netflix-red animate-pulse"></span>
-            <h2 class="text-base sm:text-lg font-black text-white tracking-tight">🎬 Editör İnceleme Masası: Seçili Yapımın Tam Künyesi</h2>
-          </div>
-          <span id="selected-badge-type" class="text-xs font-bold px-3 py-1 rounded-full bg-neutral-800 text-neutral-300 border border-neutral-700">
-            Platform Seçkisi
-          </span>
+        <!-- Platform Seçici -->
+        <div class="space-y-1.5 p-3 rounded-2xl bg-neutral-900/60 border border-neutral-800">
+          <label class="text-[11px] font-black uppercase text-red-500 block tracking-wider">🍿 1. Platform</label>
+          <select id="select-platform" class="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-3 py-2 text-xs font-semibold text-neutral-200 focus:outline-none focus:border-netflix-red">
+            <option value="8" selected>Netflix Türkiye</option>
+            <option value="119">Prime Video</option>
+            <option value="11">MUBI</option>
+            <option value="344">BluTV</option>
+            <option value="337">Disney+</option>
+            <option value="all">🌐 Tüm Platformlar / Arşiv</option>
+          </select>
+          <span class="text-[10px] text-neutral-500 block leading-tight">Yayın servisi</span>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
-          
-          <div class="md:col-span-3 flex justify-center md:justify-start">
-            <div class="relative group">
-              <img id="selected-poster" src="" alt="Afiş" class="w-40 sm:w-48 h-60 sm:h-72 object-cover rounded-2xl border border-neutral-700 shadow-2xl bg-neutral-900">
-            </div>
-          </div>
-
-          <div class="md:col-span-9 space-y-4">
-            
-            <div class="flex flex-wrap items-center gap-2">
-              <span id="selected-imdb" class="px-2.5 py-1 rounded-full bg-amber-400/10 text-amber-400 text-xs font-black border border-amber-400/30">
-                ⭐ Puan: --
-              </span>
-              <span id="selected-year" class="px-2.5 py-1 rounded-full bg-neutral-900 text-neutral-300 text-xs font-bold border border-neutral-800">
-                📅 --
-              </span>
-              <span id="selected-duration" class="px-2.5 py-1 rounded-full bg-neutral-900 text-neutral-300 text-xs font-bold border border-neutral-800">
-                ⏱️ --
-              </span>
-              <span id="selected-country" class="px-2.5 py-1 rounded-full bg-neutral-900 text-neutral-300 text-xs font-bold border border-neutral-800">
-                🌍 --
-              </span>
-              <span id="selected-platform-tag" class="px-2.5 py-1 rounded-full bg-red-950/40 text-red-400 border border-red-800/40 text-xs font-black">
-                🍿 Platform
-              </span>
-            </div>
-
-            <div>
-              <h3 id="selected-title" class="text-2xl sm:text-3xl font-black text-white tracking-tight">Lütfen Aşağıdan Bir Film Seçin</h3>
-              <p id="selected-orig-title" class="text-xs text-neutral-500 italic mt-0.5"></p>
-            </div>
-
-            <div id="selected-genres" class="flex flex-wrap gap-1.5 text-xs">
-              <span class="px-2.5 py-0.5 rounded-md bg-neutral-900 text-red-400 border border-neutral-800 font-semibold">Film</span>
-            </div>
-
-            <div class="space-y-1">
-              <span class="text-[11px] font-black uppercase text-neutral-400 block tracking-wider">📖 Filmin Tam Konusu & Özeti:</span>
-              <div class="p-4 rounded-xl bg-neutral-900/80 border border-neutral-800 text-xs sm:text-sm text-neutral-200 leading-relaxed max-h-36 overflow-y-auto custom-scrollbar">
-                <p id="selected-synopsis">Sol taraftaki arama motorundan bir yapım seçtiğinizde geniş özeti, künyesi ve yönetmen bilgisi burada eksiksiz olarak görüntülenecektir.</p>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs pt-1">
-              <div class="p-3 rounded-xl bg-neutral-900/60 border border-neutral-800">
-                <span class="text-neutral-500 font-bold block text-[10px] uppercase">🎬 Yönetmen</span>
-                <strong id="selected-director" class="text-neutral-200 text-xs font-semibold">--</strong>
-              </div>
-              <div class="p-3 rounded-xl bg-neutral-900/60 border border-neutral-800">
-                <span class="text-neutral-500 font-bold block text-[10px] uppercase">🌟 Başrol Oyuncuları</span>
-                <strong id="selected-cast" class="text-neutral-200 text-xs font-semibold leading-relaxed">--</strong>
-              </div>
-            </div>
-
-          </div>
-
+        <div class="space-y-1.5 p-3 rounded-2xl bg-neutral-900/60 border border-neutral-800">
+          <label class="text-[11px] font-black uppercase text-amber-400 block tracking-wider">🎧 2. Seslendirme</label>
+          <select id="select-audio" class="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-3 py-2 text-xs font-semibold text-neutral-200 focus:outline-none focus:border-netflix-red">
+            <option value="all">Tüm Ses Seçenekleri</option>
+            <option value="tr_dub">🇹🇷 Türkçe Dublajlı Filmler</option>
+            <option value="original">🗣️ Orijinal Kendi Dilinde</option>
+          </select>
+          <span class="text-[10px] text-neutral-500 block leading-tight">Ses formatı</span>
         </div>
 
-      </div>
-
-      <!-- ÇALIŞMA ALANI: ARAMA + X ZAMANLAMA -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        
-        <!-- SOL: ARAMA -->
-        <div class="lg:col-span-6 space-y-5">
-          <div class="glass p-5 rounded-2xl space-y-4">
-            <div class="flex items-center justify-between">
-              <div>
-                <h2 class="text-base font-black text-white flex items-center gap-2">
-                  <span>🔍 Platform ve Katalogda Ara</span>
-                </h2>
-                <p class="text-xs text-neutral-400 mt-0.5">Film, dizi, oyuncu veya serbestçe konu/ülke yazın.</p>
-              </div>
-              <button onclick="resetRejiFilters()" class="text-xs text-red-400 hover:text-red-300 underline font-semibold">
-                Sıfırla
-              </button>
-            </div>
-
-            <div class="relative">
-              <input type="text" id="reji-search" placeholder="Örn: Sevmek Zamanı, Parasite, iskandinav cinayet, afrika..." class="w-full bg-neutral-900/95 border border-neutral-700 rounded-xl px-4 py-3 pl-10 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-netflix-red focus:ring-2 focus:ring-netflix-red/30 transition-all shadow-inner">
-              <svg class="w-4 h-4 text-neutral-400 absolute left-3.5 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-            </div>
-
-            <div class="flex flex-wrap items-center gap-1.5 text-[11px]">
-              <span class="text-neutral-500 font-semibold mr-1">💡 Hızlı:</span>
-              <button onclick="applyRejiSmartQuery('iskandinav')" class="px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">❄️ iskandinav</button>
-              <button onclick="applyRejiSmartQuery('afrika')" class="px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🌍 afrika</button>
-              <button onclick="applyRejiSmartQuery('iran')" class="px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🇮🇷 iran</button>
-              <button onclick="applyRejiSmartQuery('kore gerilim')" class="px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🇰🇷 kore gerilim</button>
-              <button onclick="applyRejiSmartQuery('türk soygun')" class="px-2.5 py-1 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-all">🇹🇷 türk soygun</button>
-            </div>
-
-            <div class="space-y-1.5 pt-2 border-t border-neutral-800/60">
-              <span class="text-[11px] font-bold uppercase text-neutral-400 block tracking-wider">🎯 Konu Kuşakları</span>
-              <div class="flex flex-wrap gap-1.5">
-                <button onclick="setRejiTopic('all')" data-reji-topic="all" class="topic-pill active px-3 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800">🌟 Tümü</button>
-                <button onclick="setRejiTopic('cinayet')" data-reji-topic="cinayet" class="topic-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800">🔪 Cinayet & Dedektif</button>
-                <button onclick="setRejiTopic('ask')" data-reji-topic="ask" class="topic-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800">❤️ Aşk</button>
-                <button onclick="setRejiTopic('bilimkurgu')" data-reji-topic="bilimkurgu" class="topic-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800">🧬 Bilim Kurgu</button>
-                <button onclick="setRejiTopic('tarihi')" data-reji-topic="tarihi" class="topic-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800">🏛️ Tarihi</button>
-                <button onclick="setRejiTopic('soygun')" data-reji-topic="soygun" class="topic-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800">🏦 Soygun</button>
-                <button onclick="setRejiTopic('komedi')" data-reji-topic="komedi" class="topic-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800">😂 Komedi</button>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 pt-3 border-t border-neutral-800/60">
-              <div class="space-y-1">
-                <label class="text-[10px] font-bold uppercase text-red-400 block tracking-wider">🍿 Platform</label>
-                <select id="reji-select-platform" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-2 py-2 text-xs font-semibold text-neutral-200 focus:outline-none focus:border-netflix-red">
-                  <option value="8" selected>Netflix</option>
-                  <option value="119">Prime Video</option>
-                  <option value="11">MUBI</option>
-                  <option value="344">BluTV</option>
-                  <option value="337">Disney+</option>
-                  <option value="all">🌐 Tümü</option>
-                </select>
-              </div>
-
-              <div class="space-y-1">
-                <label class="text-[10px] font-bold uppercase text-sky-400 block tracking-wider">🌍 Ülke</label>
-                <select id="reji-select-country" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-2 py-2 text-xs font-semibold text-neutral-200 focus:outline-none focus:border-netflix-red">
-                  <option value="all">Tüm Dünya</option>
-                  <option value="nordic">❄️ İskandinav</option>
-                  <option value="africa">🌍 Afrika</option>
-                  <option value="TR">🇹🇷 Türk / Yerli</option>
-                  <option value="US">🇺🇸 Hollywood</option>
-                  <option value="europe">🇪🇺 Avrupa</option>
-                  <option value="IR">🇮🇷 İran</option>
-                  <option value="KR">🇰🇷 Kore</option>
-                  <option value="JP">🇯🇵 Japon</option>
-                </select>
-              </div>
-
-              <div class="space-y-1">
-                <label class="text-[10px] font-bold uppercase text-emerald-400 block tracking-wider">⏱️ Format</label>
-                <select id="reji-select-media" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-2 py-2 text-xs font-semibold text-neutral-200 focus:outline-none focus:border-netflix-red">
-                  <option value="both">🎬 Tümü</option>
-                  <option value="movie">🎥 Film</option>
-                  <option value="tv">📺 Dizi</option>
-                </select>
-              </div>
-
-              <div class="space-y-1">
-                <label class="text-[10px] font-bold uppercase text-amber-400 block tracking-wider">🔥 Sıralama</label>
-                <select id="reji-select-sort" class="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-2 py-2 text-xs font-semibold text-neutral-200 focus:outline-none focus:border-netflix-red">
-                  <option value="popularity.desc">Popüler</option>
-                  <option value="vote_average.desc">Puan</option>
-                  <option value="primary_release_date.desc">Yeni</option>
-                </select>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="space-y-2">
-            <div class="flex items-center justify-between text-xs text-neutral-400 px-1">
-              <span id="reji-count" class="font-bold text-neutral-300">Canlı veritabanı taranıyor...</span>
-              <span class="text-neutral-500">Seçmek için filme tıklayın ↓</span>
-            </div>
-
-            <div id="reji-movie-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[520px] overflow-y-auto pr-1 custom-scrollbar"></div>
-
-            <div id="reji-load-more" class="hidden text-center pt-2">
-              <button onclick="rejiLoadMore()" class="px-5 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-700 text-xs font-bold text-neutral-300">
-                Daha Fazla Yapım Göster ↓
-              </button>
-            </div>
-          </div>
+        <div class="space-y-1.5 p-3 rounded-2xl bg-neutral-900/60 border border-neutral-800">
+          <label class="text-[11px] font-black uppercase text-sky-400 block tracking-wider">🌍 3. Ülke / Ekol</label>
+          <select id="select-country" class="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-3 py-2 text-xs font-semibold text-neutral-200 focus:outline-none focus:border-netflix-red">
+            <option value="all">Tüm Dünya Sineması</option>
+            <option value="nordic">❄️ İskandinav Sineması</option>
+            <option value="africa">🌍 Afrika Sineması</option>
+            <option value="TR">🇹🇷 Türk / Yerli Sinema</option>
+            <option value="US">🇺🇸 Hollywood / Amerikan</option>
+            <option value="europe">🇪🇺 Avrupa Sineması</option>
+            <option value="IR">🇮🇷 İran & Ortadoğu</option>
+            <option value="JP">🇯🇵 Japon Sineması</option>
+            <option value="KR">🇰🇷 Kore & Asya</option>
+            <option value="latin">💃 Latin Amerika</option>
+          </select>
+          <span class="text-[10px] text-neutral-500 block leading-tight">Çekildiği ülke</span>
         </div>
 
-        <!-- SAĞ: TWEET YAYIN MASASI -->
-        <div class="lg:col-span-6 space-y-5">
-          <div class="glass p-5 rounded-2xl space-y-4">
-            
-            <div class="space-y-2">
-              <label class="text-xs font-bold text-neutral-300 block">Yayın Kuşağı Belirleyin:</label>
-              <div class="grid grid-cols-2 gap-2">
-                <button onclick="setConcept('Akşam Matinesi')" data-concept="Akşam Matinesi" class="concept-btn active p-2.5 rounded-xl border text-left text-xs transition-all bg-netflix-red/10 border-netflix-red text-white">
-                  <span class="font-extrabold block text-sm">🌙 Akşam Matinesi</span>
-                  <span class="text-[10px] text-neutral-400">Gerilim, dedektif & suç</span>
-                </button>
-                <button onclick="setConcept('Pazar Sineması')" data-concept="Pazar Sineması" class="concept-btn p-2.5 rounded-xl border border-neutral-800 text-left text-xs transition-all bg-neutral-900/60 hover:bg-neutral-800 text-neutral-300">
-                  <span class="font-extrabold block text-sm">🍿 Pazar Sineması</span>
-                  <span class="text-[10px] text-neutral-400">Kült dev yapım</span>
-                </button>
-                <button onclick="setConcept('Yerli Köşesi')" data-concept="Yerli Köşesi" class="concept-btn p-2.5 rounded-xl border border-neutral-800 text-left text-xs transition-all bg-neutral-900/60 hover:bg-neutral-800 text-neutral-300">
-                  <span class="font-extrabold block text-sm">🇹🇷 Yerli Köşesi</span>
-                  <span class="text-[10px] text-neutral-400">Türk sinema & dizileri</span>
-                </button>
-                <button onclick="setConcept('İskandinav Gerilimi')" data-concept="İskandinav Gerilimi" class="concept-btn p-2.5 rounded-xl border border-neutral-800 text-left text-xs transition-all bg-neutral-900/60 hover:bg-neutral-800 text-neutral-300">
-                  <span class="font-extrabold block text-sm">❄️ İskandinav Noir</span>
-                  <span class="text-[10px] text-neutral-400">Kuzeyin tekinsiz suçları</span>
-                </button>
-              </div>
-            </div>
+        <div class="space-y-1.5 p-3 rounded-2xl bg-neutral-900/60 border border-neutral-800">
+          <label class="text-[11px] font-black uppercase text-rose-400 block tracking-wider">🎭 4. Konu & Tema</label>
+          <select id="select-theme" class="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-3 py-2 text-xs font-semibold text-neutral-200 focus:outline-none focus:border-netflix-red">
+            <option value="all">Tüm Konular & Temalar</option>
+            <option value="cinayet">🔪 Cinayet, Katil & Dedektif</option>
+            <option value="ask">❤️ Aşk & Romantizm</option>
+            <option value="bilimkurgu">🧬 Bilim Kurgu & Ütopik</option>
+            <option value="tarihi">🏛️ Tarihi & Dönem</option>
+            <option value="soygun">🏦 Kusursuz Soygun & Banka</option>
+            <option value="zihin">🧠 Zihin Bükücü & Ters Köşe</option>
+            <option value="dram">💔 Derin İnsan Dramı</option>
+            <option value="aksiyon">💥 Saf Adrenalin</option>
+            <option value="korku">😱 Korku & Doğaüstü</option>
+            <option value="komedi">😂 Komedi</option>
+            <option value="belgesel">📜 Gerçek Olaylar</option>
+          </select>
+          <span class="text-[10px] text-neutral-500 block leading-tight">İşlenen hikaye</span>
+        </div>
 
-            <div class="space-y-2 pt-2 border-t border-neutral-800">
-              <label class="text-xs font-bold text-neutral-300 block">Yayın Tarihi ve Saati:</label>
-              <div class="grid grid-cols-2 gap-3">
-                <div>
-                  <label class="text-[11px] text-neutral-400 block mb-1">📅 Yayın Tarihi</label>
-                  <input type="date" id="schedule-date" class="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-netflix-red" onchange="generateTweetTemplate()">
-                </div>
-                <div>
-                  <label class="text-[11px] text-neutral-400 block mb-1">⏰ Yayın Saati</label>
-                  <input type="time" id="schedule-time" value="19:30" class="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-netflix-red" onchange="generateTweetTemplate()">
-                </div>
-              </div>
-
-              <div class="flex flex-wrap gap-1.5 pt-1">
-                <button onclick="setQuickTime('bu_aksam')" class="text-[10px] px-2.5 py-1 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-300 border border-neutral-700">Bugün 19:30</button>
-                <button onclick="setQuickTime('bu_gece')" class="text-[10px] px-2.5 py-1 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-300 border border-neutral-700">Gece 21:30</button>
-                <button onclick="setQuickTime('yarin')" class="text-[10px] px-2.5 py-1 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-300 border border-neutral-700">Yarın 19:30</button>
-                <button onclick="setQuickTime('pazar')" class="text-[10px] px-2.5 py-1 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-300 border border-neutral-700">Pazar 20:00</button>
-              </div>
-            </div>
-
-            <div class="space-y-3 pt-2 border-t border-neutral-800">
-              <div class="flex items-center justify-between">
-                <label class="text-xs font-bold uppercase tracking-wider text-sky-400 flex items-center gap-1.5">
-                  <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                  X (Twitter) Tweet Editörü
-                </label>
-                <span id="char-counter" class="text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-                  0 / 280
-                </span>
-              </div>
-
-              <textarea id="tweet-textarea" rows="6" class="w-full bg-neutral-900/90 border border-neutral-700 rounded-xl p-3 text-xs sm:text-sm text-neutral-200 focus:outline-none focus:border-sky-500 transition-all font-mono leading-relaxed" oninput="updateCharCount()"></textarea>
-
-              <div class="flex flex-wrap items-center gap-1.5 pt-1">
-                <button onclick="appendTag('#AkşamMatinesi')" class="text-[11px] px-2 py-0.5 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-300 border border-neutral-700">+ #AkşamMatinesi</button>
-                <button onclick="appendTag('#PazarSineması')" class="text-[11px] px-2 py-0.5 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-300 border border-neutral-700">+ #PazarSineması</button>
-                <button onclick="appendTag('#FilmÖnerisi')" class="text-[11px] px-2 py-0.5 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-300 border border-neutral-700">+ #FilmÖnerisi</button>
-              </div>
-
-              <div class="space-y-2.5 pt-3">
-                <button onclick="shareOnX()" class="w-full py-3.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-white font-black text-sm transition-all shadow-lg shadow-sky-500/20 flex items-center justify-center gap-2 active:scale-95">
-                  <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                  <span>X'te (Twitter) Hemen Paylaş</span>
-                </button>
-
-                <div class="grid grid-cols-2 gap-2">
-                  <button id="btn-save-queue" onclick="saveQueueAction()" class="py-2.5 px-3 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 text-xs font-bold transition-all flex items-center justify-center gap-1.5 active:scale-95">
-                    <span id="btn-save-queue-text">📅 Yayın Planına Ekle</span>
-                  </button>
-                  <button onclick="copyTweet()" class="py-2.5 px-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-700 text-xs font-semibold text-neutral-200 transition-all flex items-center justify-center gap-1.5 active:scale-95">
-                    <span>📋 Metni Kopyala</span>
-                  </button>
-                </div>
-              </div>
-
-            </div>
-
+        <div class="space-y-1.5 p-3 rounded-2xl bg-neutral-900/60 border border-neutral-800">
+          <label class="text-[11px] font-black uppercase text-emerald-400 block tracking-wider">⏱️ 5. Format & Sıra</label>
+          <div class="grid grid-cols-2 gap-1.5">
+            <select id="select-media-type" class="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-1.5 py-2 text-[11px] font-semibold text-neutral-200 focus:outline-none focus:border-netflix-red">
+              <option value="both">🎬 Tümü</option>
+              <option value="movie">🎥 Film</option>
+              <option value="tv">📺 Dizi</option>
+            </select>
+            <select id="select-sort" class="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-1.5 py-2 text-[11px] font-semibold text-neutral-200 focus:outline-none focus:border-netflix-red">
+              <option value="popularity.desc">🔥 Popüler</option>
+              <option value="vote_average.desc">⭐ Kült</option>
+              <option value="primary_release_date.desc">🆕 Yeni</option>
+            </select>
           </div>
+          <span class="text-[10px] text-neutral-500 block leading-tight">Sıralama ölçütü</span>
         </div>
 
       </div>
 
-      <!-- Planlanan Yayınlar Tablosu -->
-      <div id="queue-section" class="glass p-6 rounded-3xl space-y-4">
-        <div class="flex items-center justify-between border-b border-neutral-800 pb-3">
-          <div>
-            <h3 class="text-base font-extrabold text-white flex items-center gap-2">
-              <span>🗓️ Planlanan Yayınlar Takvimi (Editör Ajandası)</span>
-            </h3>
-            <p class="text-xs text-neutral-400 mt-0.5">Tarih, saat veya tweet içeriğini <strong>"✏️ Düzenle"</strong> ile anında güncelleyebilirsiniz.</p>
-          </div>
-          <div class="flex items-center gap-2">
-            <span id="queue-count" class="text-xs font-bold px-3 py-1 rounded-full bg-neutral-800 text-neutral-300 border border-neutral-700">0 Planlanan Yayın</span>
-            <button onclick="clearAllQueue()" class="text-xs text-red-400 hover:text-red-300 underline px-2 py-1">Tümünü Temizle</button>
-          </div>
-        </div>
-
-        <div id="queue-list" class="space-y-3 max-h-96 overflow-y-auto custom-scrollbar"></div>
+      <div class="flex items-center justify-between pt-2 text-xs">
+        <span id="results-count" class="font-bold text-neutral-300">
+          Veritabanı taranıyor...
+        </span>
+        <button id="btn-reset-filters" class="text-xs font-bold text-red-400 hover:text-red-300 underline transition-all">
+          Tüm Tercihleri Temizle
+        </button>
       </div>
 
-    </main>
-  </div>
+    </div>
 
-  <div id="toast" class="fixed bottom-6 right-6 bg-neutral-900 border border-neutral-700 text-white px-5 py-3 rounded-xl text-xs font-semibold shadow-2xl transition-all duration-300 translate-y-20 opacity-0 flex items-center gap-2 z-50">
-    <span id="toast-msg">İşlem başarıyla tamamlandı!</span>
-  </div>
+    <!-- FİLM LİSTESİ VİTRİNİ -->
+    <div class="space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 id="catalog-title" class="text-xl sm:text-2xl font-black text-white tracking-tight flex items-center gap-2">
+          <span>🍿 Platformda Yayındaki Yapımlar</span>
+        </h2>
+        <span class="text-xs text-neutral-400">Detay için afişe tıklayın</span>
+      </div>
+
+      <div id="loading-spinner" class="py-16 text-center space-y-3">
+        <div class="w-10 h-10 border-4 border-netflix-red border-t-transparent rounded-full animate-spin mx-auto"></div>
+        <p class="text-xs text-neutral-400 font-semibold">Yayın akışı taranıyor...</p>
+      </div>
+
+      <div id="live-movie-grid" class="hidden grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6"></div>
+
+      <div id="load-more-container" class="hidden text-center pt-6">
+        <button id="btn-load-more" class="px-8 py-3.5 rounded-2xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-700 text-sm font-bold text-white transition-all shadow-md active:scale-95">
+          Daha Fazla Yapım Göster (Sayfa <span id="current-page-num">2</span>) ↓
+        </button>
+      </div>
+
+      <div id="no-results" class="hidden glass-panel rounded-3xl p-12 text-center space-y-4">
+        <div class="text-4xl">🔍</div>
+        <h3 class="text-lg font-bold text-white">Bu Kriterlere Uygun Canlı Yapım Bulunamadı</h3>
+        <p class="text-xs text-neutral-400 max-w-md mx-auto">
+          Lütfen seçtiğiniz filtreleri biraz genişletin veya farklı bir konu/platform seçin.
+        </p>
+        <button onclick="resetFilters()" class="px-5 py-2.5 rounded-xl bg-netflix-red text-white text-xs font-bold hover:bg-netflix-hover transition-all">
+          Filtreleri Sıfırla
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="border-t border-neutral-900 bg-neutral-950 py-8 mt-12 text-center text-xs text-neutral-500 space-y-2">
+    <p class="font-bold text-neutral-400">Bugün Ne İzleyeyim? — Çoklu Platform Canlı Keşif Platformu</p>
+    <p>Tüm yayın verileri TheMovieDB (TMDB) akış sağlayıcıları üzerinden anlık doğrulanmaktadır.</p>
+  </footer>
 
   <script>
     const TMDB_API_KEY = "65a75854bdb8832f10fc1687f4b299d5";
@@ -437,7 +419,7 @@
     const IMG_BASE = "https://image.tmdb.org/t/p";
     const TODAY_ISO = new Date().toISOString().split('T')[0];
 
-    const PLATFORM_MAP = {
+    const PLATFORM_NAMES = {
       '8': 'Netflix Türkiye',
       '119': 'Prime Video',
       '11': 'MUBI',
@@ -446,66 +428,53 @@
       'all': 'Sinema Arşivi'
     };
 
-    let liveItems = [];
-    let selectedItem = null;
-    let currentConcept = 'Akşam Matinesi';
-    let currentRejiTopic = 'all';
-    let rejiPage = 1;
+    let currentLiveItems = [];
+    let currentPage = 1;
     let searchDebounce = null;
-    let editingQueueId = null;
+    let activeShelfMode = 'populer';
 
-    function directAccess() {
-      const pwd = document.getElementById('auth-password').value.trim();
-      if (pwd === '1945' || pwd === '1234' || pwd === 'reji2026' || pwd === '') {
-        document.getElementById('auth-overlay').classList.add('hidden');
-        setupInitialDate();
-        rejiFetch(1);
-        renderQueue();
-      } else {
-        alert('Hatalı şifre!');
+    function setShelf(mode) {
+      activeShelfMode = mode;
+      document.querySelectorAll('.shelf-tab').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById(`shelf-${mode}`);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const titleEl = document.getElementById('catalog-title');
+
+      if (mode === 'populer') {
+        document.getElementById('select-sort').value = 'popularity.desc';
+        document.getElementById('select-media-type').value = 'both';
+        titleEl.innerHTML = `<span>🔥 Şu Anda Popüler (Trendler)</span>`;
+      } else if (mode === 'yeniler') {
+        document.getElementById('select-sort').value = 'primary_release_date.desc';
+        document.getElementById('select-media-type').value = 'both';
+        titleEl.innerHTML = `<span>🆕 Yeni Eklenen Dizi ve Filmler</span>`;
+      } else if (mode === 'kult') {
+        document.getElementById('select-sort').value = 'vote_average.desc';
+        document.getElementById('select-media-type').value = 'both';
+        titleEl.innerHTML = `<span>🏆 Kült Başyapıtlar & IMDb Zirvesi</span>`;
+      } else if (mode === 'filmler') {
+        document.getElementById('select-media-type').value = 'movie';
+        document.getElementById('select-sort').value = 'popularity.desc';
+        titleEl.innerHTML = `<span>🎥 Filmler Sıralaması</span>`;
+      } else if (mode === 'diziler') {
+        document.getElementById('select-media-type').value = 'tv';
+        document.getElementById('select-sort').value = 'popularity.desc';
+        titleEl.innerHTML = `<span>📺 Diziler Sıralaması</span>`;
       }
+
+      currentPage = 1;
+      fetchLiveMovies(1);
     }
 
-    function logout() {
-      location.reload();
-    }
-
-    function setupInitialDate() {
-      const today = new Date().toISOString().split('T')[0];
-      document.getElementById('schedule-date').value = today;
-    }
-
-    function setQuickTime(type) {
-      const now = new Date();
-      if (type === 'bu_aksam') {
-        document.getElementById('schedule-date').value = now.toISOString().split('T')[0];
-        document.getElementById('schedule-time').value = '19:30';
-      } else if (type === 'bu_gece') {
-        document.getElementById('schedule-date').value = now.toISOString().split('T')[0];
-        document.getElementById('schedule-time').value = '21:30';
-      } else if (type === 'yarin') {
-        now.setDate(now.getDate() + 1);
-        document.getElementById('schedule-date').value = now.toISOString().split('T')[0];
-        document.getElementById('schedule-time').value = '19:30';
-      } else if (type === 'pazar') {
-        const day = now.getDay();
-        const diff = (7 - day) % 7;
-        now.setDate(now.getDate() + (diff === 0 ? 7 : diff));
-        document.getElementById('schedule-date').value = now.toISOString().split('T')[0];
-        document.getElementById('schedule-time').value = '20:00';
-        setConcept('Pazar Sineması');
-      }
-      generateTweetTemplate();
-    }
-
-    function parseRejiQuery(text) {
+    function parseNaturalQuery(text) {
       const q = text.toLowerCase().trim();
       let parsedCountry = null;
       let parsedGenre = null;
 
       if (q.includes('afrika') || q.includes('nijerya') || q.includes('güney afrika')) {
         parsedCountry = 'africa';
-      } else if (q.includes('iskandinav') || q.includes('isveç') || q.includes('norveç') || q.includes('danimarka') || q.includes('izlanda')) {
+      } else if ((/\biskandinav\b/i).test(q) || q.includes('iskandinav') || q.includes('isveç') || q.includes('norveç') || q.includes('danimarka') || q.includes('izlanda')) {
         parsedCountry = 'nordic';
       } else if (q.includes('iran') || q.includes('fars')) {
         parsedCountry = 'IR';
@@ -513,6 +482,12 @@
         parsedCountry = 'JP';
       } else if (q.includes('kore') || q.includes('güney kore')) {
         parsedCountry = 'KR';
+      } else if (q.includes('fransız') || q.includes('fransa')) {
+        parsedCountry = 'FR';
+      } else if (q.includes('italyan') || q.includes('italya')) {
+        parsedCountry = 'IT';
+      } else if (q.includes('ispanyol') || q.includes('ispanya')) {
+        parsedCountry = 'ES';
       } else if (q.includes('türk') || q.includes('yerli')) {
         parsedCountry = 'TR';
       } else if (q.includes('amerikan') || q.includes('hollywood')) {
@@ -523,316 +498,165 @@
         parsedGenre = '80,9648';
       } else if (q.includes('korku')) {
         parsedGenre = '27';
-      } else if (q.includes('gerilim')) {
+      } else if (q.includes('gerilim') || q.includes('seri katil')) {
         parsedGenre = '53';
       } else if (q.includes('aşk') || q.includes('romantik')) {
         parsedGenre = '10749';
-      } else if (q.includes('bilim kurgu')) {
+      } else if (q.includes('bilim kurgu') || q.includes('ütopik') || q.includes('distopik')) {
         parsedGenre = '878';
-      } else if (q.includes('soygun')) {
+      } else if (q.includes('soygun') || q.includes('banka')) {
         parsedGenre = '80,28';
-      } else if (q.includes('komedi')) {
+      } else if (q.includes('komedi') || q.includes('eğlence')) {
         parsedGenre = '35';
-      } else if (q.includes('tarih')) {
+      } else if (q.includes('tarih') || q.includes('savaş')) {
         parsedGenre = '36|10752';
+      } else if (q.includes('dram')) {
+        parsedGenre = '18';
       }
 
       return { parsedCountry, parsedGenre };
     }
 
-    async function rejiFetch(page = 1, append = false) {
-      const countEl = document.getElementById('reji-count');
-      const loadMoreBtn = document.getElementById('reji-load-more');
-      countEl.textContent = 'Canlı veritabanı taranıyor...';
+    async function fetchLiveMovies(page = 1, append = false) {
+      const spinner = document.getElementById('loading-spinner');
+      const grid = document.getElementById('live-movie-grid');
+      const noRes = document.getElementById('no-results');
+      const countEl = document.getElementById('results-count');
+      const loadMoreBtn = document.getElementById('load-more-container');
 
-      const platformChoice = document.getElementById('reji-select-platform').value;
-      const mediaChoice = document.getElementById('reji-select-media').value;
-      const targetMedia = mediaChoice === 'both' ? 'movie' : mediaChoice;
-      const countryChoice = document.getElementById('reji-select-country').value;
-      const sortBy = document.getElementById('reji-select-sort').value;
-      const rawQ = document.getElementById('reji-search').value.trim();
+      if (!append) {
+        spinner.classList.remove('hidden');
+        grid.classList.add('hidden');
+        noRes.classList.add('hidden');
+        loadMoreBtn.classList.add('hidden');
+        countEl.textContent = 'Doğrulanmış yayınlar taranıyor...';
+      }
 
-      const { parsedCountry, parsedGenre } = parseRejiQuery(rawQ);
+      const platformChoice = document.getElementById('select-platform').value;
+      const mediaTypeChoice = document.getElementById('select-media-type').value;
+      const audioChoice = document.getElementById('select-audio').value;
+      const countryChoice = document.getElementById('select-country').value;
+      const themeChoice = document.getElementById('select-theme').value;
+      const sortBy = document.getElementById('select-sort').value;
+      const rawQuery = document.getElementById('live-search-box').value.trim();
+
+      const targetMediaType = mediaTypeChoice === 'both' ? 'movie' : mediaTypeChoice;
+      const { parsedCountry, parsedGenre } = parseNaturalQuery(rawQuery);
 
       let url = "";
 
-      if (rawQ && !parsedCountry && !parsedGenre) {
-        url = `${BASE_URL}/search/${targetMedia}?api_key=${TMDB_API_KEY}&language=tr-TR&query=${encodeURIComponent(rawQ)}&page=${page}&include_adult=false`;
+      if (rawQuery && !parsedCountry && !parsedGenre) {
+        url = `${BASE_URL}/search/${targetMediaType}?api_key=${TMDB_API_KEY}&language=tr-TR&query=${encodeURIComponent(rawQuery)}&page=${page}&include_adult=false`;
       } else {
-        url = `${BASE_URL}/discover/${targetMedia}?api_key=${TMDB_API_KEY}&language=tr-TR&sort_by=${sortBy}&page=${page}&include_adult=false`;
+        url = `${BASE_URL}/discover/${targetMediaType}?api_key=${TMDB_API_KEY}&language=tr-TR&sort_by=${sortBy}&page=${page}&include_adult=false`;
 
         if (platformChoice !== 'all') {
           url += `&watch_region=TR&with_watch_providers=${platformChoice}&with_watch_monetization_types=flatrate`;
         }
 
-        if (targetMedia === 'movie') {
+        if (targetMediaType === 'movie') {
           url += `&primary_release_date.lte=${TODAY_ISO}`;
         } else {
           url += `&first_air_date.lte=${TODAY_ISO}`;
         }
 
-        const finalCountry = parsedCountry || (countryChoice !== 'all' ? countryChoice : null);
-        if (finalCountry) {
-          if (finalCountry === 'nordic') url += `&with_original_language=da|sv|no|is`;
-          else if (finalCountry === 'africa') url += `&with_origin_country=ZA|NG|KE|EG`;
-          else if (finalCountry === 'europe') url += `&with_origin_country=FR|DE|IT|ES|GB`;
-          else if (finalCountry === 'TR') url += `&with_original_language=tr`;
-          else url += `&with_origin_country=${finalCountry}`;
+        if (activeShelfMode === 'kult' || sortBy === 'vote_average.desc') {
+          url += `&vote_average.gte=7.5&vote_count.gte=50`;
         } else {
           url += `&vote_count.gte=10`;
+        }
+
+        if (audioChoice === 'tr_dub') {
+          url += `&with_original_language=tr`;
+        }
+
+        const finalCountry = parsedCountry || (countryChoice !== 'all' ? countryChoice : null);
+        if (finalCountry) {
+          if (finalCountry === 'nordic') {
+            url += `&with_original_language=da|sv|no|is`;
+          } else if (finalCountry === 'africa') {
+            url += `&with_origin_country=ZA|NG|KE|EG`;
+          } else if (finalCountry === 'europe') {
+            url += `&with_origin_country=FR|DE|IT|ES|GB`;
+          } else if (finalCountry === 'latin') {
+            url += `&with_origin_country=MX|AR|BR|CO`;
+          } else if (finalCountry === 'TR') {
+            url += `&with_original_language=tr`;
+          } else {
+            url += `&with_origin_country=${finalCountry}`;
+          }
         }
 
         const finalGenre = parsedGenre || null;
         if (finalGenre) {
           url += `&with_genres=${finalGenre}`;
-        } else if (currentRejiTopic !== 'all') {
-          if (currentRejiTopic === 'cinayet') url += `&with_genres=80,9648`;
-          else if (currentRejiTopic === 'ask') url += `&with_genres=10749`;
-          else if (currentRejiTopic === 'bilimkurgu') url += `&with_genres=878`;
-          else if (currentRejiTopic === 'tarihi') url += `&with_genres=36|10752`;
-          else if (currentRejiTopic === 'soygun') url += `&with_genres=80,28`;
-          else if (currentRejiTopic === 'komedi') url += `&with_genres=35`;
+        } else if (themeChoice !== 'all') {
+          if (themeChoice === 'cinayet') url += `&with_genres=80,9648`;
+          else if (themeChoice === 'ask') url += `&with_genres=10749`;
+          else if (themeChoice === 'bilimkurgu') url += `&with_genres=878`;
+          else if (themeChoice === 'tarihi') url += `&with_genres=36|10752`;
+          else if (themeChoice === 'soygun') url += `&with_genres=80,28`;
+          else if (themeChoice === 'zihin') url += `&with_genres=53,9648`;
+          else if (themeChoice === 'dram') url += `&with_genres=18`;
+          else if (themeChoice === 'aksiyon') url += `&with_genres=28`;
+          else if (themeChoice === 'korku') url += `&with_genres=27`;
+          else if (themeChoice === 'komedi') url += `&with_genres=35`;
+          else if (themeChoice === 'belgesel') url += `&with_genres=99`;
         }
       }
 
       try {
-        const res = await fetch(url);
-        const data = await res.json();
-        let valid = (data.results || []).filter(x => x.poster_path && (x.title || x.name));
+        const response = await fetch(url);
+        const data = await response.json();
+        spinner.classList.add('hidden');
 
-        if (valid.length === 0 && mediaChoice === 'both') {
+        let validResults = (data.results || []).filter(x => x.poster_path && (x.title || x.name));
+
+        if (validResults.length === 0 && mediaTypeChoice === 'both') {
           const tvUrl = url.replace('/discover/movie', '/discover/tv').replace('primary_release_date', 'first_air_date');
           const tvRes = await fetch(tvUrl);
           const tvData = await tvRes.json();
           if (tvData.results && tvData.results.length > 0) {
-            valid = tvData.results.filter(x => x.poster_path && (x.title || x.name));
+            validResults = tvData.results.filter(x => x.poster_path && (x.title || x.name));
           }
         }
 
-        if (append) {
-          liveItems = [...liveItems, ...valid];
+        if (validResults.length > 0) {
+          if (append) {
+            currentLiveItems = [...currentLiveItems, ...validResults];
+          } else {
+            currentLiveItems = validResults;
+          }
+
+          renderLiveGrid(validResults, targetMediaType, append);
+
+          if (!append && currentLiveItems.length > 0) {
+            const firstItem = currentLiveItems[0];
+            const detectedType = firstItem.title ? 'movie' : 'tv';
+            loadDetailedCreditsAndAI(firstItem, detectedType);
+          }
+
+          if (data.page < data.total_pages) {
+            loadMoreBtn.classList.remove('hidden');
+            document.getElementById('current-page-num').textContent = data.page + 1;
+            currentPage = data.page;
+          } else {
+            loadMoreBtn.classList.add('hidden');
+          }
         } else {
-          liveItems = valid;
+          if (!append) {
+            currentLiveItems = [];
+            grid.innerHTML = '';
+            noRes.classList.remove('hidden');
+            countEl.textContent = '0 yapım bulundu';
+            loadMoreBtn.classList.add('hidden');
+          }
         }
-
-        renderRejiList(liveItems);
-
-        if (!append && liveItems.length > 0 && !selectedItem && !editingQueueId) {
-          selectRejiItem(liveItems[0]);
-        }
-
-        if (data.page < data.total_pages) {
-          loadMoreBtn.classList.remove('hidden');
-          rejiPage = data.page;
-        } else {
-          loadMoreBtn.classList.add('hidden');
-        }
-
-      } catch (e) {
-        console.error('Reji Canlı Sorgu Hatası:', e);
+      } catch (err) {
+        console.error('TMDB Live Error:', err);
+        spinner.classList.add('hidden');
+        if (!append) noRes.classList.remove('hidden');
       }
-    }
-
-    function renderRejiList(items) {
-      const list = document.getElementById('reji-movie-list');
-      const countEl = document.getElementById('reji-count');
-      countEl.textContent = `${items.length} canlı yapım listeleniyor`;
-      list.innerHTML = '';
-
-      if (items.length === 0) {
-        list.innerHTML = `<div class="col-span-full py-8 text-center text-xs text-neutral-500">Aramanıza uygun yapım bulunamadı.</div>`;
-        return;
-      }
-
-      items.forEach(m => {
-        const title = m.title || m.name || 'İsimsiz';
-        const date = m.release_date || m.first_air_date || '';
-        const year = date ? date.split('-')[0] : '2025';
-        const vote = m.vote_average ? m.vote_average.toFixed(1) : 'NR';
-        const poster = `${IMG_BASE}/w780${m.poster_path}`;
-        const isTv = !m.title;
-
-        const isSelected = selectedItem && selectedItem.id === m.id;
-        const card = document.createElement('div');
-        card.className = `p-3 rounded-xl border transition-all cursor-pointer flex gap-3 items-center ${isSelected ? 'bg-netflix-red/15 border-netflix-red shadow-md' : 'bg-neutral-900/60 hover:bg-neutral-800/80 border-neutral-800'}`;
-        card.onclick = () => selectRejiItem(m);
-
-        card.innerHTML = `
-          <img src="${poster}" alt="${title}" class="w-12 h-16 object-cover rounded-lg shrink-0 border border-neutral-700">
-          <div class="flex-1 min-w-0">
-            <div class="flex items-center justify-between gap-1">
-              <span class="text-[9px] font-bold text-red-400 uppercase">${isTv ? '📺 Dizi' : '🎬 Film'}</span>
-              <span class="text-[10px] font-bold text-amber-400">★ ${vote}</span>
-            </div>
-            <h4 class="text-xs font-black text-white truncate leading-snug">${title}</h4>
-            <p class="text-[10px] text-neutral-400 truncate mt-0.5">${year}</p>
-            <div class="mt-1 flex items-center justify-between">
-              <span class="text-[9px] font-semibold text-neutral-400 ${isSelected ? 'text-red-400 font-bold' : ''}">
-                ${isSelected ? '✓ Seçili' : 'Seç →'}
-              </span>
-            </div>
-          </div>
-        `;
-        list.appendChild(card);
-      });
-    }
-
-    async function selectRejiItem(m) {
-      selectedItem = m;
-      const title = m.title || m.name || 'Yapım';
-      const origTitle = m.original_title || m.original_name || '';
-      const date = m.release_date || m.first_air_date || '';
-      const year = date ? date.split('-')[0] : '2025';
-      const vote = m.vote_average ? m.vote_average.toFixed(1) : '7.5';
-      const poster = `${IMG_BASE}/w780${m.poster_path}`;
-      const mediaType = m.media_type || (m.title ? 'movie' : 'tv');
-
-      document.getElementById('selected-poster').src = poster;
-      document.getElementById('selected-title').textContent = title;
-      document.getElementById('selected-orig-title').textContent = origTitle && origTitle !== title ? `Orijinal Adı: ${origTitle}` : '';
-      document.getElementById('selected-imdb').textContent = `⭐ Puan: ${vote}`;
-      document.getElementById('selected-year').textContent = `📅 ${year}`;
-      document.getElementById('selected-badge-type').textContent = mediaType === 'tv' ? '📺 Dizi' : '🎬 Film';
-
-      const currentPlat = document.getElementById('reji-select-platform').value;
-      const platName = PLATFORM_MAP[currentPlat] || 'Dijital Platform';
-      selectedItem.platformName = platName;
-      document.getElementById('selected-platform-tag').textContent = `🍿 ${platName}`;
-
-      try {
-        const detailsRes = await fetch(`${BASE_URL}/${mediaType}/${m.id}?api_key=${TMDB_API_KEY}&language=tr-TR&append_to_response=credits,watch/providers`);
-        const details = await detailsRes.json();
-
-        selectedItem.genres = details.genres || [];
-        let fullOverview = details.overview || m.overview || '';
-        if (!fullOverview || fullOverview.trim().length < 15) {
-          try {
-            const enRes = await fetch(`${BASE_URL}/${mediaType}/${item.id}?api_key=${TMDB_API_KEY}&language=en-US`);
-            const enData = await enRes.json();
-            if (enData.overview && enData.overview.trim().length > 10) {
-              fullOverview = await getTurkishOverview(enData.overview, details.genres, details.credits?.crew?.find(c => c.job === 'Director')?.name || '');
-            }
-          } catch(e) {}
-        }
-        if (!fullOverview || fullOverview.trim().length < 10) {
-          const gNames = details.genres ? details.genres.map(g => g.name).join(', ') : 'Dram';
-          fullOverview = `Katalogda yer alan bu ${gNames} yapımı, güçlü prodüksiyon kalitesi ve etkileyici senaryosuyla öne çıkıyor.`;
-        }
-
-        selectedItem.fullOverview = fullOverview;
-        document.getElementById('selected-synopsis').textContent = fullOverview;
-
-        if (details.runtime) {
-          const hours = Math.floor(details.runtime / 60);
-          const mins = details.runtime % 60;
-          const durStr = `${hours > 0 ? hours + 's ' : ''}${mins}dk`;
-          selectedItem.runtime = durStr;
-          document.getElementById('selected-duration').textContent = `⏱️ ${durStr}`;
-        } else if (details.number_of_seasons) {
-          const durStr = `${details.number_of_seasons} Sezon (${details.number_of_episodes || ''} Bölüm)`;
-          selectedItem.runtime = durStr;
-          document.getElementById('selected-duration').textContent = `📺 ${durStr}`;
-        } else {
-          document.getElementById('selected-duration').textContent = '⏱️ Standart Süre';
-        }
-
-        const gContainer = document.getElementById('selected-genres');
-        gContainer.innerHTML = '';
-        if (details.genres && details.genres.length > 0) {
-          details.genres.forEach(g => {
-            const b = document.createElement('span');
-            b.className = "px-2.5 py-0.5 rounded-md bg-neutral-900 text-red-400 border border-neutral-800 font-semibold";
-            b.textContent = g.name;
-            gContainer.appendChild(b);
-          });
-        }
-
-        let dirName = "Belirtilmemiş";
-        if (details.credits && details.credits.crew) {
-          const dObj = details.credits.crew.find(c => c.job === 'Director' || c.department === 'Directing');
-          if (dObj) dirName = dObj.name;
-        }
-        if (mediaType === 'tv' && details.created_by && details.created_by.length > 0) {
-          dirName = details.created_by.map(c => c.name).join(', ');
-        }
-        selectedItem.director = dirName;
-        document.getElementById('selected-director').textContent = dirName;
-
-        let cNames = "Oyuncu bilgisi mevcut değil";
-        if (details.credits && details.credits.cast && details.credits.cast.length > 0) {
-          cNames = details.credits.cast.slice(0, 5).map(a => a.name).join(', ');
-        }
-        selectedItem.cast = cNames;
-        document.getElementById('selected-cast').textContent = cNames;
-
-        let ctry = "Uluslararası";
-        if (details.production_countries && details.production_countries.length > 0) {
-          ctry = details.production_countries.map(c => c.name).join(', ');
-        } else if (m.original_language === 'tr') {
-          ctry = "Türkiye";
-        }
-        document.getElementById('selected-country').textContent = `🌍 ${ctry}`;
-
-        const trProviders = details['watch/providers']?.results?.TR;
-        if (trProviders?.flatrate && trProviders.flatrate.length > 0) {
-          selectedItem.platformName = trProviders.flatrate[0].provider_name;
-          document.getElementById('selected-platform-tag').textContent = `🍿 ${selectedItem.platformName}`;
-        }
-
-      } catch (e) {
-        console.warn('Credits çekilemedi:', e);
-      }
-
-      if (!editingQueueId) {
-        generateTweetTemplate();
-      }
-      renderRejiList(liveItems);
-    }
-
-    function setConcept(c) {
-      currentConcept = c;
-      document.querySelectorAll('.concept-btn').forEach(btn => {
-        if (btn.getAttribute('data-concept') === c) {
-          btn.className = "concept-btn active p-2.5 rounded-xl border text-left text-xs transition-all bg-netflix-red/10 border-netflix-red text-white";
-        } else {
-          btn.className = "concept-btn p-2.5 rounded-xl border border-neutral-800 text-left text-xs transition-all bg-neutral-900/60 hover:bg-neutral-800 text-neutral-300";
-        }
-      });
-      generateTweetTemplate();
-    }
-
-    function getGenreHook(genres, concept) {
-      const gNames = (genres || []).map(g => g.name ? g.name.toLowerCase() : '').join(' ');
-      
-      if (concept === 'Pazar Sineması') {
-        return { hook: "🍿 Pazar Sineması | Haftanın ödüllü dev yapımı!", tag: "#PazarSineması" };
-      }
-      if (concept === 'Yerli Köşesi') {
-        return { hook: "🇹🇷 Yerli Köşesi | Türk sinema ve dizisinin en iyileri!", tag: "#YerliSinema" };
-      }
-      if (concept === 'İskandinav Gerilimi') {
-        return { hook: "❄️ İskandinav Noir | Kuzeyin karanlık ve tekinsiz cinayet gizemi!", tag: "#İskandinavGerilimi" };
-      }
-
-      if (gNames.includes('romantik') || gNames.includes('aşk')) {
-        return { hook: "🌙 Akşam Matinesi | Kalbe dokunan sürükleyici bir aşk hikayesi!", tag: "#RomantikFilm" };
-      }
-      if (gNames.includes('komedi')) {
-        return { hook: "🌙 Akşam Matinesi | Kahkaha dolu harika bir seyirlik!", tag: "#Komedi" };
-      }
-      if (gNames.includes('bilim kurgu') || gNames.includes('distopik')) {
-        return { hook: "🌙 Akşam Matinesi | Zihin açıcı ütopik bir bilim kurgu yolculuğu!", tag: "#BilimKurgu" };
-      }
-      if (gNames.includes('tarih') || gNames.includes('savaş')) {
-        return { hook: "🌙 Akşam Matinesi | Geçmişin derinliklerinde epik bir dönem hikayesi!", tag: "#TarihiFilm" };
-      }
-      if (gNames.includes('dram')) {
-        return { hook: "🌙 Akşam Matinesi | İnsan ruhuna dokunan etkileyici bir dram!", tag: "#DramFilmi" };
-      }
-      if (gNames.includes('suç') || gNames.includes('cinayet') || gNames.includes('dedektif') || gNames.includes('gizem') || gNames.includes('gerilim')) {
-        return { hook: "🌙 Akşam Matinesi | Soluksuz bir suç ve dedektif gizemi!", tag: "#AkşamMatinesi" };
-      }
-      return { hook: "🌙 Akşam Matinesi | Ekran başında kaçırılmayacak harika bir yapım!", tag: "#AkşamMatinesi" };
     }
 
     async function getTurkishOverview(text, genres, dirName) {
@@ -853,378 +677,311 @@
       return text;
     }
 
-    function generateTweetTemplate() {
-      if (!selectedItem) return;
-      const title = selectedItem.title || selectedItem.name || 'Film';
-      const vote = selectedItem.vote_average ? selectedItem.vote_average.toFixed(1) : '7.5';
-      const overview = selectedItem.fullOverview || selectedItem.overview || 'Bu akşam ekran başında harika bir seyir deneyimi sizi bekliyor.';
-
-      const dateVal = document.getElementById('schedule-date').value;
-      const timeVal = document.getElementById('schedule-time').value;
-
-      let dateHook = "";
-      if (dateVal && timeVal) {
-        const d = new Date(dateVal + 'T' + timeVal);
-        const dayName = d.toLocaleDateString('tr-TR', { weekday: 'long', day: 'numeric', month: 'long' });
-        dateHook = `📅 ${dayName} | Saat ${timeVal}\n`;
-      }
-
-      const hookObj = getGenreHook(selectedItem.genres, currentConcept);
-      const hook = hookObj.hook;
-      const tag = hookObj.tag;
-
-      const platName = selectedItem.platformName || document.getElementById('reji-select-platform').options[document.getElementById('reji-select-platform').selectedIndex].text;
-      const baseFooter = `\n\n🍿 ${platName}'de izleyebilirsiniz.\n${tag} #FilmÖnerisi`;
-      let header = `${dateHook}${hook}\n\n🔴 ${title} (${vote}/10)\n`;
-      
-      let actorSnippet = "";
-      if (selectedItem.cast && selectedItem.cast !== "Oyuncu bilgisi mevcut değil") {
-        const top2 = selectedItem.cast.split(',').slice(0, 2).join(',');
-        actorSnippet = `👥 ${top2}\n`;
-      }
-
-      const usedLen = (header + actorSnippet + baseFooter).length;
-      const maxDescLen = Math.max(35, 230 - usedLen);
-      
-      let safeDesc = overview;
-      if (safeDesc.length > maxDescLen) {
-        safeDesc = safeDesc.substring(0, maxDescLen - 3) + '...';
-      }
-
-      const tweet = `${header}${actorSnippet}📌 ${safeDesc}${baseFooter}`;
-
-      document.getElementById('tweet-textarea').value = tweet;
-      updateCharCount();
-    }
-
-    function updateCharCount() {
-      const len = document.getElementById('tweet-textarea').value.length;
-      const counter = document.getElementById('char-counter');
-      counter.textContent = `${len} / 280`;
-      if (len > 280) {
-        counter.className = "text-xs font-bold px-2 py-0.5 rounded bg-red-500/20 text-red-400 border border-red-500/40";
-      } else {
-        counter.className = "text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30";
-      }
-    }
-
-    function appendTag(t) {
-      const txt = document.getElementById('tweet-textarea');
-      txt.value = txt.value.trim() + " " + t;
-      updateCharCount();
-    }
-
-    async function copyPosterToClipboard(posterUrl) {
-      if (!posterUrl) return;
-      try {
-        const img = new Image();
-        img.crossOrigin = "anonymous";
-        img.src = posterUrl;
-        await new Promise((res, rej) => { img.onload = res; img.onerror = rej; });
-
-        const canvas = document.createElement('canvas');
-        canvas.width = img.naturalWidth || 500;
-        canvas.height = img.naturalHeight || 750;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0);
-
-        canvas.toBlob(async (blob) => {
-          if (blob) {
-            try {
-              await navigator.clipboard.write([
-                new ClipboardItem({ 'image/png': blob })
-              ]);
-              console.log('Afiş otomatik panoya kopyalandı.');
-            } catch(err) {
-              console.warn('Panoya resim kopyalanamadı:', err);
-            }
-          }
-        }, 'image/png');
-      } catch(e) {
-        console.warn('Afiş çekilemedi:', e);
-      }
-    }
-
-    async function shareOnX() {
-      const text = document.getElementById('tweet-textarea').value;
-      const safeText = encodeURIComponent(text);
-      const posterUrl = selectedItem && selectedItem.poster_path ? `${IMG_BASE}/w780${selectedItem.poster_path}` : '';
-      
-      if (posterUrl) {
-        copyPosterToClipboard(posterUrl);
-      }
-
-      const url = `https://twitter.com/intent/tweet?text=${safeText}`;
-      const win = window.open(url, '_blank');
-      if (!win) {
-        window.location.href = url;
-      }
-      showToast('Afiş kopyalandı! X kutusunda sadece Ctrl+V yapın.');
-    }
-
-    function copyTweet() {
-      const text = document.getElementById('tweet-textarea').value;
-      navigator.clipboard.writeText(text);
-      showToast('Tweet metni panoya kopyalandı!');
-    }
-
-    function saveQueueAction() {
-      if (!selectedItem) {
-        alert('Lütfen önce sol taraftan bir film seçin!');
-        return;
-      }
-      const title = selectedItem.title || selectedItem.name;
-      const dateVal = document.getElementById('schedule-date').value;
-      const timeVal = document.getElementById('schedule-time').value;
-      const text = document.getElementById('tweet-textarea').value;
-      const poster = `${IMG_BASE}/w780${selectedItem.poster_path}`;
-
-      let queue = [];
-      try {
-        queue = JSON.parse(localStorage.getItem('reji_scheduled_queue') || '[]');
-      } catch(e) {}
-
-      if (editingQueueId) {
-        const idx = queue.findIndex(x => x.id === editingQueueId);
-        if (idx !== -1) {
-          queue[idx].title = title;
-          queue[idx].concept = currentConcept;
-          queue[idx].date = dateVal;
-          queue[idx].time = timeVal;
-          queue[idx].tweetText = text;
-          queue[idx].poster = poster;
-        }
-        showToast(`"${title}" yayını başarıyla güncellendi!`);
-        cancelEditMode();
-      } else {
-        const newItem = {
-          id: Date.now(),
-          title: title,
-          concept: currentConcept,
-          date: dateVal,
-          time: timeVal,
-          tweetText: text,
-          poster: poster
-        };
-        queue.push(newItem);
-        showToast(`"${title}" ${dateVal} ${timeVal} için ajandaya eklendi!`);
-      }
-
-      queue.sort((a, b) => new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`));
-
-      try {
-        localStorage.setItem('reji_scheduled_queue', JSON.stringify(queue));
-      } catch(e) {}
-
-      renderQueue();
-    }
-
-    function startEditQueueItem(id) {
-      let queue = [];
-      try {
-        queue = JSON.parse(localStorage.getItem('reji_scheduled_queue') || '[]');
-      } catch(e) {}
-
-      const item = queue.find(x => x.id === id);
+    async function loadDetailedCreditsAndAI(item, mediaType) {
       if (!item) return;
 
-      editingQueueId = id;
+      const title = item.title || item.name || 'Yapım';
+      const date = item.release_date || item.first_air_date || '';
+      const year = date ? date.split('-')[0] : '2025';
+      const vote = item.vote_average ? item.vote_average.toFixed(1) : '7.5';
+      const poster = item.poster_path ? `${IMG_BASE}/w780${item.poster_path}` : '';
+      const overview = item.overview || 'Bu yapım şu an yayındadır.';
 
-      document.getElementById('schedule-date').value = item.date;
-      document.getElementById('schedule-time').value = item.time;
-      document.getElementById('tweet-textarea').value = item.tweetText;
-      updateCharCount();
+      document.getElementById('hero-title').textContent = title;
+      document.getElementById('hero-synopsis').textContent = overview;
+      document.getElementById('hero-imdb').textContent = `⭐ Puan: ${vote}`;
+      document.getElementById('hero-year').textContent = `📅 ${year}`;
+      document.getElementById('hero-poster').src = poster;
+      document.getElementById('hero-badge-type').textContent = mediaType === 'tv' ? '📺 Dizi' : '🎬 Sinema Filmi';
 
-      setConcept(item.concept);
+      const currentPlatform = document.getElementById('select-platform').value;
+      const currentPlatformName = PLATFORM_NAMES[currentPlatform] || 'Dijital Platform';
 
-      document.getElementById('selected-poster').src = item.poster;
-      document.getElementById('selected-title').textContent = item.title;
-      document.getElementById('selected-synopsis').textContent = "Düzenleme modunda yüklendi. Tarih, saat veya tweet metnini değiştirebilirsiniz.";
+      const searchQuery = encodeURIComponent(title);
+      document.getElementById('hero-netflix-link').href = `https://www.google.com/search?q=${searchQuery}+izle`;
 
-      document.getElementById('edit-mode-banner').classList.remove('hidden');
-      document.getElementById('edit-mode-desc').textContent = `Şu an "${item.title}" yayınının tarih, saat ve tweetini düzenliyorsunuz.`;
-      document.getElementById('btn-save-queue-text').textContent = "💾 Değişiklikleri Kaydet";
-      document.getElementById('btn-save-queue').className = "py-2.5 px-3 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-300 text-xs font-black transition-all flex items-center justify-center gap-1.5 active:scale-95 animate-pulse";
-
-      window.scrollTo({ top: 300, behavior: 'smooth' });
-    }
-
-    function cancelEditMode() {
-      editingQueueId = null;
-      document.getElementById('edit-mode-banner').classList.add('hidden');
-      document.getElementById('btn-save-queue-text').textContent = "📅 Yayın Planına Ekle";
-      document.getElementById('btn-save-queue').className = "py-2.5 px-3 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 text-xs font-bold transition-all flex items-center justify-center gap-1.5 active:scale-95";
-    }
-
-    function deleteQueueItem(id) {
-      let queue = [];
       try {
-        queue = JSON.parse(localStorage.getItem('reji_scheduled_queue') || '[]');
-      } catch(e) {}
-      queue = queue.filter(x => x.id !== id);
-      try {
-        localStorage.setItem('reji_scheduled_queue', JSON.stringify(queue));
-      } catch(e) {}
-      renderQueue();
-      showToast('Yayın planından çıkarıldı.');
-      if (editingQueueId === id) cancelEditMode();
-    }
+        const detailsUrl = `${BASE_URL}/${mediaType}/${item.id}?api_key=${TMDB_API_KEY}&language=tr-TR&append_to_response=credits,watch/providers`;
+        const res = await fetch(detailsUrl);
+        const details = await res.json();
 
-    function clearAllQueue() {
-      if (confirm('Tüm planlanan yayınları temizlemek istediğinize emin misiniz?')) {
-        localStorage.removeItem('reji_scheduled_queue');
-        renderQueue();
-        showToast('Tüm yayın planı temizlendi.');
-        cancelEditMode();
-      }
-    }
+        let fullOverview = details.overview || item.overview || '';
+        if (!fullOverview || fullOverview.trim().length < 15) {
+          try {
+            const enRes = await fetch(`${BASE_URL}/${mediaType}/${item.id}?api_key=${TMDB_API_KEY}&language=en-US`);
+            const enData = await enRes.json();
+            if (enData.overview && enData.overview.trim().length > 10) {
+              fullOverview = await getTurkishOverview(enData.overview, details.genres, details.credits?.crew?.find(c => c.job === 'Director')?.name || '');
+            }
+          } catch(e) {}
+        }
+        if (!fullOverview || fullOverview.trim().length < 10) {
+          const gNames = details.genres ? details.genres.map(g => g.name).join(', ') : 'Dram';
+          fullOverview = `Katalogda yer alan bu ${gNames} yapımı, güçlü prodüksiyon kalitesi ve etkileyici atmosferiyle öne çıkıyor.`;
+        }
+        document.getElementById('hero-synopsis').textContent = fullOverview;
 
-    function renderQueue() {
-      const queueList = document.getElementById('queue-list');
-      const countEl = document.getElementById('queue-count');
-      let queue = [];
-      try {
-        queue = JSON.parse(localStorage.getItem('reji_scheduled_queue') || '[]');
-      } catch(e) {}
-
-      countEl.textContent = `${queue.length} Planlanan Yayın`;
-
-      if (queue.length === 0) {
-        queueList.innerHTML = `<div class="py-8 text-center text-xs text-neutral-500 bg-neutral-900/40 rounded-2xl border border-neutral-800">Henüz planlanan bir yayın yok. Yukarıdan bir film seçip tarih/saat belirleyin ve <strong>"Yayın Planına Ekle"</strong> butonuna basın.</div>`;
-        return;
-      }
-
-      queueList.innerHTML = '';
-      const now = new Date();
-
-      queue.forEach((item, index) => {
-        const itemDateTime = new Date(`${item.date}T${item.time}`);
-        const formattedDate = itemDateTime.toLocaleDateString('tr-TR', { 
-          weekday: 'long', 
-          day: 'numeric', 
-          month: 'long', 
-          year: 'numeric' 
-        });
-
-        const diffMs = itemDateTime - now;
-        const diffHours = Math.round(diffMs / (1000 * 60 * 60));
-        let timeRemainingBadge = "";
-
-        if (diffMs < 0) {
-          timeRemainingBadge = `<span class="px-2 py-0.5 rounded bg-neutral-800 text-neutral-400 text-[10px] font-bold">Geçmiş Yayın</span>`;
-        } else if (diffHours < 24) {
-          timeRemainingBadge = `<span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold animate-pulse">⏰ ${diffHours <= 0 ? 'Yayın Vakti Geldi!' : diffHours + ' saat kaldı'}</span>`;
-        } else {
-          const days = Math.floor(diffHours / 24);
-          timeRemainingBadge = `<span class="px-2 py-0.5 rounded bg-sky-500/20 text-sky-400 border border-sky-500/30 text-[10px] font-bold">📅 ${days} gün kaldı</span>`;
+        const trProviders = details['watch/providers']?.results?.TR;
+        let detectedPlatform = currentPlatformName;
+        if (trProviders?.flatrate && trProviders.flatrate.length > 0) {
+          detectedPlatform = trProviders.flatrate.map(p => p.provider_name).join(' / ');
         }
 
-        const isCurrentlyEditing = editingQueueId === item.id;
+        const verifyBadge = document.getElementById('hero-verify-badge');
+        const verifyText = document.getElementById('hero-verify-text');
+        const watchBtn = document.getElementById('hero-watch-btn-text');
+
+        verifyBadge.className = "px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-black uppercase tracking-wider border border-emerald-500/40 shadow-sm flex items-center gap-1.5";
+        verifyText.textContent = `✔️ ${detectedPlatform}`;
+        watchBtn.textContent = `▶️ ${detectedPlatform} İzle`;
+
+        if (details.runtime) {
+          const hours = Math.floor(details.runtime / 60);
+          const mins = details.runtime % 60;
+          document.getElementById('hero-duration').textContent = `⏱️ ${hours > 0 ? hours + 's ' : ''}${mins}dk`;
+        } else if (details.number_of_seasons) {
+          document.getElementById('hero-duration').textContent = `📺 ${details.number_of_seasons} Sezon (${details.number_of_episodes || ''} Bölüm)`;
+        } else {
+          document.getElementById('hero-duration').textContent = '⏱️ Standart Süre';
+        }
+
+        const genresContainer = document.getElementById('hero-genres');
+        genresContainer.innerHTML = '';
+        if (details.genres && details.genres.length > 0) {
+          details.genres.forEach(g => {
+            const badge = document.createElement('span');
+            badge.className = "px-2.5 py-0.5 rounded-md bg-neutral-900 text-red-400 border border-neutral-800 font-semibold";
+            badge.textContent = g.name;
+            genresContainer.appendChild(badge);
+          });
+        }
+
+        let directorName = "Belirtilmemiş";
+        if (details.credits && details.credits.crew) {
+          const directorObj = details.credits.crew.find(c => c.job === 'Director' || c.department === 'Directing');
+          if (directorObj) directorName = directorObj.name;
+        }
+        if (mediaType === 'tv' && details.created_by && details.created_by.length > 0) {
+          directorName = details.created_by.map(c => c.name).join(', ');
+        }
+        document.getElementById('hero-director').textContent = directorName;
+
+        let castNames = "Oyuncu bilgisi mevcut değil";
+        if (details.credits && details.credits.cast && details.credits.cast.length > 0) {
+          castNames = details.credits.cast.slice(0, 5).map(a => a.name).join(', ');
+        }
+        document.getElementById('hero-cast').textContent = castNames;
+
+        let country = "Uluslararası";
+        if (details.production_countries && details.production_countries.length > 0) {
+          country = details.production_countries.map(c => c.name).join(', ');
+        } else if (item.original_language === 'tr') {
+          country = "Türkiye (Yerli Sinema)";
+        } else if (['da', 'sv', 'no', 'is'].includes(item.original_language)) {
+          country = "İskandinavya (Nordic Noir)";
+        }
+        document.getElementById('hero-country').textContent = country;
+
+        generateAIReview(title, details.genres, directorName, castNames, overview, vote, country, detectedPlatform);
+
+      } catch (err) {
+        console.error('Künye hatası:', err);
+      }
+    }
+
+    function generateAIReview(title, genres, director, cast, synopsis, rating, country, platformName) {
+      const reviewBox = document.getElementById('hero-ai-review');
+      const tagsBox = document.getElementById('hero-ai-tags');
+
+      const genreNames = genres ? genres.map(g => g.name).join(', ') : 'Dram';
+      const numRating = parseFloat(rating);
+
+      let toneHook = "";
+      if (numRating >= 7.8) {
+        toneHook = "Ödüllü sinema kalitesinde, temposunu bir an bile düşürmeyen usta işi bir başyapıt.";
+      } else if (numRating >= 7.0) {
+        toneHook = "Sürükleyici hikaye örgüsü ve güçlü oyuncu performanslarıyla akşam için harika bir seyirlik.";
+      } else {
+        toneHook = "Merak uyandırıcı çıkış noktası ve dinamik sahneleriyle vakit geçirmek için ideal bir yapım.";
+      }
+
+      let actorHighlight = "";
+      if (cast && cast !== "Oyuncu bilgisi mevcut değil") {
+        const firstActor = cast.split(',')[0];
+        actorHighlight = `${firstActor} başrolde karakterin psikolojik gelgitlerini son derece samimi yansıtıyor.`;
+      }
+
+      let audienceVerdict = "";
+      if (genreNames.includes('Gerilim') || genreNames.includes('Gizem') || genreNames.includes('Suç')) {
+        audienceVerdict = "Dedektif soruşturmaları, ters köşeleri ve soluksuz suç gizemini sevenler kaçırmamalı.";
+      } else if (genreNames.includes('Romantik') || genreNames.includes('Aşk')) {
+        audienceVerdict = "Duygusal derinliği ve insan ilişkilerini sıcak bir dille hissettiren romantik bir deneyim.";
+      } else if (genreNames.includes('Bilim Kurgu')) {
+        audienceVerdict = "Geleceğin dünyasını, zihin açıcı teknolojik sorgulamaları sevenler için biçilmiş kaftan.";
+      } else if (genreNames.includes('Dram')) {
+        audienceVerdict = "Karakterlerin derinliği ve duygusal yoğunluğuyla izleyiciyi içine çeken dokunaklı bir insan hikayesi.";
+      } else {
+        audienceVerdict = "Görsel dili ve samimi anlatımıyla günün yorgunluğunu atmak isteyenlere birebir.";
+      }
+
+      reviewBox.innerHTML = `
+        "${title}", <strong>${genreNames}</strong> türünün başarılı örneklerinden biri. ${toneHook} 
+        ${actorHighlight} Yönetmen <strong>${director}</strong>, hikayenin ritmini başarıyla koruyor. 
+        <br><br>
+        💡 <strong>Editör Kararı:</strong> ${audienceVerdict}
+      `;
+
+      tagsBox.innerHTML = `
+        <span class="px-2 py-0.5 rounded bg-neutral-800 text-neutral-300 border border-neutral-700">🎯 ${genreNames.split(',')[0]}</span>
+        <span class="px-2 py-0.5 rounded bg-neutral-800 text-amber-300 border border-neutral-700">⭐ ${rating}/10 Kalite</span>
+        <span class="px-2 py-0.5 rounded bg-neutral-800 text-emerald-300 border border-neutral-700">🍿 ${platformName}</span>
+      `;
+    }
+
+    function renderLiveGrid(items, defaultMediaType, append = false) {
+      const grid = document.getElementById('live-movie-grid');
+      const countEl = document.getElementById('results-count');
+      grid.classList.remove('hidden');
+
+      const currentPlatform = document.getElementById('select-platform').value;
+      const currentPlatformName = PLATFORM_NAMES[currentPlatform] || 'Platform';
+
+      countEl.innerHTML = `<span class="text-red-400 font-black">${currentLiveItems.length}</span> doğrulanmış yapım listeleniyor (${currentPlatformName})`;
+
+      if (!append) grid.innerHTML = '';
+
+      items.forEach(m => {
+        const title = m.title || m.name || 'İsimsiz';
+        const date = m.release_date || m.first_air_date || '';
+        const year = date ? date.split('-')[0] : 'Sinema';
+        const vote = m.vote_average ? m.vote_average.toFixed(1) : 'NR';
+        const poster = `${IMG_BASE}/w780${m.poster_path}`;
+        const overview = m.overview || 'Bu yapım şu an yayındadır.';
+        const itemType = m.title ? 'movie' : 'tv';
+
         const card = document.createElement('div');
-        card.className = `p-4 rounded-2xl transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 border ${isCurrentlyEditing ? 'bg-amber-950/20 border-amber-500/60 shadow-lg' : 'bg-neutral-900/80 border-neutral-800 hover:border-neutral-700'}`;
-        
+        card.className = "group relative rounded-2xl overflow-hidden bg-neutral-900/80 border border-neutral-800 hover:border-red-600/60 transition-all duration-300 hover:shadow-xl hover:shadow-red-600/10 cursor-pointer flex flex-col";
+        card.onclick = () => {
+          loadDetailedCreditsAndAI(m, itemType);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
         card.innerHTML = `
-          <div class="flex items-center gap-3.5 min-w-0">
-            <span class="w-6 h-6 rounded-full bg-neutral-800 text-neutral-400 flex items-center justify-center font-mono font-bold text-xs shrink-0">${index + 1}</span>
-            <img src="${item.poster}" class="w-12 h-16 object-cover rounded-xl border border-neutral-700 shrink-0 shadow-md">
-            <div class="min-w-0 space-y-1">
-              <div class="flex flex-wrap items-center gap-2">
-                <h4 class="text-sm font-black text-white truncate">${item.title}</h4>
-                <span class="text-[10px] font-black px-2 py-0.5 rounded bg-netflix-red/20 text-red-400 border border-red-500/30 uppercase">${item.concept}</span>
-                ${timeRemainingBadge}
-              </div>
-              <div class="text-xs font-semibold text-amber-400 flex items-center gap-1.5">
-                <span>🗓️ ${formattedDate}</span>
-                <span class="text-white">•</span>
-                <span>⏰ Saat ${item.time}</span>
-              </div>
+          <div class="relative aspect-[2/3] overflow-hidden bg-neutral-950">
+            <img src="${poster}" alt="${title}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-transparent opacity-80"></div>
+            
+            <div class="absolute top-2.5 left-2.5 flex items-center gap-1">
+              <span class="text-[10px] font-black px-2 py-0.5 rounded bg-amber-400 text-black shadow-md">
+                ⭐ ${vote}
+              </span>
+            </div>
+
+            <div class="absolute top-2.5 right-2.5">
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-black/70 backdrop-blur-md text-white border border-white/10 uppercase">
+                ${itemType === 'tv' ? 'Dizi' : 'Film'}
+              </span>
+            </div>
+
+            <div class="absolute bottom-2.5 left-2.5 right-2.5">
+              <h3 class="text-sm font-extrabold text-white leading-tight truncate group-hover:text-red-400 transition-colors">${title}</h3>
             </div>
           </div>
 
-          <div class="flex items-center gap-2 self-end sm:self-center shrink-0">
-            <button onclick="startEditQueueItem(${item.id})" class="px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 text-xs font-bold transition-all flex items-center gap-1">
-              <span>✏️ Düzenle</span>
-            </button>
-            <button onclick="publishQueueById(${item.id})" class="px-3 py-1.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-white text-xs font-black transition-all shadow-md flex items-center gap-1 active:scale-95">
-              <span>X'e Gönder</span>
-            </button>
-            <button onclick="deleteQueueItem(${item.id})" class="p-1.5 rounded-xl bg-neutral-800 hover:bg-red-950/80 text-neutral-400 hover:text-red-400 text-xs transition-all border border-neutral-700" title="Plândan Çıkar">
-              ✕
-            </button>
+          <div class="p-3 space-y-1.5 flex-1 flex flex-col justify-between">
+            <div class="flex items-center justify-between text-[11px] text-neutral-400">
+              <span>${year}</span>
+              <span class="text-red-400 font-semibold">${currentPlatformName}</span>
+            </div>
+            <p class="text-[11px] text-neutral-400 line-clamp-2 leading-snug">
+              ${overview}
+            </p>
+            <div class="pt-2 flex items-center justify-between border-t border-neutral-800 text-[10px]">
+              <span class="text-neutral-500 font-medium">Künye & YZ İnceleme</span>
+              <span class="font-bold text-red-400 group-hover:underline">İncele →</span>
+            </div>
           </div>
         `;
-        queueList.appendChild(card);
+
+        grid.appendChild(card);
       });
     }
 
-    function publishQueueById(id) {
-      let queue = [];
-      try {
-        queue = JSON.parse(localStorage.getItem('reji_scheduled_queue') || '[]');
-      } catch(e) {}
-      const item = queue.find(x => x.id === id);
-      if (!item) return;
-      
-      const safeText = encodeURIComponent(item.tweetText);
-      if (item.poster) {
-        copyPosterToClipboard(item.poster);
-      }
-
-      const url = `https://twitter.com/intent/tweet?text=${safeText}`;
-      const win = window.open(url, '_blank');
-      if (!win) {
-        window.location.href = url;
-      }
-      showToast('Afiş kopyalandı! X kutusunda sadece Ctrl+V yapın.');
+    function applySmartQuery(queryText) {
+      document.getElementById('live-search-box').value = queryText;
+      document.getElementById('btn-clear-search').classList.remove('hidden');
+      currentPage = 1;
+      fetchLiveMovies(1);
     }
 
-    function applyRejiSmartQuery(txt) {
-      document.getElementById('reji-search').value = txt;
-      rejiFetch(1);
-    }
-
-    function setRejiTopic(topic) {
-      currentRejiTopic = topic;
-      document.querySelectorAll('[data-reji-topic]').forEach(btn => {
-        btn.classList.toggle('active', btn.getAttribute('data-reji-topic') === topic);
+    function setTopic(topic) {
+      document.querySelectorAll('.topic-pill').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-topic') === topic);
       });
-      document.getElementById('reji-search').value = '';
-      rejiFetch(1);
+      document.getElementById('select-theme').value = topic;
+      document.getElementById('live-search-box').value = '';
+      currentPage = 1;
+      fetchLiveMovies(1);
     }
 
-    function resetRejiFilters() {
-      document.getElementById('reji-search').value = '';
-      document.getElementById('reji-select-platform').value = '8';
-      document.getElementById('reji-select-country').value = 'all';
-      document.getElementById('reji-select-media').value = 'both';
-      document.getElementById('reji-select-sort').value = 'popularity.desc';
-      currentRejiTopic = 'all';
-
-      document.querySelectorAll('[data-reji-topic]').forEach(btn => {
-        btn.classList.toggle('active', btn.getAttribute('data-reji-topic') === 'all');
-      });
-
-      rejiFetch(1);
+    function resetFilters() {
+      document.getElementById('live-search-box').value = '';
+      document.getElementById('select-platform').value = '8';
+      document.getElementById('select-media-type').value = 'both';
+      document.getElementById('select-audio').value = 'all';
+      document.getElementById('select-country').value = 'all';
+      document.getElementById('select-theme').value = 'all';
+      setShelf('populer');
     }
 
-    function rejiLoadMore() {
-      rejiFetch(rejiPage + 1, true);
-    }
-
-    ['reji-select-platform', 'reji-select-country', 'reji-select-media', 'reji-select-sort'].forEach(id => {
+    ['select-platform', 'select-media-type', 'select-audio', 'select-country', 'select-theme', 'select-sort'].forEach(id => {
       document.getElementById(id).addEventListener('change', () => {
-        rejiFetch(1);
+        if (id === 'select-theme') {
+          const val = document.getElementById('select-theme').value;
+          document.querySelectorAll('.topic-pill').forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-topic') === val);
+          });
+        }
+        currentPage = 1;
+        fetchLiveMovies(1);
       });
     });
 
-    document.getElementById('reji-search').addEventListener('input', (e) => {
+    document.getElementById('btn-reset-filters').addEventListener('click', resetFilters);
+
+    document.getElementById('live-search-box').addEventListener('input', (e) => {
+      const val = e.target.value.trim();
+      document.getElementById('btn-clear-search').classList.toggle('hidden', !val);
       clearTimeout(searchDebounce);
       searchDebounce = setTimeout(() => {
-        rejiFetch(1);
+        currentPage = 1;
+        fetchLiveMovies(1);
       }, 400);
     });
 
-    renderQueue();
+    document.getElementById('btn-clear-search').addEventListener('click', () => {
+      document.getElementById('live-search-box').value = '';
+      document.getElementById('btn-clear-search').classList.add('hidden');
+      currentPage = 1;
+      fetchLiveMovies(1);
+    });
+
+    document.getElementById('btn-load-more').addEventListener('click', () => {
+      fetchLiveMovies(currentPage + 1, true);
+    });
+
+    function pickRandom() {
+      if (currentLiveItems.length > 0) {
+        const rnd = currentLiveItems[Math.floor(Math.random() * currentLiveItems.length)];
+        const itemType = rnd.title ? 'movie' : 'tv';
+        loadDetailedCreditsAndAI(rnd, itemType);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+    document.getElementById('btn-quick-random').addEventListener('click', pickRandom);
+    document.getElementById('hero-btn-random').addEventListener('click', pickRandom);
+
+    fetchLiveMovies(1);
   </script>
 </body>
 </html>
