@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="no-referrer">
-  <title>Bugün Ne İzlesem? | Sinema & Reji Masası</title>
+  <title>Bugün Ne İzlesem? | Reji Stüdyosu & Film Seçkisi</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -15,6 +15,8 @@
       --card-hover: #1a2236;
       --border: rgba(255, 255, 255, 0.08);
       --accent: #e50914;
+      --accent-gold: #fbbf24;
+      --accent-cyan: #06b6d4;
       --text: #f8fafc;
       --muted: #94a3b8;
     }
@@ -26,7 +28,7 @@
       min-height: 100vh;
       padding: 2rem 1rem;
     }
-    .wrapper { max-width: 1140px; margin: 0 auto; }
+    .wrapper { max-width: 1180px; margin: 0 auto; }
     
     header {
       display: flex;
@@ -68,7 +70,7 @@
       box-shadow: 0 4px 14px rgba(229, 9, 20, 0.4);
     }
 
-    /* Filtreleme ve Arama Çubuğu */
+    /* Vitrin Filtre Paneli */
     .filter-panel {
       background: var(--card);
       border: 1px solid var(--border);
@@ -79,9 +81,9 @@
       grid-template-columns: 1fr;
       gap: 1rem;
     }
-    @media (min-width: 768px) {
+    @media (min-width: 900px) {
       .filter-panel {
-        grid-template-columns: 2fr 1fr 1fr 1fr auto;
+        grid-template-columns: 2fr 1.3fr 1.2fr 1fr auto;
         align-items: flex-end;
       }
     }
@@ -105,7 +107,7 @@
     }
     .filter-control:focus { border-color: rgba(255,255,255,0.3); }
 
-    /* Günün Filmi (Hero) */
+    /* Hero Kartı */
     .hero-card {
       background: var(--card);
       border: 1px solid var(--border);
@@ -137,7 +139,7 @@
       justify-content: space-between;
       flex: 1;
     }
-    .badge-wrap { display: flex; gap: 0.6rem; align-items: center; margin-bottom: 0.8rem; }
+    .badge-wrap { display: flex; gap: 0.6rem; align-items: center; margin-bottom: 0.8rem; flex-wrap: wrap; }
     .badge-score {
       background: rgba(250, 204, 21, 0.15);
       border: 1px solid rgba(250, 204, 21, 0.3);
@@ -147,6 +149,15 @@
       font-size: 0.85rem;
       font-weight: 800;
     }
+    .badge-decision {
+      background: rgba(6, 182, 212, 0.15);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      color: var(--accent-cyan);
+      padding: 0.35rem 0.8rem;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
     .badge-time {
       font-size: 0.8rem;
       font-weight: 800;
@@ -155,7 +166,7 @@
       text-transform: uppercase;
     }
     .hero-title { font-size: 2.1rem; font-weight: 800; line-height: 1.2; margin-bottom: 0.5rem; }
-    .hero-platform { font-size: 0.95rem; font-weight: 600; color: #38bdf8; margin-bottom: 1.2rem; }
+    .hero-platform { font-size: 0.95rem; font-weight: 600; color: #38bdf8; margin-bottom: 0.8rem; }
     .hero-overview { color: #cbd5e1; font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.5rem; }
     
     .btn {
@@ -177,7 +188,6 @@
       background: linear-gradient(135deg, #4f46e5, #7c3aed);
       color: #fff;
     }
-    .btn-suggest:hover { opacity: 0.9; }
 
     /* Film Izgarası */
     .section-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 1.2rem; display: flex; justify-content: space-between; align-items: center; }
@@ -292,7 +302,31 @@
     }
     .st-active { background: rgba(229,9,20,0.25); color: #f87171; border: 1px solid rgba(229,9,20,0.4); }
     .st-queue { background: rgba(234,179,8,0.2); color: #facc15; }
-    
+
+    /* Düzenleme Modalı */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(5px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal {
+      background: #121826;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      max-width: 560px;
+      width: 100%;
+      padding: 2rem;
+    }
+    .modal h3 { font-size: 1.3rem; margin-bottom: 1rem; }
+    .modal label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; font-weight: 700; display: block; margin: 0.8rem 0 0.3rem; }
+    .modal textarea { min-height: 90px; resize: vertical; }
+
     footer { margin-top: 4rem; text-align: center; color: var(--muted); font-size: 0.85rem; }
   </style>
 </head>
@@ -302,11 +336,11 @@
     <header>
       <div class="brand">
         <h1>Bugün Ne İzlesem?</h1>
-        <p>Her Akşam 19:45'te X (@GizliAnu) Yayını & Film Seçki Motoru</p>
+        <p>Her Akşam 19:45'te X (@GizliAnu) Yayını & Küratörlük Stüdyosu</p>
       </div>
       <div class="nav-tabs">
         <button class="tab-btn active" id="tabCatalog" onclick="switchView('catalog')">Film Kataloğu</button>
-        <button class="tab-btn" id="tabReji" onclick="switchView('reji')">🔒 Reji Masası</button>
+        <button class="tab-btn" id="tabReji" onclick="switchView('reji')">🎬 Reji Masası</button>
       </div>
     </header>
 
@@ -318,13 +352,12 @@
           <input type="text" id="searchInput" class="filter-control" placeholder="Başlık yazın..." oninput="applyFilters()">
         </div>
         <div class="filter-group">
-          <label>Platform</label>
-          <select id="platformFilter" class="filter-control" onchange="fetchCatalog()">
-            <option value="8">Netflix</option>
-            <option value="119">Prime Video</option>
-            <option value="337">Disney+</option>
-            <option value="11">MUBI</option>
-            <option value="all" selected>Tüm Platformlar / Popüler</option>
+          <label>Seçki / Koleksiyon</label>
+          <select id="curationFilter" class="filter-control" onchange="fetchCatalog()">
+            <option value="netflix_recent">🔥 Netflix Yeni Eklenenler</option>
+            <option value="cult_classics">🏛️ Kült Sinema & Başyapıtlar</option>
+            <option value="top_rated">★ Tüm Zamanların En İyileri</option>
+            <option value="popular">⚡ Popüler / Trend Filmler</option>
           </select>
         </div>
         <div class="filter-group">
@@ -351,7 +384,7 @@
           </select>
         </div>
         <div class="filter-group">
-          <button class="btn btn-suggest" onclick="suggestRandomMovie()" title="Kriterlere göre rastgele bir film seçer">
+          <button class="btn btn-suggest" onclick="suggestRandomMovie()" title="Koleksiyondan rastgele bir başyapıt seçer">
             🎲 Bana Film Öner
           </button>
         </div>
@@ -366,7 +399,8 @@
           <div>
             <div class="badge-wrap">
               <span class="badge-score" id="heroImdb">★ 0.0</span>
-              <span class="badge-time" id="heroBadge">AKŞAM MATİNESİ | 19:45</span>
+              <span class="badge-decision" id="heroDecision">🤖 YZ Tavsiyesi</span>
+              <span class="badge-time">AKŞAM MATİNESİ | 19:45</span>
             </div>
             <h2 class="hero-title" id="heroTitle">Yükleniyor...</h2>
             <div class="hero-platform" id="heroPlatform">🍿 Platform Belirleniyor</div>
@@ -382,13 +416,13 @@
       </div>
 
       <div class="section-title">
-        <span>Seçilen Kataloğun En İyileri</span>
+        <span id="sectionHeading">Seçilen Koleksiyon</span>
         <span id="filmCount" style="font-size: 0.9rem; color: var(--muted); font-weight: 500;"></span>
       </div>
       <div class="grid" id="movieGrid"></div>
     </main>
 
-    <!-- REJİ MASASI -->
+    <!-- REJİ MASASI (STÜDYO & DÜZENLEME) -->
     <section class="reji-box" id="rejiView">
       <div class="auth-box" id="authBox">
         <h3>🔒 Reji Girişi</h3>
@@ -401,36 +435,60 @@
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
           <div>
             <h2 style="font-size: 1.6rem; font-weight: 800;">🎬 Reji Masası & Yayın Yönetimi</h2>
-            <p style="color: var(--muted); font-size: 0.95rem;">TMDb kütüphanesinden dilediğiniz filmi aratıp 19:45 yayınına seçebilirsiniz.</p>
+            <p style="color: var(--muted); font-size: 0.95rem;">Filmleri seçin, açıklamalarını düzenleyin veya kuyruktan kaldırın.</p>
           </div>
           <button class="btn" style="background: rgba(239,68,68,0.2); color:#f87171;" onclick="lockReji()">Kapat & Çıkış</button>
         </div>
 
+        <!-- Arama Alanı -->
         <div class="reji-search-box">
-          <h4 style="margin-bottom: 0.5rem;">🔎 TMDb Film Arama & Yayına Ekle</h4>
+          <h4 style="margin-bottom: 0.5rem;">🔎 TMDb Film Arama & Yayına Al</h4>
           <div style="display: flex; gap: 0.8rem;">
-            <input type="text" id="rejiSearchQuery" class="filter-control" placeholder="Eklemek istediğiniz filmin adını yazın..." onkeydown="if(event.key==='Enter') searchMovieFromTMDB()">
+            <input type="text" id="rejiSearchQuery" class="filter-control" placeholder="Eklemek istediğiniz film..." onkeydown="if(event.key==='Enter') searchMovieFromTMDB()">
             <button class="btn btn-suggest" onclick="searchMovieFromTMDB()">Ara</button>
           </div>
           <div class="reji-search-results" id="rejiSearchResults"></div>
         </div>
 
-        <h3 style="font-size:1.2rem; margin-bottom: 0.8rem;">📋 Canlı Yayın Kuyruğu</h3>
+        <h3 style="font-size:1.2rem; margin-bottom: 0.8rem;">📋 Canlı Yayın Kuyruğu & Düzenleme</h3>
         <table>
           <thead>
             <tr>
               <th>Afiş</th>
               <th>Film Başlığı</th>
               <th>Puan</th>
-              <th>Yıl</th>
+              <th>Platform / Karar</th>
               <th>Yayın Durumu</th>
-              <th>İşlem</th>
+              <th>İşlemler</th>
             </tr>
           </thead>
           <tbody id="rejiTableBody"></tbody>
         </table>
       </div>
     </section>
+
+    <!-- DÜZENLEME MODALI -->
+    <div class="modal-backdrop" id="editModal">
+      <div class="modal">
+        <h3>✏️ Film Bilgilerini Düzenle</h3>
+        <label>Film Başlığı</label>
+        <input type="text" id="editTitle" class="filter-control">
+        <label>Platform Bilgisi</label>
+        <input type="text" id="editPlatform" class="filter-control" placeholder="Örn: Netflix, Kült Sinema / Arşiv">
+        <label>Editör / YZ Kararı</label>
+        <select id="editDecision" class="filter-control">
+          <option value="✍️ Editör Kararı">✍️ Editör Kararı (Onaylandı)</option>
+          <option value="🤖 YZ Tavsiyesi">🤖 YZ Tavsiyesi</option>
+          <option value="🏛️ Kült Klasik">🏛️ Kült Klasik Seçimi</option>
+        </select>
+        <label>Açıklama / Tweet Özeti</label>
+        <textarea id="editOverview" class="filter-control"></textarea>
+        <div style="display: flex; gap: 0.8rem; margin-top: 1.5rem; justify-content: flex-end;">
+          <button class="btn" style="background: rgba(255,255,255,0.1);" onclick="closeEditModal()">İptal</button>
+          <button class="btn btn-select" onclick="saveEditedMovie()">Kaydet & Uygula</button>
+        </div>
+      </div>
+    </div>
 
     <footer>
       Tüm hakları saklıdır &copy; 2026 Bugün Ne İzlesem &bull; TMDb & Reji Motoru
@@ -445,107 +503,79 @@
     let catalogMovies = [];
     let customQueue = [];
     let activeMovie = null;
+    let editingTarget = null; // 'active' veya index numarası
     let isRejiUnlocked = false;
 
-    // Yedek filmler (TMDb bağlantısı gecikirse ekran asla boş kalmaz)
-    const fallbackMovies = [
-      {
-        id: 389,
-        title: "12 Angry Men",
-        release_date: "1957-04-10",
-        vote_average: 8.5,
-        overview: "Bir cinayet davasında 12 jüri üyesinin vicdan, adalet ve mantık savaşı.",
-        poster_path: "/ow3wq89wM8qd5X7hWKxiRfsFf9C.jpg"
-      },
-      {
-        id: 11216,
-        title: "Cinema Paradiso",
-        release_date: "1988-11-17",
-        vote_average: 8.4,
-        overview: "Küçük bir İtalyan kasabasında sinema tutkusu ve ömürlük bir dostluğun masalı.",
-        poster_path: "/8SRUuv5Vbt9yeq0rVgMGwEGq0Z.jpg"
+    function loadSavedState() {
+      const savedQueue = localStorage.getItem("bni_queue_v4");
+      if (savedQueue) {
+        try { customQueue = JSON.parse(savedQueue); } catch(e){}
       }
-    ];
-
-    function loadSavedQueue() {
-      const saved = localStorage.getItem("bni_custom_queue");
-      if (saved) {
-        try { customQueue = JSON.parse(saved); } catch(e){}
-      }
-      const savedActive = localStorage.getItem("bni_active_movie");
+      const savedActive = localStorage.getItem("bni_active_v4");
       if (savedActive) {
         try { activeMovie = JSON.parse(savedActive); } catch(e){}
       }
     }
 
-    function saveQueue() {
-      localStorage.setItem("bni_custom_queue", JSON.stringify(customQueue));
+    function saveState() {
+      localStorage.setItem("bni_queue_v4", JSON.stringify(customQueue));
       if (activeMovie) {
-        localStorage.setItem("bni_active_movie", JSON.stringify(activeMovie));
+        localStorage.setItem("bni_active_v4", JSON.stringify(activeMovie));
       }
     }
 
-    // TMDb Veri Çekimi (Hata Korumalı)
+    // Koleksiyon / Filtreleme Motoru
     async function fetchCatalog() {
-      const provider = document.getElementById("platformFilter").value;
+      const mode = document.getElementById("curationFilter").value;
       let url = "";
 
-      if (provider === "all") {
-        url = `https://api.themoviedb.org/3/movie/popular?api_key=${TMDB_API_KEY}&language=tr-TR&page=1`;
+      if (mode === "netflix_recent") {
+        document.getElementById("sectionHeading").textContent = "Netflix Türkiye Yeni Eklenenler";
+        url = `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_API_KEY}&language=tr-TR&sort_by=primary_release_date.desc&with_watch_providers=8&watch_region=TR&page=1`;
+      } else if (mode === "cult_classics") {
+        document.getElementById("sectionHeading").textContent = "Kült Sinema & Arşiv Başyapıtları";
+        url = `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_API_KEY}&language=tr-TR&sort_by=vote_average.desc&vote_count.gte=1000&primary_release_date.lte=1999-12-31&page=1`;
+      } else if (mode === "top_rated") {
+        document.getElementById("sectionHeading").textContent = "Tüm Zamanların En Yüksek Puanlıları";
+        url = `https://api.themoviedb.org/3/movie/top_rated?api_key=${TMDB_API_KEY}&language=tr-TR&page=1`;
       } else {
-        url = `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_API_KEY}&language=tr-TR&sort_by=popularity.desc&page=1&with_watch_providers=${provider}&watch_region=TR`;
+        document.getElementById("sectionHeading").textContent = "Popüler ve Trend Filmler";
+        url = `https://api.themoviedb.org/3/movie/popular?api_key=${TMDB_API_KEY}&language=tr-TR&page=1`;
       }
 
       try {
         let res = await fetch(url);
         let data = await res.json();
-        
-        // Sağlayıcı filtresi boş dönerse hemen popüler filmlere geç
-        if (!data.results || data.results.length === 0) {
-          const fallbackUrl = `https://api.themoviedb.org/3/movie/top_rated?api_key=${TMDB_API_KEY}&language=tr-TR&page=1`;
-          res = await fetch(fallbackUrl);
-          data = await res.json();
-        }
-
         if (data.results && data.results.length > 0) {
           catalogMovies = data.results.filter(m => m.poster_path);
           if (!activeMovie) {
             activeMovie = catalogMovies[0];
+            activeMovie.decision = "✍️ Editör Kararı";
+            activeMovie.custom_platform = mode === "netflix_recent" ? "Netflix Türkiye" : "Kült Sinema / Arşiv";
           }
           renderHero(activeMovie);
           applyFilters();
-        } else {
-          catalogMovies = fallbackMovies;
-          renderHero(catalogMovies[0]);
-          applyFilters();
         }
-      } catch (err) {
-        console.warn("TMDb isteği başarısız oldu, yerel kütüphane devrede:", err);
-        catalogMovies = fallbackMovies;
-        renderHero(catalogMovies[0]);
-        applyFilters();
+      } catch (e) {
+        console.error("Veri yüklenemedi:", e);
       }
     }
 
     function renderHero(movie) {
       if (!movie) return;
       activeMovie = movie;
-      saveQueue();
+      saveState();
 
       const year = movie.release_date ? movie.release_date.split('-')[0] : '';
-      const platformSelect = document.getElementById("platformFilter");
-      const platformText = platformSelect.options[platformSelect.selectedIndex].text;
-
       document.getElementById('heroTitle').textContent = `${movie.title} (${year})`;
       document.getElementById('heroImdb').textContent = `★ ${movie.vote_average ? movie.vote_average.toFixed(1) : '7.5'}`;
-      document.getElementById('heroPlatform').textContent = `🍿 ${movie.custom_platform || platformText}`;
-      document.getElementById('heroOverview').textContent = movie.overview || "Bu film için özet bilgisi bulunamadı.";
-      
-      const posterPath = movie.poster_path ? (IMG_BASE + movie.poster_path) : 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=600';
-      document.getElementById('heroImg').src = posterPath;
+      document.getElementById('heroDecision').textContent = movie.decision || "✍️ Editör Kararı";
+      document.getElementById('heroPlatform').textContent = `🍿 ${movie.custom_platform || 'Netflix / Arşiv'}`;
+      document.getElementById('heroOverview').textContent = movie.overview || "Özet bilgisi girilmedi.";
+      document.getElementById('heroImg').src = IMG_BASE + movie.poster_path;
 
       document.getElementById('btnShare').onclick = () => {
-        const text = `📅 Akşam Matinesi | Saat 19:45\n\n🔴 ${movie.title} (${movie.vote_average ? movie.vote_average.toFixed(1) : '7.5'}/10)\n📌 ${movie.overview ? movie.overview.substring(0, 160) + '...' : ''}\n\n🍿 ${movie.custom_platform || platformText}\n#Sinema #FilmÖnerisi #AkşamMatinesi`;
+        const text = `📅 Akşam Matinesi | Saat 19:45\n\n🔴 ${movie.title} (${movie.vote_average ? movie.vote_average.toFixed(1) : '7.5'}/10)\n📌 ${movie.overview ? movie.overview.substring(0, 160) + '...' : ''}\n\n🍿 ${movie.custom_platform || 'Netflix'}\n${movie.decision ? '[' + movie.decision + ']\n' : ''}#Sinema #FilmÖnerisi #AkşamMatinesi`;
         navigator.clipboard.writeText(text);
         alert("Tweet metni panoya kopyalandı! X açılıyor...");
         window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
@@ -579,7 +609,11 @@
         const year = m.release_date ? m.release_date.split('-')[0] : '';
         const div = document.createElement('div');
         div.className = 'movie-card';
-        div.onclick = () => { renderHero(m); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+        div.onclick = () => {
+          m.decision = "🤖 YZ Tavsiyesi";
+          renderHero(m);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
         div.innerHTML = `
           <div class="card-img-wrap">
             <img src="${IMG_BASE + m.poster_path}" alt="${m.title}">
@@ -593,15 +627,15 @@
       });
     }
 
-    // Bana Film Öner (Rastgele Seçici)
     function suggestRandomMovie() {
       if (catalogMovies.length === 0) return;
       const pick = catalogMovies[Math.floor(Math.random() * catalogMovies.length)];
+      pick.decision = "🎲 Şanslı / YZ Seçimi";
       renderHero(pick);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Reji Arama
+    /* REJİ MASASI MOTORU */
     async function searchMovieFromTMDB() {
       const q = document.getElementById("rejiSearchQuery").value.trim();
       if (!q) return;
@@ -633,62 +667,121 @@
           box.appendChild(div);
         });
       } catch(e) {
-        console.error("Arama hatası:", e);
+        console.error(e);
       }
     }
 
     function setAsToday(m) {
+      m.decision = "✍️ Editör Kararı";
+      m.custom_platform = m.custom_platform || "Netflix / Kült Sinema";
       activeMovie = m;
-      saveQueue();
+      saveState();
       renderHero(m);
       renderReji();
-      alert(`"${m.title}" 19:45 yayını için seçildi!`);
+      alert(`"${m.title}" bugünün 19:45 yayını olarak seçildi!`);
     }
 
     function addToQueue(m) {
       if (!customQueue.find(x => x.id === m.id)) {
+        m.decision = "✍️ Editör Kararı";
+        m.custom_platform = m.custom_platform || "Netflix / Arşiv";
         customQueue.push(m);
-        saveQueue();
+        saveState();
         renderReji();
       }
     }
 
     function removeFromQueue(idx) {
-      customQueue.splice(idx, 1);
-      saveQueue();
-      renderReji();
+      if (confirm("Bu filmi yayın kuyruğundan silmek istediğinize emin misiniz?")) {
+        customQueue.splice(idx, 1);
+        saveState();
+        renderReji();
+      }
     }
 
+    function removeActiveMovie() {
+      if (confirm("Bugünün yayınını kaldırmak istiyor musunuz? Sırada film varsa sıradaki yayına geçecektir.")) {
+        if (customQueue.length > 0) {
+          activeMovie = customQueue.shift();
+        } else {
+          activeMovie = null;
+        }
+        saveState();
+        renderHero(activeMovie);
+        renderReji();
+      }
+    }
+
+    /* DÜZENLEME (MODAL) YÖNETİMİ */
+    function openEditModal(target) {
+      editingTarget = target;
+      const movie = (target === 'active') ? activeMovie : customQueue[target];
+      if (!movie) return;
+
+      document.getElementById("editTitle").value = movie.title || '';
+      document.getElementById("editPlatform").value = movie.custom_platform || 'Netflix Türkiye';
+      document.getElementById("editDecision").value = movie.decision || '✍️ Editör Kararı';
+      document.getElementById("editOverview").value = movie.overview || '';
+
+      document.getElementById("editModal").style.display = "flex";
+    }
+
+    function closeEditModal() {
+      document.getElementById("editModal").style.display = "none";
+      editingTarget = null;
+    }
+
+    function saveEditedMovie() {
+      const movie = (editingTarget === 'active') ? activeMovie : customQueue[editingTarget];
+      if (!movie) return;
+
+      movie.title = document.getElementById("editTitle").value.trim();
+      movie.custom_platform = document.getElementById("editPlatform").value.trim();
+      movie.decision = document.getElementById("editDecision").value;
+      movie.overview = document.getElementById("editOverview").value.trim();
+
+      saveState();
+      if (editingTarget === 'active') {
+        renderHero(movie);
+      }
+      renderReji();
+      closeEditModal();
+      alert("Film ve yayın detayları başarıyla güncellendi!");
+    }
+
+    /* REJİ MASASI TABLOSU */
     function renderReji() {
       const tbody = document.getElementById("rejiTableBody");
       tbody.innerHTML = '';
 
       if (activeMovie) {
-        const y = activeMovie.release_date ? activeMovie.release_date.split('-')[0] : '';
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td><img src="${IMG_BASE + activeMovie.poster_path}" style="width:40px; border-radius:4px;"></td>
           <td><strong>${activeMovie.title}</strong></td>
           <td>★ ${activeMovie.vote_average ? activeMovie.vote_average.toFixed(1) : '-'}</td>
-          <td>${y}</td>
+          <td>${activeMovie.custom_platform || 'Netflix'} <br><small style="color:var(--accent-cyan);">${activeMovie.decision || 'Editör Onayı'}</small></td>
           <td><span class="status-tag st-active">🔴 BUGÜNÜN FİLMİ (19:45)</span></td>
-          <td>-</td>
+          <td>
+            <button class="btn" style="background:#3b82f6; color:#fff; font-size:0.75rem; padding:0.35rem 0.6rem;" onclick="openEditModal('active')">✏️ Düzenle</button>
+            <button class="btn" style="background:#ef4444; color:#fff; font-size:0.75rem; padding:0.35rem 0.6rem;" onclick="removeActiveMovie()">🗑️ Sil</button>
+          </td>
         `;
         tbody.appendChild(tr);
       }
 
       customQueue.forEach((m, idx) => {
-        const y = m.release_date ? m.release_date.split('-')[0] : '';
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td><img src="${IMG_BASE + m.poster_path}" style="width:40px; border-radius:4px;"></td>
           <td><strong>${m.title}</strong></td>
           <td>★ ${m.vote_average ? m.vote_average.toFixed(1) : '-'}</td>
-          <td>${y}</td>
+          <td>${m.custom_platform || 'Netflix'} <br><small style="color:var(--accent-cyan);">${m.decision || 'Kuyrukta'}</small></td>
           <td><span class="status-tag st-queue">Sırada (#${idx + 1})</span></td>
           <td>
-            <button class="btn-select" style="font-size:0.75rem; padding:0.3rem 0.5rem;" onclick='setAsToday(${JSON.stringify(m).replace(/'/g, "&apos;")})'>Yayına Al</button>
-            <button class="btn" style="background:#ef4444; color:#fff; font-size:0.75rem; padding:0.3rem 0.5rem;" onclick="removeFromQueue(${idx})">Kaldır</button>
+            <button class="btn-select" style="font-size:0.75rem; padding:0.35rem 0.6rem;" onclick='setAsToday(${JSON.stringify(m).replace(/'/g, "&apos;")})'>Yayına Al</button>
+            <button class="btn" style="background:#3b82f6; color:#fff; font-size:0.75rem; padding:0.35rem 0.6rem;" onclick="openEditModal(${idx})">✏️ Düzenle</button>
+            <button class="btn" style="background:#ef4444; color:#fff; font-size:0.75rem; padding:0.35rem 0.6rem;" onclick="removeFromQueue(${idx})">🗑️ Sil</button>
           </td>
         `;
         tbody.appendChild(tr);
@@ -734,8 +827,7 @@
       }
     }
 
-    // Başlat
-    loadSavedQueue();
+    loadSavedState();
     fetchCatalog();
   </script>
 </body>
