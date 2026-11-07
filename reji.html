@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+  <script>
+  // Eğer index sayfasından şifreyle gelinmediyse doğrudan PIN sor:
+  if (sessionStorage.getItem("reji_auth") !== "ok") {
+    const pin = prompt("🔒 Reji Masası Yönetici PIN Kodunu Girin:");
+    if (pin === "1945") {
+      sessionStorage.setItem("reji_auth", "ok");
+    } else {
+      alert("Yetkisiz Giriş! Vitrine yönlendiriliyorsunuz.");
+      window.location.href = "./index.html";
+    }
+  }
+</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="no-referrer">
