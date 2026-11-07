@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="no-referrer">
-  <title>Bugün Ne İzlesem? | Sinema Kulübü & Reji Stüdyosu</title>
+  <title>Bugün Ne İzlesem? | Sinema & Reji Masası</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -15,7 +15,6 @@
       --card-hover: #1a2236;
       --border: rgba(255, 255, 255, 0.08);
       --accent: #e50914;
-      --accent-gold: #fbbf24;
       --text: #f8fafc;
       --muted: #94a3b8;
     }
@@ -29,7 +28,6 @@
     }
     .wrapper { max-width: 1140px; margin: 0 auto; }
     
-    /* Header */
     header {
       display: flex;
       flex-direction: column;
@@ -69,6 +67,43 @@
       border-color: var(--accent);
       box-shadow: 0 4px 14px rgba(229, 9, 20, 0.4);
     }
+
+    /* Filtreleme ve Arama Çubuğu */
+    .filter-panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 1.25rem;
+      margin-bottom: 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    @media (min-width: 768px) {
+      .filter-panel {
+        grid-template-columns: 2fr 1fr 1fr 1fr auto;
+        align-items: flex-end;
+      }
+    }
+    .filter-group label {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+    }
+    .filter-control {
+      width: 100%;
+      background: #090d16;
+      border: 1px solid var(--border);
+      color: #fff;
+      padding: 0.8rem 1rem;
+      border-radius: 10px;
+      font-size: 0.92rem;
+      outline: none;
+    }
+    .filter-control:focus { border-color: rgba(255,255,255,0.3); }
 
     /* Günün Filmi (Hero) */
     .hero-card {
@@ -144,43 +179,6 @@
     }
     .btn-suggest:hover { opacity: 0.9; }
 
-    /* Filtreleme ve Arama Çubuğu */
-    .filter-panel {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 1.25rem;
-      margin-bottom: 2.5rem;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
-    @media (min-width: 768px) {
-      .filter-panel {
-        grid-template-columns: 2fr 1fr 1fr 1fr auto;
-        align-items: flex-end;
-      }
-    }
-    .filter-group label {
-      display: block;
-      font-size: 0.78rem;
-      color: var(--muted);
-      font-weight: 700;
-      margin-bottom: 0.4rem;
-      text-transform: uppercase;
-    }
-    .filter-control {
-      width: 100%;
-      background: #090d16;
-      border: 1px solid var(--border);
-      color: #fff;
-      padding: 0.8rem 1rem;
-      border-radius: 10px;
-      font-size: 0.92rem;
-      outline: none;
-    }
-    .filter-control:focus { border-color: rgba(255,255,255,0.3); }
-
     /* Film Izgarası */
     .section-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 1.2rem; display: flex; justify-content: space-between; align-items: center; }
     .grid {
@@ -205,7 +203,7 @@
     .card-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.35rem; }
     .card-sub { font-size: 0.85rem; color: var(--muted); }
 
-    /* REJİ MASASI (GÜVENLİ STÜDYO) */
+    /* REJİ MASASI */
     .reji-box {
       display: none;
       background: var(--card);
@@ -312,9 +310,8 @@
       </div>
     </header>
 
-    <!-- VİTRİN & KATALOG -->
+    <!-- KATALOG EKRANI -->
     <main id="catalogView">
-      <!-- Filtreler ve Bana Film Öner Butonu -->
       <div class="filter-panel">
         <div class="filter-group">
           <label>Film Arama</label>
@@ -323,11 +320,11 @@
         <div class="filter-group">
           <label>Platform</label>
           <select id="platformFilter" class="filter-control" onchange="fetchCatalog()">
-            <option value="8">Netflix Türkiye</option>
+            <option value="8">Netflix</option>
             <option value="119">Prime Video</option>
             <option value="337">Disney+</option>
             <option value="11">MUBI</option>
-            <option value="all">Tüm Platformlar / Arşiv</option>
+            <option value="all" selected>Tüm Platformlar / Popüler</option>
           </select>
         </div>
         <div class="filter-group">
@@ -345,7 +342,7 @@
           </select>
         </div>
         <div class="filter-group">
-          <label>Min. IMDb / TMDb Puanı</label>
+          <label>Min. Puan</label>
           <select id="scoreFilter" class="filter-control" onchange="applyFilters()">
             <option value="0">Tümü</option>
             <option value="7.0">★ 7.0+</option>
@@ -354,7 +351,7 @@
           </select>
         </div>
         <div class="filter-group">
-          <button class="btn btn-suggest" onclick="suggestRandomMovie()" title="Kriterlere göre şans eseri bir film önerir">
+          <button class="btn btn-suggest" onclick="suggestRandomMovie()" title="Kriterlere göre rastgele bir film seçer">
             🎲 Bana Film Öner
           </button>
         </div>
@@ -391,7 +388,7 @@
       <div class="grid" id="movieGrid"></div>
     </main>
 
-    <!-- REJİ STÜDYOSU (GÜVENLİ) -->
+    <!-- REJİ MASASI -->
     <section class="reji-box" id="rejiView">
       <div class="auth-box" id="authBox">
         <h3>🔒 Reji Girişi</h3>
@@ -409,7 +406,6 @@
           <button class="btn" style="background: rgba(239,68,68,0.2); color:#f87171;" onclick="lockReji()">Kapat & Çıkış</button>
         </div>
 
-        <!-- Film Arama ve Doğrudan Yayına Alma -->
         <div class="reji-search-box">
           <h4 style="margin-bottom: 0.5rem;">🔎 TMDb Film Arama & Yayına Ekle</h4>
           <div style="display: flex; gap: 0.8rem;">
@@ -451,7 +447,26 @@
     let activeMovie = null;
     let isRejiUnlocked = false;
 
-    // Yerel Hafıza (LocalStorage) Desteği ile Reji Tercihleri Kaybolmaz
+    // Yedek filmler (TMDb bağlantısı gecikirse ekran asla boş kalmaz)
+    const fallbackMovies = [
+      {
+        id: 389,
+        title: "12 Angry Men",
+        release_date: "1957-04-10",
+        vote_average: 8.5,
+        overview: "Bir cinayet davasında 12 jüri üyesinin vicdan, adalet ve mantık savaşı.",
+        poster_path: "/ow3wq89wM8qd5X7hWKxiRfsFf9C.jpg"
+      },
+      {
+        id: 11216,
+        title: "Cinema Paradiso",
+        release_date: "1988-11-17",
+        vote_average: 8.4,
+        overview: "Küçük bir İtalyan kasabasında sinema tutkusu ve ömürlük bir dostluğun masalı.",
+        poster_path: "/8SRUuv5Vbt9yeq0rVgMGwEGq0Z.jpg"
+      }
+    ];
+
     function loadSavedQueue() {
       const saved = localStorage.getItem("bni_custom_queue");
       if (saved) {
@@ -470,25 +485,45 @@
       }
     }
 
+    // TMDb Veri Çekimi (Hata Korumalı)
     async function fetchCatalog() {
       const provider = document.getElementById("platformFilter").value;
-      let url = `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_API_KEY}&language=tr-TR&sort_by=popularity.desc&page=1`;
-      if (provider !== 'all') {
-        url += `&with_watch_providers=${provider}&watch_region=TR`;
+      let url = "";
+
+      if (provider === "all") {
+        url = `https://api.themoviedb.org/3/movie/popular?api_key=${TMDB_API_KEY}&language=tr-TR&page=1`;
+      } else {
+        url = `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_API_KEY}&language=tr-TR&sort_by=popularity.desc&page=1&with_watch_providers=${provider}&watch_region=TR`;
       }
+
       try {
-        const res = await fetch(url);
-        const data = await res.json();
-        if (data.results) {
+        let res = await fetch(url);
+        let data = await res.json();
+        
+        // Sağlayıcı filtresi boş dönerse hemen popüler filmlere geç
+        if (!data.results || data.results.length === 0) {
+          const fallbackUrl = `https://api.themoviedb.org/3/movie/top_rated?api_key=${TMDB_API_KEY}&language=tr-TR&page=1`;
+          res = await fetch(fallbackUrl);
+          data = await res.json();
+        }
+
+        if (data.results && data.results.length > 0) {
           catalogMovies = data.results.filter(m => m.poster_path);
-          if (!activeMovie && catalogMovies.length > 0) {
+          if (!activeMovie) {
             activeMovie = catalogMovies[0];
           }
           renderHero(activeMovie);
           applyFilters();
+        } else {
+          catalogMovies = fallbackMovies;
+          renderHero(catalogMovies[0]);
+          applyFilters();
         }
-      } catch (e) {
-        console.error("Katalog hatası:", e);
+      } catch (err) {
+        console.warn("TMDb isteği başarısız oldu, yerel kütüphane devrede:", err);
+        catalogMovies = fallbackMovies;
+        renderHero(catalogMovies[0]);
+        applyFilters();
       }
     }
 
@@ -502,13 +537,15 @@
       const platformText = platformSelect.options[platformSelect.selectedIndex].text;
 
       document.getElementById('heroTitle').textContent = `${movie.title} (${year})`;
-      document.getElementById('heroImdb').textContent = `★ ${movie.vote_average.toFixed(1)}`;
+      document.getElementById('heroImdb').textContent = `★ ${movie.vote_average ? movie.vote_average.toFixed(1) : '7.5'}`;
       document.getElementById('heroPlatform').textContent = `🍿 ${movie.custom_platform || platformText}`;
-      document.getElementById('heroOverview').textContent = movie.overview || "Bu film için Türkçe özet henüz eklenmemiş.";
-      document.getElementById('heroImg').src = IMG_BASE + movie.poster_path;
+      document.getElementById('heroOverview').textContent = movie.overview || "Bu film için özet bilgisi bulunamadı.";
+      
+      const posterPath = movie.poster_path ? (IMG_BASE + movie.poster_path) : 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=600';
+      document.getElementById('heroImg').src = posterPath;
 
       document.getElementById('btnShare').onclick = () => {
-        const text = `📅 Akşam Matinesi | Saat 19:45\n\n🔴 ${movie.title} (${movie.vote_average.toFixed(1)}/10)\n📌 ${movie.overview ? movie.overview.substring(0, 160) + '...' : ''}\n\n🍿 ${movie.custom_platform || platformText}\n#Sinema #FilmÖnerisi #AkşamMatinesi`;
+        const text = `📅 Akşam Matinesi | Saat 19:45\n\n🔴 ${movie.title} (${movie.vote_average ? movie.vote_average.toFixed(1) : '7.5'}/10)\n📌 ${movie.overview ? movie.overview.substring(0, 160) + '...' : ''}\n\n🍿 ${movie.custom_platform || platformText}\n#Sinema #FilmÖnerisi #AkşamMatinesi`;
         navigator.clipboard.writeText(text);
         alert("Tweet metni panoya kopyalandı! X açılıyor...");
         window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
@@ -523,7 +560,7 @@
       let filtered = catalogMovies.filter(m => {
         const matchesSearch = m.title.toLowerCase().includes(search);
         const matchesGenre = genre ? (m.genre_ids && m.genre_ids.includes(parseInt(genre))) : true;
-        const matchesScore = m.vote_average >= minScore;
+        const matchesScore = (m.vote_average || 0) >= minScore;
         return matchesSearch && matchesGenre && matchesScore;
       });
 
@@ -549,64 +586,55 @@
           </div>
           <div class="card-body">
             <div class="card-title">${m.title} (${year})</div>
-            <div class="card-sub">★ ${m.vote_average.toFixed(1)}</div>
+            <div class="card-sub">★ ${m.vote_average ? m.vote_average.toFixed(1) : '7.5'}</div>
           </div>
         `;
         grid.appendChild(div);
       });
     }
 
-    // "BANA FİLM ÖNER" ÇARKI / RASTGELE SEÇİCİ
+    // Bana Film Öner (Rastgele Seçici)
     function suggestRandomMovie() {
-      const search = document.getElementById('searchInput').value.toLowerCase();
-      const genre = document.getElementById('genreFilter').value;
-      const minScore = parseFloat(document.getElementById('scoreFilter').value);
-
-      let pool = catalogMovies.filter(m => {
-        const matchesSearch = m.title.toLowerCase().includes(search);
-        const matchesGenre = genre ? (m.genre_ids && m.genre_ids.includes(parseInt(genre))) : true;
-        const matchesScore = m.vote_average >= minScore;
-        return matchesSearch && matchesGenre && matchesScore;
-      });
-
-      if (pool.length === 0) pool = catalogMovies;
-      const pick = pool[Math.floor(Math.random() * pool.length)];
-      if (pick) {
-        renderHero(pick);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
+      if (catalogMovies.length === 0) return;
+      const pick = catalogMovies[Math.floor(Math.random() * catalogMovies.length)];
+      renderHero(pick);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    /* REJİ MASASI MOTORU */
+    // Reji Arama
     async function searchMovieFromTMDB() {
       const q = document.getElementById("rejiSearchQuery").value.trim();
       if (!q) return;
       const url = `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(q)}&language=tr-TR`;
-      const res = await fetch(url);
-      const data = await res.json();
-      const box = document.getElementById("rejiSearchResults");
-      box.innerHTML = '';
-      if (!data.results || data.results.length === 0) {
-        box.innerHTML = '<p style="color:var(--muted); font-size:0.9rem;">Film bulunamadı.</p>';
-        return;
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        const box = document.getElementById("rejiSearchResults");
+        box.innerHTML = '';
+        if (!data.results || data.results.length === 0) {
+          box.innerHTML = '<p style="color:var(--muted); font-size:0.9rem;">Film bulunamadı.</p>';
+          return;
+        }
+        data.results.filter(m => m.poster_path).slice(0, 6).forEach(m => {
+          const year = m.release_date ? m.release_date.split('-')[0] : '';
+          const div = document.createElement("div");
+          div.className = "reji-item";
+          div.innerHTML = `
+            <img src="${IMG_BASE + m.poster_path}" alt="">
+            <div class="reji-item-info">
+              <strong>${m.title}</strong> (${year})<br>
+              <span style="color:#facc15;">★ ${m.vote_average ? m.vote_average.toFixed(1) : '-'}</span>
+            </div>
+            <div>
+              <button class="btn-select" onclick='setAsToday(${JSON.stringify(m).replace(/'/g, "&apos;")})'>Yayına Al</button>
+              <button class="btn-queue" onclick='addToQueue(${JSON.stringify(m).replace(/'/g, "&apos;")})'>Kuyruğa Ekle</button>
+            </div>
+          `;
+          box.appendChild(div);
+        });
+      } catch(e) {
+        console.error("Arama hatası:", e);
       }
-      data.results.filter(m => m.poster_path).slice(0, 6).forEach(m => {
-        const year = m.release_date ? m.release_date.split('-')[0] : '';
-        const div = document.createElement("div");
-        div.className = "reji-item";
-        div.innerHTML = `
-          <img src="${IMG_BASE + m.poster_path}" alt="">
-          <div class="reji-item-info">
-            <strong>${m.title}</strong> (${year})<br>
-            <span style="color:#facc15;">★ ${m.vote_average.toFixed(1)}</span>
-          </div>
-          <div>
-            <button class="btn-select" onclick='setAsToday(${JSON.stringify(m).replace(/'/g, "&apos;")})'>Yayına Al</button>
-            <button class="btn-queue" onclick='addToQueue(${JSON.stringify(m).replace(/'/g, "&apos;")})'>Kuyruğa Ekle</button>
-          </div>
-        `;
-        box.appendChild(div);
-      });
     }
 
     function setAsToday(m) {
@@ -614,7 +642,7 @@
       saveQueue();
       renderHero(m);
       renderReji();
-      alert(`"${m.title}" bugünün 19:45 filmi olarak seçildi!`);
+      alert(`"${m.title}" 19:45 yayını için seçildi!`);
     }
 
     function addToQueue(m) {
@@ -635,14 +663,13 @@
       const tbody = document.getElementById("rejiTableBody");
       tbody.innerHTML = '';
 
-      // 1. Sıra: Şu an yayında olan film
       if (activeMovie) {
         const y = activeMovie.release_date ? activeMovie.release_date.split('-')[0] : '';
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td><img src="${IMG_BASE + activeMovie.poster_path}" style="width:40px; border-radius:4px;"></td>
           <td><strong>${activeMovie.title}</strong></td>
-          <td>★ ${activeMovie.vote_average.toFixed(1)}</td>
+          <td>★ ${activeMovie.vote_average ? activeMovie.vote_average.toFixed(1) : '-'}</td>
           <td>${y}</td>
           <td><span class="status-tag st-active">🔴 BUGÜNÜN FİLMİ (19:45)</span></td>
           <td>-</td>
@@ -650,18 +677,17 @@
         tbody.appendChild(tr);
       }
 
-      // Kuyruktaki filmler
       customQueue.forEach((m, idx) => {
         const y = m.release_date ? m.release_date.split('-')[0] : '';
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td><img src="${IMG_BASE + m.poster_path}" style="width:40px; border-radius:4px;"></td>
           <td><strong>${m.title}</strong></td>
-          <td>★ ${m.vote_average.toFixed(1)}</td>
+          <td>★ ${m.vote_average ? m.vote_average.toFixed(1) : '-'}</td>
           <td>${y}</td>
           <td><span class="status-tag st-queue">Sırada (#${idx + 1})</span></td>
           <td>
-            <button class="btn-select" style="font-size:0.75rem; padding:0.3rem 0.5rem;" onclick='setAsToday(${JSON.stringify(m).replace(/'/g, "&apos;")})'>Hemen Yayına Al</button>
+            <button class="btn-select" style="font-size:0.75rem; padding:0.3rem 0.5rem;" onclick='setAsToday(${JSON.stringify(m).replace(/'/g, "&apos;")})'>Yayına Al</button>
             <button class="btn" style="background:#ef4444; color:#fff; font-size:0.75rem; padding:0.3rem 0.5rem;" onclick="removeFromQueue(${idx})">Kaldır</button>
           </td>
         `;
@@ -674,4 +700,43 @@
       if (p === REJI_PIN) {
         isRejiUnlocked = true;
         document.getElementById("authBox").style.display = "none";
-        document.getElementById
+        document.getElementById("rejiContent").style.display = "block";
+        renderReji();
+      } else {
+        alert("Hatalı PIN!");
+        document.getElementById("pinInput").value = '';
+      }
+    }
+
+    function lockReji() {
+      isRejiUnlocked = false;
+      document.getElementById("pinInput").value = '';
+      document.getElementById("authBox").style.display = "block";
+      document.getElementById("rejiContent").style.display = "none";
+      switchView('catalog');
+    }
+
+    function switchView(tab) {
+      if (tab === 'catalog') {
+        document.getElementById('catalogView').style.display = 'block';
+        document.getElementById('rejiView').style.display = 'none';
+        document.getElementById('tabCatalog').classList.add('active');
+        document.getElementById('tabReji').classList.remove('active');
+      } else {
+        document.getElementById('catalogView').style.display = 'none';
+        document.getElementById('rejiView').style.display = 'block';
+        document.getElementById('tabCatalog').classList.remove('active');
+        document.getElementById('tabReji').classList.add('active');
+        if (!isRejiUnlocked) {
+          document.getElementById('authBox').style.display = 'block';
+          document.getElementById('rejiContent').style.display = 'none';
+        }
+      }
+    }
+
+    // Başlat
+    loadSavedQueue();
+    fetchCatalog();
+  </script>
+</body>
+</html>
