@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <title>Bugün Ne İzleyeyim? - Gelişmiş Reji Masası</title>
+  <title>Bugün Ne İzleyeyim? - Tam Teşekküllü Reji Masası</title>
   <!-- Tailwind CSS & FontAwesome -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -17,244 +17,303 @@
 </head>
 <body class="min-h-screen flex flex-col font-sans selection:bg-red-600 selection:text-white">
 
-  <!-- Üst Bar -->
+  <!-- ÜST BAR -->
   <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur px-6 py-4 flex items-center justify-between sticky top-0 z-50">
     <div class="flex items-center space-x-3">
       <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-red-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-red-500/10">
-        <i class="fa-solid fa-clapperboard text-lg text-white animate-pulse"></i>
+        <i class="fa-solid fa-clapperboard text-lg text-white"></i>
       </div>
       <div>
         <h1 class="font-extrabold text-lg tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-indigo-400">BUGÜN NE İZLEYEYİM?</h1>
-        <p class="text-[10px] text-slate-400 font-semibold tracking-widest uppercase">Akıllı Editör &amp; Sabit Gönderi Rejisi</p>
+        <p class="text-[10px] text-slate-400 font-semibold tracking-widest uppercase">Yayın &amp; Editör Reji Masası</p>
       </div>
     </div>
     <div class="flex items-center space-x-4">
-      <a href="index.html" class="px-4 py-2 bg-slate-800/80 hover:bg-slate-800 rounded-lg text-sm font-semibold transition flex items-center space-x-2 border border-slate-700">
+      <a href="index.html" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-sm font-semibold transition flex items-center space-x-2 border border-slate-700">
         <i class="fa-solid fa-eye text-red-400"></i>
         <span>Vitrini Gör</span>
       </a>
     </div>
   </header>
 
-  <main class="flex-1 grid grid-cols-12 gap-6 p-6 max-w-7xl mx-auto w-full">
+  <main class="flex-1 max-w-7xl mx-auto w-full p-6 space-y-8">
     
-    <!-- SOL PANEL: Gelişmiş Nokta Atışı Arama & Kuşaklar -->
-    <section class="col-span-12 lg:col-span-5 flex flex-col space-y-5">
+    <div class="grid grid-cols-12 gap-6">
       
-      <!-- NOKTA ATIŞI FİLTRELEME ALANI -->
-      <div class="bg-slate-900/90 rounded-2xl p-5 border border-slate-800/80 shadow-xl space-y-4">
-        <div class="flex items-center justify-between">
-          <h2 class="text-sm font-bold tracking-wider text-indigo-400 uppercase flex items-center space-x-2">
-            <i class="fa-solid fa-crosshairs"></i>
-            <span>Nokta Atışı Film Arama</span>
-          </h2>
-          <button onclick="sifirlaVeSerbestArama()" class="text-xs text-slate-400 hover:text-red-400 transition flex items-center space-x-1">
-            <i class="fa-solid fa-rotate"></i>
-            <span>Sıfırla</span>
+      <!-- SOL PANEL: GELİŞMİŞ NOKTA ATIŞI FİLTRELER & KUŞAKLAR (5/12) -->
+      <section class="col-span-12 lg:col-span-5 flex flex-col space-y-5">
+        
+        <!-- FİLTRELEME ALANI -->
+        <div class="bg-slate-900/90 rounded-2xl p-5 border border-slate-800 shadow-xl space-y-4">
+          <div class="flex items-center justify-between">
+            <h2 class="text-sm font-bold tracking-wider text-indigo-400 uppercase flex items-center space-x-2">
+              <i class="fa-solid fa-sliders"></i>
+              <span>Gelişmiş Arama &amp; Filtreler</span>
+            </h2>
+            <button onclick="tumFiltreleriSifirla()" class="text-xs text-slate-400 hover:text-red-400 transition flex items-center space-x-1">
+              <i class="fa-solid fa-rotate"></i>
+              <span>Temizle</span>
+            </button>
+          </div>
+
+          <!-- Anahtar Kelime / Başlık -->
+          <div class="relative">
+            <input type="text" id="search-keyword" placeholder="Film adı veya anahtar kelime..." 
+                   class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 pl-10 text-xs focus:border-indigo-500 focus:outline-none text-slate-200">
+            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-500 text-xs"></i>
+          </div>
+
+          <!-- Yıl & Sıralama -->
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[10px] uppercase tracking-wider text-slate-400 font-bold mb-1">Vizyon Yılı</label>
+              <input type="number" id="search-year" placeholder="Örn: 2023" min="1920" max="2027"
+                     class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-2 text-xs focus:border-indigo-500 focus:outline-none text-slate-200">
+            </div>
+            <div>
+              <label class="block text-[10px] uppercase tracking-wider text-slate-400 font-bold mb-1">Sıralama</label>
+              <select id="search-sort" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2 py-2 text-xs focus:border-indigo-500 focus:outline-none text-slate-200">
+                <option value="popularity.desc">Popülerlik (Çoktan Aza)</option>
+                <option value="vote_average.desc">Puan (Yüksekten Düşüğe)</option>
+                <option value="primary_release_date.desc">En Yeni Vizyon</option>
+                <option value="primary_release_date.asc">Klasikler / Eski</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Tür & Min Puan -->
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[10px] uppercase tracking-wider text-slate-400 font-bold mb-1">Tür</label>
+              <select id="search-genre" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2 py-2 text-xs focus:border-indigo-500 focus:outline-none text-slate-200">
+                <option value="">Tüm Türler</option>
+                <option value="28">Aksiyon</option>
+                <option value="12">Macera</option>
+                <option value="35">Komedi</option>
+                <option value="80">Suç</option>
+                <option value="99">Belgesel</option>
+                <option value="18">Drama</option>
+                <option value="14">Fantastik</option>
+                <option value="27">Korku</option>
+                <option value="9648">Gizem</option>
+                <option value="878">Bilim Kurgu</option>
+                <option value="53">Gerilim</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[10px] uppercase tracking-wider text-slate-400 font-bold mb-1">Min. Puan (TMDB)</label>
+              <select id="search-min-vote" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2 py-2 text-xs focus:border-indigo-500 focus:outline-none text-slate-200">
+                <option value="">Filtresiz</option>
+                <option value="8.0">★ 8.0 ve Üzeri</option>
+                <option value="7.5">★ 7.5 ve Üzeri</option>
+                <option value="7.0">★ 7.0 ve Üzeri</option>
+                <option value="6.5">★ 6.5 ve Üzeri</option>
+              </select>
+            </div>
+          </div>
+
+          <button onclick="yeniAramaBaslat()" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl transition flex items-center justify-center space-x-2">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>Sonuçları Listele</span>
           </button>
         </div>
 
-        <!-- Film Adı / Kelime -->
-        <div class="relative">
-          <input type="text" id="search-keyword" placeholder="Film adı veya anahtar kelime..." 
-                 class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 pl-11 text-sm focus:border-indigo-500 focus:outline-none transition text-slate-200">
-          <div class="absolute left-4 top-3.5 text-slate-500 text-sm">
-            <i class="fa-solid fa-magnifying-glass"></i>
+        <!-- KUŞAKLAR VE SABİT GÖNDERİ SEÇİMİ -->
+        <div class="bg-slate-900/90 rounded-2xl p-5 border border-slate-800 shadow-xl space-y-3">
+          <h2 class="text-sm font-bold tracking-wider text-red-400 uppercase flex items-center space-x-2">
+            <i class="fa-solid fa-layer-group"></i>
+            <span>Yayın Kuşakları &amp; Sabit Gönderi</span>
+          </h2>
+
+          <div class="grid grid-cols-2 gap-2" id="kusak-grid">
+            <button onclick="sabitGonderiYukle()" id="btn-Sabit" class="col-span-2 p-2.5 bg-red-950/30 border border-red-500/40 hover:border-red-400 rounded-xl text-left transition flex items-center justify-between">
+              <div>
+                <span class="text-[10px] font-bold text-red-400 block"><i class="fa-solid fa-thumbtack mr-1"></i> SABİT GÖNDERİ (PINNED)</span>
+                <span class="text-xs font-semibold text-white">Karşılama &amp; Yayın Akışı Tanıtımı</span>
+              </div>
+              <i class="fa-solid fa-chevron-right text-slate-500 text-xs"></i>
+            </button>
+
+            <button onclick="kusakSec('Pazartesi')" id="btn-Pazartesi" class="p-2.5 bg-slate-950 hover:bg-slate-800 rounded-xl text-left border border-slate-800 transition">
+              <span class="text-[9px] font-bold text-slate-500 block">PAZARTESİ</span>
+              <span class="text-xs font-bold text-slate-300">Zihin Bükücü</span>
+            </button>
+            <button onclick="kusakSec('Salı')" id="btn-Salı" class="p-2.5 bg-slate-950 hover:bg-slate-800 rounded-xl text-left border border-slate-800 transition">
+              <span class="text-[9px] font-bold text-slate-500 block">SALI</span>
+              <span class="text-xs font-bold text-slate-300">Kült Klasik</span>
+            </button>
+            <button onclick="kusakSec('Çarşamba')" id="btn-Çarşamba" class="p-2.5 bg-slate-950 hover:bg-slate-800 rounded-xl text-left border border-slate-800 transition">
+              <span class="text-[9px] font-bold text-slate-500 block">ÇARŞAMBA</span>
+              <span class="text-xs font-bold text-slate-300">Belgesel</span>
+            </button>
+            <button onclick="kusakSec('Perşembe')" id="btn-Perşembe" class="p-2.5 bg-slate-950 hover:bg-slate-800 rounded-xl text-left border border-slate-800 transition">
+              <span class="text-[9px] font-bold text-slate-500 block">PERŞEMBE</span>
+              <span class="text-xs font-bold text-slate-300">Dünya Sineması</span>
+            </button>
+            <button onclick="kusakSec('Cuma')" id="btn-Cuma" class="p-2.5 bg-slate-950 hover:bg-slate-800 rounded-xl text-left border border-slate-800 transition">
+              <span class="text-[9px] font-bold text-slate-500 block">CUMA</span>
+              <span class="text-xs font-bold text-slate-300">Cuma Gerilimi</span>
+            </button>
+            <button onclick="kusakSec('Cumartesi')" id="btn-Cumartesi" class="p-2.5 bg-slate-950 hover:bg-slate-800 rounded-xl text-left border border-slate-800 transition">
+              <span class="text-[9px] font-bold text-slate-500 block">CUMARTESİ</span>
+              <span class="text-xs font-bold text-slate-300">Mısır Gecesi 🍿</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SAĞ PANEL: LİSTE VE EDİTÖR FORMU (7/12) -->
+      <section class="col-span-12 lg:col-span-7 flex flex-col space-y-6">
+        
+        <!-- VERİ LİSTESİ -->
+        <div class="bg-slate-900/90 rounded-2xl p-5 border border-slate-800 shadow-xl flex flex-col min-h-[350px]">
+          <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-3">
+            <div>
+              <h2 class="text-sm font-bold text-slate-200" id="results-title">Katalog Yapımları</h2>
+              <p class="text-[10px] text-slate-500" id="results-count">Yükleniyor...</p>
+            </div>
+            <span class="text-[10px] text-slate-400 italic">Rejiye seçmek için filme tıklayın ↓</span>
+          </div>
+
+          <div id="movies-list-grid" class="grid grid-cols-2 gap-3 flex-1 overflow-y-auto custom-scrollbar max-h-[320px] pr-1"></div>
+
+          <!-- DAHA FAZLA GÖSTER BUTONU -->
+          <div class="pt-3 border-t border-slate-800 mt-3 flex justify-center">
+            <button id="btn-load-more" onclick="dahaFazlaGoster()" class="px-6 py-2 bg-slate-950 hover:bg-slate-800 text-slate-300 font-bold text-xs rounded-xl border border-slate-800 transition flex items-center space-x-2">
+              <span>Daha Fazla Yapım Göster</span>
+              <i class="fa-solid fa-chevron-down text-xs"></i>
+            </button>
+            <div id="loading-spinner" class="hidden text-xs text-indigo-400 animate-pulse font-semibold">Veriler getiriliyor...</div>
           </div>
         </div>
 
-        <!-- Kesin Yıl & Min Puan -->
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-[10px] uppercase tracking-wider text-slate-400 font-bold mb-1">Kesin Vizyon Yılı</label>
-            <input type="number" id="search-year" placeholder="Örn: 2023" min="1920" max="2027"
-                   class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs focus:border-indigo-500 focus:outline-none text-slate-200">
+        <!-- REJİ & YAYIN DÜZENLEME FORMU -->
+        <div id="editor-card" class="bg-slate-900/90 rounded-2xl p-5 border border-slate-800 shadow-xl space-y-4 hidden">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+            <h3 class="text-sm font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-indigo-400 uppercase tracking-wider flex items-center space-x-2">
+              <i class="fa-solid fa-sliders"></i>
+              <span id="editor-heading">YAYIN VE EDİTÖR FORMU</span>
+            </h3>
+            <span id="plan-concept-badge" class="text-[10px] font-bold text-slate-400 bg-slate-950 px-2.5 py-1 rounded-full border border-slate-800">KONSEPT</span>
           </div>
-          <div>
-            <label class="block text-[10px] uppercase tracking-wider text-slate-400 font-bold mb-1">Min. Puan (TMDB)</label>
-            <select id="search-min-vote" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2 py-2 text-xs focus:border-indigo-500 focus:outline-none text-slate-200">
-              <option value="">Fark Etmez</option>
-              <option value="8.0">★ 8.0 ve Üzeri</option>
-              <option value="7.5">★ 7.5 ve Üzeri</option>
-              <option value="7.0">★ 7.0 ve Üzeri</option>
-              <option value="6.5">★ 6.5 ve Üzeri</option>
-            </select>
+
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
+            <!-- Sol: Afiş & Platform -->
+            <div class="md:col-span-4 flex flex-col items-center">
+              <div class="w-full aspect-[2/3] rounded-xl overflow-hidden bg-slate-950 border border-slate-800 relative">
+                <img id="plan-poster" src="" alt="Afiş" class="w-full h-full object-cover">
+                <span id="plan-rating-badge" class="absolute top-2 right-2 px-2 py-0.5 bg-amber-500 rounded text-[10px] font-extrabold text-slate-950">★ 8.0</span>
+              </div>
+              
+              <!-- PLATFORM SEÇİMİ (GERİ GELDİ) -->
+              <div class="w-full mt-3">
+                <label class="block text-[9px] uppercase tracking-wider text-slate-400 font-bold mb-1">Yayın Platformu</label>
+                <select id="edit-platform-select" onchange="platformDegisti()" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-indigo-300 font-bold focus:outline-none focus:border-indigo-500">
+                  <option value="Netflix">Netflix</option>
+                  <option value="Prime Video">Prime Video</option>
+                  <option value="MUBI">MUBI</option>
+                  <option value="BluTV">BluTV</option>
+                  <option value="Disney+">Disney+</option>
+                  <option value="beIN CONNECT">beIN CONNECT</option>
+                  <option value="Sinema">Sinema / Vizyon</option>
+                </select>
+              </div>
+
+              <!-- Afiş Kopyalama -->
+              <button onclick="afisiPanoyaKopyala()" id="btn-copy-img" class="w-full mt-2 py-2 bg-indigo-950/60 hover:bg-indigo-900 border border-indigo-700/60 text-indigo-300 rounded-lg text-xs font-bold transition flex items-center justify-center space-x-1.5">
+                <i class="fa-solid fa-copy"></i>
+                <span>Afişi Kopyala (Ctrl+V)</span>
+              </button>
+            </div>
+
+            <!-- Sağ: Tarih, Saat, Post Sekmeleri -->
+            <div class="md:col-span-8 space-y-3">
+              <div>
+                <h4 id="plan-title" class="font-bold text-white text-base">Film Başlığı</h4>
+                <p id="plan-details" class="text-xs text-slate-400">2024 • Türler</p>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-[9px] uppercase tracking-widest text-slate-400 font-bold mb-1">Yayın Tarihi</label>
+                  <input type="date" id="schedule-date" onchange="metniYenidenDerle()" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-200">
+                </div>
+                <div>
+                  <label class="block text-[9px] uppercase tracking-widest text-slate-400 font-bold mb-1">Yayın Saati</label>
+                  <input type="time" id="schedule-time" value="21:45" onchange="metniYenidenDerle()" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-200">
+                </div>
+              </div>
+
+              <!-- Post Sekmeleri (Flood Desteği) -->
+              <div class="flex items-center space-x-4 border-b border-slate-800 pb-1 text-xs">
+                <button onclick="sekmeDegistir(1)" id="tab-post-1" class="tab-active py-1 flex items-center space-x-1.5">
+                  <span>1. Post (Ana Tweet)</span>
+                  <span id="badge-count-1" class="text-[10px] bg-slate-800 px-1.5 py-0.2 rounded text-slate-400">0/280</span>
+                </button>
+                <button onclick="sekmeDegistir(2)" id="tab-post-2" class="text-slate-500 hover:text-slate-300 py-1 hidden flex items-center space-x-1.5">
+                  <span>2. Post (Devamı/Yanıt)</span>
+                  <span id="badge-count-2" class="text-[10px] bg-slate-800 px-1.5 py-0.2 rounded text-slate-400">0/280</span>
+                </button>
+              </div>
+
+              <div>
+                <textarea id="tweet-active-text" rows="5" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs leading-relaxed focus:border-red-500 focus:outline-none text-slate-200 resize-none"></textarea>
+                <div class="flex items-center justify-between text-[10px] text-slate-500 mt-1">
+                  <span id="split-info-text">Tek post olarak sığıyor.</span>
+                  <button onclick="otomatikIkiyeBol()" class="text-indigo-400 hover:underline">Metni 2 Posta Böl</button>
+                </div>
+              </div>
+
+              <div class="pt-2 flex items-center space-x-3">
+                <button onclick="xGonderiminiBaslat()" class="flex-1 py-2.5 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 text-white font-extrabold text-xs rounded-xl shadow-lg transition flex items-center justify-center space-x-2">
+                  <i class="fa-brands fa-x-twitter text-sm"></i>
+                  <span id="btn-x-action-label">X'te Aç &amp; Paylaş</span>
+                </button>
+                <button onclick="yayiniKuyrugaKaydet()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl transition flex items-center space-x-1.5">
+                  <i class="fa-solid fa-calendar-plus"></i>
+                  <span>Yayın Listesine Ekle</span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Tür & Sıralama -->
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-[10px] uppercase tracking-wider text-slate-400 font-bold mb-1">Film Türü</label>
-            <select id="search-genre" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2 py-2 text-xs focus:border-indigo-500 focus:outline-none text-slate-200">
-              <option value="">Tüm Türler</option>
-              <option value="28">Aksiyon</option>
-              <option value="12">Macera</option>
-              <option value="35">Komedi</option>
-              <option value="80">Suç</option>
-              <option value="99">Belgesel</option>
-              <option value="18">Drama</option>
-              <option value="14">Fantastik</option>
-              <option value="27">Korku</option>
-              <option value="9648">Gizem</option>
-              <option value="878">Bilim Kurgu</option>
-              <option value="53">Gerilim</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-[10px] uppercase tracking-wider text-slate-400 font-bold mb-1">Sıralama</label>
-            <select id="search-sort" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2 py-2 text-xs focus:border-indigo-500 focus:outline-none text-slate-200">
-              <option value="popularity.desc">Popülerlik (Çoktan Aza)</option>
-              <option value="vote_average.desc">Puan (Yüksekten Düşüğe)</option>
-              <option value="primary_release_date.desc">En Yeni Vizyon</option>
-            </select>
-          </div>
-        </div>
+      </section>
+    </div>
 
-        <button onclick="aramaYap(true)" class="w-full py-2.5 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white text-xs font-extrabold rounded-xl transition shadow-md shadow-indigo-950/30">
-          <i class="fa-solid fa-bullseye mr-1.5"></i> Nokta Atışı Listele
+    <!-- PLANLANAN YAYINLAR TABLOSU (GERİ GELDİ) -->
+    <section class="bg-slate-900/90 rounded-2xl p-6 border border-slate-800 shadow-xl space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div>
+          <h2 class="text-base font-bold text-white flex items-center space-x-2">
+            <i class="fa-solid fa-list-check text-emerald-400"></i>
+            <span>Yayına Alınanlar &amp; Planlanan Takvim</span>
+          </h2>
+          <p class="text-xs text-slate-400 mt-0.5">Vitrinde yayınlanmak ve tweetlenmek üzere sıraya konmuş filmler</p>
+        </div>
+        <button onclick="kuyruguTemizle()" class="px-3 py-1.5 bg-red-950/40 hover:bg-red-900/60 border border-red-800 text-red-300 rounded-lg text-xs font-semibold transition">
+          Listeyi Temizle
         </button>
       </div>
 
-      <!-- YAYIN KUŞAKLARI & SABİT GÖNDERİ MODU -->
-      <div class="bg-slate-900/90 rounded-2xl p-5 border border-slate-800/80 shadow-xl space-y-3">
-        <h2 class="text-sm font-bold tracking-wider text-red-400 uppercase flex items-center space-x-2">
-          <i class="fa-solid fa-thumbtack"></i>
-          <span>Kuşaklar &amp; Sabit Gönderi</span>
-        </h2>
-
-        <div class="grid grid-cols-2 gap-2" id="kusak-grid">
-          <button onclick="sabitGonderiModunuSec()" id="btn-Sabit" class="col-span-2 p-3 bg-gradient-to-r from-red-950/60 to-indigo-950/60 border border-red-500/50 hover:border-red-400 rounded-xl text-left transition flex items-center justify-between group">
-            <div>
-              <span class="text-[10px] font-extrabold text-red-400 flex items-center space-x-1">
-                <i class="fa-solid fa-thumbtack animate-bounce"></i>
-                <span>ÖZEL SABİT GÖNDERİ (PINNED TWEET)</span>
-              </span>
-              <p class="text-xs font-bold text-white mt-0.5">Karşılama &amp; Haftalık Yayın Rehberi</p>
-            </div>
-            <i class="fa-solid fa-arrow-right text-slate-400 group-hover:text-white transition"></i>
-          </button>
-
-          <button onclick="kusakSec('Pazartesi')" id="btn-Pazartesi" class="p-2.5 bg-slate-950 hover:bg-slate-800 rounded-xl text-left border border-slate-800 transition">
-            <span class="text-[9px] font-bold text-slate-500 block">PAZARTESİ</span>
-            <span class="text-xs font-bold text-slate-300">Zihin Bükücü</span>
-          </button>
-          <button onclick="kusakSec('Salı')" id="btn-Salı" class="p-2.5 bg-slate-950 hover:bg-slate-800 rounded-xl text-left border border-slate-800 transition">
-            <span class="text-[9px] font-bold text-slate-500 block">SALI</span>
-            <span class="text-xs font-bold text-slate-300">Kült Klasik</span>
-          </button>
-          <button onclick="kusakSec('Çarşamba')" id="btn-Çarşamba" class="p-2.5 bg-slate-950 hover:bg-slate-800 rounded-xl text-left border border-slate-800 transition">
-            <span class="text-[9px] font-bold text-slate-500 block">ÇARŞAMBA</span>
-            <span class="text-xs font-bold text-slate-300">Belgesel</span>
-          </button>
-          <button onclick="kusakSec('Perşembe')" id="btn-Perşembe" class="p-2.5 bg-slate-950 hover:bg-slate-800 rounded-xl text-left border border-slate-800 transition">
-            <span class="text-[9px] font-bold text-slate-500 block">PERŞEMBE</span>
-            <span class="text-xs font-bold text-slate-300">Dünya Sineması</span>
-          </button>
-          <button onclick="kusakSec('Cuma')" id="btn-Cuma" class="p-2.5 bg-slate-950 hover:bg-slate-800 rounded-xl text-left border border-slate-800 transition">
-            <span class="text-[9px] font-bold text-slate-500 block">CUMA</span>
-            <span class="text-xs font-bold text-slate-300">Cuma Gerilimi</span>
-          </button>
-          <button onclick="kusakSec('Cumartesi')" id="btn-Cumartesi" class="p-2.5 bg-slate-950 hover:bg-slate-800 rounded-xl text-left border border-slate-800 transition">
-            <span class="text-[9px] font-bold text-slate-500 block">CUMARTESİ</span>
-            <span class="text-xs font-bold text-slate-300">Mısır Gecesi 🍿</span>
-          </button>
-        </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs text-slate-300">
+          <thead class="bg-slate-950 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800">
+            <tr>
+              <th class="py-3 px-4">Afiş &amp; Başlık</th>
+              <th class="py-3 px-4">Platform</th>
+              <th class="py-3 px-4">Puan</th>
+              <th class="py-3 px-4">Planlanan Tarih/Saat</th>
+              <th class="py-3 px-4 text-right">İşlem</th>
+            </tr>
+          </thead>
+          <tbody id="queue-table-body" class="divide-y divide-slate-800/60">
+            <!-- JS ile doldurulacak -->
+          </tbody>
+        </table>
       </div>
     </section>
 
-    <!-- SAĞ PANEL: Vitrin Sonuçları & Akıllı Editör Masası -->
-    <section class="col-span-12 lg:col-span-7 flex flex-col space-y-6">
-      
-      <!-- SONUÇ LİSTESİ -->
-      <div class="bg-slate-900/90 rounded-2xl p-5 border border-slate-800/80 shadow-xl flex flex-col min-h-[380px]">
-        <div class="flex items-center justify-between pb-3 border-b border-slate-800/60 mb-3">
-          <div>
-            <h2 class="text-sm font-bold text-slate-200" id="results-title">Arama Sonuçları</h2>
-            <p class="text-[10px] text-slate-500" id="results-count">Kriterlere göre taranıyor...</p>
-          </div>
-          <span class="text-[10px] text-slate-400 italic">Seçmek için filme tıklayın ↓</span>
-        </div>
-
-        <div id="movies-list-grid" class="grid grid-cols-2 gap-3 flex-1 overflow-y-auto custom-scrollbar max-h-[320px] pr-1"></div>
-
-        <div class="pt-3 border-t border-slate-800/60 mt-3 flex justify-center">
-          <button id="btn-load-more" onclick="dahaFazlaGoster()" class="px-5 py-2 bg-slate-950 hover:bg-slate-800 text-slate-300 font-bold text-xs rounded-xl border border-slate-800 transition flex items-center space-x-2">
-            <span>Daha Fazla Göster</span>
-            <i class="fa-solid fa-chevron-down"></i>
-          </button>
-          <div id="loading-spinner" class="hidden text-xs text-indigo-400 animate-pulse font-semibold">Taranıyor...</div>
-        </div>
-      </div>
-
-      <!-- AKILLI EDİTÖR: OTOMATİK 2 POST BÖLÜCÜ & GÖRSEL KOPYALAYICI -->
-      <div id="editor-card" class="bg-slate-900/90 rounded-2xl p-5 border border-slate-800/80 shadow-xl space-y-4 hidden">
-        <div class="flex items-center justify-between pb-2 border-b border-slate-800/60">
-          <h3 class="text-sm font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-indigo-400 uppercase tracking-wider flex items-center space-x-2">
-            <i class="fa-solid fa-wand-magic-sparkles"></i>
-            <span id="editor-heading">EDİTÖR VE YAYIN KONTROLÜ</span>
-          </h3>
-          <span id="plan-concept-badge" class="text-[10px] font-bold text-slate-400 bg-slate-950 px-2.5 py-1 rounded-full border border-slate-800">KONSEPT</span>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
-          <!-- Sol: Afiş & Görseli Kopyala -->
-          <div class="md:col-span-4 flex flex-col items-center">
-            <div class="w-full aspect-[2/3] rounded-xl overflow-hidden bg-slate-950 border border-slate-800 relative group">
-              <img id="plan-poster" src="" alt="Afiş" class="w-full h-full object-cover">
-              <span id="plan-rating-badge" class="absolute top-2 right-2 px-2 py-0.5 bg-amber-500 rounded text-[10px] font-extrabold text-slate-950">★ 8.0</span>
-            </div>
-            
-            <!-- Görsel Kopyalama Butonu -->
-            <button onclick="afisiPanoyaKopyala()" id="btn-copy-img" class="w-full mt-3 py-2 bg-indigo-950/60 hover:bg-indigo-900/80 border border-indigo-700/60 text-indigo-300 rounded-lg text-xs font-bold transition flex items-center justify-center space-x-2">
-              <i class="fa-solid fa-copy"></i>
-              <span>Afişi Kopyala (Ctrl+V)</span>
-            </button>
-            <p class="text-[9px] text-slate-500 text-center mt-1">X tweet kutusuna tıklayıp yapıştırabilirsiniz.</p>
-          </div>
-
-          <!-- Sağ: Tweet Sekmeleri & 2 Post Bölücü -->
-          <div class="md:col-span-8 space-y-3">
-            <div>
-              <h4 id="plan-title" class="font-bold text-white text-base">Film Başlığı</h4>
-              <p id="plan-details" class="text-xs text-slate-400">Yıl • Türler</p>
-            </div>
-
-            <!-- Post Sekmeleri (Eğer 280 Karakteri aşarsa açılır) -->
-            <div id="post-tabs-container" class="flex items-center space-x-4 border-b border-slate-800 pb-1 text-xs">
-              <button onclick="sekmeDegistir(1)" id="tab-post-1" class="tab-active py-1 flex items-center space-x-1.5">
-                <span>1. Post (Ana Tweet)</span>
-                <span id="badge-count-1" class="text-[10px] bg-slate-800 px-1.5 py-0.2 rounded text-slate-400">0/280</span>
-              </button>
-              <button onclick="sekmeDegistir(2)" id="tab-post-2" class="text-slate-500 hover:text-slate-300 py-1 hidden flex items-center space-x-1.5">
-                <span>2. Post (Devamı/Yanıt)</span>
-                <span id="badge-count-2" class="text-[10px] bg-slate-800 px-1.5 py-0.2 rounded text-slate-400">0/280</span>
-              </button>
-            </div>
-
-            <!-- Metin Alanı -->
-            <div>
-              <textarea id="tweet-active-text" rows="5" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs leading-relaxed focus:border-red-500 focus:outline-none text-slate-200 resize-none font-sans"></textarea>
-              <div class="flex items-center justify-between text-[10px] text-slate-500 mt-1">
-                <span id="split-info-text">Tek post olarak sığıyor.</span>
-                <button onclick="otomatikIkiyeBol()" class="text-indigo-400 hover:underline">Otomatik 2 Posta Böl</button>
-              </div>
-            </div>
-
-            <!-- Hızlı Yayın Aksiyonları -->
-            <div class="pt-2 flex items-center space-x-3">
-              <button onclick="xGonderiminiBaslat()" class="flex-1 py-2.5 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white font-extrabold text-xs rounded-xl shadow-lg transition flex items-center justify-center space-x-2">
-                <i class="fa-brands fa-x-twitter text-sm"></i>
-                <span id="btn-x-action-label">Afişle Birlikte X'te Aç</span>
-              </button>
-              <button onclick="vitrineKaydet()" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs rounded-xl border border-slate-700 transition" title="Vitrindeki JSON/Listeye Ekler">
-                <i class="fa-solid fa-bookmark"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
   </main>
 
   <script>
@@ -280,10 +339,13 @@
     };
 
     window.addEventListener('DOMContentLoaded', () => {
-      sifirlaVeSerbestArama();
+      const bugun = new Date().toISOString().split('T')[0];
+      document.getElementById('schedule-date').value = bugun;
+      yeniAramaBaslat();
+      tabloyuYenile();
     });
 
-    function sifirlaVeSerbestArama() {
+    function tumFiltreleriSifirla() {
       document.getElementById('search-keyword').value = "";
       document.getElementById('search-year').value = "";
       document.getElementById('search-genre').value = "";
@@ -292,8 +354,8 @@
       currentConcept = null;
       currentKusakDay = null;
       document.querySelectorAll('#kusak-grid button').forEach(b => b.classList.remove('active-kusak'));
-      document.getElementById('results-title').textContent = "Popüler ve Öne Çıkan Yapımlar";
-      aramaYap(true);
+      document.getElementById('results-title').textContent = "Katalog Yapımları";
+      yeniAramaBaslat();
     }
 
     function kusakSec(day) {
@@ -302,54 +364,30 @@
       document.querySelectorAll('#kusak-grid button').forEach(b => b.classList.remove('active-kusak'));
       document.getElementById(`btn-${day}`).classList.add('active-kusak');
       document.getElementById('results-title').textContent = `${currentConcept.title} Kuşağı`;
-      aramaYap(true);
+      yeniAramaBaslat();
     }
 
-    // 1. ÖZEL SABİT GÖNDERİ MODU (PINNED POST)
-    function sabitGonderiModunuSec() {
-      document.querySelectorAll('#kusak-grid button').forEach(b => b.classList.remove('active-kusak'));
-      document.getElementById('btn-Sabit').classList.add('active-kusak');
-      currentConcept = { title: "Sabit Gönderi", tag: "#BugünNeİzleyeyim" };
-      currentKusakDay = "Sabit Gönderi";
-
-      selectedItem = {
-        title: "Bugün Ne İzleyeyim? | Akşam Matinesi",
-        overview: "Her gün ne izleyeceğinizi düşünmeye son! Netflix, Prime Video, MUBI, BluTV ve sinema arşivinden seçilmiş ödüllü yapımlar, kült klasikler ve kaçırılmayacak öneriler bu adreste.",
-        poster_path: null,
-        vote_average: 9.8,
-        release_date: "2026-11-08",
-        genres: [{ name: "Film Rehberi" }, { name: "Kürasyon" }]
-      };
-
-      document.getElementById('editor-card').classList.remove('hidden');
-      document.getElementById('editor-heading').textContent = "📌 SABİT GÖNDERİ HAZIRLAYICI";
-      document.getElementById('plan-concept-badge').textContent = "SABİT TWEET";
-      document.getElementById('plan-title').textContent = selectedItem.title;
-      document.getElementById('plan-details').textContent = "Resmi Tanıtım & Haftalık Yayın Akışı";
-      document.getElementById('plan-rating-badge').textContent = "★ 9.8";
-      document.getElementById('plan-poster').src = "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=600";
-
-      const sabitPost1 = `🎬 Ne İzlesem Diye Saatlerce Aramaya Son!\n\nNetflix, Prime Video, MUBI ve BluTV arşivinden özenle seçilmiş film ve dizi önerileri her akşam matinesinde sizlerle.\n\n🍿 Tüm arşivi filtrelemek ve listeyi incelemek için vitrinimizi ziyaret edin:\n🔗 ${SITE_URL}\n\n👇 Haftalık yayın akışımız:`;
-      const sabitPost2 = `📅 Haftalık Yayın Kuşaklarımız:\n\n• Pazartesi: Zihin Bükücü 🌀\n• Salı: Kült Klasikler 🎞️\n• Çarşamba: Belgesel Kuşağı 🌍\n• Perşembe: Dünya Sineması 🎭\n• Cuma: Cuma Gerilimi 🩸\n• Cumartesi: Mısır Gecesi 🍿\n• Pazar: Haftalık Kapanış ✨\n\nBildirimleri açın, akşam ne izleyeceğinizi şansa bırakmayın! #BugünNeİzlesem`;
-
-      postParts = [sabitPost1, sabitPost2];
-      aktifPostuGuncelle();
+    function yeniAramaBaslat() {
+      currentPage = 1;
+      document.getElementById('movies-list-grid').innerHTML = "";
+      apiIstegiGonder(true);
     }
 
-    // 2. TMDB NOKTA ATIŞI FİLTRELEME & ARAMA MOTORU
-    async function aramaYap(resetList = true) {
+    function dahaFazlaGoster() {
+      if (isLoading) return;
+      currentPage++;
+      apiIstegiGonder(false);
+    }
+
+    // TMDB ÇAĞRISI (Arama & Keşif & Sayfalama Birlikte)
+    async function apiIstegiGonder(temizle = false) {
       if (isLoading) return;
       isLoading = true;
 
       const spinner = document.getElementById('loading-spinner');
-      const loadMoreBtn = document.getElementById('btn-load-more');
+      const loadBtn = document.getElementById('btn-load-more');
       spinner.classList.remove('hidden');
-      loadMoreBtn.classList.add('hidden');
-
-      if (resetList) {
-        currentPage = 1;
-        document.getElementById('movies-list-grid').innerHTML = "";
-      }
+      loadBtn.classList.add('hidden');
 
       const kwd = document.getElementById('search-keyword').value.trim();
       const year = document.getElementById('search-year').value.trim();
@@ -357,7 +395,7 @@
       const minVote = document.getElementById('search-min-vote').value;
       const sort = document.getElementById('search-sort').value;
 
-      let url = "";
+      let endpoint = "https://api.themoviedb.org/3/discover/movie";
       const params = new URLSearchParams({
         api_key: API_KEY,
         language: 'tr-TR',
@@ -365,13 +403,12 @@
       });
 
       if (kwd) {
-        url = "https://api.themoviedb.org/3/search/movie";
+        endpoint = "https://api.themoviedb.org/3/search/movie";
         params.append("query", kwd);
         if (year) params.append("primary_release_year", year);
       } else {
-        url = "https://api.themoviedb.org/3/discover/movie";
         params.append("sort_by", sort);
-        params.append("vote_count.gte", "40");
+        params.append("vote_count.gte", "30");
 
         if (year) params.append("primary_release_year", year);
         if (genre) params.append("with_genres", genre);
@@ -387,27 +424,25 @@
       }
 
       try {
-        const res = await fetch(`${url}?${params.toString()}`);
+        const res = await fetch(`${endpoint}?${params.toString()}`);
         const data = await res.json();
         const results = data.results || [];
 
         renderList(results);
-        document.getElementById('results-count').textContent = `Toplam ${data.total_results || 0} sonuç arasından ${results.length} yapım listelendi.`;
+
+        document.getElementById('results-count').textContent = `Toplam ${data.total_results || 0} sonuç arasından ${document.getElementById('movies-list-grid').children.length} yapım listeleniyor.`;
 
         if (data.page < data.total_pages) {
-          loadMoreBtn.classList.remove('hidden');
+          loadBtn.classList.remove('hidden');
+        } else {
+          loadBtn.classList.add('hidden');
         }
-      } catch (e) {
-        console.error("Film getirme hatası:", e);
+      } catch (err) {
+        console.error("API Hatası:", err);
       } finally {
         isLoading = false;
         spinner.classList.add('hidden');
       }
-    }
-
-    function dahaFazlaGoster() {
-      currentPage++;
-      aramaYap(false);
     }
 
     function renderList(movies) {
@@ -420,7 +455,7 @@
 
         const el = document.createElement('div');
         el.className = "bg-slate-950 p-2.5 rounded-xl border border-slate-800 hover:border-red-500/60 cursor-pointer transition flex space-x-3 items-center group";
-        el.onclick = () => filmDetayinaGit(m.id);
+        el.onclick = () => filmDetayGetir(m.id);
         el.innerHTML = `
           <img src="${poster}" class="w-12 h-16 object-cover rounded-lg flex-shrink-0">
           <div class="min-w-0 flex-1">
@@ -433,61 +468,78 @@
       });
     }
 
-    async function filmDetayinaGit(id) {
+    async function filmDetayGetir(id) {
       try {
         const res = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=tr-TR&append_to_response=credits`);
         const data = await res.json();
         selectedItem = data;
-        filmiEditoraYukle(data);
+        formuDoldur(data);
       } catch (e) {
-        console.error(e);
+        console.error("Detay hatası:", e);
       }
     }
 
-    // 3. FİLMİ EDİTÖRE YÜKLEME VE OTOMATİK METİN OLUŞTURMA
-    function filmiEditoraYukle(data) {
+    function formuDoldur(data) {
       document.getElementById('editor-card').classList.remove('hidden');
-      document.getElementById('editor-heading').textContent = "YAYIN & TWEET KONTROLÜ";
+      document.getElementById('editor-heading').textContent = "YAYIN VE EDİTÖR FORMU";
+      document.getElementById('plan-concept-badge').textContent = currentKusakDay ? `${currentKusakDay} Kuşağı` : "Serbest Seçim";
       document.getElementById('plan-title').textContent = data.title;
       document.getElementById('plan-details').textContent = `${data.release_date?.split('-')[0] || '2024'} • ${data.genres?.map(g=>g.name).join(', ') || 'Sinema'}`;
       document.getElementById('plan-rating-badge').textContent = `★ ${data.vote_average?.toFixed(1) || '7.5'}`;
       document.getElementById('plan-poster').src = data.poster_path ? `${IMG_BASE_URL}${data.poster_path}` : 'https://images.unsplash.com/photo-1594909122845-11baa439b7bf?q=80&w=400';
 
-      const actors = data.credits?.cast ? data.credits.cast.slice(0, 2).map(c=>c.name).join(', ') : '';
+      metniYenidenDerle();
+    }
+
+    function platformDegisti() {
+      metniYenidenDerle();
+    }
+
+    // TWEET METNİNİ DERLE VE KARAKTERE GÖRE BÖL
+    function metniYenidenDerle() {
+      if (!selectedItem) return;
+
+      const title = selectedItem.title;
+      const score = selectedItem.vote_average ? selectedItem.vote_average.toFixed(1) : '7.5';
+      const actors = selectedItem.credits?.cast ? selectedItem.credits.cast.slice(0, 2).map(c=>c.name).join(', ') : '';
+      const overview = selectedItem.overview || "Bu akşam ekran başında sinema keyfi yaşayın.";
+      const platform = document.getElementById('edit-platform-select').value;
       const tag = currentConcept?.tag || "#FilmÖnerisi";
-      const title = data.title;
-      const score = data.vote_average ? data.vote_average.toFixed(1) : '7.5';
-      const overview = data.overview || "Bu akşam ekran başında harika bir sinema deneyimi sizi bekliyor.";
 
-      // Tam metni hazırla
-      const fullContent = `🍿 ${currentKusakDay ? currentKusakDay + ' Matinesi' : 'Günün Film Önerisi'}\n\n🔴 ${title} (${score}/10)\n${actors ? '👥 ' + actors + '\n' : ''}📌 ${overview}\n\n🔗 Detaylar & Platform: ${SITE_URL}\n${tag} #BugünNeİzlesem`;
+      const dVal = document.getElementById('schedule-date').value;
+      const tVal = document.getElementById('schedule-time').value;
+      let dateLine = "🍿 Günün Önerisi";
+      if (dVal && tVal) {
+        const d = new Date(`${dVal}T${tVal}`);
+        const dayName = d.toLocaleDateString('tr-TR', { weekday: 'long', day: 'numeric', month: 'long' });
+        dateLine = `📅 ${dayName} | Saat ${tVal}`;
+      }
 
-      // 280 Karakter Kontrolü ve 2 Post Bölücü
+      const fullContent = `${dateLine}\n🍿 ${currentKusakDay ? currentKusakDay + ' Matinesi' : 'Akşam Matinesi'}!\n\n🔴 ${title} (${score}/10)\n${actors ? '👥 ' + actors + '\n' : ''}📌 ${overview}\n\n🎥 ${platform}'da izleyebilirsiniz.\n🔗 Detaylar: ${SITE_URL}\n${tag} #BugünNeİzlesem`;
+
       if (fullContent.length > 280) {
-        // Otomatik 2 posta böl
-        const part1 = `🍿 ${currentKusakDay ? currentKusakDay + ' Matinesi' : 'Günün Film Önerisi'} [1/2]\n\n🔴 ${title} (${score}/10)\n${actors ? '👥 ' + actors + '\n' : ''}📌 ${overview.substring(0, 140)}...\n\n👇 Detaylar & Link altta:`;
-        const part2 = `[2/2] ${title}\n\n📌 ...${overview.substring(140)}\n\n🔗 İncele & Platformları Gör: ${SITE_URL}\n${tag} #BugünNeİzlesem`;
+        const part1 = `${dateLine}\n🍿 ${currentKusakDay ? currentKusakDay + ' Matinesi' : 'Akşam Matinesi'} [1/2]\n\n🔴 ${title} (${score}/10)\n${actors ? '👥 ' + actors + '\n' : ''}📌 ${overview.substring(0, 120)}...\n\n👇 Detaylar & Platform altta:`;
+        const part2 = `[2/2] ${title}\n\n📌 ...${overview.substring(120)}\n\n🎥 ${platform}'da izleyebilirsiniz.\n🔗 İncele: ${SITE_URL}\n${tag} #BugünNeİzlesem`;
         postParts = [part1, part2];
       } else {
         postParts = [fullContent, ""];
       }
 
-      aktifPostuGuncelle();
+      arayuzSekmeleriniGuncelle();
     }
 
-    // 4. OTOMATİK 2 POSTA BÖLÜCÜ VE SEKME YÖNETİMİ
-    function aktifPostuGuncelle() {
+    function arayuzSekmeleriniGuncelle() {
       const tab2 = document.getElementById('tab-post-2');
-      const badgeCount1 = document.getElementById('badge-count-1');
-      const badgeCount2 = document.getElementById('badge-count-2');
+      const badge1 = document.getElementById('badge-count-1');
+      const badge2 = document.getElementById('badge-count-2');
       const splitInfo = document.getElementById('split-info-text');
 
-      badgeCount1.textContent = `${postParts[0].length}/280`;
-      badgeCount2.textContent = `${postParts[1]?.length || 0}/280`;
+      badge1.textContent = `${postParts[0].length}/280`;
+      badge2.textContent = `${postParts[1]?.length || 0}/280`;
 
       if (postParts[1] && postParts[1].trim() !== "") {
         tab2.classList.remove('hidden');
-        splitInfo.textContent = "Metin uzun olduğu için otomatik olarak 2 posta bölündü (Flood).";
+        splitInfo.textContent = "Metin uzun olduğu için otomatik 2 posta bölündü (Flood).";
       } else {
         tab2.classList.add('hidden');
         splitInfo.textContent = "Tek post olarak sığıyor.";
@@ -496,28 +548,28 @@
       sekmeDegistir(1);
     }
 
-    function sekmeDegistir(tabIndex) {
-      activeTab = tabIndex;
-      const txtArea = document.getElementById('tweet-active-text');
-      const tab1 = document.getElementById('tab-post-1');
-      const tab2 = document.getElementById('tab-post-2');
+    function sekmeDegistir(index) {
+      activeTab = index;
+      const txt = document.getElementById('tweet-active-text');
+      const t1 = document.getElementById('tab-post-1');
+      const t2 = document.getElementById('tab-post-2');
       const btnLabel = document.getElementById('btn-x-action-label');
 
-      if (tabIndex === 1) {
-        tab1.className = "tab-active py-1 flex items-center space-x-1.5";
-        tab2.className = "text-slate-500 hover:text-slate-300 py-1 flex items-center space-x-1.5";
-        txtArea.value = postParts[0];
-        btnLabel.textContent = postParts[1] ? "1. Postu Kopyala & X'te Aç" : "Afişle Birlikte X'te Aç";
+      if (index === 1) {
+        t1.className = "tab-active py-1 flex items-center space-x-1.5";
+        t2.className = "text-slate-500 hover:text-slate-300 py-1 flex items-center space-x-1.5";
+        txt.value = postParts[0];
+        btnLabel.textContent = postParts[1] ? "1. Postu Kopyala & X'te Aç" : "X'te Aç & Paylaş";
       } else {
-        tab2.className = "tab-active py-1 flex items-center space-x-1.5";
-        tab1.className = "text-slate-500 hover:text-slate-300 py-1 flex items-center space-x-1.5";
-        txtArea.value = postParts[1];
+        t2.className = "tab-active py-1 flex items-center space-x-1.5";
+        t1.className = "text-slate-500 hover:text-slate-300 py-1 flex items-center space-x-1.5";
+        txt.value = postParts[1];
         btnLabel.textContent = "2. Postu (Yanıtı) X'te Aç";
       }
 
-      txtArea.oninput = () => {
-        postParts[activeTab - 1] = txtArea.value;
-        document.getElementById(`badge-count-${activeTab}`).textContent = `${txtArea.value.length}/280`;
+      txt.oninput = () => {
+        postParts[activeTab - 1] = txt.value;
+        document.getElementById(`badge-count-${activeTab}`).textContent = `${txt.value.length}/280`;
       };
     }
 
@@ -525,14 +577,14 @@
       const current = document.getElementById('tweet-active-text').value;
       const half = Math.floor(current.length / 2);
       const spaceIdx = current.indexOf(' ', half);
-      const splitPoint = spaceIdx !== -1 ? spaceIdx : half;
+      const pt = spaceIdx !== -1 ? spaceIdx : half;
 
-      postParts[0] = current.substring(0, splitPoint).trim() + "\n\n(Devamı altta 👇)";
-      postParts[1] = "👇 " + current.substring(splitPoint).trim();
-      aktifPostuGuncelle();
+      postParts[0] = current.substring(0, pt).trim() + "\n\n(Devamı altta 👇)";
+      postParts[1] = "👇 " + current.substring(pt).trim();
+      arayuzSekmeleriniGuncelle();
     }
 
-    // 5. AFİŞİ ARKA PLANDA GÖRSEL (BLOB) OLARAK PANOYA KOPYALAMA
+    // AFİŞ KOPYALAMA
     async function afisiPanoyaKopyala() {
       const posterUrl = document.getElementById('plan-poster').src;
       const btn = document.getElementById('btn-copy-img');
@@ -544,26 +596,127 @@
         await navigator.clipboard.write([
           new ClipboardItem({ [blob.type]: blob })
         ]);
-        btn.className = "w-full mt-3 py-2 bg-emerald-950/60 border border-emerald-600/80 text-emerald-300 rounded-lg text-xs font-bold transition flex items-center justify-center space-x-2";
-        btn.innerHTML = `<i class="fa-solid fa-check"></i> <span>Afiş Panoda! (Ctrl+V Yapın)</span>`;
+        btn.className = "w-full mt-2 py-2 bg-emerald-950/80 border border-emerald-600 text-emerald-300 rounded-lg text-xs font-bold transition flex items-center justify-center space-x-1.5";
+        btn.innerHTML = `<i class="fa-solid fa-check"></i> <span>Afiş Panoda! (Ctrl+V)</span>`;
       } catch (err) {
-        console.warn("Görsel panoya kopyalanamadı:", err);
-        btn.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> <span>Manuel Kaydet</span>`;
+        btn.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> <span>Afişi Sağ Tıkla Kaydet</span>`;
       }
     }
 
-    // 6. X'E GÖNDERİMİ BAŞLAT
+    // X'TE AÇMA
     async function xGonderiminiBaslat() {
-      // Önce afişi sessizce panoya kopyalamayı dene
       await afisiPanoyaKopyala();
-
-      const textToSend = encodeURIComponent(postParts[activeTab - 1]);
-      const xUrl = `https://twitter.com/intent/tweet?text=${textToSend}`;
-      window.open(xUrl, '_blank', 'width=600,height=500');
+      const txt = encodeURIComponent(postParts[activeTab - 1]);
+      window.open(`https://twitter.com/intent/tweet?text=${txt}`, '_blank', 'width=600,height=500');
     }
 
-    function vitrineKaydet() {
-      alert(`"${selectedItem.title}" vitrin arşivine başarıyla kaydedildi!`);
+    // SABİT GÖNDERİ MODU
+    function sabitGonderiYukle() {
+      document.querySelectorAll('#kusak-grid button').forEach(b => b.classList.remove('active-kusak'));
+      document.getElementById('btn-Sabit').classList.add('active-kusak');
+      currentConcept = { title: "Sabit Gönderi", tag: "#BugünNeİzlesem" };
+      currentKusakDay = "Sabit Gönderi";
+
+      selectedItem = {
+        title: "Bugün Ne İzleyeyim? | Akşam Matinesi",
+        overview: "Her akşam 'ne izlesem' arayışına son! Netflix, Prime, MUBI, BluTV ve sinema arşivinden seçilmiş ödüllü yapımlar, kült klasikler ve kaçırılmayacak öneriler bu adreste.",
+        poster_path: null,
+        vote_average: 9.8,
+        release_date: "2026-11-09",
+        genres: [{ name: "Film Rehberi" }, { name: "Kürasyon" }]
+      };
+
+      document.getElementById('editor-card').classList.remove('hidden');
+      document.getElementById('editor-heading').textContent = "📌 SABİT GÖNDERİ DÜZENLE";
+      document.getElementById('plan-concept-badge').textContent = "SABİT TWEET";
+      document.getElementById('plan-title').textContent = selectedItem.title;
+      document.getElementById('plan-details').textContent = "Resmi Tanıtım & Haftalık Yayın Akışı";
+      document.getElementById('plan-rating-badge').textContent = "★ 9.8";
+      document.getElementById('plan-poster').src = "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=600";
+
+      const sabit1 = `🎬 Ne İzlesem Diye Saatlerce Aramaya Son!\n\nNetflix, Prime Video, MUBI ve BluTV arşivinden özenle seçilmiş film ve dizi önerileri her akşam matinesinde sizlerle.\n\n🍿 Tüm arşivi filtrelemek ve listeyi incelemek için vitrinimizi ziyaret edin:\n🔗 ${SITE_URL}\n\n👇 Haftalık yayın akışımız:`;
+      const sabit2 = `📅 Haftalık Yayın Kuşaklarımız:\n\n• Pazartesi: Zihin Bükücü 🌀\n• Salı: Kült Klasikler 🎞️\n• Çarşamba: Belgesel Kuşağı 🌍\n• Perşembe: Dünya Sineması 🎭\n• Cuma: Cuma Gerilimi 🩸\n• Cumartesi: Mısır Gecesi 🍿\n• Pazar: Haftalık Kapanış ✨\n\nBildirimleri açın, akşam ne izleyeceğinizi şansa bırakmayın! #BugünNeİzlesem`;
+
+      postParts = [sabit1, sabit2];
+      arayuzSekmeleriniGuncelle();
+    }
+
+    // PLANLANAN LİSTE YÖNETİMİ (localStorage)
+    function yayiniKuyrugaKaydet() {
+      if (!selectedItem) return;
+
+      const pDate = document.getElementById('schedule-date').value;
+      const pTime = document.getElementById('schedule-time').value;
+      const platform = document.getElementById('edit-platform-select').value;
+
+      if (!pDate || !pTime) {
+        alert("Lütfen tarih ve saat seçin.");
+        return;
+      }
+
+      const kayit = {
+        id: Date.now(),
+        movieId: selectedItem.id,
+        title: selectedItem.title,
+        poster_path: selectedItem.poster_path,
+        vote_average: selectedItem.vote_average,
+        platformName: platform,
+        scheduledDate: pDate,
+        scheduledTime: pTime
+      };
+
+      let kuyruk = JSON.parse(localStorage.getItem('yayinkuyrugu') || '[]');
+      kuyruk.unshift(kayit);
+      localStorage.setItem('yayinkuyrugu', JSON.stringify(kuyruk));
+
+      tabloyuYenile();
+      alert(`"${selectedItem.title}" planlanan yayın listesine eklendi.`);
+    }
+
+    function tabloyuYenile() {
+      const tbody = document.getElementById('queue-table-body');
+      tbody.innerHTML = "";
+      const kuyruk = JSON.parse(localStorage.getItem('yayinkuyrugu') || '[]');
+
+      if (kuyruk.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-slate-500">Henüz planlanan bir yayın eklenmedi.</td></tr>`;
+        return;
+      }
+
+      kuyruk.forEach(item => {
+        const poster = item.poster_path ? `${IMG_BASE_URL}${item.poster_path}` : 'https://images.unsplash.com/photo-1594909122845-11baa439b7bf?q=80&w=400';
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-950/40 transition";
+        tr.innerHTML = `
+          <td class="py-3 px-4 flex items-center space-x-3">
+            <img src="${poster}" class="w-8 h-12 object-cover rounded">
+            <span class="font-bold text-slate-200">${item.title}</span>
+          </td>
+          <td class="py-3 px-4 font-semibold text-indigo-400">${item.platformName || 'Platform'}</td>
+          <td class="py-3 px-4 text-amber-500 font-bold">★ ${item.vote_average ? Number(item.vote_average).toFixed(1) : '-'}</td>
+          <td class="py-3 px-4 text-slate-400">${item.scheduledDate} ${item.scheduledTime}</td>
+          <td class="py-3 px-4 text-right">
+            <button onclick="kuyruktanSil(${item.id})" class="text-red-400 hover:text-red-300 p-1">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function kuyruktanSil(id) {
+      let kuyruk = JSON.parse(localStorage.getItem('yayinkuyrugu') || '[]');
+      kuyruk = kuyruk.filter(k => k.id !== id);
+      localStorage.setItem('yayinkuyrugu', JSON.stringify(kuyruk));
+      tabloyuYenile();
+    }
+
+    function kuyruguTemizle() {
+      if (confirm("Planlanan tüm yayın listesini temizlemek istediğinize emin misiniz?")) {
+        localStorage.removeItem('yayinkuyrugu');
+        tabloyuYenile();
+      }
     }
   </script>
 </body>
