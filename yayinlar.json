@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-09T16:35:05.245Z",
+  "updatedAt": "2026-11-09T17:18:19.581Z",
   "entries": [
     {
       "uid": "y-1794231784372-ggp0tr",
@@ -65,6 +65,37 @@
       "status": "published",
       "editorPick": "weekly",
       "editorNote": "..."
+    },
+    {
+      "uid": "y-1794243902434-1hyfxd",
+      "id": 1654940,
+      "media_type": "movie",
+      "title": "Bir Yıllık Ömrün Kaldıysa Bir Erkek Satın Al",
+      "release_date": "2026-11-05",
+      "poster_path": "/gR90yGOhhtZfjU2tyBEC4GF5ICU.jpg",
+      "backdrop_path": "/6vGH7JZFLzFawpwCcnNweF8j3KD.jpg",
+      "vote_average": 7.647,
+      "imdbRating": "",
+      "imdbId": "tt39400541",
+      "overview": "Bir yıllık ömrü kalan 40 yaşındaki tutumlu Yıi sonunda para harcamaya başlar ve gece kulübü çalışanı Sena'yı \"satın alır\". Sözleşmeyle başlayan ilişki beklenmedik bir yola girer.",
+      "hook": "Bu akşam biraz gülümsemek iyi gelebilir.",
+      "platform": "Netflix",
+      "providerId": 8,
+      "availableProviders": [
+        {
+          "id": 8,
+          "name": "Netflix"
+        }
+      ],
+      "date": "2026-11-09",
+      "time": "21:00",
+      "hashtag": "#AkşamMatinesi",
+      "post1": "🎬 Bir Yıllık Ömrün Kaldıysa Bir Erkek Satın Al (2026)\n⭐ TMDB 7.6/10 · 📅 2026-11-09 · ⏰ 21:00\n✨ Bu akşam biraz gülümsemek iyi gelebilir.\nBir yıllık ömrü kalan 40 yaşındaki tutu\n🎥 Netflix'da izleyebilirsiniz.\n🔗 https://tinyurl.com/yvsa2ww7\n#AkşamMatinesi",
+      "post2": "📝 Filmin devam eden özeti:\nmlu Yıi sonunda para harcamaya başlar ve gece kulübü çalışanı Sena'yı \"satın alır\". Sözleşmeyle başlayan ilişki beklenmedik bir yola girer.",
+      "pinned": false,
+      "status": "published",
+      "editorPick": "weekly",
+      "editorNote": "Hem duygusal hem biraz absürt, hem de yetişkinlere hitap eden bir tonu var."
     }
   ]
 }
