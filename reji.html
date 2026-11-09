@@ -12,7 +12,7 @@
 header{height:74px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 30px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#0b0b0eec;backdrop-filter:blur(16px);z-index:15}
 .brand{display:flex;align-items:center;gap:12px}.brand-ico{width:40px;height:40px;border-radius:11px;background:#d82b35;display:grid;place-items:center;font-size:19px}.brand strong{display:block;font-size:.98rem;letter-spacing:-.02em}.brand span{font-size:.68rem;letter-spacing:.17em;color:#bab2b7;font-weight:650}.top-right{display:flex;gap:9px;align-items:center}.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;background:#ffffff10;border:1px solid #ffffff14;border-radius:90px;font-size:.72rem;color:#ccc4c9}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#40df90}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 14px;border-radius:9px;border:1px solid transparent;font-weight:800;font-size:.77rem;white-space:nowrap;transition:background .18s,transform .18s}.btn:hover:not(:disabled){transform:translateY(-1px)}.redbtn{background:var(--red);color:white}.redbtn:hover{background:#f03c46}.subbtn{background:#29292f;border-color:#ffffff21;color:#f6f2f5}.outlinebtn{background:transparent;border-color:#ffffff35;color:#eee}.greenbtn{background:#164b35;border-color:#297b54;color:#c5ffe1}.dangerbtn{background:#492026;border-color:#9a3845;color:#ffc5ca}.btn-sm{padding:7px 10px;font-size:.7rem}
-.main{width:min(1500px,calc(100% - 56px));margin:30px auto 90px;display:grid;grid-template-columns:minmax(0,1fr) 415px;gap:22px;align-items:start}.left,.right{min-width:0;display:flex;flex-direction:column;gap:22px}.panel{background:var(--surf);border:1px solid var(--line);border-radius:17px;padding:23px;min-width:0}.panel-top{display:flex;align-items:start;justify-content:space-between;gap:12px;margin-bottom:19px}
+.main{width:min(1900px,calc(100% - 40px));margin:30px auto 90px;display:grid;grid-template-columns:minmax(0,1fr) minmax(420px, 38%);gap:22px;align-items:start}.left,.right{min-width:0;display:flex;flex-direction:column;gap:22px}.panel{background:var(--surf);border:1px solid var(--line);border-radius:17px;padding:23px;min-width:0}.panel-top{display:flex;align-items:start;justify-content:space-between;gap:12px;margin-bottom:19px}
 .kpi-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.kpi{background:linear-gradient(145deg,#222025,#18171b);border:1px solid #ffffff1d;border-radius:14px;padding:15px}.kpi span{display:block;color:#a9a1aa;font-size:.7rem;font-weight:700}.kpi b{display:block;font-size:1.65rem;margin-top:3px;letter-spacing:-.06em}
 .days{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}.daybtn{background:#242328;border:1px solid #ffffff1c;border-radius:11px;padding:12px;text-align:left;color:white;min-height:76px;transition:background .15s}.daybtn:hover,.daybtn.active{background:#431c24;border-color:#ec4b59a3}.daybtn small{display:block;color:#bcadb3;font-size:.68rem;margin-bottom:6px}.daybtn strong{font-size:.75rem;line-height:1.25;display:block}
 .fields{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.field{display:flex;flex-direction:column;gap:6px;min-width:0}.field.wide{grid-column:span 2}.field.full{grid-column:1/-1}.field label{color:#c1bbc1;font-size:.72rem;font-weight:700}.field input,.field select,.field textarea{width:100%;background:#0e0e12;border:1px solid #ffffff2b;border-radius:9px;min-height:42px;padding:10px 11px;color:#fff;font-size:.8rem;outline:none}.field input:focus,.field textarea:focus,.field select:focus{border-color:#e33a46;box-shadow:0 0 0 2px #e33a461b}.field textarea{min-height:91px;resize:vertical;line-height:1.6}.field input::placeholder,.field textarea::placeholder{color:#706d72}.field small{color:#97919a;font-size:.67rem}
@@ -37,6 +37,16 @@ header{height:74px;display:flex;align-items:center;justify-content:space-between
  <section class="panel"><div class="panel-top"><div><h2 class="section-title"><i class="fa-solid fa-calendar-week red"></i> Haftalık Yayın Kuşakları</h2><p class="section-caption">Bir kuşak seçin; tür, dönem ve puan filtreleri otomatik uygulansın.</p></div></div><div class="days" id="dayButtons"></div><div class="actions"><button class="btn subbtn btn-sm" id="resetPreset" type="button"><i class="fa-solid fa-rotate-left"></i> Kuşak seçimini temizle</button><button class="btn outlinebtn btn-sm" id="pinnedBtn" type="button"><i class="fa-solid fa-thumbtack"></i> Sabit Gönderi Şablonu</button></div></section>
  <section class="panel" id="searchPanel"><div class="panel-top"><div><h2 class="section-title"><i class="fa-solid fa-magnifying-glass red"></i> Film Kataloğu & Nokta Atışı Arama</h2><p class="section-caption">Türkiye abonelik kataloglarında gelişmiş filtrelerle ara; istediğin filmi editöre aktar.</p></div></div>
   <form id="searchForm"><div class="fields"><div class="field wide"><label for="searchText">Film adı / anahtar kelime</label><input id="searchText" placeholder="Örn. Parasite veya zamana yolculuk"></div><div class="field"><label for="searchMode">Arama türü</label><select id="searchMode"><option value="title">Film adına göre</option><option value="keyword">TMDB anahtar kelimesi</option></select></div><div class="field"><label for="platformFilter">Türkiye platformu</label><select id="platformFilter"><option value="">5 platformun tamamı</option><option value="8">Netflix</option><option value="119">Prime Video</option><option value="341">BluTV</option><option value="337">Disney+</option><option value="11">MUBI</option></select></div><div class="field"><label for="releaseYear">Net vizyon yılı</label><input id="releaseYear" type="number" min="1890" max="2100" placeholder="Örn. 2020"></div><div class="field"><label for="minRating">Min. TMDB puanı</label><select id="minRating"><option value="0">Filtresiz</option><option value="6.5">6.5+</option><option value="7">7.0+</option><option value="7.5">7.5+</option><option value="8">8.0+</option></select></div><div class="field wide"><label for="sortBy">Sıralama</label><select id="sortBy"><option value="popularity.desc">Popülerlik (yüksekten)</option><option value="vote_average.desc">Puan (yüksekten)</option><option value="primary_release_date.desc">Vizyon tarihi (yeniden)</option></select></div></div><div class="fields" style="margin-top:14px">
+<div class="field"><label for="themeFilter">Tematik seçki</label><select id="themeFilter">
+<option value="">Tüm temalar</option><option value="justice">Adalet ve hukuk</option>
+<option value="detective">Dedektif / Polisiye</option><option value="adaptation">Roman uyarlamaları</option>
+<option value="psychological">Psikolojik gerilim</option><option value="dystopia">Distopya</option>
+<option value="true_story">Gerçek olaylardan</option></select></div>
+<div class="field"><label for="countryFilter">Yapım ülkesi</label><select id="countryFilter">
+<option value="">Tüm ülkeler</option><option value="FR">Fransa</option><option value="IR">İran</option>
+<option value="SE|NO|DK|FI|IS">İskandinav / Nordik</option><option value="SE">İsveç</option>
+<option value="NO">Norveç</option><option value="DK">Danimarka</option><option value="FI">Finlandiya</option>
+<option value="KR">Güney Kore</option><option value="JP">Japonya</option></select></div>
 <div class="field"><label for="genreFilter">Film türü</label><select id="genreFilter">
 <option value="">Tüm türler</option><option value="28">Aksiyon</option><option value="12">Macera</option><option value="16">Animasyon</option><option value="35">Komedi</option><option value="80">Suç</option><option value="99">Belgesel</option><option value="18">Dram</option><option value="10751">Aile</option><option value="14">Fantastik</option><option value="36">Tarih</option><option value="27">Korku</option><option value="9648">Gizem</option><option value="10749">Romantik</option><option value="878">Bilimkurgu</option><option value="53">Gerilim</option></select></div>
 <div class="field"><label for="ageFilter">İzleyici yaşı (TR sertifikası)</label><select id="ageFilter"><option value="">Tüm yaşlar</option><option value="kids">Çocuk / Aile (0–12)</option><option value="13">13+</option><option value="16">16+</option><option value="18">18+</option></select></div><div class="field"><label for="originalLanguage">Orijinal dil</label><select id="originalLanguage"><option value="">Tüm diller</option><option value="!en">İngilizce dışı</option><option value="tr">Türkçe</option><option value="en">İngilizce</option><option value="fr">Fransızca</option><option value="es">İspanyolca</option><option value="ko">Korece</option><option value="ja">Japonca</option><option value="de">Almanca</option><option value="it">İtalyanca</option></select></div>
@@ -83,7 +93,8 @@ const POSTER_ROOT="https://image.tmdb.org/t/p/w500";
 const PROVIDERS=[{id:8,name:"Netflix"},{id:119,name:"Prime Video"},{id:341,name:"BluTV"},{id:337,name:"Disney+"},{id:11,name:"MUBI"}];
 const PRESETS=[
 {day:"Pazartesi",title:"Zihin Bükücü",genres:"9648|878",min:7,tag:"#ZihinBükücü",dayNo:1},
-{day:"Salı",title:"Kült Klasik",genres:"",yearTo:2005,min:7.5,tag:"#KültKlasik",dayNo:2},
+{day:"Salı",title:"Sinema Klasikleri",genres:"",yearTo:2005,min:7.5,tag:"#SinemaKlasikleri",dayNo:2},
+{day:"Salı",title:"Kült Sinema",genres:"",yearTo:2015,min:7,tag:"#KültSinema",dayNo:2},
 {day:"Çarşamba",title:"Belgesel Kuşağı",genres:"99",min:6.8,tag:"#Belgesel",dayNo:3},
 {day:"Perşembe",title:"Dünya Sineması",genres:"18|36",excludeEnglish:true,min:7,tag:"#DünyaSineması",dayNo:4},
 {day:"Cuma",title:"Cuma Gerilimi",genres:"53|27",yearFrom:2015,min:6.5,tag:"#CumaGerilimi",dayNo:5},
@@ -147,7 +158,7 @@ function searchState(){
   return {q,mode,provider:platform||"8|119|341|337|11",exactProvider:platform,year,
     from:Math.max(from,p?.yearFrom||0),to:to&&p?.yearTo?Math.min(to,p.yearTo):to||p?.yearTo||0,
     min:Math.max(Number($("minRating").value),p?.min||0),sort:$("sortBy").value,preset:p,keywordId:null,
-    genre:$("genreFilter").value,age:$("ageFilter").value,originalLanguage:$("originalLanguage").value,
+    theme:$("themeFilter").value,country:$("countryFilter").value,genre:$("genreFilter").value,age:$("ageFilter").value,originalLanguage:$("originalLanguage").value,
     minVotes:numField("minVotes"),runtimeFrom:numField("runtimeFrom"),runtimeTo:numField("runtimeTo")};
 }
 async function getResultPage(state,page){
@@ -165,6 +176,16 @@ async function getResultPage(state,page){
     if(state.from)params["primary_release_date.gte"]=state.from+"-01-01";
     if(state.to)params["primary_release_date.lte"]=state.to+"-12-31";
   }
+  if(state.country)params.with_origin_country=state.country.replaceAll("|","|");
+  const themes={justice:"justice",detective:"detective",adaptation:"based on novel",psychological:"psychological thriller",dystopia:"dystopia",true_story:"based on true story"};
+  if(state.theme){
+    if(!state.themeKeywordId){
+      const keys=await tmdb("/search/keyword",{query:themes[state.theme],page:1});
+      state.themeKeywordId=keys.results?.[0]?.id||-1;
+    }
+    if(state.themeKeywordId===-1)return {results:[],total_pages:0};
+    params.with_keywords=state.themeKeywordId;
+  }
   if(state.preset?.genres)params.with_genres=state.preset.genres;
   else if(state.genre)params.with_genres=state.genre;
   if(state.preset?.excludeGenres)params.without_genres=state.preset.excludeGenres;
@@ -176,7 +197,7 @@ async function getResultPage(state,page){
       if(!found)return {results:[],total_pages:0};
       state.keywordId=found.id;
     }
-    params.with_keywords=state.keywordId;
+    params.with_keywords=state.themeKeywordId?`${state.keywordId},${state.themeKeywordId}`:state.keywordId;
   }
   return tmdb("/discover/movie",params);
 }
