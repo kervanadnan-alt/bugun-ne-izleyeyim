@@ -98,6 +98,28 @@ const read=(k,fall)=>{try{return JSON.parse(localStorage.getItem(k))??fall}catch
 const apiKey=()=>localStorage.getItem("matinee_tmdb")||"";
 let queue=read("yayinkuyrugu",[]);
 if(!Array.isArray(queue))queue=[];
+// Eski kayıtlarda uid olmayabilir veya aynı uid birden fazla kez kullanılmış olabilir.
+// Her satıra kalıcı, benzersiz bir kimlik ver; film bilgilerine ve yayın durumuna dokunma.
+{
+ const used=new Set();
+ let changed=false;
+ queue.forEach((item,index)=>{
+   if(!item||typeof item!=="object")return;
+   const id=String(item.uid??"").trim();
+   if(!id||used.has(id)){
+     let next;
+     do { next="legacy-"+Date.now().toString(36)+"-"+index+"-"+Math.random().toString(36).slice(2,10); }
+     while(used.has(next));
+     item.uid=next;
+     used.add(next);
+     changed=true;
+   } else used.add(id);
+ });
+ if(changed){
+   try{localStorage.setItem("yayinkuyrugu",JSON.stringify(queue));}
+   catch(err){console.warn("Kayıt kimlikleri saklanamadı:",err);}
+ }
+}
 let activePreset=null,currentPage=1,lastParams=null,morePages=false,results=[],selected=null,editingId=null,postTab=1,post1="",post2="",isPinned=false,authSetup=false;
 /* Session password: same-device deterrent, NOT authentication for a public static host. */
 const encoder=new TextEncoder();
