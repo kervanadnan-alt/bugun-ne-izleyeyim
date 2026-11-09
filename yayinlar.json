@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-09T17:18:19.581Z",
+  "updatedAt": "2026-11-09T20:55:03.619Z",
   "entries": [
     {
       "uid": "y-1794231784372-ggp0tr",
@@ -28,6 +28,35 @@
       "hashtag": "#ZihinBükücü",
       "post1": "🎬 Yedi (1995)\n⭐ TMDB 8.4/10 · 📅 2026-11-09 · ⏰ 21:00\n✨ Gerçekle kurgu arasındaki çizgiyi silen bir hikâyeye hazır mısınız?\nSe7en, seri cinayetler işleyen bir katilin peşine düşen iki dedektifin hik\n🎥 Netflix'da izleyebilirsiniz.\n🔗 https://kervanadnan-alt.github.io/bugun-ne-izleyeyim/\n#ZihinBükücü",
       "post2": "📝 Devamı:\nayesini anlatıyor. Bir seri katil 7 ölümcül günahı işleyenleri kendi yöntemleriyle öldürmektedir. Yedi ölümcül günah, hıristiyanlık inançlarına göre kibir, açgözlülük, şehvet düşkünlüğü, kıskançlık, oburluk, yıkıcılık ve tembelliktir.",
+      "pinned": false,
+      "status": "published"
+    },
+    {
+      "uid": "y-1794233567478-jq1jxy",
+      "id": 687163,
+      "media_type": "movie",
+      "title": "Kurtuluş Projesi",
+      "release_date": "2026-03-15",
+      "poster_path": "/suFNqtGOi0BsBI3uJPKkDXCwgVI.jpg",
+      "backdrop_path": "/8Tfys3mDZVp4tNoH2ktm06a0Tau.jpg",
+      "vote_average": 8.629,
+      "imdbRating": "",
+      "imdbId": "tt12042730",
+      "overview": "Fen bilgisi öğretmeni Ryland Grace, evinden ışık yılları uzakta bir uzay gemisinde uyanır, kim olduğuna ya da oraya nasıl geldiğine dair hiçbir şey hatırlamaz. Hafızası yavaş yavaş yerine gelirken görevini de çözmeye başlar: Güneşin sönmesine neden olan gizemli maddenin sırrını çözmek. Dünyadaki her şeyi yok olmaktan kurtarmak için tüm bilimsel bilgisine ve sıra dışı fikirlerine başvurmak zorundadır. Ancak beklenmedik bir dostluk, bu görevi tek başına yapmak zorunda kalmayacağı anlamına gelecektir.",
+      "hook": "Gerçekle kurgu arasındaki çizgiyi silen bir hikâyeye hazır mısınız?",
+      "platform": "Amazon Prime Video",
+      "providerId": "",
+      "availableProviders": [
+        {
+          "id": 119,
+          "name": "Amazon Prime Video"
+        }
+      ],
+      "date": "2026-11-09",
+      "time": "21:00",
+      "hashtag": "#ZihinBükücü",
+      "post1": "🎬 Kurtuluş Projesi (2026)\n⭐ TMDB 8.6/10 · 📅 2026-11-09 · ⏰ 21:00\n✨ Gerçekle kurgu arasındaki çizgiyi silen bir hikâyeye hazır mısınız?\nFen bilgisi öğretmeni Ryland Grace, evinden ışık yı\n🎥 Amazon Prime Video'da izleyebilirsiniz.\n🔗 https://kervanadnan-alt.github.io/bugun-ne-izleyeyim/\n#ZihinBükücü",
+      "post2": "📝 Devamı:\nlları uzakta bir uzay gemisinde uyanır, kim olduğuna ya da oraya nasıl geldiğine dair hiçbir şey hatırlamaz. Hafızası yavaş yavaş yerine gelirken görevini de çözmeye başlar: Güneşin sönmesine neden olan gizemli maddenin sırrını çözmek. Dünyadaki her şeyi yok olmaktan…",
       "pinned": false,
       "status": "published"
     },
@@ -77,7 +106,7 @@
       "vote_average": 7.647,
       "imdbRating": "",
       "imdbId": "tt39400541",
-      "overview": "Bir yıllık ömrü kalan 40 yaşındaki tutumlu Yıi sonunda para harcamaya başlar ve gece kulübü çalışanı Sena'yı \"satın alır\". Sözleşmeyle başlayan ilişki beklenmedik bir yola girer.",
+      "overview": "Bir yıllık ömrü kalan 40 yaşındaki tutumlu Yui sonunda para harcamaya başlar ve gece kulübü çalışanı Sena'yı \"satın alır\". Sözleşmeyle başlayan ilişki beklenmedik bir yola girer.",
       "hook": "Bu akşam biraz gülümsemek iyi gelebilir.",
       "platform": "Netflix",
       "providerId": 8,
@@ -91,11 +120,44 @@
       "time": "21:00",
       "hashtag": "#AkşamMatinesi",
       "post1": "🎬 Bir Yıllık Ömrün Kaldıysa Bir Erkek Satın Al (2026)\n⭐ TMDB 7.6/10 · 📅 2026-11-09 · ⏰ 21:00\n✨ Bu akşam biraz gülümsemek iyi gelebilir.\nBir yıllık ömrü kalan 40 yaşındaki tutu\n🎥 Netflix'da izleyebilirsiniz.\n🔗 https://tinyurl.com/yvsa2ww7\n#AkşamMatinesi",
-      "post2": "📝 Filmin devam eden özeti:\nmlu Yıi sonunda para harcamaya başlar ve gece kulübü çalışanı Sena'yı \"satın alır\". Sözleşmeyle başlayan ilişki beklenmedik bir yola girer.",
+      "post2": "📝 Filmin devam eden özeti:\nmlu Yui sonunda para harcamaya başlar ve gece kulübü çalışanı Sena'yı \"satın alır\". Sözleşmeyle başlayan ilişki beklenmedik bir yola girer.",
       "pinned": false,
       "status": "published",
       "editorPick": "weekly",
       "editorNote": "Hem duygusal hem biraz absürt, hem de yetişkinlere hitap eden bir tonu var."
+    },
+    {
+      "uid": "y-1794257677213-9cp5uy",
+      "id": 111,
+      "media_type": "movie",
+      "title": "Yaralı Yüz",
+      "release_date": "1983-12-09",
+      "poster_path": "/9F7xtVA6cKGdjkVu2s33C09oZAP.jpg",
+      "backdrop_path": "/cCvp5Sni75agCtyJkNOMapORUQV.jpg",
+      "vote_average": 8.155,
+      "imdbRating": "",
+      "imdbId": "tt0086250",
+      "overview": "Tony Montana isimli Kübalı suçlu, Miami'ye gelip uyuşturucu lordu Robert Loggia'nın emrinde çalışmaya başlar. Montana'nın hırsı ve öfkesi basamaklaı hızla tırmanıp büyük bir suç şebekesinin başı olmasını sağlar. Film, uyuşturucu dünyasının gizli kapılar ardında dönen çarklarından başlayarak suç dünyasını gözler önüne serer.",
+      "hook": "Perde açılıyor, insan ruhunun derinliklerine yolculuk başlıyor.",
+      "platform": "Amazon Prime Video",
+      "providerId": "",
+      "availableProviders": [
+        {
+          "id": 119,
+          "name": "Amazon Prime Video"
+        }
+      ],
+      "date": "2026-11-10",
+      "time": "21:00",
+      "hashtag": "#KültSinema",
+      "post1": "🎬 Yaralı Yüz (1983)\n⭐ TMDB 8.2/10 · 📅 2026-11-10 · ⏰ 21:00\n✨ Perde açılıyor, insan ruhunun derinliklerine yolculuk başlıyor.\nTony Montana isimli Kübalı suçlu, Miami'ye\n🎥 Amazon Prime Video'da izleyebilirsiniz.\n🔗 https://tinyurl.com/yvsa2ww7\n#KültSinema",
+      "post2": "📝 Filmin devam eden özeti:\ngelip uyuşturucu lordu Robert Loggia'nın emrinde çalışmaya başlar. Montana'nın hırsı ve öfkesi basamaklaı hızla tırmanıp büyük bir suç şebekesinin başı olmasını sağlar. Film, uyuşturucu dünyasının gizli kapılar ardında dönen çark",
+      "pinned": false,
+      "status": "published",
+      "editorPick": "none",
+      "editorNote": "",
+      "editorPriority": 10,
+      "editorEndDate": ""
     }
   ]
 }
