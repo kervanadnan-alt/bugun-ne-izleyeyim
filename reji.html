@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <title>Bugün Ne İzleyeyim? - Tam Teşekküllü Reji Masası</title>
+  <title>Bugün Ne İzleyeyim? - Güvenli Reji & Yayın Masası</title>
   <!-- Tailwind CSS & FontAwesome -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -17,8 +17,30 @@
 </head>
 <body class="min-h-screen flex flex-col font-sans selection:bg-red-600 selection:text-white">
 
+  <!-- 1. GÜVENLİK VE ŞİFRELİ GİRİŞ EKRANI (AUTH MODAL) -->
+  <div id="auth-overlay" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl max-w-sm w-full shadow-2xl text-center space-y-5">
+      <div class="w-16 h-16 bg-red-950/50 border border-red-500/40 rounded-2xl mx-auto flex items-center justify-center text-red-500 text-2xl shadow-lg">
+        <i class="fa-solid fa-lock"></i>
+      </div>
+      <div>
+        <h2 class="text-lg font-extrabold text-white">REJİ MASASI KİLİTLİ</h2>
+        <p class="text-xs text-slate-400 mt-1">Yayın paneline erişmek için reji şifresini girin.</p>
+      </div>
+      <div class="space-y-3">
+        <input type="password" id="auth-password-input" placeholder="Reji Şifresi (Varsayılan: 1923)" 
+               class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-center text-sm tracking-widest text-white focus:outline-none focus:border-red-500 transition"
+               onkeypress="if(event.key === 'Enter') rejiGirisiniDogrula()">
+        <p id="auth-error-msg" class="text-xs text-red-500 hidden font-semibold">Hatalı şifre! Lütfen tekrar deneyin.</p>
+        <button onclick="rejiGirisiniDogrula()" class="w-full py-3 bg-gradient-to-r from-red-600 to-indigo-600 hover:from-red-500 hover:to-indigo-500 text-white font-extrabold text-xs rounded-xl shadow-lg transition">
+          GİRİŞ YAP &gt;
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- ÜST BAR -->
-  <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur px-6 py-4 flex items-center justify-between sticky top-0 z-50">
+  <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur px-6 py-4 flex items-center justify-between sticky top-0 z-40">
     <div class="flex items-center space-x-3">
       <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-red-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-red-500/10">
         <i class="fa-solid fa-clapperboard text-lg text-white"></i>
@@ -28,11 +50,14 @@
         <p class="text-[10px] text-slate-400 font-semibold tracking-widest uppercase">Yayın &amp; Editör Reji Masası</p>
       </div>
     </div>
-    <div class="flex items-center space-x-4">
-      <a href="index.html" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-sm font-semibold transition flex items-center space-x-2 border border-slate-700">
+    <div class="flex items-center space-x-3">
+      <a href="index.html" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-xs font-semibold transition flex items-center space-x-2 border border-slate-700">
         <i class="fa-solid fa-eye text-red-400"></i>
         <span>Vitrini Gör</span>
       </a>
+      <button onclick="rejiCikisYap()" class="px-3 py-2 bg-red-950/30 hover:bg-red-900/50 border border-red-800/60 text-red-400 rounded-lg text-xs font-semibold transition" title="Paneli Kilitle">
+        <i class="fa-solid fa-right-from-bracket"></i>
+      </button>
     </div>
   </header>
 
@@ -40,15 +65,14 @@
     
     <div class="grid grid-cols-12 gap-6">
       
-      <!-- SOL PANEL: GELİŞMİŞ ARAMA, PLATFORM SEÇİMİ VE KUŞAKLAR (5/12) -->
+      <!-- SOL PANEL: GELİŞMİŞ FİLTRELER & KUŞAKLAR (5/12) -->
       <section class="col-span-12 lg:col-span-5 flex flex-col space-y-5">
         
-        <!-- FİLTRELEME ALANI -->
         <div class="bg-slate-900/90 rounded-2xl p-5 border border-slate-800 shadow-xl space-y-4">
           <div class="flex items-center justify-between">
             <h2 class="text-sm font-bold tracking-wider text-indigo-400 uppercase flex items-center space-x-2">
               <i class="fa-solid fa-sliders"></i>
-              <span>Gelişmiş Filtreler &amp; Nokta Atışı</span>
+              <span>Gelişmiş Arama &amp; Filtreler</span>
             </h2>
             <button onclick="tumFiltreleriSifirla()" class="text-xs text-slate-400 hover:text-red-400 transition flex items-center space-x-1">
               <i class="fa-solid fa-rotate"></i>
@@ -63,7 +87,7 @@
             <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-500 text-xs"></i>
           </div>
 
-          <!-- Kütüphane / Platform Seçimi (Gerçek TMDB Sağlayıcı Filtresi) -->
+          <!-- Türkiye Kütüphanesi Sağlayıcı Filtresi -->
           <div>
             <label class="block text-[10px] uppercase tracking-wider text-amber-400 font-bold mb-1">
               <i class="fa-solid fa-tv mr-1"></i> İzleme Platformu Kataloğu (TR)
@@ -99,7 +123,7 @@
           <!-- Tür & Min Puan -->
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="block text-[10px] uppercase tracking-wider text-slate-400 font-bold mb-1">Film Türü</label>
+              <label class="block text-[10px] uppercase tracking-wider text-slate-400 font-bold mb-1">Tür</label>
               <select id="search-genre" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2 py-2 text-xs focus:border-indigo-500 focus:outline-none text-slate-200">
                 <option value="">Tüm Türler</option>
                 <option value="28">Aksiyon</option>
@@ -133,7 +157,7 @@
           </button>
         </div>
 
-        <!-- YAYIN KUŞAKLARI & SABİT GÖNDERİ MODU -->
+        <!-- KUŞAKLAR & SABİT GÖNDERİ SEÇİMİ -->
         <div class="bg-slate-900/90 rounded-2xl p-5 border border-slate-800 shadow-xl space-y-3">
           <h2 class="text-sm font-bold tracking-wider text-red-400 uppercase flex items-center space-x-2">
             <i class="fa-solid fa-layer-group"></i>
@@ -180,8 +204,8 @@
       <!-- SAĞ PANEL: LİSTE VE EDİTÖR FORMU (7/12) -->
       <section class="col-span-12 lg:col-span-7 flex flex-col space-y-6">
         
-        <!-- VERİ LİSTESİ -->
-        <div class="bg-slate-900/90 rounded-2xl p-5 border border-slate-800 shadow-xl flex flex-col min-h-[350px]">
+        <!-- KATALOG LİSTESİ -->
+        <div class="bg-slate-900/90 rounded-2xl p-5 border border-slate-800 shadow-xl flex flex-col min-h-[340px]">
           <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-3">
             <div>
               <h2 class="text-sm font-bold text-slate-200" id="results-title">Katalog Yapımları</h2>
@@ -202,25 +226,25 @@
           </div>
         </div>
 
-        <!-- REJİ & YAYIN DÜZENLEME FORMU -->
+        <!-- REJİ & GELİŞMİŞ EDİTÖR FORMU (GENİŞ ÖZET + YZ AÇIKLAMASI DAHİL) -->
         <div id="editor-card" class="bg-slate-900/90 rounded-2xl p-5 border border-slate-800 shadow-xl space-y-4 hidden">
           <div class="flex items-center justify-between pb-2 border-b border-slate-800">
             <h3 class="text-sm font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-indigo-400 uppercase tracking-wider flex items-center space-x-2">
-              <i class="fa-solid fa-sliders"></i>
-              <span id="editor-heading">YAYIN VE EDİTÖR FORMU</span>
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
+              <span id="editor-heading">YAYIN VE EDİTÖR KONTROLÜ</span>
             </h3>
             <span id="plan-concept-badge" class="text-[10px] font-bold text-slate-400 bg-slate-950 px-2.5 py-1 rounded-full border border-slate-800">KONSEPT</span>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
-            <!-- Sol: Afiş & Form Platform Seçimi -->
+            <!-- Sol: Afiş, Puan, Platform Seçimi -->
             <div class="md:col-span-4 flex flex-col items-center">
               <div class="w-full aspect-[2/3] rounded-xl overflow-hidden bg-slate-950 border border-slate-800 relative">
                 <img id="plan-poster" src="" alt="Afiş" class="w-full h-full object-cover">
                 <span id="plan-rating-badge" class="absolute top-2 right-2 px-2 py-0.5 bg-amber-500 rounded text-[10px] font-extrabold text-slate-950">★ 8.0</span>
               </div>
               
-              <!-- Yayın Platformu Seçimi -->
+              <!-- Form İçi Platform Seçimi -->
               <div class="w-full mt-3">
                 <label class="block text-[9px] uppercase tracking-wider text-slate-400 font-bold mb-1">Yayın Platformu</label>
                 <select id="edit-platform-select" onchange="metniYenidenDerle()" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-indigo-300 font-bold focus:outline-none focus:border-indigo-500">
@@ -234,20 +258,20 @@
                 </select>
               </div>
 
-              <!-- Afiş Kopyalama -->
               <button onclick="afisiPanoyaKopyala()" id="btn-copy-img" class="w-full mt-2 py-2 bg-indigo-950/60 hover:bg-indigo-900 border border-indigo-700/60 text-indigo-300 rounded-lg text-xs font-bold transition flex items-center justify-center space-x-1.5">
                 <i class="fa-solid fa-copy"></i>
                 <span>Afişi Kopyala (Ctrl+V)</span>
               </button>
             </div>
 
-            <!-- Sağ: Tarih, Saat, Post Sekmeleri -->
+            <!-- Sağ: Detaylar, Geniş Özet, YZ Motoru ve Tweet Taslağı -->
             <div class="md:col-span-8 space-y-3">
               <div>
                 <h4 id="plan-title" class="font-bold text-white text-base">Film Başlığı</h4>
                 <p id="plan-details" class="text-xs text-slate-400">2024 • Türler</p>
               </div>
 
+              <!-- Tarih / Saat -->
               <div class="grid grid-cols-2 gap-3">
                 <div>
                   <label class="block text-[9px] uppercase tracking-widest text-slate-400 font-bold mb-1">Yayın Tarihi</label>
@@ -259,7 +283,31 @@
                 </div>
               </div>
 
-              <!-- Post Sekmeleri (Flood Desteği) -->
+              <!-- 1. FİLMİN GENİŞ ÖZETİ (Geri Geldi) -->
+              <div>
+                <label class="block text-[9px] uppercase tracking-widest text-slate-400 font-bold mb-1 flex items-center justify-between">
+                  <span>Filmin Geniş Özeti (TMDB)</span>
+                  <span class="text-[9px] text-slate-500 font-normal italic">Ham sinopsis</span>
+                </label>
+                <textarea id="plan-full-overview" rows="2" class="w-full bg-slate-950 border border-slate-850 rounded-lg p-2 text-xs text-slate-300 leading-relaxed focus:outline-none focus:border-slate-700 custom-scrollbar" placeholder="Geniş özet..."></textarea>
+              </div>
+
+              <!-- 2. YAPAY ZEKA & EDİTÖR AÇIKLAMASI MOTORU (Geri Geldi) -->
+              <div class="p-2.5 bg-indigo-950/30 border border-indigo-800/40 rounded-xl space-y-1.5">
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] font-extrabold text-indigo-300 flex items-center space-x-1">
+                    <i class="fa-solid fa-brain text-indigo-400"></i>
+                    <span>YZ / EDİTÖR KANCASI &amp; YORUMU</span>
+                  </span>
+                  <button onclick="yapayZekaYorumuUret()" class="px-2 py-0.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded text-[10px] font-bold transition flex items-center space-x-1 shadow">
+                    <i class="fa-solid fa-wand-magic"></i>
+                    <span>Yeni Yorum Üret</span>
+                  </button>
+                </div>
+                <input type="text" id="ai-editorial-hook" oninput="metniYenidenDerle()" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-amber-300 font-medium focus:outline-none focus:border-indigo-500" placeholder="Editörün kancası veya yapay zeka tavsiye cümlesi...">
+              </div>
+
+              <!-- Post Sekmeleri (Flood Bölücü) -->
               <div class="flex items-center space-x-4 border-b border-slate-800 pb-1 text-xs">
                 <button onclick="sekmeDegistir(1)" id="tab-post-1" class="tab-active py-1 flex items-center space-x-1.5">
                   <span>1. Post (Ana Tweet)</span>
@@ -272,21 +320,21 @@
               </div>
 
               <div>
-                <textarea id="tweet-active-text" rows="5" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs leading-relaxed focus:border-red-500 focus:outline-none text-slate-200 resize-none"></textarea>
+                <textarea id="tweet-active-text" rows="4" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs leading-relaxed focus:border-red-500 focus:outline-none text-slate-200 resize-none font-sans"></textarea>
                 <div class="flex items-center justify-between text-[10px] text-slate-500 mt-1">
                   <span id="split-info-text">Tek post olarak sığıyor.</span>
                   <button onclick="otomatikIkiyeBol()" class="text-indigo-400 hover:underline">Metni 2 Posta Böl</button>
                 </div>
               </div>
 
-              <div class="pt-2 flex items-center space-x-3">
+              <div class="pt-1 flex items-center space-x-3">
                 <button onclick="xGonderiminiBaslat()" class="flex-1 py-2.5 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 text-white font-extrabold text-xs rounded-xl shadow-lg transition flex items-center justify-center space-x-2">
                   <i class="fa-brands fa-x-twitter text-sm"></i>
                   <span id="btn-x-action-label">X'te Aç &amp; Paylaş</span>
                 </button>
-                <button onclick="yayiniKuyrugaKaydet()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl transition flex items-center space-x-1.5">
-                  <i class="fa-solid fa-calendar-plus"></i>
-                  <span>Yayın Listesine Ekle</span>
+                <button onclick="yayiniKuyrugaKaydet()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl transition flex items-center space-x-1.5 shadow-lg shadow-emerald-950/40">
+                  <i class="fa-solid fa-floppy-disk"></i>
+                  <span id="btn-save-label">Yayın Listesine Kaydet</span>
                 </button>
               </div>
             </div>
@@ -296,7 +344,7 @@
       </section>
     </div>
 
-    <!-- PLANLANAN YAYINLAR TABLOSU -->
+    <!-- PLANLANAN YAYINLAR TABLOSU (DÜZENLEME BUTONUYLA BİRLİKTE) -->
     <section class="bg-slate-900/90 rounded-2xl p-6 border border-slate-800 shadow-xl space-y-4">
       <div class="flex items-center justify-between pb-3 border-b border-slate-800">
         <div>
@@ -323,7 +371,7 @@
             </tr>
           </thead>
           <tbody id="queue-table-body" class="divide-y divide-slate-800/60">
-            <!-- Dinamik doldurulur -->
+            <!-- JS ile doldurulacak -->
           </tbody>
         </table>
       </div>
@@ -332,6 +380,9 @@
   </main>
 
   <script>
+    // 1. REJİ GİRİŞ ŞİFRESİ AYARI
+    const REJI_SIFRESI = "1923"; // İstediğiniz şifreyi buraya yazabilirsiniz.
+
     const API_KEY = '3fd2be6f0c70a2a598f084ddfb75487c';
     const IMG_BASE_URL = 'https://image.tmdb.org/t/p/w500';
     const SITE_URL = 'https://kervanadnan-alt.github.io/bugun-ne-izleyeyim/';
@@ -343,6 +394,7 @@
     let selectedItem = null;
     let postParts = ["", ""];
     let activeTab = 1;
+    let duzenlenenId = null; // Eğer listeden bir film düzenleniyorsa ID'sini tutar
 
     const conceptRules = {
       "Pazartesi": { title: "Zihin Bükücü", genre: "9648,878", minVote: 7.0, tag: "#ZihinBükücü" },
@@ -353,12 +405,35 @@
       "Cumartesi": { title: "Mısır Gecesi 🍿", genre: "28,12,35,14", yearSince: "2012", minVote: 6.8, tag: "#MısırGecesi" }
     };
 
+    // GÜVENLİK KONTROLÜ
     window.addEventListener('DOMContentLoaded', () => {
+      const auth = sessionStorage.getItem('reji_auth');
+      if (auth === 'true') {
+        document.getElementById('auth-overlay').classList.add('hidden');
+      } else {
+        document.getElementById('auth-overlay').classList.remove('hidden');
+      }
+
       const bugun = new Date().toISOString().split('T')[0];
       document.getElementById('schedule-date').value = bugun;
       yeniAramaBaslat();
       tabloyuYenile();
     });
+
+    function rejiGirisiniDogrula() {
+      const girilen = document.getElementById('auth-password-input').value;
+      if (girilen === REJI_SIFRESI) {
+        sessionStorage.setItem('reji_auth', 'true');
+        document.getElementById('auth-overlay').classList.add('hidden');
+      } else {
+        document.getElementById('auth-error-msg').classList.remove('hidden');
+      }
+    }
+
+    function rejiCikisYap() {
+      sessionStorage.removeItem('reji_auth');
+      window.location.reload();
+    }
 
     function tumFiltreleriSifirla() {
       document.getElementById('search-keyword').value = "";
@@ -395,7 +470,6 @@
       apiIstegiGonder(false);
     }
 
-    // TMDB ÇAĞRISI (Platform, Yıl, Puan, Tür, Kuşak ve Sayfalama Entegre)
     async function apiIstegiGonder(temizle = false) {
       if (isLoading) return;
       isLoading = true;
@@ -427,7 +501,6 @@
         params.append("sort_by", sort);
         params.append("vote_count.gte", "30");
 
-        // Gerçek Sağlayıcı (Platform TR)
         if (providerId) {
           params.append("with_watch_providers", providerId);
           params.append("watch_region", "TR");
@@ -496,6 +569,8 @@
         const res = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=tr-TR&append_to_response=credits`);
         const data = await res.json();
         selectedItem = data;
+        duzenlenenId = null; // Yeni film seçildiği için düzenleme modunu sıfırla
+        document.getElementById('btn-save-label').textContent = "Yayın Listesine Kaydet";
         formuDoldur(data);
       } catch (e) {
         console.error("Detay hatası:", e);
@@ -504,14 +579,17 @@
 
     function formuDoldur(data) {
       document.getElementById('editor-card').classList.remove('hidden');
-      document.getElementById('editor-heading').textContent = "YAYIN VE EDİTÖR FORMU";
+      document.getElementById('editor-heading').textContent = "YAYIN VE EDİTÖR KONTROLÜ";
       document.getElementById('plan-concept-badge').textContent = currentKusakDay ? `${currentKusakDay} Kuşağı` : "Serbest Seçim";
       document.getElementById('plan-title').textContent = data.title;
       document.getElementById('plan-details').textContent = `${data.release_date?.split('-')[0] || '2024'} • ${data.genres?.map(g=>g.name).join(', ') || 'Sinema'}`;
       document.getElementById('plan-rating-badge').textContent = `★ ${data.vote_average?.toFixed(1) || '7.5'}`;
       document.getElementById('plan-poster').src = data.poster_path ? `${IMG_BASE_URL}${data.poster_path}` : 'https://images.unsplash.com/photo-1594909122845-11baa439b7bf?q=80&w=400';
 
-      // Eğer filtrede bir platform seçilmişse otomatik formdaki platform kutusuna ata
+      // Geniş Özeti Doldur
+      document.getElementById('plan-full-overview').value = data.overview || "Geniş sinopsis bulunmuyor.";
+
+      // Platform otomatik seçim
       const seciliProviderText = document.getElementById('search-provider')?.selectedOptions[0]?.text;
       const editSelect = document.getElementById('edit-platform-select');
       if (seciliProviderText && editSelect) {
@@ -522,19 +600,59 @@
         else if (seciliProviderText.includes("MUBI")) editSelect.value = "MUBI";
       }
 
+      // İlk Yapay Zeka / Editör Yorumunu Otomatik Üret
+      yapayZekaYorumuUret();
+    }
+
+    // 2. YAPAY ZEKA / EDİTÖR AÇIKLAMASI MOTORU
+    function yapayZekaYorumuUret() {
+      if (!selectedItem) return;
+
+      const genres = selectedItem.genres ? selectedItem.genres.map(g => g.name.toLowerCase()) : [];
+      const score = selectedItem.vote_average || 7.0;
+
+      const gerilimHooks = [
+        "Nefes kesen bir suç & gizem labirenti! Ters köşeleriyle son saniyeye kadar diken üstünde tutuyor.",
+        "Psikolojik gerilimin zirve yaptığı, temposu bir an bile düşmeyen şahane bir sinema deneyimi.",
+        "Soluksuz izlenecek, zihninizde uzun süre yankı uyandıracak karanlık ve sürükleyici bir başyapıt."
+      ];
+
+      const bilimKurguHooks = [
+        "Zihin bükücü kurgusu ve derin atmosferiyle algılarınızı zorlayacak modern bir klasik.",
+        "Zaman, mekan ve gerçeklik kavramını altüst eden felsefi bir bilimkurgu yolculuğu.",
+        "Merak duygunuzu iliklerinize kadar hissettirecek, teoriler ürettiren zekice bir yapıt."
+      ];
+
+      const genelHooks = [
+        "Görsel dili ve güçlü oyunculuklarıyla ekran başında geçirdiğiniz her saniyeye değecek bir öneri.",
+        "Yönetmenin ustalığını konuşturduğu, sinemaseverlerin arşivine mutlaka eklemesi gereken bir iş.",
+        "Akşam koltuğa kurulup kendinizi akışına bırakacağınız, seyir zevki tavan bir yapım."
+      ];
+
+      let secilenDizi = genelHooks;
+      if (genres.some(g => g.includes('gerilim') || g.includes('korku') || g.includes('suç'))) {
+        secilenDizi = gerilimHooks;
+      } else if (genres.some(g => g.includes('bilim') || g.includes('gizem'))) {
+        secilenDizi = bilimKurguHooks;
+      }
+
+      const rastgeleYorum = secilenDizi[Math.floor(Math.random() * secilenDizi.length)];
+      document.getElementById('ai-editorial-hook').value = rastgeleYorum;
+
       metniYenidenDerle();
     }
 
-    // TWEET METNİNİ DERLE VE 2 POST BÖLÜCÜYE AKTAR
+    // 3. TWEET METNİNİ DERLE (Geniş Özet + YZ Yorumu + Linkler)
     function metniYenidenDerle() {
       if (!selectedItem) return;
 
       const title = selectedItem.title;
       const score = selectedItem.vote_average ? selectedItem.vote_average.toFixed(1) : '7.5';
       const actors = selectedItem.credits?.cast ? selectedItem.credits.cast.slice(0, 2).map(c=>c.name).join(', ') : '';
-      const overview = selectedItem.overview || "Bu akşam ekran başında sinema keyfi yaşayın.";
       const platform = document.getElementById('edit-platform-select').value;
       const tag = currentConcept?.tag || "#FilmÖnerisi";
+      const aiHook = document.getElementById('ai-editorial-hook').value.trim();
+      const overview = document.getElementById('plan-full-overview').value.trim();
 
       const dVal = document.getElementById('schedule-date').value;
       const tVal = document.getElementById('schedule-time').value;
@@ -545,11 +663,12 @@
         dateLine = `📅 ${dayName} | Saat ${tVal}`;
       }
 
-      const fullContent = `${dateLine}\n🍿 ${currentKusakDay ? currentKusakDay + ' Matinesi' : 'Akşam Matinesi'}!\n\n🔴 ${title} (${score}/10)\n${actors ? '👥 ' + actors + '\n' : ''}📌 ${overview}\n\n🎥 ${platform}'da izleyebilirsiniz.\n🔗 Detaylar: ${SITE_URL}\n${tag} #BugünNeİzlesem`;
+      const hookSnippet = aiHook ? `⚡ ${aiHook}\n\n` : '';
+      const fullContent = `${dateLine}\n🍿 ${currentKusakDay ? currentKusakDay + ' Matinesi' : 'Akşam Matinesi'}!\n\n🔴 ${title} (${score}/10)\n${actors ? '👥 ' + actors + '\n' : ''}${hookSnippet}📌 ${overview}\n\n🎥 ${platform}'da izleyebilirsiniz.\n🔗 Detaylar: ${SITE_URL}\n${tag} #BugünNeİzlesem`;
 
       if (fullContent.length > 280) {
-        const part1 = `${dateLine}\n🍿 ${currentKusakDay ? currentKusakDay + ' Matinesi' : 'Akşam Matinesi'} [1/2]\n\n🔴 ${title} (${score}/10)\n${actors ? '👥 ' + actors + '\n' : ''}📌 ${overview.substring(0, 120)}...\n\n👇 Detaylar & Platform altta:`;
-        const part2 = `[2/2] ${title}\n\n📌 ...${overview.substring(120)}\n\n🎥 ${platform}'da izleyebilirsiniz.\n🔗 İncele: ${SITE_URL}\n${tag} #BugünNeİzlesem`;
+        const part1 = `${dateLine}\n🍿 ${currentKusakDay ? currentKusakDay + ' Matinesi' : 'Akşam Matinesi'} [1/2]\n\n🔴 ${title} (${score}/10)\n${actors ? '👥 ' + actors + '\n' : ''}${hookSnippet}👇 Detaylar & Platform altta:`;
+        const part2 = `[2/2] ${title}\n\n📌 ${overview.substring(0, 140)}...\n\n🎥 ${platform}'da izleyebilirsiniz.\n🔗 İncele: ${SITE_URL}\n${tag} #BugünNeİzlesem`;
         postParts = [part1, part2];
       } else {
         postParts = [fullContent, ""];
@@ -614,7 +733,6 @@
       arayuzSekmeleriniGuncelle();
     }
 
-    // AFİŞ KOPYALAMA (BLOB)
     async function afisiPanoyaKopyala() {
       const posterUrl = document.getElementById('plan-poster').src;
       const btn = document.getElementById('btn-copy-img');
@@ -633,14 +751,12 @@
       }
     }
 
-    // X'TE AÇMA
     async function xGonderiminiBaslat() {
       await afisiPanoyaKopyala();
       const txt = encodeURIComponent(postParts[activeTab - 1]);
       window.open(`https://twitter.com/intent/tweet?text=${txt}`, '_blank', 'width=600,height=500');
     }
 
-    // SABİT GÖNDERİ MODU (PINNED POST)
     function sabitGonderiYukle() {
       document.querySelectorAll('#kusak-grid button').forEach(b => b.classList.remove('active-kusak'));
       document.getElementById('btn-Sabit').classList.add('active-kusak');
@@ -663,6 +779,8 @@
       document.getElementById('plan-details').textContent = "Resmi Tanıtım & Haftalık Yayın Akışı";
       document.getElementById('plan-rating-badge').textContent = "★ 9.8";
       document.getElementById('plan-poster').src = "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=600";
+      document.getElementById('plan-full-overview').value = selectedItem.overview;
+      document.getElementById('ai-editorial-hook').value = "Sinema tutkunlarının buluşma noktası. Her güne özel film kuşakları!";
 
       const sabit1 = `🎬 Ne İzlesem Diye Saatlerce Aramaya Son!\n\nNetflix, Prime Video, MUBI ve BluTV arşivinden özenle seçilmiş film ve dizi önerileri her akşam matinesinde sizlerle.\n\n🍿 Tüm arşivi filtrelemek ve listeyi incelemek için vitrinimizi ziyaret edin:\n🔗 ${SITE_URL}\n\n👇 Haftalık yayın akışımız:`;
       const sabit2 = `📅 Haftalık Yayın Kuşaklarımız:\n\n• Pazartesi: Zihin Bükücü 🌀\n• Salı: Kült Klasikler 🎞️\n• Çarşamba: Belgesel Kuşağı 🌍\n• Perşembe: Dünya Sineması 🎭\n• Cuma: Cuma Gerilimi 🩸\n• Cumartesi: Mısır Gecesi 🍿\n• Pazar: Haftalık Kapanış ✨\n\nBildirimleri açın, akşam ne izleyeceğinizi şansa bırakmayın! #BugünNeİzlesem`;
@@ -671,36 +789,96 @@
       arayuzSekmeleriniGuncelle();
     }
 
-    // YAYIN LİSTESİ YÖNETİMİ (localStorage)
+    // 4. PLANLANAN LİSTE YÖNETİMİ & DÜZENLEME FONKSİYONLARI
     function yayiniKuyrugaKaydet() {
       if (!selectedItem) return;
 
       const pDate = document.getElementById('schedule-date').value;
       const pTime = document.getElementById('schedule-time').value;
       const platform = document.getElementById('edit-platform-select').value;
+      const fullOverview = document.getElementById('plan-full-overview').value;
+      const aiHook = document.getElementById('ai-editorial-hook').value;
+      const activeTweetText = document.getElementById('tweet-active-text').value;
 
       if (!pDate || !pTime) {
         alert("Lütfen tarih ve saat seçin.");
         return;
       }
 
-      const kayit = {
-        id: Date.now(),
-        movieId: selectedItem.id,
-        title: selectedItem.title,
-        poster_path: selectedItem.poster_path,
-        vote_average: selectedItem.vote_average,
-        platformName: platform,
-        scheduledDate: pDate,
-        scheduledTime: pTime
+      let kuyruk = JSON.parse(localStorage.getItem('yayinkuyrugu') || '[]');
+
+      if (duzenlenenId) {
+        // Mevcut kaydı güncelle
+        const index = kuyruk.findIndex(k => k.id === duzenlenenId);
+        if (index !== -1) {
+          kuyruk[index].platformName = platform;
+          kuyruk[index].scheduledDate = pDate;
+          kuyruk[index].scheduledTime = pTime;
+          kuyruk[index].fullOverview = fullOverview;
+          kuyruk[index].aiHook = aiHook;
+          kuyruk[index].tweetText = activeTweetText;
+        }
+        duzenlenenId = null;
+        document.getElementById('btn-save-label').textContent = "Yayın Listesine Kaydet";
+      } else {
+        // Yeni kayıt ekle
+        const kayit = {
+          id: Date.now(),
+          movieId: selectedItem.id,
+          title: selectedItem.title,
+          poster_path: selectedItem.poster_path,
+          vote_average: selectedItem.vote_average,
+          platformName: platform,
+          scheduledDate: pDate,
+          scheduledTime: pTime,
+          fullOverview: fullOverview,
+          aiHook: aiHook,
+          tweetText: activeTweetText
+        };
+        kuyruk.unshift(kayit);
+      }
+
+      localStorage.setItem('yayinkuyrugu', JSON.stringify(kuyruk));
+      tabloyuYenile();
+      alert(`"${selectedItem.title}" başarıyla güncellendi / listeye kaydedildi!`);
+    }
+
+    // TABLODAKİ DÜZENLEME BUTONU TETİKLEYİCİSİ
+    function yayiniDuzenle(id) {
+      const kuyruk = JSON.parse(localStorage.getItem('yayinkuyrugu') || '[]');
+      const item = kuyruk.find(k => k.id === id);
+      if (!item) return;
+
+      duzenlenenId = id;
+      selectedItem = {
+        id: item.movieId,
+        title: item.title,
+        poster_path: item.poster_path,
+        vote_average: item.vote_average,
+        overview: item.fullOverview
       };
 
-      let kuyruk = JSON.parse(localStorage.getItem('yayinkuyrugu') || '[]');
-      kuyruk.unshift(kayit);
-      localStorage.setItem('yayinkuyrugu', JSON.stringify(kuyruk));
+      document.getElementById('editor-card').classList.remove('hidden');
+      document.getElementById('editor-heading').textContent = "📝 YAYIN KAYDINI DÜZENLE";
+      document.getElementById('btn-save-label').textContent = "Değişiklikleri Güncelle";
+      document.getElementById('plan-title').textContent = item.title;
+      document.getElementById('plan-rating-badge').textContent = `★ ${item.vote_average ? Number(item.vote_average).toFixed(1) : '7.5'}`;
+      document.getElementById('plan-poster').src = item.poster_path ? `${IMG_BASE_URL}${item.poster_path}` : 'https://images.unsplash.com/photo-1594909122845-11baa439b7bf?q=80&w=400';
+      document.getElementById('edit-platform-select').value = item.platformName || "Netflix";
+      document.getElementById('schedule-date').value = item.scheduledDate;
+      document.getElementById('schedule-time').value = item.scheduledTime;
+      document.getElementById('plan-full-overview').value = item.fullOverview || "";
+      document.getElementById('ai-editorial-hook').value = item.aiHook || "";
 
-      tabloyuYenile();
-      alert(`"${selectedItem.title}" planlanan yayın listesine eklendi.`);
+      if (item.tweetText) {
+        postParts = [item.tweetText, ""];
+        arayuzSekmeleriniGuncelle();
+      } else {
+        metniYenidenDerle();
+      }
+
+      // Sayfayı editör alanına kaydır
+      document.getElementById('editor-card').scrollIntoView({ behavior: 'smooth' });
     }
 
     function tabloyuYenile() {
@@ -725,8 +903,13 @@
           <td class="py-3 px-4 font-semibold text-indigo-400">${item.platformName || 'Platform'}</td>
           <td class="py-3 px-4 text-amber-500 font-bold">★ ${item.vote_average ? Number(item.vote_average).toFixed(1) : '-'}</td>
           <td class="py-3 px-4 text-slate-400">${item.scheduledDate} ${item.scheduledTime}</td>
-          <td class="py-3 px-4 text-right">
-            <button onclick="kuyruktanSil(${item.id})" class="text-red-400 hover:text-red-300 p-1">
+          <td class="py-3 px-4 text-right space-x-2">
+            <!-- Düzenle Butonu -->
+            <button onclick="yayiniDuzenle(${item.id})" class="px-2.5 py-1 bg-indigo-950/60 hover:bg-indigo-900 border border-indigo-700/60 text-indigo-300 rounded text-xs font-semibold transition" title="Kaydı Düzenle">
+              <i class="fa-solid fa-pen-to-square"></i> Düzenle
+            </button>
+            <!-- Sil Butonu -->
+            <button onclick="kuyruktanSil(${item.id})" class="text-red-400 hover:text-red-300 p-1 transition" title="Listeden Kaldır">
               <i class="fa-solid fa-trash"></i>
             </button>
           </td>
