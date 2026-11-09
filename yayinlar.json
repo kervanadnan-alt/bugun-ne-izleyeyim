@@ -1,5 +1,70 @@
 {
   "version": 1,
-  "updatedAt": null,
-  "entries": []
+  "updatedAt": "2026-11-09T16:35:05.245Z",
+  "entries": [
+    {
+      "uid": "y-1794231784372-ggp0tr",
+      "id": 807,
+      "media_type": "movie",
+      "title": "Yedi",
+      "release_date": "1995-09-22",
+      "poster_path": "/3qpOnTbxPK2HeHObBHttcvQHLGI.jpg",
+      "backdrop_path": "/i5H7zusQGsysGQ8i6P361Vnr0n2.jpg",
+      "vote_average": 8.382,
+      "imdbRating": "",
+      "imdbId": "tt0114369",
+      "overview": "Se7en, seri cinayetler işleyen bir katilin peşine düşen iki dedektifin hikayesini anlatıyor. Bir seri katil 7 ölümcül günahı işleyenleri kendi yöntemleriyle öldürmektedir. Yedi ölümcül günah, hıristiyanlık inançlarına göre kibir, açgözlülük, şehvet düşkünlüğü, kıskançlık, oburluk, yıkıcılık ve tembelliktir.",
+      "hook": "Gerçekle kurgu arasındaki çizgiyi silen bir hikâyeye hazır mısınız?",
+      "platform": "Netflix",
+      "providerId": 8,
+      "availableProviders": [
+        {
+          "id": 8,
+          "name": "Netflix"
+        }
+      ],
+      "date": "2026-11-09",
+      "time": "21:00",
+      "hashtag": "#ZihinBükücü",
+      "post1": "🎬 Yedi (1995)\n⭐ TMDB 8.4/10 · 📅 2026-11-09 · ⏰ 21:00\n✨ Gerçekle kurgu arasındaki çizgiyi silen bir hikâyeye hazır mısınız?\nSe7en, seri cinayetler işleyen bir katilin peşine düşen iki dedektifin hik\n🎥 Netflix'da izleyebilirsiniz.\n🔗 https://kervanadnan-alt.github.io/bugun-ne-izleyeyim/\n#ZihinBükücü",
+      "post2": "📝 Devamı:\nayesini anlatıyor. Bir seri katil 7 ölümcül günahı işleyenleri kendi yöntemleriyle öldürmektedir. Yedi ölümcül günah, hıristiyanlık inançlarına göre kibir, açgözlülük, şehvet düşkünlüğü, kıskançlık, oburluk, yıkıcılık ve tembelliktir.",
+      "pinned": false,
+      "status": "published"
+    },
+    {
+      "uid": "y-1794242035119-mtypct",
+      "id": 447332,
+      "media_type": "movie",
+      "title": "Sessiz Bir Yer",
+      "release_date": "2018-04-03",
+      "poster_path": "/apGuHOq9c4lhP2Kh9i20aKtJwpQ.jpg",
+      "backdrop_path": "/nHRUtBwFNnNN70vcQ7lAsjc2T6S.jpg",
+      "vote_average": 7.395,
+      "imdbRating": "",
+      "imdbId": "tt6644200",
+      "overview": "Dünyanın geri kalanıyla bağları kesilmiş, birbirine sıkı sıkıya bağlı bir aile, korkunç yaratıkların dikkatini çekecek herhangi bir ses çıkarmadan korku ve sessizlik içinde yaşar.",
+      "hook": "Gerçekle kurgu arasındaki çizgiyi silen bir hikâyeye hazır mısınız?",
+      "platform": "Netflix",
+      "providerId": 8,
+      "availableProviders": [
+        {
+          "id": 8,
+          "name": "Netflix"
+        },
+        {
+          "id": 337,
+          "name": "Disney Plus"
+        }
+      ],
+      "date": "2026-11-09",
+      "time": "21:00",
+      "hashtag": "#ZihinBükücü",
+      "post1": "🎬 Sessiz Bir Yer (2018)\n⭐ TMDB 7.4/10 · 📅 2026-11-09 · ⏰ 21:00\n✨ Gerçekle kurgu arasındaki çizgiyi silen bir hikâyeye hazır mısınız?\nDünyanın geri kalanıyla bağları kesilmiş, bi\n🎥 Netflix'da izleyebilirsiniz.\n🔗 https://tinyurl.com/yvsa2ww7\n#ZihinBükücü",
+      "post2": "📝 Filmin devam eden özeti:\nrbirine sıkı sıkıya bağlı bir aile, korkunç yaratıkların dikkatini çekecek herhangi bir ses çıkarmadan korku ve sessizlik içinde yaşar.",
+      "pinned": false,
+      "status": "published",
+      "editorPick": "weekly",
+      "editorNote": "..."
+    }
+  ]
 }
