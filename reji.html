@@ -63,8 +63,8 @@ header{height:74px;display:flex;align-items:center;justify-content:space-between
     <div class="tweet-tabs"><button id="tabPost1" class="tweet-tab active" type="button">1. Post</button><button id="tabPost2" class="tweet-tab" type="button">2. Post / Flood</button><span id="tweetCount" class="small muted" style="margin-left:auto">0/280</span></div>
     <div class="field"><label for="tweetInput">Paylaşım metni (düzenlenebilir)</label><textarea id="tweetInput" class="tweet-field" rows="7"></textarea><div class="tweet-status"><span id="tweetValidation">Henüz metin yok.</span><strong id="tweetLength">0/280</strong></div></div>
     <div id="tweetWarning" class="notice hidden"></div><div class="actions"><button type="button" class="btn subbtn btn-sm" id="regenerate"><i class="fa-solid fa-wand-magic-sparkles"></i> Metni Yenile</button><button type="button" class="btn outlinebtn btn-sm" id="copyTweet"><i class="fa-solid fa-copy"></i> Metni Kopyala</button><button type="button" class="btn outlinebtn btn-sm" id="copyPoster"><i class="fa-solid fa-image"></i> Afişi Panoya Kopyala</button></div>
-    <div class="actions"><a class="btn redbtn" id="tweetOpen" target="_blank" rel="noopener noreferrer" aria-disabled="true"><i class="fa-brands fa-x-twitter"></i> X'te Dolu Taslak Aç</a><button type="button" class="btn greenbtn" id="saveQueue"><i class="fa-solid fa-floppy-disk"></i> Yayın Listesine Kaydet</button></div>
-    <p class="tiny muted" style="margin-top:13px">X düğmesi metni doğrudan paylaşım bağlantısına ekler; normalde taslak dolu açılır. X giriş yönlendirmesi metni kaldırırsa <a id="tweetAlt" class="red" target="_blank" rel="noopener noreferrer">alternatif X bağlantısını dene</a>. X arayüzü metni yine boş açarsa bu davranış site koduyla zorlanamaz; yedek olarak <b>Metni Kopyala</b> düğmesi kalır. Afiş ayrıca yüklenir. 2. postu ilkine yanıt olarak paylaşın.</p>
+    <div class="actions"><a class="btn redbtn" id="tweetOpen" target="_blank" rel="noopener noreferrer" aria-disabled="true"><i class="fa-brands fa-x-twitter"></i> X'te Aç (Eski Yöntem)</a><button type="button" class="btn greenbtn" id="saveQueue"><i class="fa-solid fa-floppy-disk"></i> Yayın Listesine Kaydet</button></div>
+    <p class="tiny muted" style="margin-top:13px">Eski reji dosyasındaki gibi <code>twitter.com/intent/tweet</code> bağlantısı, düğmeye basıldığı anda açılır ve gönderi metni URL içinde aktarılır. İsterseniz <a id="tweetAlt" class="red" target="_blank" rel="noopener noreferrer">alternatif X bağlantısını</a> da deneyebilirsiniz. X yine boş açılırsa site kodu X arayüzünü zorla dolduramaz; <b>Metni Kopyala</b> yedek seçenektir. Afişi ayrıca ekleyin. 2. postu ilkine yanıt olarak paylaşın.</p>
   </div>
  </section>
 </div>
@@ -77,7 +77,7 @@ const $=id=>document.getElementById(id);
 const SITE_URL="https://kervanadnan-alt.github.io/bugun-ne-izleyeyim/";
 function getShareUrl(){const custom=localStorage.getItem("matinee_shareurl")||"";return /^https:\/\/[^\s/?#]+(?:[^\s]*)$/i.test(custom)?custom:SITE_URL}
 function validShareUrl(value){try{const url=new URL(value);return url.protocol==="https:"&&!!url.hostname&&!url.username&&!url.password}catch{return false}}
-function xIntentUrl(value,host="https://x.com"){const url=new URL(host+"/intent/tweet");url.searchParams.set("text",value);return url.toString()}
+function xIntentUrl(value,host="https://twitter.com"){return host+"/intent/tweet?text="+encodeURIComponent(String(value||""))}
 
 const POSTER_ROOT="https://image.tmdb.org/t/p/w500";
 const PROVIDERS=[{id:8,name:"Netflix"},{id:119,name:"Prime Video"},{id:341,name:"BluTV"},{id:337,name:"Disney+"},{id:11,name:"MUBI"}];
@@ -216,7 +216,7 @@ function makePinnedTweets(){post1=`🎬 Bugün Ne İzleyeyim? | Akşam Matinesi\
 function preparePinned(){selected={uid:null,id:0,media_type:"movie",title:"Sabit Gönderi — Akşam Matinesi",release_date:"",poster_path:"",backdrop_path:"",vote_average:0,overview:"",hook:"7 günlük yayın kuşağı",platform:"",availableProviders:[],date:defaultDate(),time:"21:00",hashtag:"#AkşamMatinesi",post1:"",post2:"",pinned:true,status:"planned"};editingId=null;isPinned=true;populateEditor();$("editorPanel").scrollIntoView({behavior:"smooth",block:"start"})}
 $("pinnedBtn").onclick=preparePinned;
 function switchPost(n){postTab=n;$("tabPost1").classList.toggle("active",n===1);$("tabPost2").classList.toggle("active",n===2);$("tweetInput").value=n===1?post1:post2;updateTweetStatus()}
-function updateTweetStatus(){const value=$("tweetInput").value,len=weightedLength(value),bad=len>280;let requiredOk=true;if(!isPinned&&postTab===1&&selected){const m=selected;requiredOk=value.includes(m.title)&&value.includes(Number(m.vote_average||0).toFixed(1))&&value.includes(m.date)&&value.includes(m.time)&&value.includes(m.platform||"Platform belirtilmedi")&&value.includes(getShareUrl())}const invalid=bad||!requiredOk||!value.trim();$("tweetCount").textContent=len+"/280";$("tweetLength").textContent=len+"/280";$("tweetLength").classList.toggle("bad",bad||!requiredOk);$("tweetValidation").textContent=bad?"280 karakter sınırı aşıldı.":!requiredOk?"Zorunlu 1. post alanlarından biri eksik.":"X karakter bütçesine uygun (URL/Unicode ağırlıklı tahmin).";const main=$("tweetOpen"),alt=$("tweetAlt");if(invalid){main.removeAttribute("href");alt.removeAttribute("href");main.setAttribute("aria-disabled","true");alt.setAttribute("aria-disabled","true");main.style.opacity=".45";main.style.pointerEvents="none";alt.style.pointerEvents="none"}else{main.href=xIntentUrl(value,"https://x.com");alt.href=xIntentUrl(value,"https://twitter.com");main.setAttribute("aria-disabled","false");alt.setAttribute("aria-disabled","false");main.style.opacity="";main.style.pointerEvents="";alt.style.pointerEvents=""}$("tweetWarning").classList.toggle("hidden",!(bad||!requiredOk));if(bad||!requiredOk){$("tweetWarning").textContent=bad?"Bu gönderi 280 ağırlıklı karakteri aşıyor. Metni kısaltın.":"1. postta başlık, puan, tarih, saat, platform ve site bağlantısı bulunmalı.";}}
+function updateTweetStatus(){const value=$("tweetInput").value,len=weightedLength(value),bad=len>280;let requiredOk=true;if(!isPinned&&postTab===1&&selected){const m=selected;requiredOk=value.includes(m.title)&&value.includes(Number(m.vote_average||0).toFixed(1))&&value.includes(m.date)&&value.includes(m.time)&&value.includes(m.platform||"Platform belirtilmedi")&&value.includes(getShareUrl())}const invalid=bad||!requiredOk||!value.trim();$("tweetCount").textContent=len+"/280";$("tweetLength").textContent=len+"/280";$("tweetLength").classList.toggle("bad",bad||!requiredOk);$("tweetValidation").textContent=bad?"280 karakter sınırı aşıldı.":!requiredOk?"Zorunlu 1. post alanlarından biri eksik.":"X karakter bütçesine uygun (URL/Unicode ağırlıklı tahmin).";const main=$("tweetOpen"),alt=$("tweetAlt");if(invalid){main.removeAttribute("href");alt.removeAttribute("href");main.setAttribute("aria-disabled","true");alt.setAttribute("aria-disabled","true");main.style.opacity=".45";main.style.pointerEvents="none";alt.style.pointerEvents="none"}else{main.href=xIntentUrl(value,"https://twitter.com");alt.href=xIntentUrl(value,"https://x.com");main.setAttribute("aria-disabled","false");alt.setAttribute("aria-disabled","false");main.style.opacity="";main.style.pointerEvents="";alt.style.pointerEvents=""}$("tweetWarning").classList.toggle("hidden",!(bad||!requiredOk));if(bad||!requiredOk){$("tweetWarning").textContent=bad?"Bu gönderi 280 ağırlıklı karakteri aşıyor. Metni kısaltın.":"1. postta başlık, puan, tarih, saat, platform ve site bağlantısı bulunmalı.";}}
 function showTweetWarning(msg,kind="error"){$("tweetWarning").textContent=msg;$("tweetWarning").className="notice "+kind}
 function refreshTweet(){$("tweetInput").value=postTab===1?post1:post2;updateTweetStatus()}
 $("tabPost1").onclick=()=>switchPost(1);$("tabPost2").onclick=()=>switchPost(2);
@@ -241,10 +241,27 @@ $("copyTweet").onclick=async()=>{
   const copied=await copyPostText(value);
   showTweetWarning(copied?"Gönderi metni panoya kopyalandı. X penceresine Ctrl+V yapıştırabilirsiniz.":"Pano izni verilemedi. Metin kutusundaki yazıyı seçip Ctrl+C ile kopyalayın.",copied?"good":"error");
 };
-// Doğrudan <a href> kullanımı, popup/clipboard izinlerine bağlı window.open akışını ortadan kaldırır.
-// X'in kendi oturum yönlendirmesi text parametresini atarsa, statik site bunu zorla dolduramaz.
+// Eski reji.html'in calisan yaklasimini geri getiriyoruz: 
+// Kullanici tiklamasi sirasinda dogrudan twitter.com/intent/tweet adresini ac.
+// Baska async islem (afis kopyalama vb.) once yapilmaz: popup izni kaybolmasin.
 $("tweetOpen").addEventListener("click",event=>{
-  if(!$("tweetOpen").getAttribute("href"))event.preventDefault();
+  if(event.button!==0||event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;
+  event.preventDefault();
+  updateTweetStatus();
+  if($("tweetOpen").getAttribute("aria-disabled")==="true"){
+    showTweetWarning("Paylaşım metni boş, eksik veya 280 karakteri aşıyor. Önce metni düzeltin.","error");
+    return;
+  }
+  const text=$("tweetInput").value; 
+  // Yuklenen eski dosyada da kullanilan dogrudan text parametresi.
+  const url="https://twitter.com/intent/tweet?text="+encodeURIComponent(text);
+  const pop=window.open(url,"_blank","width=600,height=500");
+  if(pop){
+    try{pop.opener=null}catch(_){}
+    showTweetWarning("Metin X'e aktarılmak üzere gönderildi. X taslağı boş açılırsa X oturum veya yönlendirmesi bağlantının text parametresini kaldırıyor olabilir; bu durumda kodun X'i doldurması garanti edilemez.","good");
+  }else{
+    showTweetWarning("Tarayıcı açılır pencereyi engellemiş olabilir. Sağdaki alternatif bağlantıyı deneyin.","error");
+  }
 });
 $("tweetAlt").addEventListener("click",event=>{
   if(!$("tweetAlt").getAttribute("href"))event.preventDefault();
