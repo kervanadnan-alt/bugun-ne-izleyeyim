@@ -266,7 +266,40 @@ $("tweetOpen").addEventListener("click",event=>{
 $("tweetAlt").addEventListener("click",event=>{
   if(!$("tweetAlt").getAttribute("href"))event.preventDefault();
 });
-$("copyPoster").onclick=async()=>{if(!selected||!poster(selected.poster_path)){showTweetWarning("Bu içerik için kopyalanacak afiş yok.","error");return}let url=poster(selected.poster_path);try{if(!window.isSecureContext||!navigator.clipboard?.write||!window.ClipboardItem)throw Error("Pano API'si kullanılamıyor.");let res=await fetch(url);if(!res.ok)throw Error("Afiş indirilemedi.");const blob=await res.blob();const img=await createImageBitmap(blob);const canvas=document.createElement("canvas");canvas.width=img.width;canvas.height=img.height;canvas.getContext("2d").drawImage(img,0,0);const png=await new Promise(resolve=>canvas.toBlob(resolve,"image/png"));if(!png)throw Error("Görsel dönüştürülemedi.");await navigator.clipboard.write([new ClipboardItem({"image/png":png})]);showTweetWarning("Afiş panoda! X penceresinde Ctrl+V yapıştırın.","good")}catch(e){showTweetWarning("Doğrudan görsel kopyalama engellendi. Afiş yeni sekmede açılıyor; görüntüyü oradan indirip X'e yükleyin. ("+e.message+")","error");window.open(url,"_blank","noopener,noreferrer")}};
+$("copyPoster").onclick=async()=>{
+  const btn=$("copyPoster");
+  if(!selected||!poster(selected.poster_path)){showTweetWarning("Bu içerik için kopyalanacak afiş yok.","error");return}
+  const url=poster(selected.poster_path);
+  const oldLabel=btn.innerHTML;
+  btn.disabled=true;
+  btn.textContent="Afiş kopyalanıyor…";
+  try{
+    if(!window.isSecureContext||!navigator.clipboard?.write||!window.ClipboardItem)throw Error("Tarayıcı görsel panosunu desteklemiyor veya izin vermiyor.");
+    // ClipboardItem'in Promise tabanlı veri biçimi, asenkron indirme sırasında
+    // kullanıcı etkileşimi yetkisinin kaybolmasını bazı tarayıcılarda önler.
+    const pngPromise=(async()=>{
+      const res=await fetch(url);
+      if(!res.ok)throw Error("Afiş indirilemedi.");
+      const blob=await res.blob();
+      if(blob.type==="image/png")return blob;
+      const bitmap=await createImageBitmap(blob);
+      const canvas=document.createElement("canvas");
+      canvas.width=bitmap.width;canvas.height=bitmap.height;
+      canvas.getContext("2d").drawImage(bitmap,0,0);
+      const png=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(Error("PNG dönüştürülemedi.")),"image/png"));
+      bitmap.close?.();
+      return png;
+    })();
+    await navigator.clipboard.write([new ClipboardItem({"image/png":pngPromise})]);
+    btn.textContent="✓ Afiş Panoya Kopyalandı";
+    showTweetWarning("Afiş panoya kopyalandı. X'te Ctrl+V ile yapıştırabilirsiniz.","good");
+  }catch(e){
+    btn.innerHTML=oldLabel;
+    showTweetWarning("Afiş panoya kopyalanamadı: "+e.message+". Yeni sekme açılmadı; tarayıcı pano iznini kontrol edin.","error");
+  }finally{
+    btn.disabled=false;
+  }
+};
 $("saveQueue").onclick=()=>{if(!selected)return;readEditor();if(!selected.pinned&&!selected.platform){showTweetWarning("Türkiye platformu doğrulanmadan yayını kaydetmeyin.","error");return}if(!selected.date||!selected.time){showTweetWarning("Yayın tarihi ve saati gerekli.","error");return}if(weightedLength(post1)>280||weightedLength(post2)>280){showTweetWarning("Bir gönderi 280 karakter sınırını aşıyor. Düzenleyin.","error");return}if(!selected.pinned&&(!post1.includes(selected.title)||!post1.includes(selected.date)||!post1.includes(selected.time)||!post1.includes(selected.platform)||!post1.includes(getShareUrl()))){showTweetWarning("1. postun zorunlu alanları eksik.","error");return}let doc=structuredClone(selected),index=queue.findIndex(x=>x.uid===editingId);doc.uid=editingId||"y-"+Date.now()+"-"+Math.random().toString(36).slice(2,8);doc.status=index>=0?queue[index].status:"planned";doc.post1=post1;doc.post2=post2;if(index>=0)queue[index]=doc;else queue.push(doc);editingId=doc.uid;selected=doc;saveQueue();showTweetWarning("Yayın kuyruğuna kaydedildi. Vitrine Seç → yayinlar.json indir → GitHub’a yükle adımlarını uygulayın.","good")};
 function popup(content){$("popRoot").innerHTML=`<div class="popcover" id="popCover"><div class="popbox">${content}</div></div>`;$("popCover").onclick=e=>{if(e.target.id==="popCover")$("popRoot").innerHTML=""};$("popRoot").querySelectorAll("[data-close]").forEach(x=>x.onclick=()=>$("popRoot").innerHTML="")}
 function openSettings(){popup(`<div class="pop-head"><h2>TMDB ve Proje Ayarları</h2><button class="btn subbtn btn-sm" data-close>✕</button></div><p class="small muted" style="line-height:1.6">Anahtarlar yalnızca bu tarayıcıya kaydedilir. GitHub Pages üzerinde gerçek sunucu giriş koruması yoktur. API anahtarlarını halka açık dosyalara eklemeyin.</p><div class="field" style="margin-top:17px"><label for="settingsTmdb">TMDB v3 API Key</label><input id="settingsTmdb" type="password" value="${esc(apiKey())}" autocomplete="off" placeholder="TMDB API anahtarınızı girin"></div><div class="field" style="margin-top:13px"><label for="settingsOmdb">OMDb API Key (isteğe bağlı IMDb puanı)</label><input id="settingsOmdb" type="password" value="${esc(localStorage.getItem("matinee_omdb")||"")}" autocomplete="off" placeholder="OMDb API anahtarınız"></div><div class="field" style="margin-top:13px"><label for="settingsShareUrl">X gönderileri için kısa site adresi (isteğe bağlı)</label><input id="settingsShareUrl" type="url" value="${esc(localStorage.getItem("matinee_shareurl")||"")}" placeholder="https://izle.uzzman.com.tr/"><small>Sadece <b>gerçekten çalışan ve sitenize yönlenen</b> HTTPS bağlantısını yazın. Alan adınız henüz kurulmadıysa boş bırakın; mevcut GitHub adresi kullanılır. X URL'leri t.co üzerinden otomatik kısaltır.</small></div><div class="actions"><button class="btn redbtn" id="settingsSave">Kaydet</button></div><p class="tiny muted" style="margin-top:11px">Paylaşım adresi değişirse açık editördeki postlar yeniden oluşturulur. Eski kuyruk kayıtlarının metnini yenilemeniz gerekebilir.</p>`);$("settingsSave").onclick=()=>{const shortUrl=$("settingsShareUrl").value.trim();if(shortUrl&&!validShareUrl(shortUrl)){alert("Kısa site adresi geçerli bir https:// bağlantısı olmalıdır.");return}localStorage.setItem("matinee_tmdb",$("settingsTmdb").value.trim());localStorage.setItem("matinee_omdb",$("settingsOmdb").value.trim());if(shortUrl)localStorage.setItem("matinee_shareurl",shortUrl);else localStorage.removeItem("matinee_shareurl");$("popRoot").innerHTML="";if(selected){if(isPinned)makePinnedTweets();else composeTweet()}notice("API ve X paylaşım bağlantısı ayarları kaydedildi.","good")}}
