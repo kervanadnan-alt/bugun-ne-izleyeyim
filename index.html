@@ -32,7 +32,7 @@
     .days{display:grid;grid-template-columns:repeat(7,1fr);gap:9px}.day{min-height:112px;padding:15px 12px;border:1px solid #ffffff1a;border-radius:13px;background:#17171a;position:relative;overflow:hidden}.day.active{border-color:#e32b347d;background:linear-gradient(150deg,#321217,#191216)}.day small{font-size:.68rem;text-transform:uppercase;letter-spacing:.12em;color:#aaa5a8}.day strong{display:block;margin-top:13px;font-size:.81rem;line-height:1.25}.day em{font-style:normal;position:absolute;top:11px;right:11px;color:#e32b34;opacity:.9}
     .movie-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px}.movie-card{position:relative;min-width:0;cursor:pointer;transition:transform .22s}.movie-card:hover{transform:translateY(-5px)}.poster{position:relative;aspect-ratio:2/3;border-radius:13px;overflow:hidden;background:linear-gradient(160deg,#4a2329,#21181e 55%,#161216);border:1px solid #ffffff18;display:flex;justify-content:center;align-items:center;text-align:center}.poster img{height:100%;width:100%;object-fit:cover}.poster:after{content:"";inset:55% 0 0;position:absolute;background:linear-gradient(0deg,#0008,transparent);pointer-events:none}.poster .fallback{padding:15px;color:#ffffff90;font-size:1.6rem;font-weight:900;letter-spacing:-.06em}.rating{position:absolute;z-index:1;right:10px;top:10px;background:#08080bdf;border-radius:7px;color:#ffc86e;padding:6px 9px;font-size:.72rem;font-weight:850;backdrop-filter:blur(8px)}.movie-title{font-size:.89rem;font-weight:800;margin-top:11px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.movie-sub{display:flex;justify-content:space-between;gap:8px;color:#a6a0a5;font-size:.75rem;margin-top:3px}.heart{position:absolute;z-index:3;top:10px;left:10px;background:#111b;border:1px solid #ffffff40;color:#fff;width:31px;height:31px;border-radius:50%;display:grid;place-items:center}.heart.saved{background:#dd202e;color:white}
     .empty{background:linear-gradient(120deg,#1e171b,#161619);padding:40px 26px;border:1px dashed #ffffff3b;border-radius:16px;text-align:center;color:#d0ccd0}.empty i{font-size:2.4rem;color:#e43e49;display:block;margin-bottom:14px}.empty h3{font-size:1.15rem;font-weight:800;margin:0 0 9px}.empty p{font-size:.88rem;color:#aaa5aa;margin-bottom:22px}
-    .filters{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr auto;gap:11px;padding:16px;background:#17171b;border:1px solid var(--line);border-radius:14px;margin-bottom:22px}.field{display:flex;flex-direction:column;gap:6px;min-width:0}.field label{color:#aaa6aa;font-size:.71rem;font-weight:750}.field input,.field select{width:100%;border:1px solid #ffffff25;background:#0d0d11;color:#f4f2f4;border-radius:8px;padding:10px 11px;outline:0;font-size:.8rem;min-height:43px}.field input:focus,.field select:focus{border-color:#e84654}
+    .filters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;padding:16px;background:#17171b;border:1px solid var(--line);border-radius:14px;margin-bottom:22px}.field{display:flex;flex-direction:column;gap:6px;min-width:0}.field label{color:#aaa6aa;font-size:.71rem;font-weight:750}.field input,.field select{width:100%;border:1px solid #ffffff25;background:#0d0d11;color:#f4f2f4;border-radius:8px;padding:10px 11px;outline:0;font-size:.8rem;min-height:43px}.field input:focus,.field select:focus{border-color:#e84654}
     .note{font-size:.8rem;color:#9e9ba0;margin:13px 0}.more{display:flex;justify-content:center;margin:24px 0}.hidden{display:none!important}
     .split-cta{display:flex;justify-content:space-between;gap:22px;align-items:center;border:1px solid #e32b343d;background:linear-gradient(100deg,#281216,#161316 65%);border-radius:18px;padding:29px 34px}.split-cta h2{font-weight:900;font-size:1.4rem;letter-spacing:-.03em}.split-cta p{font-size:.82rem;color:#c4bac1;margin-top:6px}
     footer{border-top:1px solid #ffffff20;padding:36px 0;color:#8b888f;font-size:.77rem}.footer-inner{display:flex;justify-content:space-between;gap:28px;flex-wrap:wrap}
@@ -61,13 +61,16 @@
 <main class="wrap">
 <section class="section" id="kusaklar"><div class="section-header"><div><h2 class="section-heading">7 Gün, 7 Farklı Dünya</h2><p class="section-sub">Haftanın her günü için ayrı bir sinema ruhu.</p></div><span class="tiny muted">#AkşamMatinesi</span></div><div class="days" id="dayStrip"></div></section>
 <section class="section" id="haftaninSecimleri"><div class="section-header"><div><h2 class="section-heading">✦ Haftanın <span class="red">7 Seçkisi</span></h2><p class="section-sub">Reji masasından belirlenen haftalık özel filmler.</p></div></div><div class="movie-grid" id="weeklyGrid"></div><div id="weeklyEmpty" class="empty">Henüz haftalık editör seçkisi yayınlanmadı.</div></section><section class="section" id="seckiler"><div class="section-header"><div><h2 class="section-heading"><span class="red">✦</span> Editörün Seçkileri</h2><p class="section-sub">Reji masasından onaylanarak yayınlanan öneriler.</p></div><span class="section-link" id="curatedCount"></span></div><div class="movie-grid" id="curatedGrid"></div><div id="curatedEmpty" class="empty hidden"><i class="fa-solid fa-film"></i><h3>İlk matine hazırlanıyor</h3><p>Henüz onaylanmış bir yayın yok. Reji masasından seçkileri yayınlayıp <strong>yayinlar.json</strong> dosyasını güncellediğinizde burada görünecekler.</p><a class="btn btn-ghost btn-sm" href="#kesfet">Bu arada film keşfet <i class="fa-solid fa-arrow-down"></i></a></div></section>
-<section class="section" id="kesfet"><div class="section-header"><div><h2 class="section-heading">Kendi Filmini <span class="red">Keşfet</span></h2><p class="section-sub">TMDB üzerinden tür, dönem, puan ve Türkiye platformuna göre ara.</p></div></div>
+<section class="section" id="kesfet"><div class="section-header"><div><h2 class="section-heading">Kendi Filmini <span class="red">Keşfet</span></h2><p class="section-sub">TMDB üzerinden film adı, tema, ülke, tür, dönem ve platforma göre keşfet. Tematik eşleşmeler TMDB etiketlerine bağlıdır.</p></div></div>
   <div class="filters">
     <div class="field wide"><label for="q">Film veya dizi adı</label><input id="q" placeholder="Aklında bir isim var mı?" autocomplete="off"></div>
     <div class="field"><label for="media">İçerik</label><select id="media"><option value="movie">Film</option><option value="tv">Dizi</option></select></div>
     <div class="field"><label for="genre">Tür</label><select id="genre"><option value="">Tüm türler</option><option value="18">Dram</option><option value="35">Komedi</option><option value="53">Gerilim</option><option value="878">Bilimkurgu</option><option value="9648">Gizem</option><option value="27">Korku</option><option value="28">Aksiyon</option><option value="99">Belgesel</option><option value="10749">Romantik</option><option value="12">Macera</option><option value="16">Animasyon</option><option value="80">Suç</option><option value="10751">Aile</option><option value="14">Fantastik</option><option value="36">Tarih</option><option value="10752">Savaş</option><option value="37">Western</option><option value="10402">Müzik</option></select></div>
     <div class="field"><label for="searchMode">Arama türü</label><select id="searchMode"><option value="title">Film adına göre</option><option value="keyword">Anahtar kelimeye göre</option></select></div>
     <div class="field"><label for="age">Yaş sınıfı (Türkiye sertifikası)</label><select id="age"><option value="">Tüm yaşlar</option><option value="family">Çocuk / Aile</option><option value="13">13+</option><option value="16">16+</option><option value="18">18+</option></select></div>
+    <div class="field"><label for="theme">Tematik seçki</label><select id="theme"><option value="">Tüm temalar</option><option value="justice">Adalet ve hukuk</option><option value="detective">Dedektif / Polisiye</option><option value="adaptation">Roman uyarlamaları</option><option value="psychological">Psikolojik gerilim</option><option value="dystopia">Distopya</option><option value="true_story">Gerçek olaylardan</option><option value="revenge">İntikam</option><option value="serial">Seri katil</option><option value="cult">Kült sinema</option><option value="classic">Sinema klasikleri</option></select></div>
+    <div class="field"><label for="country">Ülke sineması</label><select id="country"><option value="">Tüm ülkeler</option><option value="FR">Fransa</option><option value="IR">İran</option><option value="SE|NO|DK|FI|IS">İskandinav / Nordik</option><option value="KR">Güney Kore</option><option value="JP">Japonya</option></select></div>
+    <div class="field"><label for="order">Sıralama</label><select id="order"><option value="popularity.desc">Popüler yapımlar</option><option value="primary_release_date.desc">Yeni vizyona girenler</option><option value="vote_count.desc">En çok değerlendirilenler</option><option value="vote_average.desc">En yüksek puanlılar</option></select></div>
     <div class="field"><label for="provider">Platform</label><select id="provider"><option value="">Tümü</option><option value="8">Netflix</option><option value="119">Prime Video</option><option value="341">BluTV</option><option value="337">Disney+</option><option value="11">MUBI</option></select></div>
     <div class="field"><label for="minscore">En az puan</label><select id="minscore"><option value="0">Tümü</option><option value="6.5">6.5+</option><option value="7">7.0+</option><option value="7.5">7.5+</option><option value="8">8.0+</option></select></div>
     <div class="field"><label for="year">Yıl</label><input id="year" type="number" inputmode="numeric" placeholder="Örn. 2023" min="1890" max="2100"></div>
@@ -90,10 +93,38 @@ const POSTER_ROOT = "https://image.tmdb.org/t/p/w500";
 const BACKDROP_ROOT = "https://image.tmdb.org/t/p/original";
 const WATCH_PROVIDERS = {8:"Netflix",119:"Prime Video",341:"BluTV",337:"Disney+",11:"MUBI"};
 const WEEK = [
-  ["Pazartesi","Zihin Bükücü","fa-brain"],["Salı","Kült Klasik","fa-star"],["Çarşamba","Belgesel Kuşağı","fa-earth-europe"],
+  ["Pazartesi","Zihin Bükücü","fa-brain"],["Salı","Kült / Klasik","fa-star"],["Çarşamba","Belgesel Kuşağı","fa-earth-europe"],
   ["Perşembe","Dünya Sineması","fa-globe"],["Cuma","Cuma Gerilimi","fa-bolt"],["Cumartesi","Mısır Gecesi","fa-ticket"],["Pazar","Haftalık Kapanış","fa-heart"]
 ];
 const $=id=>document.getElementById(id);
+
+/* v10.1: ortak Türkçe kavram sözlüğü; TMDB etiketleri eksik olabilir. */
+const MATINEE_THEMES={
+ justice:["justice","courtroom","lawyer","trial"],
+ detective:["detective","investigation","private detective","police detective"],
+ adaptation:["based on novel","based on book","literary adaptation"],
+ psychological:["psychological thriller","psychological drama"],
+ dystopia:["dystopia","dystopian future"],
+ true_story:["based on true story","based on actual events"],
+ revenge:["revenge","vengeance"],
+ serial:["serial killer","serial murder"],
+ cult:["cult film","cult classic"]
+};
+const MATINEE_ALIASES={
+ "adalet":"justice","hukuk":"justice","mahkeme":"justice","avukat":"justice",
+ "dedektif":"detective","polisiye":"detective","sorusturma":"detective",
+ "roman":"adaptation","roman uyarlamasi":"adaptation","kitap uyarlamasi":"adaptation",
+ "psikolojik gerilim":"psychological","distopya":"dystopia",
+ "gercek olay":"true_story","gercek hikaye":"true_story",
+ "intikam":"revenge","seri katil":"serial","kult":"cult","kult film":"cult"
+};
+function matineeNormalize(s){return String(s||"").toLocaleLowerCase("tr").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/ı/g,"i").trim()}
+function matineeTheme(q){return MATINEE_ALIASES[matineeNormalize(q)]||""}
+async function matineeKeywordIds(api,phrases){
+ const data=await Promise.all(phrases.map(q=>api("/search/keyword",{query:q,page:1}).catch(()=>({results:[]}))));
+ return [...new Set(data.flatMap(x=>(x.results||[]).filter(y=>y.name&&y.id).slice(0,3).map(y=>y.id)))];
+}
+
 const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const validImage=p=>typeof p==="string"&&/^\/[A-Za-z0-9_./-]+$/.test(p);
 const imageUrl=(p,root=POSTER_ROOT)=>validImage(p)?root+p:"";
@@ -101,7 +132,7 @@ const key=()=>PUBLIC_TMDB_KEY.trim()||(window.MATINEE_CONFIG?.tmdbApiKey||"").tr
 const omdbKey=()=>PUBLIC_OMDB_KEY.trim()||localStorage.getItem("matinee_omdb")||"";
 const storage=(k,fallback)=>{try{return JSON.parse(localStorage.getItem(k))??fallback}catch{return fallback}};
 const setStorage=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));return true}catch{return false}};
-const toItem=(m,media="movie")=>({id:Number(m.id||m.tmdbId)||0,media_type:m.media_type||media,title:m.title||m.name||"Başlıksız",poster_path:m.poster_path||m.posterPath||"",backdrop_path:m.backdrop_path||m.backdropPath||"",release_date:m.release_date||m.first_air_date||m.releaseDate||"",vote_average:Number(m.vote_average??m.rating??0),overview:m.overview||m.synopsis||"",platform:m.platform||"",imdbRating:m.imdbRating||"",date:m.date||"",time:m.time||"",hook:m.hook||"",hashtag:m.hashtag||"",editorPick:m.editorPick||"none",editorNote:m.editorNote||""});
+const toItem=(m,media="movie")=>({id:Number(m.id||m.tmdbId)||0,media_type:m.media_type||media,title:m.title||m.name||"Başlıksız",poster_path:m.poster_path||m.posterPath||"",backdrop_path:m.backdrop_path||m.backdropPath||"",release_date:m.release_date||m.first_air_date||m.releaseDate||"",vote_average:Number(m.vote_average??m.rating??0),overview:m.overview||m.synopsis||"",platform:m.platform||"",imdbRating:m.imdbRating||"",date:m.date||"",time:m.time||"",hook:m.hook||"",hashtag:m.hashtag||"",editorPick:m.editorPick||"none",editorNote:m.editorNote||"",editorPriority:Number(m.editorPriority||10),editorEndDate:m.editorEndDate||""});
 let curated=[], discovery=[], currentPage=1, moreAvailable=false, currentDetail=null;
 const saveKey=(m)=>m.media_type+":"+m.id;
 function getList(type){return storage("matinee_"+type,[])}
@@ -111,21 +142,40 @@ function ratingText(m){return Number(m.vote_average)>0?Number(m.vote_average).to
 function card(m){let img=imageUrl(m.poster_path),saved=inList("favorites",m),year=(m.release_date||"").slice(0,4)||"—";return `<article class="movie-card" data-id="${m.id}" data-type="${esc(m.media_type)}" tabindex="0" role="button" aria-label="${esc(m.title)} detaylarını aç"><div class="poster">${img?`<img src="${img}" alt="${esc(m.title)} afişi" loading="lazy" onerror="this.style.display='none'">`:`<span class="fallback">${esc(m.title)}</span>`}<span class="rating">★ ${ratingText(m)}</span><button class="heart ${saved?"saved":""}" data-fav="${saveKey(m)}" title="${saved?"Favorilerden çıkar":"Favorilere ekle"}" aria-label="${saved?"Favorilerden çıkar":"Favorilere ekle"}"><i class="${saved?"fa-solid":"fa-regular"} fa-heart"></i></button></div><div class="movie-title">${esc(m.title)}</div><div class="movie-sub"><span>${year} · ${m.media_type==="tv"?"Dizi":"Film"}</span><span>${esc(m.platform||"TMDB")}</span></div></article>`}
 function attachCards(root,items){root.innerHTML=items.map(card).join("");root.querySelectorAll(".movie-card").forEach(el=>{let m=items.find(x=>String(x.id)===el.dataset.id&&x.media_type===el.dataset.type);if(!m)return;el.addEventListener("click",e=>{if(e.target.closest("[data-fav]"))return;openDetail(m)});el.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&!e.target.closest("button")){e.preventDefault();openDetail(m)}});let fav=el.querySelector("[data-fav]");fav.addEventListener("click",e=>{e.stopPropagation();toggleList("favorites",m)})})}
 function renderCurated(){
- const weekly=curated.filter(m=>["weekly","both"].includes(m.editorPick)).sort((a,b)=>(a.date||"").localeCompare(b.date||"")).slice(0,7);
+ const weekly=curated.filter(m=>["weekly","both"].includes(m.editorPick)&&(!m.editorEndDate||m.editorEndDate>=new Date().toISOString().slice(0,10))).sort((a,b)=>(a.editorPriority||10)-(b.editorPriority||10)||(a.date||"").localeCompare(b.date||"")).slice(0,7);
  attachCards($("weeklyGrid"),weekly);
  $("weeklyEmpty").classList.toggle("hidden",weekly.length>0);
- let el=$("curatedGrid");attachCards(el,curated);$("curatedEmpty").classList.toggle("hidden",curated.length>0);$("curatedCount").textContent=curated.length?curated.length+" öneri":"";if(curated.length){let m=curated.find(x=>["daily","both"].includes(x.editorPick))||curated[0];$("heroTitle").textContent=m.title;$("heroDesc").textContent=m.editorNote||m.hook||m.overview||"Editörün seçkisiyle bu akşam nitelikli sinemaya yer aç.";$("heroLabel").textContent="AKŞAM MATİNESİ · EDİTÖRÜN SEÇİMİ";$("heroMeta").innerHTML=`<span>★ ${ratingText(m)} TMDB</span><span>${esc(m.platform||"Seçki")}</span><span>${esc((m.release_date||"").slice(0,4))}</span>`;let img=imageUrl(m.backdrop_path,BACKDROP_ROOT);$("heroPhoto").style.backgroundImage=img?`url("${img}")`:"";$("heroDecoration").classList.toggle("hidden",!!img)}}
+ let el=$("curatedGrid");curated.sort((a,b)=>(a.editorPriority||10)-(b.editorPriority||10));attachCards(el,curated);$("curatedEmpty").classList.toggle("hidden",curated.length>0);$("curatedCount").textContent=curated.length?curated.length+" öneri":"";if(curated.length){let m=curated.find(x=>["daily","both"].includes(x.editorPick))||curated[0];$("heroTitle").textContent=m.title;$("heroDesc").textContent=m.editorNote||m.hook||m.overview||"Editörün seçkisiyle bu akşam nitelikli sinemaya yer aç.";$("heroLabel").textContent="AKŞAM MATİNESİ · EDİTÖRÜN SEÇİMİ";$("heroMeta").innerHTML=`<span>★ ${ratingText(m)} TMDB</span><span>${esc(m.platform||"Seçki")}</span><span>${esc((m.release_date||"").slice(0,4))}</span>`;let img=imageUrl(m.backdrop_path,BACKDROP_ROOT);$("heroPhoto").style.backgroundImage=img?`url("${img}")`:"";$("heroDecoration").classList.toggle("hidden",!!img)}}
 function renderDiscovery(){attachCards($("discoveryGrid"),discovery)}
 async function request(endpoint,params={}){if(!key())throw new Error("Canlı film kataloğu bu kurulumda etkin değil. Editörün seçkilerini ve favorilerinizi kullanabilirsiniz.");const url=new URL("https://api.themoviedb.org/3"+endpoint);url.searchParams.set("api_key",key());url.searchParams.set("language","tr-TR");for(const [k,v] of Object.entries(params))if(v!==""&&v!==null&&v!==undefined)url.searchParams.set(k,String(v));const r=await fetch(url,{headers:{Accept:"application/json"}});if(!r.ok)throw new Error(r.status===401?"TMDB anahtarı geçersiz.":"TMDB isteği başarısız ("+r.status+").");return r.json()}
 function status(message,type=""){let s=$("discoverStatus");s.textContent=message;s.className="status "+type}
 function mediaGenre(movie,genre){if(!genre)return true;return (movie.genre_ids||[]).includes(Number(genre))}
-async function runDiscover(reset=true){let m=$("media").value,query=$("q").value.trim(),genre=$("genre").value,provider=$("provider").value,score=Number($("minscore").value),yr=$("year").value.trim();if(reset){currentPage=1;discovery=[];renderDiscovery()}$("discoverBtn").disabled=true;$("moreBtn").classList.add("hidden");status(activeWeek!==null?WEEK[activeWeek][0]+" · "+WEEK[activeWeek][1]+" kuşağı aranıyor…":"Film arşivi taranıyor…");try{let data;if(query){
+async function runDiscover(reset=true){let m=$("media").value,query=$("q").value.trim(),genre=$("genre").value,provider=$("provider").value,score=Number($("minscore").value),yr=$("year").value.trim();if(reset){currentPage=1;discovery=[];renderDiscovery()}$("discoverBtn").disabled=true;$("moreBtn").classList.add("hidden");status(activeWeek!==null?WEEK[activeWeek][0]+" · "+WEEK[activeWeek][1]+" kuşağı aranıyor…":"Film arşivi taranıyor…");try{let data;
+const theme=$("theme").value,country=$("country").value,order=$("order").value;
+const alias=matineeTheme(query);
+const selectedTheme=theme==="classic"?"":(theme||($("searchMode").value==="keyword"?alias:""));
+const thematic=Boolean(selectedTheme||theme==="classic"||country);
+if((thematic||($("searchMode").value==="keyword"&&query))&&m==="movie"){
+ const params={page:currentPage,watch_region:"TR",with_watch_providers:provider||undefined,with_watch_monetization_types:provider?"flatrate":undefined,
+ "vote_average.gte":score||undefined,with_genres:genre||undefined,sort_by:order,include_adult:"false",with_origin_country:country||undefined};
+ if(yr)params.primary_release_year=yr;
+ if(theme==="classic")params["primary_release_date.lte"]="2005-12-31";
+ let phrases=selectedTheme?(MATINEE_THEMES[selectedTheme]||[]):[];
+ if(query&&$("searchMode").value==="keyword"&&!alias)phrases.push(query);
+ if(phrases.length){
+  const ids=await matineeKeywordIds(request,phrases);
+  if(!ids.length)data={results:[],total_pages:0};
+  else{params.with_keywords=ids.join("|");data=await request("/discover/movie",params)}
+ }else if(query&&$("searchMode").value==="title"){
+  data=await request("/search/movie",{query,page:currentPage,include_adult:"false"});
+ }else data=await request("/discover/movie",params);
+}else if(query){
 if($("searchMode").value==="keyword"&&m==="movie"){
  const found=await request("/search/keyword",{query,page:1});
  const ids=(found.results||[]).slice(0,8).map(k=>k.id);
  if(!ids.length){data={results:[],total_pages:0}}
  else data=await request("/discover/movie",{page:currentPage,with_keywords:ids.join("|"),watch_region:"TR",with_watch_providers:provider||undefined,"vote_average.gte":score||undefined});
-}else data=await request("/search/"+m,{query,page:currentPage,include_adult:"false"});}else{let params={page:currentPage,watch_region:"TR",include_adult:"false",sort_by:"popularity.desc",with_genres:genre||undefined,"vote_average.gte":score||undefined,with_watch_providers:provider||undefined,with_watch_monetization_types:provider?"flatrate":undefined};if(yr)params[m==="movie"?"primary_release_year":"first_air_date_year"]=yr;
+}else data=await request("/search/"+m,{query,page:currentPage,include_adult:"false"});}else{let params={page:currentPage,watch_region:"TR",include_adult:"false",sort_by:order,with_genres:genre||undefined,"vote_average.gte":score||undefined,with_watch_providers:provider||undefined,with_watch_monetization_types:provider?"flatrate":undefined};if(yr)params[m==="movie"?"primary_release_year":"first_air_date_year"]=yr;
 if(activeWeek!==null){
  const w=WEEK_FILTERS[activeWeek];
  params.with_genres=w.genres||undefined;

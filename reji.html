@@ -36,12 +36,12 @@ header{height:74px;display:flex;align-items:center;justify-content:space-between
  <div class="kpi-bar"><div class="kpi"><span>Yayın Kuyruğu</span><b id="totalCount">0</b></div><div class="kpi"><span>Yayına Hazır</span><b id="plannedCount">0</b></div><div class="kpi"><span>Vitrine Seçilen</span><b id="publishedCount">0</b></div></div>
  <section class="panel"><div class="panel-top"><div><h2 class="section-title"><i class="fa-solid fa-calendar-week red"></i> Haftalık Yayın Kuşakları</h2><p class="section-caption">Bir kuşak seçin; tür, dönem ve puan filtreleri otomatik uygulansın.</p></div></div><div class="days" id="dayButtons"></div><div class="actions"><button class="btn subbtn btn-sm" id="resetPreset" type="button"><i class="fa-solid fa-rotate-left"></i> Kuşak seçimini temizle</button><button class="btn outlinebtn btn-sm" id="pinnedBtn" type="button"><i class="fa-solid fa-thumbtack"></i> Sabit Gönderi Şablonu</button></div></section>
  <section class="panel" id="searchPanel"><div class="panel-top"><div><h2 class="section-title"><i class="fa-solid fa-magnifying-glass red"></i> Film Kataloğu & Nokta Atışı Arama</h2><p class="section-caption">Türkiye abonelik kataloglarında gelişmiş filtrelerle ara; istediğin filmi editöre aktar.</p></div></div>
-  <form id="searchForm"><div class="fields"><div class="field wide"><label for="searchText">Film adı / anahtar kelime</label><input id="searchText" placeholder="Örn. Parasite veya zamana yolculuk"></div><div class="field"><label for="searchMode">Arama türü</label><select id="searchMode"><option value="title">Film adına göre</option><option value="keyword">TMDB anahtar kelimesi</option></select></div><div class="field"><label for="platformFilter">Türkiye platformu</label><select id="platformFilter"><option value="">5 platformun tamamı</option><option value="8">Netflix</option><option value="119">Prime Video</option><option value="341">BluTV</option><option value="337">Disney+</option><option value="11">MUBI</option></select></div><div class="field"><label for="releaseYear">Net vizyon yılı</label><input id="releaseYear" type="number" min="1890" max="2100" placeholder="Örn. 2020"></div><div class="field"><label for="minRating">Min. TMDB puanı</label><select id="minRating"><option value="0">Filtresiz</option><option value="6.5">6.5+</option><option value="7">7.0+</option><option value="7.5">7.5+</option><option value="8">8.0+</option></select></div><div class="field wide"><label for="sortBy">Sıralama</label><select id="sortBy"><option value="popularity.desc">Popülerlik (yüksekten)</option><option value="vote_average.desc">Puan (yüksekten)</option><option value="primary_release_date.desc">Vizyon tarihi (yeniden)</option></select></div></div><div class="fields" style="margin-top:14px">
+  <form id="searchForm"><div class="fields"><div class="field wide"><label for="searchText">Film adı / anahtar kelime</label><input id="searchText" placeholder="Örn. Parasite veya zamana yolculuk"></div><div class="field"><label for="searchMode">Arama türü</label><select id="searchMode"><option value="title">Film adına göre</option><option value="keyword">TMDB anahtar kelimesi</option></select></div><div class="field"><label for="platformFilter">Türkiye platformu</label><select id="platformFilter"><option value="">5 platformun tamamı</option><option value="8">Netflix</option><option value="119">Prime Video</option><option value="341">BluTV</option><option value="337">Disney+</option><option value="11">MUBI</option></select></div><div class="field"><label for="releaseYear">Net vizyon yılı</label><input id="releaseYear" type="number" min="1890" max="2100" placeholder="Örn. 2020"></div><div class="field"><label for="minRating">Min. TMDB puanı</label><select id="minRating"><option value="0">Filtresiz</option><option value="6.5">6.5+</option><option value="7">7.0+</option><option value="7.5">7.5+</option><option value="8">8.0+</option></select></div><div class="field wide"><label for="sortBy">Sıralama</label><select id="sortBy"><option value="popularity.desc">Popülerlik (yüksekten)</option><option value="vote_average.desc">Puan (yüksekten)</option><option value="primary_release_date.desc">Yeni vizyona girenler</option><option value="vote_count.desc">En çok değerlendirilenler</option></select></div></div><div class="fields" style="margin-top:14px">
 <div class="field"><label for="themeFilter">Tematik seçki</label><select id="themeFilter">
 <option value="">Tüm temalar</option><option value="justice">Adalet ve hukuk</option>
 <option value="detective">Dedektif / Polisiye</option><option value="adaptation">Roman uyarlamaları</option>
 <option value="psychological">Psikolojik gerilim</option><option value="dystopia">Distopya</option>
-<option value="true_story">Gerçek olaylardan</option></select></div>
+<option value="true_story">Gerçek olaylardan</option><option value="revenge">İntikam</option><option value="serial">Seri katil</option><option value="cult">Kült sinema (TMDB etiketi)</option><option value="classic">Sinema klasikleri (2005 ve öncesi)</option></select></div>
 <div class="field"><label for="countryFilter">Yapım ülkesi</label><select id="countryFilter">
 <option value="">Tüm ülkeler</option><option value="FR">Fransa</option><option value="IR">İran</option>
 <option value="SE|NO|DK|FI|IS">İskandinav / Nordik</option><option value="SE">İsveç</option>
@@ -68,7 +68,7 @@ header{height:74px;display:flex;align-items:center;justify-content:space-between
   <div id="noSelection" class="empty"><i class="fa-solid fa-hand-pointer"></i>Soldaki katalogdan bir film seçin veya sabit gönderi şablonunu açın.</div>
   <div id="editorBody" class="hidden">
     <div class="editor-preview"><div id="editorPoster"></div><div style="min-width:0;flex:1"><h3 id="editorTitle">—</h3><div class="small muted" id="editorMeta">—</div><div class="selected-platform" id="platformBadge">Platform seçilmedi</div><div class="small muted" id="imdbBadge" style="margin-top:7px"></div></div></div>
-    <div class="edit-fields"><div class="field"><label for="editDate">Yayın tarihi</label><input type="date" id="editDate"></div><div class="field"><label for="editTime">Yayın saati</label><input type="time" id="editTime" value="21:00"></div><div class="field span2"><label for="editPlatform">İzleme platformu (TR)</label><select id="editPlatform"></select><small id="platformHint">TMDB üzerinde doğrulanan sağlayıcılar listelenir.</small></div><div class="field span2"><label for="editHook">Vurucu tanıtım cümlesi (düzenlenebilir)</label><textarea id="editHook" rows="2" placeholder="Kısa, vurucu editör notu"></textarea></div><div class="field span2"><label for="editOverview">Geniş sinopsis — TMDB tam metin</label><textarea id="editOverview" rows="5" placeholder="TMDB'den gelen tam özet burada tutulur."></textarea></div><div class="field span2"><label for="editorPick">Editörün Seçimi</label><select id="editorPick"><option value="none">Normal yayın</option><option value="daily">Günün Filmi (büyük afiş)</option><option value="weekly">Haftanın 7 Seçkisi</option><option value="both">Günün Filmi + Haftanın Seçkisi</option></select></div><div class="field span2"><label for="editorNote">Editör yorumu (vitrinde görünür)</label><textarea id="editorNote" rows="3" placeholder="Bu filmi neden öneriyorsun?"></textarea></div><div class="field span2"><label for="editHashtag">Kuşak etiketi</label><input id="editHashtag" placeholder="#AkşamMatinesi"></div></div>
+    <div class="edit-fields"><div class="field"><label for="editDate">Yayın tarihi</label><input type="date" id="editDate"></div><div class="field"><label for="editTime">Yayın saati</label><input type="time" id="editTime" value="21:00"></div><div class="field span2"><label for="editPlatform">İzleme platformu (TR)</label><select id="editPlatform"></select><small id="platformHint">TMDB üzerinde doğrulanan sağlayıcılar listelenir.</small></div><div class="field span2"><label for="editHook">Vurucu tanıtım cümlesi (düzenlenebilir)</label><textarea id="editHook" rows="2" placeholder="Kısa, vurucu editör notu"></textarea></div><div class="field span2"><label for="editOverview">Geniş sinopsis — TMDB tam metin</label><textarea id="editOverview" rows="5" placeholder="TMDB'den gelen tam özet burada tutulur."></textarea></div><div class="field span2"><label for="editorPick">Editörün Seçimi</label><select id="editorPick"><option value="none">Normal yayın</option><option value="daily">Günün Filmi (büyük afiş)</option><option value="weekly">Haftanın 7 Seçkisi</option><option value="both">Günün Filmi + Haftanın Seçkisi</option></select></div><div class="field"><label for="editorPriority">Vitrin önceliği (1 en üstte)</label><input id="editorPriority" type="number" min="1" max="99" value="10"></div><div class="field"><label for="editorEndDate">Vitrin bitiş tarihi (isteğe bağlı)</label><input id="editorEndDate" type="date"></div><div class="field span2"><label for="editorNote">Editör yorumu (vitrinde görünür)</label><textarea id="editorNote" rows="3" placeholder="Bu filmi neden öneriyorsun?"></textarea></div><div class="field span2"><label for="editHashtag">Kuşak etiketi</label><input id="editHashtag" placeholder="#AkşamMatinesi"></div></div>
     <hr class="section-rule"><h3 class="section-title" style="font-size:.9rem">X (Twitter) Gönderi Editörü</h3><p class="section-caption">Başlık, puan, tarih/saat, platform ve site linki daima 1. postta kalır.</p>
     <div class="tweet-tabs"><button id="tabPost1" class="tweet-tab active" type="button">1. Post</button><button id="tabPost2" class="tweet-tab" type="button">2. Post / Flood</button><span id="tweetCount" class="small muted" style="margin-left:auto">0/280</span></div>
     <div class="field"><label for="tweetInput">Paylaşım metni (düzenlenebilir)</label><textarea id="tweetInput" class="tweet-field" rows="7"></textarea><div class="tweet-status"><span id="tweetValidation">Henüz metin yok.</span><strong id="tweetLength">0/280</strong></div><div class="tiny muted" style="margin-top:6px">Metinler X’te taşmaması için güvenli pay bırakılarak hazırlanır. Sekmeler ayrı taslaklardır; iki gönderilik zincir için X üzerinde + veya Yanıtla kullanılmalıdır.</div></div>
@@ -84,6 +84,34 @@ header{height:74px;display:flex;align-items:center;justify-content:space-between
 <script>
 "use strict";
 const $=id=>document.getElementById(id);
+
+/* v10.1: ortak Türkçe kavram sözlüğü; TMDB etiketleri eksik olabilir. */
+const MATINEE_THEMES={
+ justice:["justice","courtroom","lawyer","trial"],
+ detective:["detective","investigation","private detective","police detective"],
+ adaptation:["based on novel","based on book","literary adaptation"],
+ psychological:["psychological thriller","psychological drama"],
+ dystopia:["dystopia","dystopian future"],
+ true_story:["based on true story","based on actual events"],
+ revenge:["revenge","vengeance"],
+ serial:["serial killer","serial murder"],
+ cult:["cult film","cult classic"]
+};
+const MATINEE_ALIASES={
+ "adalet":"justice","hukuk":"justice","mahkeme":"justice","avukat":"justice",
+ "dedektif":"detective","polisiye":"detective","sorusturma":"detective",
+ "roman":"adaptation","roman uyarlamasi":"adaptation","kitap uyarlamasi":"adaptation",
+ "psikolojik gerilim":"psychological","distopya":"dystopia",
+ "gercek olay":"true_story","gercek hikaye":"true_story",
+ "intikam":"revenge","seri katil":"serial","kult":"cult","kult film":"cult"
+};
+function matineeNormalize(s){return String(s||"").toLocaleLowerCase("tr").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/ı/g,"i").trim()}
+function matineeTheme(q){return MATINEE_ALIASES[matineeNormalize(q)]||""}
+async function matineeKeywordIds(api,phrases){
+ const data=await Promise.all(phrases.map(q=>api("/search/keyword",{query:q,page:1}).catch(()=>({results:[]}))));
+ return [...new Set(data.flatMap(x=>(x.results||[]).filter(y=>y.name&&y.id).slice(0,3).map(y=>y.id)))];
+}
+
 const SITE_URL="https://kervanadnan-alt.github.io/bugun-ne-izleyeyim/";
 function getShareUrl(){const custom=localStorage.getItem("matinee_shareurl")||"";return /^https:\/\/[^\s/?#]+(?:[^\s]*)$/i.test(custom)?custom:SITE_URL}
 function validShareUrl(value){try{const url=new URL(value);return url.protocol==="https:"&&!!url.hostname&&!url.username&&!url.password}catch{return false}}
@@ -177,27 +205,24 @@ async function getResultPage(state,page){
     if(state.to)params["primary_release_date.lte"]=state.to+"-12-31";
   }
   if(state.country)params.with_origin_country=state.country.replaceAll("|","|");
-  const themes={justice:"justice",detective:"detective",adaptation:"based on novel",psychological:"psychological thriller",dystopia:"dystopia",true_story:"based on true story"};
-  if(state.theme){
-    if(!state.themeKeywordId){
-      const keys=await tmdb("/search/keyword",{query:themes[state.theme],page:1});
-      state.themeKeywordId=keys.results?.[0]?.id||-1;
-    }
-    if(state.themeKeywordId===-1)return {results:[],total_pages:0};
-    params.with_keywords=state.themeKeywordId;
+  const themeKey=state.theme==="classic"?"":state.theme;
+  const userTheme=state.q&&state.mode==="keyword"?matineeTheme(state.q):"";
+  const selectedTheme=themeKey||userTheme;
+  if(state.theme==="classic")params["primary_release_date.lte"]="2005-12-31";
+  if(selectedTheme){
+    if(!state.themeKeywordIds)state.themeKeywordIds=await matineeKeywordIds(tmdb,MATINEE_THEMES[selectedTheme]||[]);
+    if(!state.themeKeywordIds.length)return {results:[],total_pages:0};
+    params.with_keywords=state.themeKeywordIds.join("|");
   }
   if(state.preset?.genres)params.with_genres=state.preset.genres;
   else if(state.genre)params.with_genres=state.genre;
   if(state.preset?.excludeGenres)params.without_genres=state.preset.excludeGenres;
   if(state.originalLanguage&&state.originalLanguage!=="!en")params.with_original_language=state.originalLanguage;
-  if(state.q&&state.mode==="keyword"){
-    if(!state.keywordId){
-      const keys=await tmdb("/search/keyword",{query:state.q,page:1});
-      const found=keys.results?.[0];
-      if(!found)return {results:[],total_pages:0};
-      state.keywordId=found.id;
-    }
-    params.with_keywords=state.themeKeywordId?`${state.keywordId},${state.themeKeywordId}`:state.keywordId;
+  if(state.q&&state.mode==="keyword"&&!userTheme){
+    if(!state.keywordIds)state.keywordIds=await matineeKeywordIds(tmdb,[state.q]);
+    if(!state.keywordIds.length)return {results:[],total_pages:0};
+    // Serbest kelime ve tema birlikteyse alternatif eşleşmeler kullanılır.
+    params.with_keywords=[...new Set([...(state.keywordIds||[]),...(state.themeKeywordIds||[])])].join("|");
   }
   return tmdb("/discover/movie",params);
 }
@@ -275,8 +300,8 @@ async function selectMovie(movie){notice("Film ayrıntıları ve Türkiye sağla
 function loadDraft(d){selected=structuredClone(d);editingId=d.uid;isPinned=!!d.pinned;populateEditor(true);$("editorPanel").scrollIntoView({behavior:"smooth",block:"start"})}
 function resetEditor(){selected=null;editingId=null;isPinned=false;post1="";post2="";$("editorBody").classList.add("hidden");$("noSelection").classList.remove("hidden")}
 $("newDraft").onclick=resetEditor;
-function populateEditor(restore=false){if(!selected)return;$("noSelection").classList.add("hidden");$("editorBody").classList.remove("hidden");let m=selected,cover=poster(m.poster_path);$("editorPoster").innerHTML=cover?`<img src="${cover}" alt="${esc(m.title)} afişi">`:`<div class="placeholder"><i class="fa-solid fa-clapperboard"></i></div>`;$("editorTitle").textContent=m.title;$("editorMeta").textContent=isPinned?"7 günlük yayın akışı · Sabit gönderi":`${(m.release_date||"").slice(0,4)} · ★ ${Number(m.vote_average||0).toFixed(1)} TMDB`;$("imdbBadge").textContent=m.imdbRating?"IMDb: "+m.imdbRating+"/10":(isPinned?"":"IMDb puanı için OMDb anahtarı isteğe bağlıdır.");$("editDate").value=m.date||defaultDate();$("editTime").value=m.time||"21:00";let providerItems=(m.availableProviders||[]).length?m.availableProviders:PROVIDERS.map(x=>({id:x.id,name:x.name}));$("editPlatform").innerHTML=isPinned?`<option value="">Sabit gönderi</option>`:!providerItems.length?`<option value="">Türkiye abonelik platformu bulunamadı</option>`:providerItems.map(x=>`<option value="${esc(x.name)}">${esc(x.name)}</option>`).join("");if(!isPinned&&m.platform&&!Array.from($("editPlatform").options).some(x=>x.value===m.platform))$("editPlatform").insertAdjacentHTML("beforeend",`<option value="${esc(m.platform)}">${esc(m.platform)} (önceki kayıt)</option>`);$("editPlatform").value=m.platform||"";$("platformBadge").textContent=isPinned?"Sabit gönderi":m.platform||"Sağlayıcı bulunamadı";$("platformHint").textContent=isPinned?"Haftalık akış tanıtımı için platform gerekmez.":(m.availableProviders||[]).length?"Sadece TMDB TR abonelik katalogunda doğrulanmış platformlar listeleniyor.":"TMDB TR abonelik katalogunda platform bulunamadı. Yayınlamadan önce doğrulayın.";$("editOverview").value=m.overview||"";$("editHook").value=m.hook||"";$("editHashtag").value=m.hashtag||"";$("editorPick").value=m.editorPick||"none";$("editorNote").value=m.editorNote||"";post1=restore?m.post1||"":"";post2=restore?m.post2||"":"";if(!restore){if(isPinned)makePinnedTweets();else composeTweet()}postTab=1;switchPost(1)}
-function readEditor(){if(!selected)return;selected.date=$("editDate").value;selected.time=$("editTime").value;selected.platform=$("editPlatform").value;selected.providerId=(getPlatformByName(selected.platform)||{}).id||"";selected.hook=$("editHook").value;selected.overview=$("editOverview").value;selected.hashtag=$("editHashtag").value;selected.editorPick=$("editorPick").value;selected.editorNote=$("editorNote").value;selected.post1=post1;selected.post2=post2}
+function populateEditor(restore=false){if(!selected)return;$("noSelection").classList.add("hidden");$("editorBody").classList.remove("hidden");let m=selected,cover=poster(m.poster_path);$("editorPoster").innerHTML=cover?`<img src="${cover}" alt="${esc(m.title)} afişi">`:`<div class="placeholder"><i class="fa-solid fa-clapperboard"></i></div>`;$("editorTitle").textContent=m.title;$("editorMeta").textContent=isPinned?"7 günlük yayın akışı · Sabit gönderi":`${(m.release_date||"").slice(0,4)} · ★ ${Number(m.vote_average||0).toFixed(1)} TMDB`;$("imdbBadge").textContent=m.imdbRating?"IMDb: "+m.imdbRating+"/10":(isPinned?"":"IMDb puanı için OMDb anahtarı isteğe bağlıdır.");$("editDate").value=m.date||defaultDate();$("editTime").value=m.time||"21:00";let providerItems=(m.availableProviders||[]).length?m.availableProviders:PROVIDERS.map(x=>({id:x.id,name:x.name}));$("editPlatform").innerHTML=isPinned?`<option value="">Sabit gönderi</option>`:!providerItems.length?`<option value="">Türkiye abonelik platformu bulunamadı</option>`:providerItems.map(x=>`<option value="${esc(x.name)}">${esc(x.name)}</option>`).join("");if(!isPinned&&m.platform&&!Array.from($("editPlatform").options).some(x=>x.value===m.platform))$("editPlatform").insertAdjacentHTML("beforeend",`<option value="${esc(m.platform)}">${esc(m.platform)} (önceki kayıt)</option>`);$("editPlatform").value=m.platform||"";$("platformBadge").textContent=isPinned?"Sabit gönderi":m.platform||"Sağlayıcı bulunamadı";$("platformHint").textContent=isPinned?"Haftalık akış tanıtımı için platform gerekmez.":(m.availableProviders||[]).length?"Sadece TMDB TR abonelik katalogunda doğrulanmış platformlar listeleniyor.":"TMDB TR abonelik katalogunda platform bulunamadı. Yayınlamadan önce doğrulayın.";$("editOverview").value=m.overview||"";$("editHook").value=m.hook||"";$("editHashtag").value=m.hashtag||"";$("editorPick").value=m.editorPick||"none";$("editorPriority").value=m.editorPriority||10;$("editorEndDate").value=m.editorEndDate||"";$("editorNote").value=m.editorNote||"";post1=restore?m.post1||"":"";post2=restore?m.post2||"":"";if(!restore){if(isPinned)makePinnedTweets();else composeTweet()}postTab=1;switchPost(1)}
+function readEditor(){if(!selected)return;selected.date=$("editDate").value;selected.time=$("editTime").value;selected.platform=$("editPlatform").value;selected.providerId=(getPlatformByName(selected.platform)||{}).id||"";selected.hook=$("editHook").value;selected.overview=$("editOverview").value;selected.hashtag=$("editHashtag").value;selected.editorPick=$("editorPick").value;selected.editorPriority=Math.max(1,Number($("editorPriority").value)||10);selected.editorEndDate=$("editorEndDate").value;selected.editorNote=$("editorNote").value;selected.post1=post1;selected.post2=post2}
 function weightedLength(s){const text=String(s||"").replace(/https?:\/\/[^\s]+/g,"x".repeat(23));return [...text].reduce((sum,ch)=>sum+(ch.codePointAt(0)>0x10ff?2:1),0)}
 function fitText(text,max){let output="",weight=0,chars=[...String(text||"").trim()];for(let i=0;i<chars.length;i++){const n=weightedLength(chars[i]);if(weight+n>max-(i<chars.length-1?1:0))break;output+=chars[i];weight+=n}return {short:output.trim(),rest:chars.slice([...output].length).join("").trim()}}
 function composeTweet(){
@@ -389,7 +414,7 @@ function openSettings(){popup(`<div class="pop-head"><h2>TMDB ve Proje Ayarları
 $("settingsOpen").onclick=openSettings;
 function download(name,data){const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:"application/json;charset=utf-8"}));let a=document.createElement("a");a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2500)}
 $("exportBackup").onclick=()=>download("yayinkuyrugu-yedek.json",{version:1,exportedAt:new Date().toISOString(),entries:queue});
-$("exportPublished").onclick=()=>{let published=queue.filter(x=>x.status==="published"&&!x.pinned);if(!published.length){alert("Vitrin için önce en az bir filmi Vitrine Seç düğmesiyle işaretleyin. Sabit gönderi yalnızca X içindir.");return}let safe=published.map(({uid,id,media_type,title,release_date,poster_path,backdrop_path,vote_average,imdbRating,imdbId,overview,hook,platform,providerId,availableProviders,date,time,hashtag,post1,post2,pinned,status,editorPick,editorNote})=>({uid,id,media_type,title,release_date,poster_path,backdrop_path,vote_average,imdbRating,imdbId,overview,hook,platform,providerId,availableProviders,date,time,hashtag,post1,post2,pinned,status,editorPick,editorNote}));download("yayinlar.json",{version:1,updatedAt:new Date().toISOString(),entries:safe})};
+$("exportPublished").onclick=()=>{let published=queue.filter(x=>x.status==="published"&&!x.pinned);if(!published.length){alert("Vitrin için önce en az bir filmi Vitrine Seç düğmesiyle işaretleyin. Sabit gönderi yalnızca X içindir.");return}let safe=published.map(({uid,id,media_type,title,release_date,poster_path,backdrop_path,vote_average,imdbRating,imdbId,overview,hook,platform,providerId,availableProviders,date,time,hashtag,post1,post2,pinned,status,editorPick,editorNote,editorPriority,editorEndDate})=>({uid,id,media_type,title,release_date,poster_path,backdrop_path,vote_average,imdbRating,imdbId,overview,hook,platform,providerId,availableProviders,date,time,hashtag,post1,post2,pinned,status,editorPick,editorNote,editorPriority,editorEndDate}));download("yayinlar.json",{version:1,updatedAt:new Date().toISOString(),entries:safe})};
 renderDays();renderQueue();resetEditor();
 </script>
 </body></html>
