@@ -60,7 +60,13 @@
 </div></div><div class="hero-decoration" id="heroDecoration"><div class="film-frame"></div></div></section>
 <main class="wrap">
 <section class="section" id="kusaklar"><div class="section-header"><div><h2 class="section-heading">7 Gün, 7 Farklı Dünya</h2><p class="section-sub">Haftanın her günü için ayrı bir sinema ruhu.</p></div><span class="tiny muted">#AkşamMatinesi</span></div><div class="days" id="dayStrip"></div></section>
-<section class="section" id="haftaninSecimleri"><div class="section-header"><div><h2 class="section-heading">✦ Haftanın <span class="red">7 Seçkisi</span></h2><p class="section-sub">Reji masasından belirlenen haftalık özel filmler.</p></div></div><div class="movie-grid" id="weeklyGrid"></div><div id="weeklyEmpty" class="empty">Henüz haftalık editör seçkisi yayınlanmadı.</div></section><section class="section" id="seckiler"><div class="section-header"><div><h2 class="section-heading"><span class="red">✦</span> Editörün Seçkileri</h2><p class="section-sub">Reji masasından onaylanarak yayınlanan öneriler.</p></div><span class="section-link" id="curatedCount"></span></div><div class="movie-grid" id="curatedGrid"></div><div id="curatedEmpty" class="empty hidden"><i class="fa-solid fa-film"></i><h3>İlk matine hazırlanıyor</h3><p>Henüz onaylanmış bir yayın yok. Reji masasından seçkileri yayınlayıp <strong>yayinlar.json</strong> dosyasını güncellediğinizde burada görünecekler.</p><a class="btn btn-ghost btn-sm" href="#kesfet">Bu arada film keşfet <i class="fa-solid fa-arrow-down"></i></a></div></section>
+<section class="section" id="haftaninSecimleri"><div class="section-header"><div><h2 class="section-heading">✦ Haftanın <span class="red">7 Seçkisi</span></h2><p class="section-sub">Reji masasından belirlenen haftalık özel filmler.</p></div></div><div class="movie-grid" id="weeklyGrid"></div><div id="weeklyEmpty" class="empty">Henüz haftalık editör seçkisi yayınlanmadı.</div></section><section class="section" id="ozel-koleksiyonlar">
+<div class="section-header"><div><h2 class="section-heading">✦ <span class="red">Kült Köşesi</span></h2><p class="section-sub">Editörün seçtiği kült filmler.</p></div></div>
+<div class="movie-grid" id="cultGrid"></div><div class="empty" id="cultEmpty">Kült Köşesi için henüz seçki yayınlanmadı.</div>
+<div class="section-header" style="margin-top:40px"><div><h2 class="section-heading">✦ <span class="red">Yönetmen Dosyası</span></h2><p class="section-sub">Yönetmenlere odaklanan özel film seçkileri.</p></div></div>
+<div class="movie-grid" id="directorGrid"></div><div class="empty" id="directorEmpty">Yönetmen Dosyası için henüz seçki yayınlanmadı.</div>
+</section>
+<section class="section" id="seckiler"><div class="section-header"><div><h2 class="section-heading"><span class="red">✦</span> Editörün Seçkileri</h2><p class="section-sub">Reji masasından onaylanarak yayınlanan öneriler.</p></div><span class="section-link" id="curatedCount"></span></div><div class="movie-grid" id="curatedGrid"></div><div id="curatedEmpty" class="empty hidden"><i class="fa-solid fa-film"></i><h3>İlk matine hazırlanıyor</h3><p>Henüz onaylanmış bir yayın yok. Reji masasından seçkileri yayınlayıp <strong>yayinlar.json</strong> dosyasını güncellediğinizde burada görünecekler.</p><a class="btn btn-ghost btn-sm" href="#kesfet">Bu arada film keşfet <i class="fa-solid fa-arrow-down"></i></a></div></section>
 <section class="section" id="kesfet"><div class="section-header"><div><h2 class="section-heading">Kendi Filmini <span class="red">Keşfet</span></h2><p class="section-sub">TMDB üzerinden film adı, tema, ülke, tür, dönem ve platforma göre keşfet. Tematik eşleşmeler TMDB etiketlerine bağlıdır.</p></div></div>
   <div class="filters">
     <div class="field wide"><label for="q">Film veya dizi adı</label><input id="q" placeholder="Aklında bir isim var mı?" autocomplete="off"></div>
@@ -132,7 +138,9 @@ const key=()=>PUBLIC_TMDB_KEY.trim()||(window.MATINEE_CONFIG?.tmdbApiKey||"").tr
 const omdbKey=()=>PUBLIC_OMDB_KEY.trim()||localStorage.getItem("matinee_omdb")||"";
 const storage=(k,fallback)=>{try{return JSON.parse(localStorage.getItem(k))??fallback}catch{return fallback}};
 const setStorage=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));return true}catch{return false}};
-const toItem=(m,media="movie")=>({id:Number(m.id||m.tmdbId)||0,media_type:m.media_type||media,title:m.title||m.name||"Başlıksız",poster_path:m.poster_path||m.posterPath||"",backdrop_path:m.backdrop_path||m.backdropPath||"",release_date:m.release_date||m.first_air_date||m.releaseDate||"",vote_average:Number(m.vote_average??m.rating??0),overview:m.overview||m.synopsis||"",platform:m.platform||"",imdbRating:m.imdbRating||"",date:m.date||"",time:m.time||"",hook:m.hook||"",hashtag:m.hashtag||"",editorPick:m.editorPick||"none",editorNote:m.editorNote||"",editorPriority:Number(m.editorPriority||10),editorEndDate:m.editorEndDate||""});
+const toItem=(m,media="movie")=>({id:Number(m.id||m.tmdbId)||0,media_type:m.media_type||media,title:m.title||m.name||"Başlıksız",poster_path:m.poster_path||m.posterPath||"",backdrop_path:m.backdrop_path||m.backdropPath||"",release_date:m.release_date||m.first_air_date||m.releaseDate||"",vote_average:Number(m.vote_average??m.rating??0),overview:m.overview||m.synopsis||"",platform:m.platform||"",imdbRating:m.imdbRating||"",date:m.date||"",time:m.time||"",hook:m.hook||"",hashtag:m.hashtag||"",editorPick:m.editorPick||"none",editorNote:m.editorNote||"",editorPriority:Number(m.editorPriority||10),editorEndDate:m.editorEndDate||"",
+editorStartDate:m.editorStartDate||"",editorCollection:m.editorCollection||"",
+editorDirector:m.editorDirector||"",editorWhy:m.editorWhy||""});
 let curated=[], discovery=[], currentPage=1, moreAvailable=false, currentDetail=null;
 const saveKey=(m)=>m.media_type+":"+m.id;
 function getList(type){return storage("matinee_"+type,[])}
@@ -142,10 +150,30 @@ function ratingText(m){return Number(m.vote_average)>0?Number(m.vote_average).to
 function card(m){let img=imageUrl(m.poster_path),saved=inList("favorites",m),year=(m.release_date||"").slice(0,4)||"—";return `<article class="movie-card" data-id="${m.id}" data-type="${esc(m.media_type)}" tabindex="0" role="button" aria-label="${esc(m.title)} detaylarını aç"><div class="poster">${img?`<img src="${img}" alt="${esc(m.title)} afişi" loading="lazy" onerror="this.style.display='none'">`:`<span class="fallback">${esc(m.title)}</span>`}<span class="rating">★ ${ratingText(m)}</span><button class="heart ${saved?"saved":""}" data-fav="${saveKey(m)}" title="${saved?"Favorilerden çıkar":"Favorilere ekle"}" aria-label="${saved?"Favorilerden çıkar":"Favorilere ekle"}"><i class="${saved?"fa-solid":"fa-regular"} fa-heart"></i></button></div><div class="movie-title">${esc(m.title)}</div><div class="movie-sub"><span>${year} · ${m.media_type==="tv"?"Dizi":"Film"}</span><span>${esc(m.platform||"TMDB")}</span></div></article>`}
 function attachCards(root,items){root.innerHTML=items.map(card).join("");root.querySelectorAll(".movie-card").forEach(el=>{let m=items.find(x=>String(x.id)===el.dataset.id&&x.media_type===el.dataset.type);if(!m)return;el.addEventListener("click",e=>{if(e.target.closest("[data-fav]"))return;openDetail(m)});el.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&!e.target.closest("button")){e.preventDefault();openDetail(m)}});let fav=el.querySelector("[data-fav]");fav.addEventListener("click",e=>{e.stopPropagation();toggleList("favorites",m)})})}
 function renderCurated(){
- const weekly=curated.filter(m=>["weekly","both"].includes(m.editorPick)&&(!m.editorEndDate||m.editorEndDate>=new Date().toISOString().slice(0,10))).sort((a,b)=>(a.editorPriority||10)-(b.editorPriority||10)||(a.date||"").localeCompare(b.date||"")).slice(0,7);
+ const today=new Date().toISOString().slice(0,10);
+ const visible=curated.filter(m=>(!m.editorStartDate||m.editorStartDate<=today)&&(!m.editorEndDate||m.editorEndDate>=today))
+  .sort((x,y)=>(x.editorPriority||10)-(y.editorPriority||10)||(x.date||"").localeCompare(y.date||""));
+ const weekly=visible.filter(m=>["weekly","both"].includes(m.editorPick)).slice(0,7);
  attachCards($("weeklyGrid"),weekly);
  $("weeklyEmpty").classList.toggle("hidden",weekly.length>0);
- let el=$("curatedGrid");curated.sort((a,b)=>(a.editorPriority||10)-(b.editorPriority||10));attachCards(el,curated);$("curatedEmpty").classList.toggle("hidden",curated.length>0);$("curatedCount").textContent=curated.length?curated.length+" öneri":"";if(curated.length){let m=curated.find(x=>["daily","both"].includes(x.editorPick))||curated[0];$("heroTitle").textContent=m.title;$("heroDesc").textContent=m.editorNote||m.hook||m.overview||"Editörün seçkisiyle bu akşam nitelikli sinemaya yer aç.";$("heroLabel").textContent="AKŞAM MATİNESİ · EDİTÖRÜN SEÇİMİ";$("heroMeta").innerHTML=`<span>★ ${ratingText(m)} TMDB</span><span>${esc(m.platform||"Seçki")}</span><span>${esc((m.release_date||"").slice(0,4))}</span>`;let img=imageUrl(m.backdrop_path,BACKDROP_ROOT);$("heroPhoto").style.backgroundImage=img?`url("${img}")`:"";$("heroDecoration").classList.toggle("hidden",!!img)}}
+ const cult=visible.filter(m=>m.editorCollection==="cult");
+ const director=visible.filter(m=>m.editorCollection==="director");
+ attachCards($("cultGrid"),cult);$("cultEmpty").classList.toggle("hidden",cult.length>0);
+ attachCards($("directorGrid"),director);$("directorEmpty").classList.toggle("hidden",director.length>0);
+ attachCards($("curatedGrid"),visible);
+ $("curatedEmpty").classList.toggle("hidden",visible.length>0);
+ $("curatedCount").textContent=visible.length?visible.length+" öneri":"";
+ if(visible.length){
+  const m=visible.find(x=>["daily","both"].includes(x.editorPick))||visible[0];
+  $("heroTitle").textContent=m.title;
+  $("heroDesc").textContent=m.editorWhy||m.editorNote||m.hook||m.overview||"Editörün seçkisiyle bu akşam nitelikli sinemaya yer aç.";
+  $("heroLabel").textContent="AKŞAM MATİNESİ · EDİTÖRÜN SEÇİMİ";
+  $("heroMeta").innerHTML=`<span>★ ${ratingText(m)} TMDB</span><span>${esc(m.platform||"Seçki")}</span><span>${esc((m.release_date||"").slice(0,4))}</span>`;
+  const img=imageUrl(m.backdrop_path,BACKDROP_ROOT);
+  $("heroPhoto").style.backgroundImage=img?`url("${img}")`:"";
+  $("heroDecoration").classList.toggle("hidden",!!img);
+ }
+}
 function renderDiscovery(){attachCards($("discoveryGrid"),discovery)}
 async function request(endpoint,params={}){if(!key())throw new Error("Canlı film kataloğu bu kurulumda etkin değil. Editörün seçkilerini ve favorilerinizi kullanabilirsiniz.");const url=new URL("https://api.themoviedb.org/3"+endpoint);url.searchParams.set("api_key",key());url.searchParams.set("language","tr-TR");for(const [k,v] of Object.entries(params))if(v!==""&&v!==null&&v!==undefined)url.searchParams.set(k,String(v));const r=await fetch(url,{headers:{Accept:"application/json"}});if(!r.ok)throw new Error(r.status===401?"TMDB anahtarı geçersiz.":"TMDB isteği başarısız ("+r.status+").");return r.json()}
 function status(message,type=""){let s=$("discoverStatus");s.textContent=message;s.className="status "+type}
@@ -225,7 +253,7 @@ function renderDays(){
    runDiscover();
  }));
 }
-async function loadCurated(){try{let r=await fetch("yayinlar.json?ts="+Date.now(),{cache:"no-store"});if(!r.ok)throw Error("Dosya yok");let o=await r.json();curated=(Array.isArray(o)?o:o.entries||[]).filter(x=>x.status==="published"||x.published===true).map(x=>toItem(x));}catch{curated=[]}if(new URLSearchParams(location.search).get("preview")==="1"){let drafts=storage("yayinkuyrugu",[]).map(x=>toItem(x));curated=drafts.length?drafts:curated}renderCurated()}
+async function loadCurated(){try{let r=await fetch("yayinlar.json?ts="+Date.now(),{cache:"no-store"});if(!r.ok)throw Error("Dosya yok");let o=await r.json();curated=(Array.isArray(o)?o:o.entries||[]).filter(x=>x.status==="published"||x.published===true).map(x=>toItem(x));}catch{curated=[]}if(new URLSearchParams(location.search).get("preview")==="1"){let drafts=storage("matinee_preview_v102",storage("yayinkuyrugu",[])).map(x=>toItem(x));curated=drafts.length?drafts.filter(x=>!x.pinned):curated}renderCurated()}
 function randomMovie(){let pool=[...curated,...discovery];if(pool.length)openDetail(pool[Math.floor(Math.random()*pool.length)]);else{document.getElementById("kesfet").scrollIntoView({behavior:"smooth"});if(key())runDiscover();else {status("Şu anda canlı keşif kullanılamıyor. Editör seçkilerini inceleyebilirsiniz.","error")}}}
 $("randomBtn").onclick=randomMovie;$("favoritesBtn").onclick=()=>openLists();$("privacyBtn").onclick=openPrivacy;$("discoverBtn").onclick=()=>{activeWeek=null;runDiscover()};$("moreBtn").onclick=()=>{currentPage++;runDiscover(false)};$("navBtn").onclick=()=>$("mainNav").classList.toggle("open");$("mainNav").querySelectorAll("a").forEach(a=>a.onclick=()=>$("mainNav").classList.remove("open"));$("q").addEventListener("keydown",e=>{if(e.key==="Enter")runDiscover()});document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("overlay"))closeModal()});$("copyrightYear").textContent=new Date().getFullYear();renderDays();loadCurated();if(key())runDiscover();else status("Editör seçkileri herkese açık. Canlı TMDB katalog araması için site sahibi ayrıca güvenli API bağlantısı kurmalıdır.");
 </script>
