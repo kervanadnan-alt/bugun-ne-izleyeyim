@@ -65,7 +65,9 @@
   <div class="filters">
     <div class="field wide"><label for="q">Film veya dizi adı</label><input id="q" placeholder="Aklında bir isim var mı?" autocomplete="off"></div>
     <div class="field"><label for="media">İçerik</label><select id="media"><option value="movie">Film</option><option value="tv">Dizi</option></select></div>
-    <div class="field"><label for="genre">Tür</label><select id="genre"><option value="">Tüm türler</option><option value="18">Dram</option><option value="35">Komedi</option><option value="53">Gerilim</option><option value="878">Bilimkurgu</option><option value="9648">Gizem</option><option value="27">Korku</option><option value="28">Aksiyon</option><option value="99">Belgesel</option><option value="10749">Romantik</option></select></div>
+    <div class="field"><label for="genre">Tür</label><select id="genre"><option value="">Tüm türler</option><option value="18">Dram</option><option value="35">Komedi</option><option value="53">Gerilim</option><option value="878">Bilimkurgu</option><option value="9648">Gizem</option><option value="27">Korku</option><option value="28">Aksiyon</option><option value="99">Belgesel</option><option value="10749">Romantik</option><option value="12">Macera</option><option value="16">Animasyon</option><option value="80">Suç</option><option value="10751">Aile</option><option value="14">Fantastik</option><option value="36">Tarih</option><option value="10752">Savaş</option><option value="37">Western</option><option value="10402">Müzik</option></select></div>
+    <div class="field"><label for="searchMode">Arama türü</label><select id="searchMode"><option value="title">Film adına göre</option><option value="keyword">Anahtar kelimeye göre</option></select></div>
+    <div class="field"><label for="age">Yaş sınıfı (Türkiye sertifikası)</label><select id="age"><option value="">Tüm yaşlar</option><option value="family">Çocuk / Aile</option><option value="13">13+</option><option value="16">16+</option><option value="18">18+</option></select></div>
     <div class="field"><label for="provider">Platform</label><select id="provider"><option value="">Tümü</option><option value="8">Netflix</option><option value="119">Prime Video</option><option value="341">BluTV</option><option value="337">Disney+</option><option value="11">MUBI</option></select></div>
     <div class="field"><label for="minscore">En az puan</label><select id="minscore"><option value="0">Tümü</option><option value="6.5">6.5+</option><option value="7">7.0+</option><option value="7.5">7.5+</option><option value="8">8.0+</option></select></div>
     <div class="field"><label for="year">Yıl</label><input id="year" type="number" inputmode="numeric" placeholder="Örn. 2023" min="1890" max="2100"></div>
@@ -117,7 +119,13 @@ function renderDiscovery(){attachCards($("discoveryGrid"),discovery)}
 async function request(endpoint,params={}){if(!key())throw new Error("Canlı film kataloğu bu kurulumda etkin değil. Editörün seçkilerini ve favorilerinizi kullanabilirsiniz.");const url=new URL("https://api.themoviedb.org/3"+endpoint);url.searchParams.set("api_key",key());url.searchParams.set("language","tr-TR");for(const [k,v] of Object.entries(params))if(v!==""&&v!==null&&v!==undefined)url.searchParams.set(k,String(v));const r=await fetch(url,{headers:{Accept:"application/json"}});if(!r.ok)throw new Error(r.status===401?"TMDB anahtarı geçersiz.":"TMDB isteği başarısız ("+r.status+").");return r.json()}
 function status(message,type=""){let s=$("discoverStatus");s.textContent=message;s.className="status "+type}
 function mediaGenre(movie,genre){if(!genre)return true;return (movie.genre_ids||[]).includes(Number(genre))}
-async function runDiscover(reset=true){let m=$("media").value,query=$("q").value.trim(),genre=$("genre").value,provider=$("provider").value,score=Number($("minscore").value),yr=$("year").value.trim();if(reset){currentPage=1;discovery=[];renderDiscovery()}$("discoverBtn").disabled=true;$("moreBtn").classList.add("hidden");status(activeWeek!==null?WEEK[activeWeek][0]+" · "+WEEK[activeWeek][1]+" kuşağı aranıyor…":"Film arşivi taranıyor…");try{let data;if(query){data=await request("/search/"+m,{query,page:currentPage,include_adult:"false"});}else{let params={page:currentPage,watch_region:"TR",include_adult:"false",sort_by:"popularity.desc",with_genres:genre||undefined,"vote_average.gte":score||undefined,with_watch_providers:provider||undefined,with_watch_monetization_types:provider?"flatrate":undefined};if(yr)params[m==="movie"?"primary_release_year":"first_air_date_year"]=yr;
+async function runDiscover(reset=true){let m=$("media").value,query=$("q").value.trim(),genre=$("genre").value,provider=$("provider").value,score=Number($("minscore").value),yr=$("year").value.trim();if(reset){currentPage=1;discovery=[];renderDiscovery()}$("discoverBtn").disabled=true;$("moreBtn").classList.add("hidden");status(activeWeek!==null?WEEK[activeWeek][0]+" · "+WEEK[activeWeek][1]+" kuşağı aranıyor…":"Film arşivi taranıyor…");try{let data;if(query){
+if($("searchMode").value==="keyword"&&m==="movie"){
+ const found=await request("/search/keyword",{query,page:1});
+ const ids=(found.results||[]).slice(0,8).map(k=>k.id);
+ if(!ids.length){data={results:[],total_pages:0}}
+ else data=await request("/discover/movie",{page:currentPage,with_keywords:ids.join("|"),watch_region:"TR",with_watch_providers:provider||undefined,"vote_average.gte":score||undefined});
+}else data=await request("/search/"+m,{query,page:currentPage,include_adult:"false"});}else{let params={page:currentPage,watch_region:"TR",include_adult:"false",sort_by:"popularity.desc",with_genres:genre||undefined,"vote_average.gte":score||undefined,with_watch_providers:provider||undefined,with_watch_monetization_types:provider?"flatrate":undefined};if(yr)params[m==="movie"?"primary_release_year":"first_air_date_year"]=yr;
 if(activeWeek!==null){
  const w=WEEK_FILTERS[activeWeek];
  params.with_genres=w.genres||undefined;
@@ -127,7 +135,22 @@ if(activeWeek!==null){
  params.without_original_language=w.nonEnglish?"en":undefined;
  params.without_genres=w.excludeAnimation?"16,10751":undefined;
 }
-data=await request("/discover/"+m,params)}let items=(data.results||[]).filter(x=>{let year=(x.release_date||x.first_air_date||"").slice(0,4);return(!genre||mediaGenre(x,genre))&&(!score||x.vote_average>=score)&&(!yr||year===yr)}).map(x=>toItem(x,m));if(query&&provider){let passed=await Promise.all(items.map(async x=>{try{let p=await request("/"+m+"/"+x.id+"/watch/providers");const tr=p.results?.TR||{};return (tr.flatrate||[]).some(z=>z.provider_id===Number(provider))?x:null}catch{return null}}));items=passed.filter(Boolean)}discovery.push(...items.filter(x=>!discovery.some(d=>saveKey(d)===saveKey(x))));renderDiscovery();moreAvailable=currentPage<(data.total_pages||1)&&currentPage<500;$("moreBtn").classList.toggle("hidden",!moreAvailable);status(discovery.length?`${discovery.length} sonuç gösteriliyor. ${query&&provider?"Platform, Türkiye abonelik kataloguna göre doğrulandı.":""}`:"Bu filtrelerle sonuç bulunamadı.","good")}catch(e){status(e.message,"error")}finally{$("discoverBtn").disabled=false}}
+data=await request("/discover/"+m,params)}let items=(data.results||[]).filter(x=>{let year=(x.release_date||x.first_air_date||"").slice(0,4);return(!genre||mediaGenre(x,genre))&&(!score||x.vote_average>=score)&&(!yr||year===yr)}).map(x=>toItem(x,m));if(query&&provider){let passed=await Promise.all(items.map(async x=>{try{let p=await request("/"+m+"/"+x.id+"/watch/providers");const tr=p.results?.TR||{};return (tr.flatrate||[]).some(z=>z.provider_id===Number(provider))?x:null}catch{return null}}));items=passed.filter(Boolean)}const age=$("age").value;
+if(age&&m==="movie"){
+ const checked=await Promise.all(items.map(async x=>{
+ try{
+ const detail=await request("/movie/"+x.id+"/release_dates");
+ const tr=(detail.results||[]).find(r=>r.iso_3166_1==="TR");
+ const cert=(tr?.release_dates||[]).map(r=>(r.certification||"").trim().toUpperCase()).find(Boolean)||"";
+ if(!cert)return null;
+ const number=Number((cert.match(/\\d+/)||[])[0]);
+ if(age==="family")return /^(G|GENEL|0|6|7|7A)$/.test(cert)?x:null;
+ return Number.isFinite(number)&&number>=Number(age)?x:null;
+ }catch{return null}
+ }));
+ items=checked.filter(Boolean);
+}
+discovery.push(...items.filter(x=>!discovery.some(d=>saveKey(d)===saveKey(x))));renderDiscovery();moreAvailable=currentPage<(data.total_pages||1)&&currentPage<500;$("moreBtn").classList.toggle("hidden",!moreAvailable);status(discovery.length?`${discovery.length} sonuç gösteriliyor. ${query&&provider?"Platform, Türkiye abonelik kataloguna göre doğrulandı.":""}`:"Bu filtrelerle sonuç bulunamadı.","good")}catch(e){status(e.message+(String(e.message).includes("502")?" TMDB veya ağ geçidi geçici olarak yanıt vermiyor; filtreleri değiştirmek bunu çözmeyebilir. Biraz sonra yeniden deneyin.":""),"error")}finally{$("discoverBtn").disabled=false}}
 function modal(inner,large=false){$("modalRoot").innerHTML=`<div class="overlay" id="overlay"><div role="dialog" aria-modal="true" aria-label="Akşam Matinesi penceresi" class="modal ${large?"large":""}">${inner}</div></div>`;document.body.classList.add("lock");$("overlay").addEventListener("mousedown",e=>{if(e.target.id==="overlay")closeModal()});$("overlay").querySelectorAll("[data-close]").forEach(e=>e.addEventListener("click",closeModal))}
 function closeModal(){$("modalRoot").innerHTML="";document.body.classList.remove("lock");currentDetail=null}
 function modalHead(title){return `<div class="modal-head"><h2>${title}</h2><button type="button" data-close class="iconbtn" aria-label="Kapat"><i class="fa-solid fa-xmark"></i></button></div>`}
