@@ -40,7 +40,7 @@
     
     <div class="grid grid-cols-12 gap-6">
       
-      <!-- SOL PANEL: GELİŞMİŞ NOKTA ATIŞI FİLTRELER & KUŞAKLAR (5/12) -->
+      <!-- SOL PANEL: GELİŞMİŞ ARAMA, PLATFORM SEÇİMİ VE KUŞAKLAR (5/12) -->
       <section class="col-span-12 lg:col-span-5 flex flex-col space-y-5">
         
         <!-- FİLTRELEME ALANI -->
@@ -48,19 +48,34 @@
           <div class="flex items-center justify-between">
             <h2 class="text-sm font-bold tracking-wider text-indigo-400 uppercase flex items-center space-x-2">
               <i class="fa-solid fa-sliders"></i>
-              <span>Gelişmiş Arama &amp; Filtreler</span>
+              <span>Gelişmiş Filtreler &amp; Nokta Atışı</span>
             </h2>
             <button onclick="tumFiltreleriSifirla()" class="text-xs text-slate-400 hover:text-red-400 transition flex items-center space-x-1">
               <i class="fa-solid fa-rotate"></i>
-              <span>Temizle</span>
+              <span>Sıfırla</span>
             </button>
           </div>
 
-          <!-- Anahtar Kelime / Başlık -->
+          <!-- Film Adı / Kelime -->
           <div class="relative">
             <input type="text" id="search-keyword" placeholder="Film adı veya anahtar kelime..." 
                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 pl-10 text-xs focus:border-indigo-500 focus:outline-none text-slate-200">
             <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-500 text-xs"></i>
+          </div>
+
+          <!-- Kütüphane / Platform Seçimi (Gerçek TMDB Sağlayıcı Filtresi) -->
+          <div>
+            <label class="block text-[10px] uppercase tracking-wider text-amber-400 font-bold mb-1">
+              <i class="fa-solid fa-tv mr-1"></i> İzleme Platformu Kataloğu (TR)
+            </label>
+            <select id="search-provider" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-2 text-xs focus:border-amber-500 focus:outline-none text-slate-200">
+              <option value="">Tüm Platformlar / Genel Katalog</option>
+              <option value="8">Netflix Türkiye</option>
+              <option value="119">Amazon Prime Video</option>
+              <option value="341">BluTV</option>
+              <option value="337">Disney+</option>
+              <option value="11">MUBI</option>
+            </select>
           </div>
 
           <!-- Yıl & Sıralama -->
@@ -84,7 +99,7 @@
           <!-- Tür & Min Puan -->
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="block text-[10px] uppercase tracking-wider text-slate-400 font-bold mb-1">Tür</label>
+              <label class="block text-[10px] uppercase tracking-wider text-slate-400 font-bold mb-1">Film Türü</label>
               <select id="search-genre" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2 py-2 text-xs focus:border-indigo-500 focus:outline-none text-slate-200">
                 <option value="">Tüm Türler</option>
                 <option value="28">Aksiyon</option>
@@ -112,13 +127,13 @@
             </div>
           </div>
 
-          <button onclick="yeniAramaBaslat()" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl transition flex items-center justify-center space-x-2">
+          <button onclick="yeniAramaBaslat()" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl transition flex items-center justify-center space-x-2 shadow-lg shadow-indigo-950/40">
             <i class="fa-solid fa-magnifying-glass"></i>
             <span>Sonuçları Listele</span>
           </button>
         </div>
 
-        <!-- KUŞAKLAR VE SABİT GÖNDERİ SEÇİMİ -->
+        <!-- YAYIN KUŞAKLARI & SABİT GÖNDERİ MODU -->
         <div class="bg-slate-900/90 rounded-2xl p-5 border border-slate-800 shadow-xl space-y-3">
           <h2 class="text-sm font-bold tracking-wider text-red-400 uppercase flex items-center space-x-2">
             <i class="fa-solid fa-layer-group"></i>
@@ -128,8 +143,8 @@
           <div class="grid grid-cols-2 gap-2" id="kusak-grid">
             <button onclick="sabitGonderiYukle()" id="btn-Sabit" class="col-span-2 p-2.5 bg-red-950/30 border border-red-500/40 hover:border-red-400 rounded-xl text-left transition flex items-center justify-between">
               <div>
-                <span class="text-[10px] font-bold text-red-400 block"><i class="fa-solid fa-thumbtack mr-1"></i> SABİT GÖNDERİ (PINNED)</span>
-                <span class="text-xs font-semibold text-white">Karşılama &amp; Yayın Akışı Tanıtımı</span>
+                <span class="text-[10px] font-bold text-red-400 block"><i class="fa-solid fa-thumbtack mr-1"></i> SABİT GÖNDERİ (PINNED TWEET)</span>
+                <span class="text-xs font-semibold text-white">Karşılama &amp; Haftalık Yayın Akışı</span>
               </div>
               <i class="fa-solid fa-chevron-right text-slate-500 text-xs"></i>
             </button>
@@ -198,17 +213,17 @@
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
-            <!-- Sol: Afiş & Platform -->
+            <!-- Sol: Afiş & Form Platform Seçimi -->
             <div class="md:col-span-4 flex flex-col items-center">
               <div class="w-full aspect-[2/3] rounded-xl overflow-hidden bg-slate-950 border border-slate-800 relative">
                 <img id="plan-poster" src="" alt="Afiş" class="w-full h-full object-cover">
                 <span id="plan-rating-badge" class="absolute top-2 right-2 px-2 py-0.5 bg-amber-500 rounded text-[10px] font-extrabold text-slate-950">★ 8.0</span>
               </div>
               
-              <!-- PLATFORM SEÇİMİ (GERİ GELDİ) -->
+              <!-- Yayın Platformu Seçimi -->
               <div class="w-full mt-3">
                 <label class="block text-[9px] uppercase tracking-wider text-slate-400 font-bold mb-1">Yayın Platformu</label>
-                <select id="edit-platform-select" onchange="platformDegisti()" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-indigo-300 font-bold focus:outline-none focus:border-indigo-500">
+                <select id="edit-platform-select" onchange="metniYenidenDerle()" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-indigo-300 font-bold focus:outline-none focus:border-indigo-500">
                   <option value="Netflix">Netflix</option>
                   <option value="Prime Video">Prime Video</option>
                   <option value="MUBI">MUBI</option>
@@ -281,7 +296,7 @@
       </section>
     </div>
 
-    <!-- PLANLANAN YAYINLAR TABLOSU (GERİ GELDİ) -->
+    <!-- PLANLANAN YAYINLAR TABLOSU -->
     <section class="bg-slate-900/90 rounded-2xl p-6 border border-slate-800 shadow-xl space-y-4">
       <div class="flex items-center justify-between pb-3 border-b border-slate-800">
         <div>
@@ -308,7 +323,7 @@
             </tr>
           </thead>
           <tbody id="queue-table-body" class="divide-y divide-slate-800/60">
-            <!-- JS ile doldurulacak -->
+            <!-- Dinamik doldurulur -->
           </tbody>
         </table>
       </div>
@@ -347,6 +362,7 @@
 
     function tumFiltreleriSifirla() {
       document.getElementById('search-keyword').value = "";
+      document.getElementById('search-provider').value = "";
       document.getElementById('search-year').value = "";
       document.getElementById('search-genre').value = "";
       document.getElementById('search-min-vote').value = "";
@@ -379,7 +395,7 @@
       apiIstegiGonder(false);
     }
 
-    // TMDB ÇAĞRISI (Arama & Keşif & Sayfalama Birlikte)
+    // TMDB ÇAĞRISI (Platform, Yıl, Puan, Tür, Kuşak ve Sayfalama Entegre)
     async function apiIstegiGonder(temizle = false) {
       if (isLoading) return;
       isLoading = true;
@@ -390,6 +406,7 @@
       loadBtn.classList.add('hidden');
 
       const kwd = document.getElementById('search-keyword').value.trim();
+      const providerId = document.getElementById('search-provider').value;
       const year = document.getElementById('search-year').value.trim();
       const genre = document.getElementById('search-genre').value;
       const minVote = document.getElementById('search-min-vote').value;
@@ -409,6 +426,12 @@
       } else {
         params.append("sort_by", sort);
         params.append("vote_count.gte", "30");
+
+        // Gerçek Sağlayıcı (Platform TR)
+        if (providerId) {
+          params.append("with_watch_providers", providerId);
+          params.append("watch_region", "TR");
+        }
 
         if (year) params.append("primary_release_year", year);
         if (genre) params.append("with_genres", genre);
@@ -488,14 +511,21 @@
       document.getElementById('plan-rating-badge').textContent = `★ ${data.vote_average?.toFixed(1) || '7.5'}`;
       document.getElementById('plan-poster').src = data.poster_path ? `${IMG_BASE_URL}${data.poster_path}` : 'https://images.unsplash.com/photo-1594909122845-11baa439b7bf?q=80&w=400';
 
+      // Eğer filtrede bir platform seçilmişse otomatik formdaki platform kutusuna ata
+      const seciliProviderText = document.getElementById('search-provider')?.selectedOptions[0]?.text;
+      const editSelect = document.getElementById('edit-platform-select');
+      if (seciliProviderText && editSelect) {
+        if (seciliProviderText.includes("Netflix")) editSelect.value = "Netflix";
+        else if (seciliProviderText.includes("Prime")) editSelect.value = "Prime Video";
+        else if (seciliProviderText.includes("BluTV")) editSelect.value = "BluTV";
+        else if (seciliProviderText.includes("Disney")) editSelect.value = "Disney+";
+        else if (seciliProviderText.includes("MUBI")) editSelect.value = "MUBI";
+      }
+
       metniYenidenDerle();
     }
 
-    function platformDegisti() {
-      metniYenidenDerle();
-    }
-
-    // TWEET METNİNİ DERLE VE KARAKTERE GÖRE BÖL
+    // TWEET METNİNİ DERLE VE 2 POST BÖLÜCÜYE AKTAR
     function metniYenidenDerle() {
       if (!selectedItem) return;
 
@@ -584,7 +614,7 @@
       arayuzSekmeleriniGuncelle();
     }
 
-    // AFİŞ KOPYALAMA
+    // AFİŞ KOPYALAMA (BLOB)
     async function afisiPanoyaKopyala() {
       const posterUrl = document.getElementById('plan-poster').src;
       const btn = document.getElementById('btn-copy-img');
@@ -599,7 +629,7 @@
         btn.className = "w-full mt-2 py-2 bg-emerald-950/80 border border-emerald-600 text-emerald-300 rounded-lg text-xs font-bold transition flex items-center justify-center space-x-1.5";
         btn.innerHTML = `<i class="fa-solid fa-check"></i> <span>Afiş Panoda! (Ctrl+V)</span>`;
       } catch (err) {
-        btn.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> <span>Afişi Sağ Tıkla Kaydet</span>`;
+        btn.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> <span>Afişi Manuel Kaydet</span>`;
       }
     }
 
@@ -610,7 +640,7 @@
       window.open(`https://twitter.com/intent/tweet?text=${txt}`, '_blank', 'width=600,height=500');
     }
 
-    // SABİT GÖNDERİ MODU
+    // SABİT GÖNDERİ MODU (PINNED POST)
     function sabitGonderiYukle() {
       document.querySelectorAll('#kusak-grid button').forEach(b => b.classList.remove('active-kusak'));
       document.getElementById('btn-Sabit').classList.add('active-kusak');
@@ -641,7 +671,7 @@
       arayuzSekmeleriniGuncelle();
     }
 
-    // PLANLANAN LİSTE YÖNETİMİ (localStorage)
+    // YAYIN LİSTESİ YÖNETİMİ (localStorage)
     function yayiniKuyrugaKaydet() {
       if (!selectedItem) return;
 
