@@ -85,7 +85,14 @@ header{height:74px;display:flex;align-items:center;justify-content:space-between
 <div class="field"><label for="editorStartDate">Vitrin başlangıç tarihi</label><input id="editorStartDate" type="date"></div>
 <div class="field span2"><label for="editorDirector">Yönetmen / Dosya başlığı</label><input id="editorDirector" maxlength="120" placeholder="Örn. Asghar Farhadi sineması"></div>
 <div class="field span2"><label for="editorWhy">Neden izlemeli? (vitrin açıklaması)</label><textarea id="editorWhy" rows="4" placeholder="Filmin anlatımı, oyunculukları veya sinema tarihindeki önemi..."></textarea></div>
-<div class="field"><label for="editorPriority">Vitrin önceliği (1 en üstte)</label><input id="editorPriority" type="number" min="1" max="99" value="10"></div><div class="field"><label for="editorEndDate">Vitrin bitiş tarihi (isteğe bağlı)</label><input id="editorEndDate" type="date"></div><div class="field span2"><label for="editorNote">Editör yorumu (vitrinde görünür)</label><textarea id="editorNote" rows="5" placeholder="Bu filmi neden öneriyorsun?"></textarea></div><div class="field span2"><label for="editHashtag">Kuşak etiketi</label><input id="editHashtag" placeholder="#AkşamMatinesi"></div></div>
+<div class="field"><label for="editorPriority">Vitrin önceliği (1 en üstte)</label><input id="editorPriority" type="number" min="1" max="99" value="10"></div><div class="field"><label for="editorEndDate">Vitrin bitiş tarihi (isteğe bağlı)</label><input id="editorEndDate" type="date"></div><div class="field span2"><label for="editorNote">Editör yorumu (vitrinde görünür)</label><textarea id="editorNote" rows="5" placeholder="Bu filmi neden öneriyorsun?"></textarea></div><div class="field span2" style="padding:15px;border:1px solid #753b48;border-radius:12px;background:#21171d">
+<label>✨ Ücretsiz Yapay Zekâ Editörü</label>
+<p class="tiny muted" style="margin:7px 0 12px">Film bilgileriyle ChatGPT için sinematik ve spoiler içermeyen iki metin isteği hazırlar. Metinleri kontrol edip yukarıdaki alanlara yapıştırın; otomatik yayın yapılmaz.</p>
+<button type="button" class="btn redbtn" id="aiPromptBtn">✨ İki Metin İçin İstek Hazırla</button>
+<textarea id="aiPromptOutput" rows="9" readonly style="display:none;width:100%;margin-top:12px" aria-label="ChatGPT için hazır istek"></textarea>
+<div id="aiPromptActions" style="display:none;gap:10px;flex-wrap:wrap;margin-top:9px"><button type="button" class="btn" id="aiCopyBtn">Metni Kopyala</button><a class="btn" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT'yi Aç ↗</a></div>
+</div>
+<div class="field span2"><label for="editHashtag">Kuşak etiketi</label><input id="editHashtag" placeholder="#AkşamMatinesi"></div></div>
     <hr class="section-rule"><h3 class="section-title" style="font-size:.9rem">X (Twitter) Gönderi Editörü</h3><p class="section-caption">Başlık, puan, tarih/saat, platform ve site linki daima 1. postta kalır.</p>
     <div class="tweet-tabs"><button id="tabPost1" class="tweet-tab active" type="button">1. Post</button><button id="tabPost2" class="tweet-tab" type="button">2. Post / Flood</button><span id="tweetCount" class="small muted" style="margin-left:auto">0/280</span></div>
     <div class="field"><label for="tweetInput">Paylaşım metni (düzenlenebilir)</label><textarea id="tweetInput" class="tweet-field" rows="7"></textarea><div class="tweet-status"><span id="tweetValidation">Henüz metin yok.</span><strong id="tweetLength">0/280</strong></div><div class="tiny muted" style="margin-top:6px">Metinler X’te taşmaması için güvenli pay bırakılarak hazırlanır. Sekmeler ayrı taslaklardır; iki gönderilik zincir için X üzerinde + veya Yanıtla kullanılmalıdır.</div></div>
@@ -563,6 +570,31 @@ $("previewShowcase").onclick=()=>{
   store("matinee_preview_v102",previewQueue.filter(x=>!x.pinned));
   window.open("index.html?preview=1","_blank","noopener");
   notice("Önizleme yeni sekmede açıldı. Canlı vitrin değişmedi.","good");
+};
+$("aiPromptBtn").onclick=()=>{
+ if(!selected){alert("Önce bir film seçin veya arayın.");return}
+ const title=selected.title||"Seçilen film";
+ const year=String(selected.release_date||"").slice(0,4);
+ const overview=$("editOverview").value.trim()||selected.overview||"Özet girilmedi";
+ const prompt=`Akşam Matinesi adlı Türkçe sinema keşif sitesi için iki ayrı özgün editör metni hazırla. Üslup sinematik, etkileyici, rafine ve merak uyandırıcı olsun. Spoiler verme, olay örgüsünü aşırı açıklama, doğrulanmamış ödül, oyuncu, yönetmen, teknik başarı veya platform bilgisi ekleme. Yalnızca aşağıda verilen film bilgilerine dayan. Reklam dili ve klişelerden kaçın. İki bölümü ayrı başlıklarla sun; düz metin olsun, Markdown işaretleri kullanma.
+
+Film: ${title}
+Yapım yılı: ${year||"Belirtilmedi"}
+Özet: ${overview}
+
+1) NEDEN İZLEMELİ? (vitrin açıklaması): 65-90 kelime; filmin temasını, atmosferini ve izleme gerekçesini anlat.
+2) EDİTÖR YORUMU: 35-55 kelime; Akşam Matinesi editörünün samimi ama sinematik daveti. İlk metni tekrar etme.
+
+Her iki metin de Türkçe olsun.`;
+ $("aiPromptOutput").value=prompt;
+ $("aiPromptOutput").style.display="block";
+ $("aiPromptActions").style.display="flex";
+ $("aiPromptOutput").focus();
+};
+$("aiCopyBtn").onclick=async()=>{
+ const t=$("aiPromptOutput").value;
+ try{await navigator.clipboard.writeText(t);$("aiCopyBtn").textContent="✓ Kopyalandı"}
+ catch{$("aiPromptOutput").select();alert("Metin seçildi. Kopyala komutunu kullanın (Ctrl+C veya telefonda Kopyala).")}
 };
 renderDays();renderQueue();resetEditor();
 </script>
