@@ -262,8 +262,9 @@ function renderSchedule(){
  $("scheduleUpcoming").innerHTML=upcoming.slice(0,12).map(m=>`<div class="schedule-entry"><span class="schedule-tag">${esc(MATINEE_SLOTS[m.scheduleSlot])}</span><h3>${esc(m.title)}</h3><p>${esc(m.date)} · ${esc(m.time)} (Türkiye saati)</p></div>`).join("")||'<p class="section-sub">Yaklaşan yayın planlanmadı.</p>';
  // Arşiv yalnızca aynı kuşakta daha yeni bir yayınla yer değiştirmiş filmleri gösterir.
  // Halen Yayın Akışı'nda görünen filmler arşive tekrar eklenmez.
- const currentKeys=new Set(current.map(m=>`${m.media_type}:${m.id}:${m.date}:${m.time}:${m.scheduleSlot}`));
- const archived=live.filter(m=>!currentKeys.has(`${m.media_type}:${m.id}:${m.date}:${m.time}:${m.scheduleSlot}`));
+ // Aynı film farklı bir tarihte yeniden planlansa bile aktifken arşivde tekrarlanmaz.
+ const currentFilmKeys=new Set(current.map(m=>`${m.media_type}:${m.id}`));
+ const archived=live.filter(m=>!currentFilmKeys.has(`${m.media_type}:${m.id}`));
  attachCards($("scheduleArchive"),archived.slice().reverse().slice(0,30));
  $("scheduleArchiveEmpty").classList.toggle("hidden",archived.length>0);
 }
