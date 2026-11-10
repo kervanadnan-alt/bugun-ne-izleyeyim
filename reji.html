@@ -35,8 +35,11 @@ header{height:74px;display:flex;align-items:center;justify-content:space-between
 <div class="left">
  <div class="kpi-bar"><div class="kpi"><span>Yayın Kuyruğu</span><b id="totalCount">0</b></div><div class="kpi"><span>Yayına Hazır</span><b id="plannedCount">0</b></div><div class="kpi"><span>Vitrine Seçilen</span><b id="publishedCount">0</b></div></div>
  <section class="panel"><div class="panel-top"><div><h2 class="section-title"><i class="fa-solid fa-calendar-week red"></i> Haftalık Yayın Kuşakları</h2><p class="section-caption">Bir kuşak seçin; tür, dönem ve puan filtreleri otomatik uygulansın.</p></div></div><div class="days" id="dayButtons"></div><div class="actions"><button class="btn subbtn btn-sm" id="resetPreset" type="button"><i class="fa-solid fa-rotate-left"></i> Kuşak seçimini temizle</button><button class="btn outlinebtn btn-sm" id="pinnedBtn" type="button"><i class="fa-solid fa-thumbtack"></i> Sabit Gönderi Şablonu</button></div></section>
- <section class="panel" id="searchPanel"><div class="panel-top"><div><h2 class="section-title"><i class="fa-solid fa-magnifying-glass red"></i> Film Kataloğu & Nokta Atışı Arama</h2><p class="section-caption">Türkiye abonelik kataloglarında gelişmiş filtrelerle ara; istediğin filmi editöre aktar.</p></div></div>
-  <form id="searchForm"><div class="fields"><div class="field wide"><label for="searchText">Film adı / anahtar kelime</label><input id="searchText" placeholder="Örn. Parasite veya zamana yolculuk"></div><div class="field"><label for="searchMode">Arama türü</label><select id="searchMode"><option value="title">Film adına göre</option><option value="keyword">TMDB anahtar kelimesi</option></select></div><div class="field"><label for="platformFilter">Türkiye platformu</label><select id="platformFilter"><option value="">5 platformun tamamı</option><option value="8">Netflix</option><option value="119">Prime Video</option><option value="341">BluTV</option><option value="337">Disney+</option><option value="11">MUBI</option></select></div><div class="field"><label for="releaseYear">Net vizyon yılı</label><input id="releaseYear" type="number" min="1890" max="2100" placeholder="Örn. 2020"></div><div class="field"><label for="minRating">Min. TMDB puanı</label><select id="minRating"><option value="0">Filtresiz</option><option value="6.5">6.5+</option><option value="7">7.0+</option><option value="7.5">7.5+</option><option value="8">8.0+</option></select></div><div class="field wide"><label for="sortBy">Sıralama</label><select id="sortBy"><option value="popularity.desc">Popülerlik (yüksekten)</option><option value="vote_average.desc">Puan (yüksekten)</option><option value="primary_release_date.desc">Yeni vizyona girenler</option><option value="vote_count.desc">En çok değerlendirilenler</option></select></div></div><div class="fields" style="margin-top:14px">
+ <section class="panel" id="searchPanel"><div class="panel-top"><div><h2 class="section-title"><i class="fa-solid fa-magnifying-glass red"></i> Film Kataloğu & Nokta Atışı Arama</h2><p class="section-caption">Önce platform seç veya Tüm TMDB üzerinde film, yönetmen, senarist ve oyuncuya göre ara; seçtiğin filmi editöre aktar.</p></div></div>
+  <form id="searchForm"><div class="fields"><div class="field"><label for="platformFilter">Türkiye platformu</label><select id="platformFilter"><option value="">Tüm TMDB · platform sınırlaması yok</option><option value="8">Netflix</option><option value="119">Prime Video</option><option value="341">BluTV</option><option value="337">Disney+</option><option value="11">MUBI</option></select></div><div class="field wide"><label for="searchText">Film adı / anahtar kelime</label><input id="searchText" placeholder="Örn. Parasite veya zamana yolculuk"></div><div class="field"><label for="searchMode">Arama türü</label><select id="searchMode"><option value="title">Film adına göre</option><option value="keyword">TMDB anahtar kelimesi</option></select></div><div class="field"><label for="directorFilter">Yönetmen</label><input id="directorFilter" placeholder="Örn. Hitchcock" autocomplete="off"></div>
+<div class="field"><label for="writerFilter">Senarist</label><input id="writerFilter" placeholder="Örn. Charlie Kaufman" autocomplete="off"></div>
+<div class="field"><label for="actorFilter">Oyuncu</label><input id="actorFilter" placeholder="Örn. Tilda Swinton" autocomplete="off"></div>
+<div class="field"><label for="releaseYear">Net vizyon yılı</label><input id="releaseYear" type="number" min="1890" max="2100" placeholder="Örn. 2020"></div><div class="field"><label for="minRating">Min. TMDB puanı</label><select id="minRating"><option value="0">Filtresiz</option><option value="6.5">6.5+</option><option value="7">7.0+</option><option value="7.5">7.5+</option><option value="8">8.0+</option></select></div><div class="field wide"><label for="sortBy">Sıralama</label><select id="sortBy"><option value="popularity.desc">Popülerlik (yüksekten)</option><option value="vote_average.desc">Puan (yüksekten)</option><option value="primary_release_date.desc">Yeni vizyona girenler</option><option value="vote_count.desc">En çok değerlendirilenler</option></select></div></div><div class="fields" style="margin-top:14px">
 <div class="field"><label for="themeFilter">Tematik seçki</label><select id="themeFilter">
 <option value="">Tüm temalar</option><option value="justice">Adalet ve hukuk</option>
 <option value="detective">Dedektif / Polisiye</option><option value="adaptation">Roman uyarlamaları</option>
@@ -62,7 +65,7 @@ header{height:74px;display:flex;align-items:center;justify-content:space-between
 <div class="actions">
 <button type="button" class="btn redbtn btn-sm" id="cultDiscover"><i class="fa-solid fa-star"></i> Kült Film Adaylarını Bul</button>
 <button type="button" class="btn subbtn btn-sm" id="cultTitleSearch"><i class="fa-solid fa-magnifying-glass"></i> Film Adıyla Kült Ara</button>
-<label class="small" style="display:flex;align-items:center;gap:7px"><input type="checkbox" id="allCatalog" style="accent-color:#e32b34"> Platform şartı olmadan tüm TMDB</label>
+<span class="small muted">Platform seçilmezse tüm TMDB aranır.</span>
 </div><span class="tiny muted">Adaylar otomatik yayımlanmaz. Seçtiğin film editörde Kült Köşesi için hazırlanır.</span>
 </div>
 <div class="actions"><button type="button" class="btn subbtn btn-sm" id="clearFilters"><i class="fa-solid fa-rotate-left"></i> Filtreleri Temizle</button></div>
@@ -198,17 +201,55 @@ function searchState(){
   let p=activePreset===null?null:PRESETS[activePreset];
   const q=$("searchText").value.trim(),mode=$("searchMode").value,platform=$("platformFilter").value;
   const year=numField("releaseYear"),from=numField("yearFrom"),to=numField("yearTo");
-  return {q,mode,provider:$("allCatalog").checked?"":(platform||"8|119|341|337|11"),exactProvider:$("allCatalog").checked?"":platform,allCatalog:$("allCatalog").checked,year,
+  return {q,mode,provider:platform,exactProvider:platform,allCatalog:!platform,director:$("directorFilter").value.trim(),writer:$("writerFilter").value.trim(),actor:$("actorFilter").value.trim(),year,
     from:Math.max(from,p?.yearFrom||0),to:to&&p?.yearTo?Math.min(to,p.yearTo):to||p?.yearTo||0,
     min:Math.max(Number($("minRating").value),p?.min||0),sort:$("sortBy").value,preset:p,keywordId:null,
     theme:$("themeFilter").value,country:$("countryFilter").value,genre:$("genreFilter").value,age:$("ageFilter").value,originalLanguage:$("originalLanguage").value,
     minVotes:numField("minVotes"),runtimeFrom:numField("runtimeFrom"),runtimeTo:numField("runtimeTo")};
 }
+const peopleCache=new Map();
+async function resolvePerson(name){
+ if(!name)return null;
+ const key=name.toLocaleLowerCase("tr").trim();
+ if(peopleCache.has(key))return peopleCache.get(key);
+ const data=await tmdb("/search/person",{query:name,page:1,include_adult:"false"});
+ const candidates=(data.results||[]).filter(p=>p.known_for_department==="Acting"||p.known_for_department==="Directing"||p.known_for_department==="Writing"||p.known_for_department==="Production");
+ const person=candidates[0]||(data.results||[])[0]||null;
+ peopleCache.set(key,person?.id||null);
+ return person?.id||null;
+}
+async function resolvePeople(s){
+ if(s.peopleResolved)return;
+ s.peopleResolved=true;
+ const [director,writer,actor]=await Promise.all([resolvePerson(s.director),resolvePerson(s.writer),resolvePerson(s.actor)]);
+ s.directorId=director;s.writerId=writer;s.actorId=actor;
+ s.missingPerson=Boolean((s.director&&!director)||(s.writer&&!writer)||(s.actor&&!actor));
+}
+async function verifyRoles(items,s){
+ if(!s.director&&!s.writer&&!s.actor)return items;
+ const out=[];
+ for(let i=0;i<items.length;i+=5){
+  const batch=await Promise.all(items.slice(i,i+5).map(async m=>{
+   try{
+    const cr=await tmdb("/movie/"+m.id+"/credits");
+    if(s.directorId&&!(cr.crew||[]).some(p=>p.id===s.directorId&&p.job==="Director"))return null;
+    if(s.writerId&&!(cr.crew||[]).some(p=>p.id===s.writerId&&["Screenplay","Writer","Story","Adaptation","Original Story"].includes(p.job)))return null;
+    if(s.actorId&&!(cr.cast||[]).some(p=>p.id===s.actorId))return null;
+    return m;
+   }catch{return null}
+  }));
+  out.push(...batch.filter(Boolean));
+ }
+ return out;
+}
 async function getResultPage(state,page){
+  await resolvePeople(state);
+  if(state.missingPerson)return {results:[],total_pages:0};
   if(state.q&&state.mode==="title"){
     return tmdb("/search/movie",{query:state.q,page,include_adult:"false"});
   }
   const params={
+    with_crew:[state.directorId,state.writerId].filter(Boolean).join("|")||undefined,with_cast:state.actorId||undefined,
     page,watch_region:"TR",with_watch_providers:state.provider,
     with_watch_monetization_types:state.allCatalog?undefined:"flatrate",sort_by:state.sort,include_adult:"false",
     "vote_average.gte":state.min||undefined,"vote_count.gte":state.minVotes||undefined,
@@ -300,7 +341,7 @@ async function filterByAge(items,age){
 async function searchMovies(reset=true){if(reset){currentPage=1;lastParams=searchState();results=[];$("results").innerHTML=""}if(!lastParams)lastParams=searchState();
 if(lastParams.from&&lastParams.to&&lastParams.from>lastParams.to){notice("İlk yıl son yıldan büyük olamaz.","error");return}
 if(lastParams.runtimeFrom&&lastParams.runtimeTo&&lastParams.runtimeFrom>lastParams.runtimeTo){notice("En az süre, en çok süreden büyük olamaz.","error");return}
-$("searchBtn").disabled=true;$("moreBtn").classList.add("hidden");$("searchInfo").textContent="TMDB sonuçları getiriliyor…";notice("TMDB Türkiye platformları ve seçili koşullar taranıyor.");try{let pageData=await getResultPage(lastParams,currentPage),raw=(pageData.results||[]).filter(x=>passesExtraFilters(x,lastParams));if(lastParams.q&&lastParams.mode==="title"&&!lastParams.allCatalog){let verified=[];for(let i=0;i<raw.length;i+=5){let checks=await Promise.all(raw.slice(i,i+5).map(async x=>await verifyProvider(x,lastParams)?x:null));verified.push(...checks.filter(Boolean))}raw=verified}raw=await filterRuntime(raw,lastParams);raw=await filterByAge(raw,lastParams.age);if(lastParams.q&&lastParams.mode==="title"){const sort=lastParams.sort;raw.sort((a,b)=>sort==="vote_average.desc"?(b.vote_average||0)-(a.vote_average||0):sort==="primary_release_date.desc"?(b.release_date||"").localeCompare(a.release_date||""):(b.popularity||0)-(a.popularity||0))}let oldIDs=new Set(results.map(x=>x.id));let next=raw.filter(x=>!oldIDs.has(x.id));results.push(...next);$("results").insertAdjacentHTML("beforeend",next.map(resultItem).join(""));$("results").querySelectorAll("[data-result]").forEach(b=>{if(b.dataset.bound)return;b.dataset.bound="1";b.onclick=()=>{let m=results.find(x=>String(x.id)===b.dataset.result);if(m)selectMovie(m)}});morePages=currentPage<(pageData.total_pages||0)&&currentPage<500;$("moreBtn").classList.toggle("hidden",!morePages);$("resultsEmpty").classList.toggle("hidden",results.length>0);$("resultsEmpty").innerHTML="Bu sayfada eşleşen film bulunamadı. Farklı filtre deneyin veya başka sayfaya geçin.";$("searchInfo").textContent=results.length+" film listelendi"+(morePages?" · Daha fazla sonuç var":"");notice(`Sayfa ${currentPage} tarandı. ${cultDiscoveryMode?"Kült film adayları listeleniyor; seçtiklerin editöre aktarılır.":"Sonuçlar önceki sayfalar silinmeden eklendi."}`,"good")}catch(err){notice(err.message,"error");$("searchInfo").textContent="Arama sırasında sorun oluştu."}finally{$("searchBtn").disabled=false}}
+$("searchBtn").disabled=true;$("moreBtn").classList.add("hidden");$("searchInfo").textContent="TMDB sonuçları getiriliyor…";notice("TMDB Türkiye platformları ve seçili koşullar taranıyor.");try{let pageData=await getResultPage(lastParams,currentPage),raw=(pageData.results||[]).filter(x=>passesExtraFilters(x,lastParams));if(lastParams.q&&lastParams.mode==="title"&&lastParams.exactProvider){let verified=[];for(let i=0;i<raw.length;i+=5){let checks=await Promise.all(raw.slice(i,i+5).map(async x=>await verifyProvider(x,lastParams)?x:null));verified.push(...checks.filter(Boolean))}raw=verified}raw=await verifyRoles(raw,lastParams);raw=await filterRuntime(raw,lastParams);raw=await filterByAge(raw,lastParams.age);if(lastParams.q&&lastParams.mode==="title"){const sort=lastParams.sort;raw.sort((a,b)=>sort==="vote_average.desc"?(b.vote_average||0)-(a.vote_average||0):sort==="primary_release_date.desc"?(b.release_date||"").localeCompare(a.release_date||""):(b.popularity||0)-(a.popularity||0))}let oldIDs=new Set(results.map(x=>x.id));let next=raw.filter(x=>!oldIDs.has(x.id));results.push(...next);$("results").insertAdjacentHTML("beforeend",next.map(resultItem).join(""));$("results").querySelectorAll("[data-result]").forEach(b=>{if(b.dataset.bound)return;b.dataset.bound="1";b.onclick=()=>{let m=results.find(x=>String(x.id)===b.dataset.result);if(m)selectMovie(m)}});morePages=currentPage<(pageData.total_pages||0)&&currentPage<500;$("moreBtn").classList.toggle("hidden",!morePages);$("resultsEmpty").classList.toggle("hidden",results.length>0);$("resultsEmpty").innerHTML="Bu sayfada eşleşen film bulunamadı. Farklı filtre deneyin veya başka sayfaya geçin.";$("searchInfo").textContent=results.length+" film listelendi"+(morePages?" · Daha fazla sonuç var":"");notice(`Sayfa ${currentPage} tarandı. ${cultDiscoveryMode?"Kült film adayları listeleniyor; seçtiklerin editöre aktarılır.":"Sonuçlar önceki sayfalar silinmeden eklendi."}`,"good")}catch(err){notice(err.message,"error");$("searchInfo").textContent="Arama sırasında sorun oluştu."}finally{$("searchBtn").disabled=false}}
 $("searchForm").addEventListener("submit",e=>{e.preventDefault();cultDiscoveryMode=cultDiscoveryMode||$("themeFilter").value==="cult";searchMovies(true)});
 $("cultDiscover").onclick=()=>{
  cultDiscoveryMode=true;activePreset=null;renderDays();
