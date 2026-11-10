@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-10T18:59:45.775Z",
+  "updatedAt": "2026-11-10T19:07:20.084Z",
   "entries": [
     {
       "uid": "y-1794334933322-4tvivl",
@@ -105,21 +105,21 @@
       ],
       "date": "2026-11-10",
       "time": "22:00",
-      "hashtag": "#KültSinema",
-      "post1": "🎬 Çarpışma Anı (2026)\n⭐ TMDB 6.4/10 · 📅 2026-11-10 · ⏰ 22:00\n✨ Gerilimin ritmi yükseliyor; koltuğunuza sıkı tutunun.\nEkonomik krizin ortasında gelişen bu hikâyede bir grup soygunc\n🎥 Netflix (TMDB Türkiye abonelik verisi).\n🔗 https://izle.uzzman.com.tr/\\n#KültSinema",
+      "hashtag": "",
+      "post1": "🎬 Çarpışma Anı (2026)\n⭐ TMDB 6.4/10 · 📅 2026-11-10 · ⏰ 22:00\n✨ Gerilimin ritmi yükseliyor; koltuğunuza sıkı tutunun.\nEkonomik krizin ortasında gelişen bu hikâyede bir grup soygunc\n🎥 Netflix (TMDB Türkiye abonelik verisi).\n🔗 https://izle.uzzman.com.tr/",
       "post2": "📝 Filmin devam eden özeti:\nu, Madrid'deki bir bankaya baskın yaptığında öngörülemeyen bir dizi olayı tetikler. İlk başta sıradan bir soygun gibi görünen bu girişim, dehşet verici bir aldatma ve hayatta kalma oyununa dönüşür. Her kararın bir önemi, her hare",
       "pinned": false,
       "status": "published",
       "editorPick": "none",
       "editorNote": "",
       "editorPriority": 10,
-      "editorEndDate": "",
-      "editorCollection": "cult",
-      "editorStartDate": "",
+      "editorEndDate": "2026-11-15",
+      "editorCollection": "",
+      "editorStartDate": "2026-11-10",
       "editorDirector": "",
       "editorWhy": "",
       "platformVerified": true,
-      "scheduleSlot": "none"
+      "scheduleSlot": "evening"
     }
   ]
 }
