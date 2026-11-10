@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="640" viewBox="0 0 480 640">
+<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#373f4b"/><stop offset="1" stop-color="#15151a"/></linearGradient><linearGradient id="skin"><stop stop-color="#e4d2c3"/><stop offset="1" stop-color="#96858b"/></linearGradient></defs>
+<rect width="480" height="640" fill="url(#bg)"/><circle cx="240" cy="235" r="158" fill="#fff" opacity=".045"/>
+<path d="M25 640Q55 470 178 428L306 428Q432 460 460 640" fill="#20212a"/>
+<path d="M177 430L239 502L304 430L276 411H201Z" fill="#d6c9c0"/>
+<path d="M209 463L238 498L269 461L260 640H224Z" fill="#30343c"/>
+<path d="M152 215Q142 128 224 108Q305 98 328 180Q347 280 302 361Q280 402 239 398Q182 392 161 317Q147 260 152 215Z" fill="url(#skin)"/>
+<path d="M148 218Q140 159 176 124Q202 91 255 102Q314 102 332 166L323 207Q299 161 263 165Q216 157 176 197Z" fill="#292a30"/>
+<path d="M173 280Q193 259 220 271M259 270Q288 257 312 278" fill="none" stroke="#29272a" stroke-width="8"/>
+<rect x="166" y="251" width="68" height="48" rx="10" fill="none" stroke="#27242a" stroke-width="9"/>
+<rect x="249" y="251" width="68" height="48" rx="10" fill="none" stroke="#27242a" stroke-width="9"/>
+<path d="M234 269Q242 263 249 269" stroke="#27242a" stroke-width="8" fill="none"/>
+<path d="M238 290L229 322L245 328" stroke="#75666b" stroke-width="5" fill="none"/>
+<path d="M189 335Q213 344 238 336Q269 345 295 333Q291 383 244 392Q197 388 189 335Z" fill="#3b363a"/>
+<path d="M204 342Q239 360 279 340" stroke="#c7b5a7" stroke-width="5" fill="none"/>
+<text x="240" y="575" text-anchor="middle" font-family="Georgia,serif" font-size="26" fill="#d9c4c4" letter-spacing="4">KUBRICK</text>
+<text x="240" y="606" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#aaa0a5" letter-spacing="3">SİNEMA VİZYONU</text></svg>
