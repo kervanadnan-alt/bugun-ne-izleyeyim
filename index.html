@@ -260,8 +260,12 @@ function renderSchedule(){
  root.innerHTML=current.length?current.map(m=>`<button class="schedule-entry" type="button" data-id="${esc(String(m.id))}" data-date="${esc(m.date)}"><span class="schedule-tag">${esc(MATINEE_SLOTS[m.scheduleSlot])} · ${esc(m.time)}</span><h3>${esc(m.title)}</h3><p>${esc(m.date)} · Filmi incele →</p></button>`).join(""):`<div class="empty">Henüz yayına giren planlı film yok. Reji Masası'ndan takvim oluşturabilirsiniz.</div>`;
  root.querySelectorAll("[data-id]").forEach(b=>{const m=current.find(x=>String(x.id)===b.dataset.id&&x.date===b.dataset.date);if(m)b.onclick=()=>openDetail(m)});
  $("scheduleUpcoming").innerHTML=upcoming.slice(0,12).map(m=>`<div class="schedule-entry"><span class="schedule-tag">${esc(MATINEE_SLOTS[m.scheduleSlot])}</span><h3>${esc(m.title)}</h3><p>${esc(m.date)} · ${esc(m.time)} (Türkiye saati)</p></div>`).join("")||'<p class="section-sub">Yaklaşan yayın planlanmadı.</p>';
- attachCards($("scheduleArchive"),live.slice().reverse().slice(0,30));
- $("scheduleArchiveEmpty").classList.toggle("hidden",live.length>0);
+ // Arşiv yalnızca aynı kuşakta daha yeni bir yayınla yer değiştirmiş filmleri gösterir.
+ // Halen Yayın Akışı'nda görünen filmler arşive tekrar eklenmez.
+ const currentKeys=new Set(current.map(m=>`${m.media_type}:${m.id}:${m.date}:${m.time}:${m.scheduleSlot}`));
+ const archived=live.filter(m=>!currentKeys.has(`${m.media_type}:${m.id}:${m.date}:${m.time}:${m.scheduleSlot}`));
+ attachCards($("scheduleArchive"),archived.slice().reverse().slice(0,30));
+ $("scheduleArchiveEmpty").classList.toggle("hidden",archived.length>0);
 }
 function renderCurated(){
  renderSchedule();
