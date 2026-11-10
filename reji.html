@@ -39,7 +39,7 @@ header{height:74px;display:flex;align-items:center;justify-content:space-between
   <form id="searchForm"><div class="fields"><div class="field"><label for="platformFilter">Türkiye platformu</label><select id="platformFilter"><option value="">Tüm TMDB · platform sınırlaması yok</option><option value="8">Netflix</option><option value="119">Prime Video</option><option value="341">BluTV</option><option value="337">Disney+</option><option value="11">MUBI</option></select></div><div class="field wide"><label for="searchText">Film adı / anahtar kelime</label><input id="searchText" placeholder="Örn. Parasite veya zamana yolculuk"></div><div class="field"><label for="searchMode">Arama türü</label><select id="searchMode"><option value="title">Film adına göre</option><option value="keyword">TMDB anahtar kelimesi</option></select></div><div class="field"><label for="directorFilter">Yönetmen</label><input id="directorFilter" placeholder="Örn. Hitchcock" autocomplete="off"></div>
 <div class="field"><label for="writerFilter">Senarist</label><input id="writerFilter" placeholder="Örn. Charlie Kaufman" autocomplete="off"></div>
 <div class="field"><label for="actorFilter">Oyuncu</label><input id="actorFilter" placeholder="Örn. Tilda Swinton" autocomplete="off"></div>
-<div class="field"><label for="releaseYear">Net vizyon yılı</label><input id="releaseYear" type="number" min="1890" max="2100" placeholder="Örn. 2020"></div><div class="field"><label for="minRating">Min. TMDB puanı</label><select id="minRating"><option value="0">Filtresiz</option><option value="6.5">6.5+</option><option value="7">7.0+</option><option value="7.5">7.5+</option><option value="8">8.0+</option></select></div><div class="field wide"><label for="sortBy">Sıralama</label><select id="sortBy"><option value="popularity.desc">Popülerlik (yüksekten)</option><option value="vote_average.desc">Puan (yüksekten)</option><option value="primary_release_date.desc">Yeni vizyona girenler</option><option value="vote_count.desc">En çok değerlendirilenler</option></select></div></div><div class="fields" style="margin-top:14px">
+<div class="field"><label for="releaseYear">Başlangıç yılı (alternatif)</label><input id="releaseYear" type="number" min="1890" max="2100" placeholder="Örn. 2020"></div><div class="field"><label for="minRating">Min. TMDB puanı</label><select id="minRating"><option value="0">Filtresiz</option><option value="6.5">6.5+</option><option value="7">7.0+</option><option value="7.5">7.5+</option><option value="8">8.0+</option></select></div><div class="field wide"><label for="sortBy">Sıralama</label><select id="sortBy"><option value="popularity.desc">Popülerlik (yüksekten)</option><option value="vote_average.desc">Puan (yüksekten)</option><option value="primary_release_date.desc">Yeni vizyona girenler</option><option value="vote_count.desc">En çok değerlendirilenler</option></select></div></div><div class="fields" style="margin-top:14px">
 <div class="field"><label for="themeFilter">Tematik seçki</label><select id="themeFilter">
 <option value="">Tüm temalar</option><option value="justice">Adalet ve hukuk</option>
 <option value="detective">Dedektif / Polisiye</option><option value="adaptation">Roman uyarlamaları</option>
@@ -202,7 +202,7 @@ function searchState(){
   const q=$("searchText").value.trim(),mode=$("searchMode").value,platform=$("platformFilter").value;
   const year=numField("releaseYear"),from=numField("yearFrom"),to=numField("yearTo");
   return {q,mode,provider:platform,exactProvider:platform,allCatalog:!platform,director:$("directorFilter").value.trim(),writer:$("writerFilter").value.trim(),actor:$("actorFilter").value.trim(),year,
-    from:Math.max(from,p?.yearFrom||0),to:to&&p?.yearTo?Math.min(to,p.yearTo):to||p?.yearTo||0,
+    from:Math.max(from||year,p?.yearFrom||0),to:to&&p?.yearTo?Math.min(to,p.yearTo):to||p?.yearTo||0,
     min:Math.max(Number($("minRating").value),p?.min||0),sort:$("sortBy").value,preset:p,keywordId:null,
     theme:$("themeFilter").value,country:$("countryFilter").value,genre:$("genreFilter").value,age:$("ageFilter").value,originalLanguage:$("originalLanguage").value,
     minVotes:numField("minVotes"),runtimeFrom:numField("runtimeFrom"),runtimeTo:numField("runtimeTo")};
@@ -255,11 +255,8 @@ async function getResultPage(state,page){
     "vote_average.gte":state.min||undefined,"vote_count.gte":state.minVotes||undefined,
     "with_runtime.gte":state.runtimeFrom||undefined,"with_runtime.lte":state.runtimeTo||undefined
   };
-  if(state.year)params.primary_release_year=state.year;
-  else{
-    if(state.from)params["primary_release_date.gte"]=state.from+"-01-01";
-    if(state.to)params["primary_release_date.lte"]=state.to+"-12-31";
-  }
+  if(state.from)params["primary_release_date.gte"]=state.from+"-01-01";
+  if(state.to)params["primary_release_date.lte"]=state.to+"-12-31";
   if(state.country)params.with_origin_country=state.country.replaceAll("|","|");
   const themeKey=state.theme==="classic"?"":state.theme;
   const userTheme=state.q&&state.mode==="keyword"?matineeTheme(state.q):"";
@@ -285,7 +282,7 @@ async function getResultPage(state,page){
 function passesPreset(x,p){if(!p)return true;let year=Number((x.release_date||"").slice(0,4)),ids=x.genre_ids||[];if(p.yearTo&&year>p.yearTo||p.yearFrom&&year<p.yearFrom)return false;if(p.excludeEnglish&&x.original_language==="en")return false;if(p.excludeGenres&&ids.some(g=>p.excludeGenres.split(",").includes(String(g))))return false;if(p.genres&&!p.genres.split("|").some(g=>ids.includes(Number(g))))return false;return Number(x.vote_average||0)>=p.min}
 function passesExtraFilters(m,s){
   const y=Number((m.release_date||"").slice(0,4)),ids=m.genre_ids||[];
-  if(s.year&&y!==s.year)return false;
+  
   if(s.from&&(!y||y<s.from))return false;
   if(s.to&&(!y||y>s.to))return false;
   if(s.min&&Number(m.vote_average||0)<s.min)return false;

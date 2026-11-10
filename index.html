@@ -83,7 +83,7 @@
     <div class="field"><label for="order">Sıralama</label><select id="order"><option value="popularity.desc">Popüler yapımlar</option><option value="primary_release_date.desc">Yeni vizyona girenler</option><option value="vote_count.desc">En çok değerlendirilenler</option><option value="vote_average.desc">En yüksek puanlılar</option></select></div>
     
     <div class="field"><label for="minscore">En az puan</label><select id="minscore"><option value="0">Tümü</option><option value="6.5">6.5+</option><option value="7">7.0+</option><option value="7.5">7.5+</option><option value="8">8.0+</option></select></div>
-    <div class="field"><label for="year">Yıl</label><input id="year" type="number" inputmode="numeric" placeholder="Örn. 2023" min="1890" max="2100"></div>
+    <div class="field"><label for="year">Başlangıç yılı (dahil)</label><input id="year" type="number" inputmode="numeric" placeholder="Örn. 2023" min="1890" max="2100"></div><div class="field"><label for="yearEnd">Bitiş yılı (isteğe bağlı)</label><input id="yearEnd" type="number" min="1890" max="2100" placeholder="Örn. 2024"></div>
     <div class="field searchbtn" style="justify-content:end"><button type="button" class="btn btn-red" id="discoverBtn"><i class="fa-solid fa-magnifying-glass"></i> Keşfet</button></div>
   </div>
   <div class="status hidden" id="discoverStatus" role="status"></div><div class="movie-grid" id="discoveryGrid"></div><div class="more"><button type="button" id="moreBtn" class="btn btn-ghost hidden">Daha Fazla Yapım Göster <i class="fa-solid fa-angle-down"></i></button></div>
@@ -220,9 +220,11 @@ async function verifyRoles(items,s){
 }
 async function runDiscover(reset=true){
  if(reset)publicPeopleState={director:$("pubDirector").value.trim(),writer:$("pubWriter").value.trim(),actor:$("pubActor").value.trim()};
+ const fromYear=Number($("year").value||0),toYear=Number($("yearEnd").value||0);
+ if(fromYear&&toYear&&fromYear>toYear){status("Başlangıç yılı bitiş yılından büyük olamaz.","error");return}
  await resolvePeople(publicPeopleState);
  if(publicPeopleState.missingPerson){discovery=[];renderDiscovery();status("Girilen kişi adı TMDB'de bulunamadı.","error");return}
-let m=$("media").value,query=$("q").value.trim(),genre=$("genre").value,provider=$("provider").value,score=Number($("minscore").value),yr=$("year").value.trim();if(reset){currentPage=1;discovery=[];renderDiscovery()}$("discoverBtn").disabled=true;$("moreBtn").classList.add("hidden");status(activeWeek!==null?WEEK[activeWeek][0]+" · "+WEEK[activeWeek][1]+" kuşağı aranıyor…":"Film arşivi taranıyor…");try{let data;
+let m=$("media").value,query=$("q").value.trim(),genre=$("genre").value,provider=$("provider").value,score=Number($("minscore").value),yr=$("year").value.trim(),yrEnd=$("yearEnd").value.trim();if(reset){currentPage=1;discovery=[];renderDiscovery()}$("discoverBtn").disabled=true;$("moreBtn").classList.add("hidden");status(activeWeek!==null?WEEK[activeWeek][0]+" · "+WEEK[activeWeek][1]+" kuşağı aranıyor…":"Film arşivi taranıyor…");try{let data;
 const theme=$("theme").value,country=$("country").value,order=$("order").value;
 const alias=matineeTheme(query);
 const selectedTheme=theme==="classic"?"":(theme||($("searchMode").value==="keyword"?alias:""));
@@ -230,7 +232,7 @@ const thematic=Boolean(selectedTheme||theme==="classic"||country);
 if((thematic||($("searchMode").value==="keyword"&&query))&&m==="movie"){
  const params={with_crew:[publicPeopleState.directorId,publicPeopleState.writerId].filter(Boolean).join("|")||undefined,with_cast:publicPeopleState.actorId||undefined,page:currentPage,watch_region:"TR",with_watch_providers:provider||undefined,with_watch_monetization_types:provider?"flatrate":undefined,
  "vote_average.gte":score||undefined,with_genres:genre||undefined,sort_by:order,include_adult:"false",with_origin_country:country||undefined};
- if(yr)params.primary_release_year=yr;
+ if(yr)params["primary_release_date.gte"]=yr+"-01-01";if(yrEnd)params["primary_release_date.lte"]=yrEnd+"-12-31";
  if(theme==="classic")params["primary_release_date.lte"]="2005-12-31";
  let phrases=selectedTheme?(MATINEE_THEMES[selectedTheme]||[]):[];
  if(query&&$("searchMode").value==="keyword"&&!alias)phrases.push(query);
@@ -247,7 +249,7 @@ if($("searchMode").value==="keyword"&&m==="movie"){
  const ids=(found.results||[]).slice(0,8).map(k=>k.id);
  if(!ids.length){data={results:[],total_pages:0}}
  else data=await request("/discover/movie",{page:currentPage,with_keywords:ids.join("|"),watch_region:"TR",with_watch_providers:provider||undefined,"vote_average.gte":score||undefined});
-}else data=await request("/search/"+m,{query,page:currentPage,include_adult:"false"});}else{let params={with_crew:[publicPeopleState.directorId,publicPeopleState.writerId].filter(Boolean).join("|")||undefined,with_cast:publicPeopleState.actorId||undefined,page:currentPage,watch_region:"TR",include_adult:"false",sort_by:order,with_genres:genre||undefined,"vote_average.gte":score||undefined,with_watch_providers:provider||undefined,with_watch_monetization_types:provider?"flatrate":undefined};if(yr)params[m==="movie"?"primary_release_year":"first_air_date_year"]=yr;
+}else data=await request("/search/"+m,{query,page:currentPage,include_adult:"false"});}else{let params={with_crew:[publicPeopleState.directorId,publicPeopleState.writerId].filter(Boolean).join("|")||undefined,with_cast:publicPeopleState.actorId||undefined,page:currentPage,watch_region:"TR",include_adult:"false",sort_by:order,with_genres:genre||undefined,"vote_average.gte":score||undefined,with_watch_providers:provider||undefined,with_watch_monetization_types:provider?"flatrate":undefined};if(yr)params[m==="movie"?"primary_release_date.gte":"first_air_date.gte"]=yr+"-01-01";if(yrEnd)params[m==="movie"?"primary_release_date.lte":"first_air_date.lte"]=yrEnd+"-12-31";
 if(activeWeek!==null){
  const w=WEEK_FILTERS[activeWeek];
  params.with_genres=w.genres||undefined;
@@ -257,7 +259,7 @@ if(activeWeek!==null){
  params.without_original_language=w.nonEnglish?"en":undefined;
  params.without_genres=w.excludeAnimation?"16,10751":undefined;
 }
-data=await request("/discover/"+m,params)}let items=(data.results||[]).filter(x=>{let year=(x.release_date||x.first_air_date||"").slice(0,4);return(!genre||mediaGenre(x,genre))&&(!score||x.vote_average>=score)&&(!yr||year===yr)}).map(x=>toItem(x,m));if(query&&provider){let passed=await Promise.all(items.map(async x=>{try{let p=await request("/"+m+"/"+x.id+"/watch/providers");const tr=p.results?.TR||{};return (tr.flatrate||[]).some(z=>z.provider_id===Number(provider))?x:null}catch{return null}}));items=passed.filter(Boolean)}items=await verifyRoles(items,publicPeopleState);
+data=await request("/discover/"+m,params)}let items=(data.results||[]).filter(x=>{let year=(x.release_date||x.first_air_date||"").slice(0,4);return(!genre||mediaGenre(x,genre))&&(!score||x.vote_average>=score)&&(!yr||Number(year)>=Number(yr))&&(!yrEnd||Number(year)<=Number(yrEnd))}).map(x=>toItem(x,m));if(provider){let passed=await Promise.all(items.map(async x=>{try{let p=await request("/"+m+"/"+x.id+"/watch/providers");const tr=p.results?.TR||{};const match=(tr.flatrate||[]).find(z=>z.provider_id===Number(provider));if(!match)return null;return {...x,platform:match.provider_name,platformVerified:true}}catch{return null}}));items=passed.filter(Boolean)}items=await verifyRoles(items,publicPeopleState);
 const age=$("age").value;
 if(age&&m==="movie"){
  const checked=await Promise.all(items.map(async x=>{
