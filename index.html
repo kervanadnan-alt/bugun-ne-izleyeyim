@@ -71,9 +71,9 @@
   <div class="filters">
 <div class="field"><label for="provider">Platform</label><select id="provider"><option value="">Tüm TMDB · platform sınırlaması yok</option><option value="8">Netflix</option><option value="119">Prime Video</option><option value="341">BluTV</option><option value="337">Disney+</option><option value="11">MUBI</option></select></div>
     <div class="field wide"><label for="q">Film veya dizi adı</label><input id="q" placeholder="Aklında bir isim var mı?" autocomplete="off"></div>
-    <div class="field"><label for="pubDirector">Yönetmen</label><input id="pubDirector" placeholder="Yönetmen adı"></div>
-<div class="field"><label for="pubWriter">Senarist</label><input id="pubWriter" placeholder="Senarist adı"></div>
-<div class="field"><label for="pubActor">Oyuncu</label><input id="pubActor" placeholder="Oyuncu adı"></div>
+    <div style="grid-column:1/-1;font-size:12px;opacity:.75">Kişi adı yazıp arayın. Birden fazla eşleşme varsa açılan listeden doğru kişiyi seçip yeniden arayın.</div><div class="field"><label for="pubDirector">Yönetmen</label><input id="pubDirector" placeholder="Yönetmen adı"><select id="pubDirectorChoice" aria-label="Yönetmen kişi eşleşmesi" style="display:none;margin-top:6px;width:100%;padding:9px;border-radius:7px;background:#17171d;color:#fff;border:1px solid #666"></select></div>
+<div class="field"><label for="pubWriter">Senarist</label><input id="pubWriter" placeholder="Senarist adı"><select id="pubWriterChoice" aria-label="Senarist kişi eşleşmesi" style="display:none;margin-top:6px;width:100%;padding:9px;border-radius:7px;background:#17171d;color:#fff;border:1px solid #666"></select></div>
+<div class="field"><label for="pubActor">Oyuncu</label><input id="pubActor" placeholder="Oyuncu adı"><select id="pubActorChoice" aria-label="Oyuncu kişi eşleşmesi" style="display:none;margin-top:6px;width:100%;padding:9px;border-radius:7px;background:#17171d;color:#fff;border:1px solid #666"></select></div>
 <div class="field"><label for="media">İçerik</label><select id="media"><option value="movie">Film</option><option value="tv">Dizi</option></select></div>
     <div class="field"><label for="genre">Tür</label><select id="genre"><option value="">Tüm türler</option><option value="18">Dram</option><option value="35">Komedi</option><option value="53">Gerilim</option><option value="878">Bilimkurgu</option><option value="9648">Gizem</option><option value="27">Korku</option><option value="28">Aksiyon</option><option value="99">Belgesel</option><option value="10749">Romantik</option><option value="12">Macera</option><option value="16">Animasyon</option><option value="80">Suç</option><option value="10751">Aile</option><option value="14">Fantastik</option><option value="36">Tarih</option><option value="10752">Savaş</option><option value="37">Western</option><option value="10402">Müzik</option></select></div>
     <div class="field"><label for="searchMode">Arama türü</label><select id="searchMode"><option value="title">Film adına göre</option><option value="keyword">Anahtar kelimeye göre</option></select></div>
@@ -184,20 +184,50 @@ function status(message,type=""){let s=$("discoverStatus");s.textContent=message
 function mediaGenre(movie,genre){if(!genre)return true;return (movie.genre_ids||[]).includes(Number(genre))}
 let publicPeopleState=null;
 const peopleCache=new Map();
-async function resolvePerson(name){
+const personChoices={director:null,writer:null,actor:null};
+const personFields={director:"pubDirector",writer:"pubWriter",actor:"pubActor"};
+const personLabels={director:"Yönetmen",writer:"Senarist",actor:"Oyuncu"};
+function personKey(s){return (s||"").trim().toLocaleLowerCase("tr")}
+function clearPersonChoice(role){
+ personChoices[role]=null;
+ const el=$(personFields[role]+"Choice");
+ el.style.display="none";el.innerHTML="";
+}
+for(const role of ["director","writer","actor"]){
+ $(personFields[role]).addEventListener("input",()=>clearPersonChoice(role));
+}
+async function resolvePerson(name,role){
  if(!name)return null;
- const key=name.toLocaleLowerCase("tr").trim();
- if(peopleCache.has(key))return peopleCache.get(key);
- const data=await request("/search/person",{query:name,page:1,include_adult:"false"});
- const candidates=(data.results||[]).filter(p=>p.known_for_department==="Acting"||p.known_for_department==="Directing"||p.known_for_department==="Writing"||p.known_for_department==="Production");
- const person=candidates[0]||(data.results||[])[0]||null;
- peopleCache.set(key,person?.id||null);
- return person?.id||null;
+ const key=personKey(name);
+ if(!peopleCache.has(key)){
+  const data=await request("/search/person",{query:name,page:1,include_adult:"false"});
+  peopleCache.set(key,(data.results||[]).slice(0,12));
+ }
+ const all=peopleCache.get(key)||[];
+ const appropriate=all.filter(p=>role==="actor"?p.known_for_department==="Acting":role==="director"?p.known_for_department==="Directing":p.known_for_department==="Writing");
+ const candidates=(appropriate.length?appropriate:all).slice(0,8);
+ const dropdown=$(personFields[role]+"Choice");
+ if(!candidates.length){dropdown.style.display="none";return null}
+ dropdown.innerHTML="";
+ for(const p of candidates){
+  const option=document.createElement("option");
+  option.value=String(p.id);
+  const works=(p.known_for||[]).slice(0,2).map(w=>w.title||w.name).filter(Boolean).join(", ");
+  option.textContent=p.name+" · "+(p.known_for_department||"Sinema")+(works?" · "+works:"")+" (#"+p.id+")";
+  dropdown.appendChild(option);
+ }
+ dropdown.style.display="block";
+ const previous=personChoices[role];
+ const found=candidates.find(p=>p.id===previous?.id&&previous.key===key);
+ dropdown.value=String(found?.id||candidates[0].id);
+ personChoices[role]={key,id:Number(dropdown.value)};
+ dropdown.onchange=()=>{personChoices[role]={key,id:Number(dropdown.value)}};
+ return Number(dropdown.value);
 }
 async function resolvePeople(s){
  if(s.peopleResolved)return;
  s.peopleResolved=true;
- const [director,writer,actor]=await Promise.all([resolvePerson(s.director),resolvePerson(s.writer),resolvePerson(s.actor)]);
+ const [director,writer,actor]=await Promise.all([resolvePerson(s.director,"director"),resolvePerson(s.writer,"writer"),resolvePerson(s.actor,"actor")]);
  s.directorId=director;s.writerId=writer;s.actorId=actor;
  s.missingPerson=Boolean((s.director&&!director)||(s.writer&&!writer)||(s.actor&&!actor));
 }

@@ -36,9 +36,9 @@ header{height:74px;display:flex;align-items:center;justify-content:space-between
  <div class="kpi-bar"><div class="kpi"><span>Yayın Kuyruğu</span><b id="totalCount">0</b></div><div class="kpi"><span>Yayına Hazır</span><b id="plannedCount">0</b></div><div class="kpi"><span>Vitrine Seçilen</span><b id="publishedCount">0</b></div></div>
  <section class="panel"><div class="panel-top"><div><h2 class="section-title"><i class="fa-solid fa-calendar-week red"></i> Haftalık Yayın Kuşakları</h2><p class="section-caption">Bir kuşak seçin; tür, dönem ve puan filtreleri otomatik uygulansın.</p></div></div><div class="days" id="dayButtons"></div><div class="actions"><button class="btn subbtn btn-sm" id="resetPreset" type="button"><i class="fa-solid fa-rotate-left"></i> Kuşak seçimini temizle</button><button class="btn outlinebtn btn-sm" id="pinnedBtn" type="button"><i class="fa-solid fa-thumbtack"></i> Sabit Gönderi Şablonu</button></div></section>
  <section class="panel" id="searchPanel"><div class="panel-top"><div><h2 class="section-title"><i class="fa-solid fa-magnifying-glass red"></i> Film Kataloğu & Nokta Atışı Arama</h2><p class="section-caption">Önce platform seç veya Tüm TMDB üzerinde film, yönetmen, senarist ve oyuncuya göre ara; seçtiğin filmi editöre aktar.</p></div></div>
-  <form id="searchForm"><div class="fields"><div class="field"><label for="platformFilter">Türkiye platformu</label><select id="platformFilter"><option value="">Tüm TMDB · platform sınırlaması yok</option><option value="8">Netflix</option><option value="119">Prime Video</option><option value="341">BluTV</option><option value="337">Disney+</option><option value="11">MUBI</option></select></div><div class="field wide"><label for="searchText">Film adı / anahtar kelime</label><input id="searchText" placeholder="Örn. Parasite veya zamana yolculuk"></div><div class="field"><label for="searchMode">Arama türü</label><select id="searchMode"><option value="title">Film adına göre</option><option value="keyword">TMDB anahtar kelimesi</option></select></div><div class="field"><label for="directorFilter">Yönetmen</label><input id="directorFilter" placeholder="Örn. Hitchcock" autocomplete="off"></div>
-<div class="field"><label for="writerFilter">Senarist</label><input id="writerFilter" placeholder="Örn. Charlie Kaufman" autocomplete="off"></div>
-<div class="field"><label for="actorFilter">Oyuncu</label><input id="actorFilter" placeholder="Örn. Tilda Swinton" autocomplete="off"></div>
+  <form id="searchForm"><div class="fields"><div class="field"><label for="platformFilter">Türkiye platformu</label><select id="platformFilter"><option value="">Tüm TMDB · platform sınırlaması yok</option><option value="8">Netflix</option><option value="119">Prime Video</option><option value="341">BluTV</option><option value="337">Disney+</option><option value="11">MUBI</option></select></div><div class="field wide"><label for="searchText">Film adı / anahtar kelime</label><input id="searchText" placeholder="Örn. Parasite veya zamana yolculuk"></div><div class="field"><label for="searchMode">Arama türü</label><select id="searchMode"><option value="title">Film adına göre</option><option value="keyword">TMDB anahtar kelimesi</option></select></div><div style="grid-column:1/-1;font-size:12px;opacity:.75">Kişi adı yazıp arayın. Birden fazla eşleşme varsa açılan listeden doğru kişiyi seçip yeniden arayın.</div><div class="field"><label for="directorFilter">Yönetmen</label><input id="directorFilter" placeholder="Örn. Hitchcock" autocomplete="off"><select id="directorFilterChoice" aria-label="Yönetmen kişi eşleşmesi" style="display:none;margin-top:6px;width:100%;padding:9px;border-radius:7px;background:#17171d;color:#fff;border:1px solid #666"></select></div>
+<div class="field"><label for="writerFilter">Senarist</label><input id="writerFilter" placeholder="Örn. Charlie Kaufman" autocomplete="off"><select id="writerFilterChoice" aria-label="Senarist kişi eşleşmesi" style="display:none;margin-top:6px;width:100%;padding:9px;border-radius:7px;background:#17171d;color:#fff;border:1px solid #666"></select></div>
+<div class="field"><label for="actorFilter">Oyuncu</label><input id="actorFilter" placeholder="Örn. Tilda Swinton" autocomplete="off"><select id="actorFilterChoice" aria-label="Oyuncu kişi eşleşmesi" style="display:none;margin-top:6px;width:100%;padding:9px;border-radius:7px;background:#17171d;color:#fff;border:1px solid #666"></select></div>
 <div class="field"><label for="releaseYear">Başlangıç yılı (alternatif)</label><input id="releaseYear" type="number" min="1890" max="2100" placeholder="Örn. 2020"></div><div class="field"><label for="minRating">Min. TMDB puanı</label><select id="minRating"><option value="0">Filtresiz</option><option value="6.5">6.5+</option><option value="7">7.0+</option><option value="7.5">7.5+</option><option value="8">8.0+</option></select></div><div class="field wide"><label for="sortBy">Sıralama</label><select id="sortBy"><option value="popularity.desc">Popülerlik (yüksekten)</option><option value="vote_average.desc">Puan (yüksekten)</option><option value="primary_release_date.desc">Yeni vizyona girenler</option><option value="vote_count.desc">En çok değerlendirilenler</option></select></div></div><div class="fields" style="margin-top:14px">
 <div class="field"><label for="themeFilter">Tematik seçki</label><select id="themeFilter">
 <option value="">Tüm temalar</option><option value="justice">Adalet ve hukuk</option>
@@ -208,20 +208,50 @@ function searchState(){
     minVotes:numField("minVotes"),runtimeFrom:numField("runtimeFrom"),runtimeTo:numField("runtimeTo")};
 }
 const peopleCache=new Map();
-async function resolvePerson(name){
+const personChoices={director:null,writer:null,actor:null};
+const personFields={director:"directorFilter",writer:"writerFilter",actor:"actorFilter"};
+const personLabels={director:"Yönetmen",writer:"Senarist",actor:"Oyuncu"};
+function personKey(s){return (s||"").trim().toLocaleLowerCase("tr")}
+function clearPersonChoice(role){
+ personChoices[role]=null;
+ const el=$(personFields[role]+"Choice");
+ el.style.display="none";el.innerHTML="";
+}
+for(const role of ["director","writer","actor"]){
+ $(personFields[role]).addEventListener("input",()=>clearPersonChoice(role));
+}
+async function resolvePerson(name,role){
  if(!name)return null;
- const key=name.toLocaleLowerCase("tr").trim();
- if(peopleCache.has(key))return peopleCache.get(key);
- const data=await tmdb("/search/person",{query:name,page:1,include_adult:"false"});
- const candidates=(data.results||[]).filter(p=>p.known_for_department==="Acting"||p.known_for_department==="Directing"||p.known_for_department==="Writing"||p.known_for_department==="Production");
- const person=candidates[0]||(data.results||[])[0]||null;
- peopleCache.set(key,person?.id||null);
- return person?.id||null;
+ const key=personKey(name);
+ if(!peopleCache.has(key)){
+  const data=await tmdb("/search/person",{query:name,page:1,include_adult:"false"});
+  peopleCache.set(key,(data.results||[]).slice(0,12));
+ }
+ const all=peopleCache.get(key)||[];
+ const appropriate=all.filter(p=>role==="actor"?p.known_for_department==="Acting":role==="director"?p.known_for_department==="Directing":p.known_for_department==="Writing");
+ const candidates=(appropriate.length?appropriate:all).slice(0,8);
+ const dropdown=$(personFields[role]+"Choice");
+ if(!candidates.length){dropdown.style.display="none";return null}
+ dropdown.innerHTML="";
+ for(const p of candidates){
+  const option=document.createElement("option");
+  option.value=String(p.id);
+  const works=(p.known_for||[]).slice(0,2).map(w=>w.title||w.name).filter(Boolean).join(", ");
+  option.textContent=p.name+" · "+(p.known_for_department||"Sinema")+(works?" · "+works:"")+" (#"+p.id+")";
+  dropdown.appendChild(option);
+ }
+ dropdown.style.display="block";
+ const previous=personChoices[role];
+ const found=candidates.find(p=>p.id===previous?.id&&previous.key===key);
+ dropdown.value=String(found?.id||candidates[0].id);
+ personChoices[role]={key,id:Number(dropdown.value)};
+ dropdown.onchange=()=>{personChoices[role]={key,id:Number(dropdown.value)}};
+ return Number(dropdown.value);
 }
 async function resolvePeople(s){
  if(s.peopleResolved)return;
  s.peopleResolved=true;
- const [director,writer,actor]=await Promise.all([resolvePerson(s.director),resolvePerson(s.writer),resolvePerson(s.actor)]);
+ const [director,writer,actor]=await Promise.all([resolvePerson(s.director,"director"),resolvePerson(s.writer,"writer"),resolvePerson(s.actor,"actor")]);
  s.directorId=director;s.writerId=writer;s.actorId=actor;
  s.missingPerson=Boolean((s.director&&!director)||(s.writer&&!writer)||(s.actor&&!actor));
 }
