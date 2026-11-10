@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-10T19:18:22.058Z",
+  "updatedAt": "2026-11-10T19:24:41.441Z",
   "entries": [
     {
       "uid": "y-1794334933322-4tvivl",
@@ -117,6 +117,45 @@
       "editorEndDate": "2026-11-15",
       "editorCollection": "",
       "editorStartDate": "2026-11-10",
+      "editorDirector": "",
+      "editorWhy": "",
+      "platformVerified": true,
+      "scheduleSlot": "evening"
+    },
+    {
+      "uid": "y-1794338667665-lbugyg",
+      "id": 3933,
+      "media_type": "movie",
+      "title": "Ölü Gelin",
+      "release_date": "2005-09-12",
+      "poster_path": "/qE3dAUInYF2OXvuGbcIkKUaTdlE.jpg",
+      "backdrop_path": "/v23fWgJUEt8EMmvn19btIacxP8E.jpg",
+      "vote_average": 7.6,
+      "imdbRating": "",
+      "imdbId": "tt0121164",
+      "overview": "Victor Van Dort kısa süre sonra güzel Victoria ile evlenecektir. Ancak genç adam kendini henüz evlenmeye hazır biri gibi hissetmemektedir. Kendi kendine yüzük takma provası yaparken yüzüğü yanlışlıkla Ölü Gelin'in parmağına takıverir ve apar topar Ölüler Diyarı'na götürülür. Ölüler Diyarı'ndaki hayat Yaşayanların Dünyası'nın sıkıcılığından uzak ve çok daha eğlenceli bir yerdir. Yine de hiçbir şey Victor'un Victoria'ya kavuşmasına engel olamaycaktır.",
+      "hook": "Bu akşam yeni bir hikâyeye yer açın.",
+      "platform": "Netflix",
+      "providerId": 8,
+      "availableProviders": [
+        {
+          "id": 8,
+          "name": "Netflix"
+        }
+      ],
+      "date": "2026-11-11",
+      "time": "22:00",
+      "hashtag": "#KültSinema",
+      "post1": "🎬 Ölü Gelin (2005)\n⭐ TMDB 7.6/10 · 📅 2026-11-11 · ⏰ 22:00\n✨ Bu akşam yeni bir hikâyeye yer açın.\nVictor Van Dort kısa süre sonra güzel Victoria ile evlenecektir. Ancak genç adam k\n🎥 Netflix (TMDB Türkiye abonelik verisi).\n🔗 https://izle.uzzman.com.tr/\\n#KültSinema",
+      "post2": "📝 Filmin devam eden özeti:\nendini henüz evlenmeye hazır biri gibi hissetmemektedir. Kendi kendine yüzük takma provası yaparken yüzüğü yanlışlıkla Ölü Gelin'in parmağına takıverir ve apar topar Ölüler Diyarı'na götürülür. Ölüler Diyarı'ndaki hayat Yaşayanla",
+      "pinned": false,
+      "status": "published",
+      "editorPick": "none",
+      "editorNote": "",
+      "editorPriority": 10,
+      "editorEndDate": "",
+      "editorCollection": "cult",
+      "editorStartDate": "",
       "editorDirector": "",
       "editorWhy": "",
       "platformVerified": true,
