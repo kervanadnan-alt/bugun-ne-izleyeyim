@@ -42,7 +42,18 @@
     @media(max-width:1100px){.movie-grid{grid-template-columns:repeat(4,1fr)}.filters{grid-template-columns:repeat(3,1fr)}.days{grid-template-columns:repeat(4,1fr)}.hero-decoration{right:-140px;opacity:.45}nav{gap:14px}}
     @media(max-width:760px){.wrap{width:calc(100% - 36px)}.header-inner{width:calc(100% - 32px);gap:9px}nav{display:none;position:absolute;top:76px;left:0;right:0;padding:22px;background:#121216;flex-direction:column;align-items:start;border-bottom:1px solid var(--line)}nav.open{display:flex}.hamb{display:inline-grid}.brand-title{font-size:.92rem}.brand-icon{width:35px;height:35px}.header-actions{gap:6px}header{height:76px}.hero{min-height:530px}.hero-content{padding:65px 0}.hero-desc{font-size:.92rem}.hero-decoration{display:none}.movie-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 11px}.days{grid-template-columns:repeat(2,1fr)}.filters{grid-template-columns:repeat(2,1fr)}.filters .wide{grid-column:span 2}.filters .searchbtn{grid-column:span 2}.split-cta{align-items:start;flex-direction:column;padding:24px}.section{margin-top:42px}.section-heading{font-size:1.35rem}.detail-flex{flex-direction:column}.modal-poster{width:128px;min-width:128px}.footer-inner{flex-direction:column;gap:12px}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
-  </style>
+  
+.director-profiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:20px 0 12px}
+.director-profile{display:flex;gap:20px;align-items:stretch;padding:20px;border:1px solid #393039;border-radius:18px;background:linear-gradient(130deg,#211c22,#111114);min-width:0}
+.director-portrait{width:135px;min-width:135px;min-height:175px;border-radius:12px;background:linear-gradient(145deg,#42313a,#141418);display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-size:44px;color:#e7c8c5;background-position:center;background-size:cover}
+.director-profile-body{display:flex;flex-direction:column;align-items:flex-start;gap:8px;min-width:0}
+.director-profile h3{font-size:24px;margin:0}.director-profile p{font-size:13px;color:#bbb;margin:0;line-height:1.65}
+.director-profile .director-subtitle{color:#f05b64;font-weight:700}
+.director-eyebrow{font-size:10px;letter-spacing:2px;color:#aaa}
+.director-action{border:1px solid #e42c3c;border-radius:9px;background:#b71f2e;color:white;font-weight:700;padding:10px 16px;cursor:pointer;margin-top:auto}
+.director-action:hover{background:#e42c3c}.director-expanded{margin-top:22px;padding:18px;border:1px solid #393039;border-radius:16px}
+@media(max-width:780px){.director-profiles{grid-template-columns:1fr}.director-profile{padding:14px;gap:14px}.director-portrait{width:100px;min-width:100px;min-height:140px}.director-profile h3{font-size:20px}}
+</style>
 <script src="config.js"></script>
 </head>
 <body>
@@ -64,7 +75,17 @@
 <div class="section-header"><div><h2 class="section-heading">✦ <span class="red">Kült Köşesi</span></h2><p class="section-sub">Editörün seçtiği kült filmler.</p></div></div>
 <div class="movie-grid" id="cultGrid"></div><div class="empty" id="cultEmpty">Kült Köşesi için henüz seçki yayınlanmadı.</div>
 <div class="section-header" style="margin-top:40px"><div><h2 class="section-heading">✦ <span class="red">Yönetmen Dosyası</span></h2><p class="section-sub">Yönetmenlere odaklanan özel film seçkileri.</p></div></div>
-<div class="movie-grid" id="directorGrid"></div><div class="empty" id="directorEmpty">Yönetmen Dosyası için henüz seçki yayınlanmadı.</div>
+<div class="director-profiles" id="directorProfiles">
+<article class="director-profile">
+<div class="director-portrait" id="portraitHitchcock" aria-hidden="true">AH</div>
+<div class="director-profile-body"><span class="director-eyebrow">YÖNETMEN DOSYASI · 01</span><h3>Alfred Hitchcock</h3><p class="director-subtitle">Gerilimin Ustası</p><p>Gizem, suç ve psikolojik gerilimi sinema diline dönüştüren usta yönetmen.</p><button class="director-action" type="button" data-director-open="hitchcock" aria-expanded="false">Filmlerini Gör ↓</button></div>
+</article>
+<article class="director-profile">
+<div class="director-portrait" id="portraitKubrick" aria-hidden="true">SK</div>
+<div class="director-profile-body"><span class="director-eyebrow">YÖNETMEN DOSYASI · 02</span><h3>Stanley Kubrick</h3><p class="director-subtitle">Sinemanın Kusursuzluk Arayışı</p><p>İnsan doğası, iktidar, teknoloji ve psikolojik çatışmaları özgün bir görsel dille ele alan yönetmen.</p><button class="director-action" type="button" data-director-open="kubrick" aria-expanded="false">Filmlerini Gör ↓</button></div>
+</article>
+</div>
+<div id="directorExpanded" class="director-expanded hidden"><div class="section-header"><div><h3 id="directorExpandedTitle" class="section-heading"></h3><p id="directorExpandedNote" class="section-sub"></p></div><button class="director-action" type="button" id="directorClose">Kapat ×</button></div><div class="movie-grid" id="directorGrid"></div><div class="empty hidden" id="directorEmpty">Bu yönetmenin filmleri henüz yüklenemedi.</div></div>
 </section>
 <section class="section" id="seckiler"><div class="section-header"><div><h2 class="section-heading"><span class="red">✦</span> Editörün Seçkileri</h2><p class="section-sub">Reji masasından onaylanarak yayınlanan öneriler.</p></div><span class="section-link" id="curatedCount"></span></div><div class="movie-grid" id="curatedGrid"></div><div id="curatedEmpty" class="empty hidden"><i class="fa-solid fa-film"></i><h3>İlk matine hazırlanıyor</h3><p>Henüz onaylanmış bir yayın yok. Reji masasından seçkileri yayınlayıp <strong>yayinlar.json</strong> dosyasını güncellediğinizde burada görünecekler.</p><a class="btn btn-ghost btn-sm" href="#kesfet">Bu arada film keşfet <i class="fa-solid fa-arrow-down"></i></a></div></section>
 <section class="section" id="kesfet"><div class="section-header"><div><h2 class="section-heading">Kendi Filmini <span class="red">Keşfet</span></h2><p class="section-sub">Önce platform seçebilir, ardından film adı, yönetmen, senarist, oyuncu, tema, ülke ve döneme göre keşfedebilirsin. Tematik eşleşmeler TMDB etiketlerine bağlıdır.</p></div></div>
@@ -153,6 +174,63 @@ function toggleList(type,m){let list=getList(type),idx=list.findIndex(x=>saveKey
 function ratingText(m){return Number(m.vote_average)>0?Number(m.vote_average).toFixed(1):"—"}
 function card(m){let img=imageUrl(m.poster_path),saved=inList("favorites",m),year=(m.release_date||"").slice(0,4)||"—";return `<article class="movie-card" data-id="${m.id}" data-type="${esc(m.media_type)}" tabindex="0" role="button" aria-label="${esc(m.title)} detaylarını aç"><div class="poster">${img?`<img src="${img}" alt="${esc(m.title)} afişi" loading="lazy" onerror="this.style.display='none'">`:`<span class="fallback">${esc(m.title)}</span>`}<span class="rating">★ ${ratingText(m)}</span><button class="heart ${saved?"saved":""}" data-fav="${saveKey(m)}" title="${saved?"Favorilerden çıkar":"Favorilere ekle"}" aria-label="${saved?"Favorilerden çıkar":"Favorilere ekle"}"><i class="${saved?"fa-solid":"fa-regular"} fa-heart"></i></button></div><div class="movie-title">${esc(m.title)}</div><div class="movie-sub"><span>${year} · ${m.media_type==="tv"?"Dizi":"Film"}</span><span>${esc(m.editorCollection==="director"?(m.editorDirector||"Yönetmen bilgisi bekleniyor"):(m.platformVerified&&m.platform?m.platform:"Platform bilgisi yok"))}</span></div></article>`}
 function attachCards(root,items){root.innerHTML=items.map(card).join("");root.querySelectorAll(".movie-card").forEach(el=>{let m=items.find(x=>String(x.id)===el.dataset.id&&x.media_type===el.dataset.type);if(!m)return;el.addEventListener("click",e=>{if(e.target.closest("[data-fav]"))return;openDetail(m)});el.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&!e.target.closest("button")){e.preventDefault();openDetail(m)}});let fav=el.querySelector("[data-fav]");fav.addEventListener("click",e=>{e.stopPropagation();toggleList("favorites",m)})})}
+const directorInfo={
+ hitchcock:{name:"Alfred Hitchcock",films:[["Psycho",1960],["Rear Window",1954],["Vertigo",1958]]},
+ kubrick:{name:"Stanley Kubrick",films:[["2001: A Space Odyssey",1968],["A Clockwork Orange",1971],["The Shining",1980]]}
+};
+let activeDirector=null,directorCurated=[],directorFilmCache={};
+function directorMatches(m,name){
+ const n=(m.editorDirector||"").toLocaleLowerCase("tr").trim();
+ return n.includes(name.toLocaleLowerCase("tr"))||(name==="Alfred Hitchcock"&&n==="hitchcock")||(name==="Stanley Kubrick"&&n==="kubrick");
+}
+async function loadDirectorCatalog(slug){
+ if(directorFilmCache[slug])return directorFilmCache[slug];
+ const info=directorInfo[slug];
+ const people=await request("/search/person",{query:info.name,page:1});
+ const person=(people.results||[]).find(p=>p.name.toLocaleLowerCase("en")===info.name.toLocaleLowerCase("en"));
+ if(!person)throw Error("Yönetmen TMDB'de bulunamadı.");
+ const credits=await request("/person/"+person.id+"/movie_credits");
+ const directed=(credits.crew||[]).filter(c=>c.job==="Director");
+ const movies=[];
+ for(const [title,year] of info.films){
+  const found=directed.find(m=>m.original_title?.toLowerCase()===title.toLowerCase()&&(m.release_date||"").startsWith(String(year)));
+  if(found)movies.push(toItem({...found,title:found.title||title,media_type:"movie"}));
+ }
+ directorFilmCache[slug]=movies;
+ if(person.profile_path){
+  const portrait=$("portrait"+(slug==="hitchcock"?"Hitchcock":"Kubrick"));
+  portrait.style.backgroundImage=`linear-gradient(0deg,rgba(0,0,0,.25),rgba(0,0,0,.05)),url(https://image.tmdb.org/t/p/w342${person.profile_path})`;
+  portrait.textContent="";
+ }
+ return movies;
+}
+async function renderDirectorFilms(slug){
+ const info=directorInfo[slug];if(!info)return;
+ const filtered=directorCurated.filter(m=>directorMatches(m,info.name));
+ const grid=$("directorGrid"),empty=$("directorEmpty");
+ if(filtered.length){attachCards(grid,filtered);empty.classList.add("hidden");return}
+ if(directorFilmCache[slug]){attachCards(grid,directorFilmCache[slug]);empty.classList.toggle("hidden",directorFilmCache[slug].length>0);return}
+ grid.innerHTML="<p class='muted'>Film arşivi yükleniyor…</p>";empty.classList.add("hidden");
+ try{const movies=await loadDirectorCatalog(slug);if(activeDirector!==slug)return;attachCards(grid,movies);empty.classList.toggle("hidden",movies.length>0)}
+ catch{if(activeDirector!==slug)return;grid.innerHTML="";empty.textContent="Film listesi için TMDB bağlantısı gerekiyor. Reji Masası'ndan bu yönetmenin filmlerini Yönetmen Dosyası koleksiyonuna ekleyebilirsiniz.";empty.classList.remove("hidden")}
+}
+function toggleDirector(slug){
+ const panel=$("directorExpanded");
+ activeDirector=activeDirector===slug?null:slug;
+ panel.classList.toggle("hidden",!activeDirector);
+ document.querySelectorAll("[data-director-open]").forEach(btn=>{
+  const open=btn.dataset.directorOpen===activeDirector;
+  btn.setAttribute("aria-expanded",String(open));btn.textContent=open?"Dosyayı Kapat ↑":"Filmlerini Gör ↓";
+ });
+ if(activeDirector){
+  $("directorExpandedTitle").textContent=directorInfo[activeDirector].name+" · Film Seçkisi";
+  $("directorExpandedNote").textContent="Üç önemli film ve Reji Masası'nda yayımlanan yönetmen seçkileri.";
+  renderDirectorFilms(activeDirector);
+  panel.scrollIntoView({behavior:"smooth",block:"nearest"});
+ }
+}
+document.querySelectorAll("[data-director-open]").forEach(btn=>btn.addEventListener("click",()=>toggleDirector(btn.dataset.directorOpen)));
+$("directorClose").addEventListener("click",()=>toggleDirector(activeDirector));
 function renderCurated(){
  const today=new Date().toISOString().slice(0,10);
  const visible=curated.filter(m=>(!m.editorStartDate||m.editorStartDate<=today)&&(!m.editorEndDate||m.editorEndDate>=today))
@@ -163,7 +241,7 @@ function renderCurated(){
  const cult=visible.filter(m=>m.editorCollection==="cult");
  const director=visible.filter(m=>m.editorCollection==="director");
  attachCards($("cultGrid"),cult);$("cultEmpty").classList.toggle("hidden",cult.length>0);
- attachCards($("directorGrid"),director);$("directorEmpty").classList.toggle("hidden",director.length>0);
+ directorCurated=director; if(activeDirector)renderDirectorFilms(activeDirector);
  attachCards($("curatedGrid"),visible);
  $("curatedEmpty").classList.toggle("hidden",visible.length>0);
  $("curatedCount").textContent=visible.length?visible.length+" öneri":"";
