@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-10T19:14:06.131Z",
+  "updatedAt": "2026-11-10T19:18:22.058Z",
   "entries": [
     {
       "uid": "y-1794334933322-4tvivl",
@@ -76,11 +76,12 @@
       "editorNote": "",
       "editorPriority": 10,
       "editorEndDate": "",
-      "editorCollection": "",
+      "editorCollection": "cult",
       "editorStartDate": "",
       "editorDirector": "",
       "editorWhy": "",
-      "platformVerified": true
+      "platformVerified": true,
+      "scheduleSlot": "none"
     },
     {
       "uid": "y-1794336457393-v37hyw",
