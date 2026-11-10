@@ -1,15 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" height="640" viewBox="0 0 480 640">
-<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#484047"/><stop offset="1" stop-color="#15151a"/></linearGradient><linearGradient id="skin"><stop stop-color="#e4d6c9"/><stop offset="1" stop-color="#95878b"/></linearGradient></defs>
-<rect width="480" height="640" fill="url(#bg)"/><path d="M0 555L480 420V640H0Z" fill="#29252b"/>
-<circle cx="240" cy="212" r="151" fill="#ffffff" opacity=".045"/>
-<path d="M35 640Q50 458 165 432L310 423Q427 456 450 640" fill="#0e1016"/>
-<path d="M167 433L238 505L312 431L277 414H198Z" fill="#e8e1d9"/>
-<path d="M205 457L238 500L268 456L253 640H226Z" fill="#8e1e31"/>
-<path d="M150 222Q135 128 213 108Q301 92 327 182Q337 215 325 277Q312 360 257 392Q205 401 172 335Q154 290 150 222Z" fill="url(#skin)"/>
-<path d="M153 225Q142 153 194 122Q231 98 288 119Q319 139 329 196Q299 177 275 156Q215 186 153 225Z" fill="#242229"/>
-<path d="M164 261Q140 251 147 280Q151 301 170 305M322 263Q345 253 337 284Q333 304 316 307" fill="#ab9d9b"/>
-<path d="M184 261Q210 250 232 260M261 260Q288 251 311 261" fill="none" stroke="#302a2c" stroke-width="8" stroke-linecap="round"/>
-<path d="M232 278Q225 313 243 316" fill="none" stroke="#76696d" stroke-width="5" stroke-linecap="round"/>
-<path d="M211 343Q240 351 269 338" fill="none" stroke="#64565b" stroke-width="5" stroke-linecap="round"/>
-<text x="240" y="575" text-anchor="middle" font-family="Georgia,serif" font-size="26" fill="#d9c4c4" letter-spacing="4">HITCHCOCK</text>
-<text x="240" y="606" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#aaa0a5" letter-spacing="3">GERİLİMİN USTASI</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="640" viewBox="0 0 480 640"><rect width="480" height="640" fill="#16171b"/><circle cx="240" cy="228" r="175" fill="#642b38"/><path d="M65 640Q65 440 200 420H280Q415 440 415 640" fill="#0c0d12"/><path d="M170 175Q190 110 240 110Q310 110 325 185L316 305Q290 390 240 390Q190 390 165 305Z" fill="#c9b7aa"/><path d="M165 205Q130 130 195 112Q255 80 300 115Q340 145 325 210Q292 164 260 170Q210 160 165 205Z" fill="#2c2930"/><path d="M185 260H226M257 260H297" stroke="#28252b" stroke-width="9" stroke-linecap="round"/><path d="M217 345Q240 360 268 345" stroke="#5a464a" stroke-width="6" fill="none"/><text x="240" y="562" font-family="Georgia,serif" font-size="34" text-anchor="middle" fill="#f2dce0">HITCHCOCK</text><text x="240" y="596" font-family="sans-serif" font-size="15" text-anchor="middle" fill="#c4adb4">GERİLİMİN USTASI</text></svg>

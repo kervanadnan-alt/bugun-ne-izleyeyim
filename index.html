@@ -55,6 +55,12 @@
 .director-action{border:1px solid #e42c3c;border-radius:9px;background:#b71f2e;color:white;font-weight:700;padding:10px 16px;cursor:pointer;margin-top:auto}
 .director-action:hover{background:#e42c3c}.director-expanded{margin-top:22px;padding:18px;border:1px solid #393039;border-radius:16px}
 @media(max-width:780px){.director-profiles{grid-template-columns:1fr}.director-profile{padding:14px;gap:14px}.director-portrait{width:100px;min-width:100px;min-height:140px}.director-profile h3{font-size:20px}}
+
+.schedule-now{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:16px 0}
+.schedule-entry{padding:18px;border:1px solid #413038;border-radius:14px;background:linear-gradient(125deg,#23191e,#121215);cursor:pointer;text-align:left;color:inherit;width:100%}
+.schedule-entry:hover{border-color:#c92e42}.schedule-entry h3{margin:8px 0;font-size:20px}.schedule-entry p{color:#bbb;font-size:13px;margin:0}
+.schedule-tag{font-size:11px;letter-spacing:1px;color:#ef7882;font-weight:700}.schedule-heading{margin:25px 0 12px;font-size:18px}
+.schedule-list{display:flex;flex-wrap:wrap;gap:10px}.schedule-list .schedule-entry{width:auto;min-width:230px;cursor:default}
 </style>
 <script src="config.js"></script>
 </head>
@@ -89,6 +95,7 @@
 </div>
 <div id="directorExpanded" class="director-expanded hidden"><div class="section-header"><div><h3 id="directorExpandedTitle" class="section-heading"></h3><p id="directorExpandedNote" class="section-sub"></p></div><button class="director-action" type="button" id="directorClose">Kapat ×</button></div><div class="movie-grid" id="directorGrid"></div><div class="empty hidden" id="directorEmpty">Bu yönetmenin filmleri henüz yüklenemedi.</div></div>
 </section>
+<section class="section" id="yayin-akisi"><div class="section-header"><div><h2 class="section-heading">✦ <span class="red">Yayın Akışı</span></h2><p class="section-sub">Türkiye saatiyle otomatik açılan film önerileri.</p></div></div><div id="scheduleNow" class="schedule-now"></div><h3 class="schedule-heading">Yaklaşan Matineler</h3><div id="scheduleUpcoming" class="schedule-list"></div><h3 class="schedule-heading">Geçmiş Matineler</h3><div id="scheduleArchive" class="movie-grid"></div><div class="empty" id="scheduleArchiveEmpty">Henüz geçmiş matine yok.</div></section>
 <section class="section" id="seckiler"><div class="section-header"><div><h2 class="section-heading"><span class="red">✦</span> Editörün Seçkileri</h2><p class="section-sub">Reji masasından onaylanarak yayınlanan öneriler.</p></div><span class="section-link" id="curatedCount"></span></div><div class="movie-grid" id="curatedGrid"></div><div id="curatedEmpty" class="empty hidden"><i class="fa-solid fa-film"></i><h3>İlk matine hazırlanıyor</h3><p>Henüz onaylanmış bir yayın yok. Reji masasından seçkileri yayınlayıp <strong>yayinlar.json</strong> dosyasını güncellediğinizde burada görünecekler.</p><a class="btn btn-ghost btn-sm" href="#kesfet">Bu arada film keşfet <i class="fa-solid fa-arrow-down"></i></a></div></section>
 <section class="section" id="kesfet"><div class="section-header"><div><h2 class="section-heading">Kendi Filmini <span class="red">Keşfet</span></h2><p class="section-sub">Önce platform seçebilir, ardından film adı, yönetmen, senarist, oyuncu, tema, ülke ve döneme göre keşfedebilirsin. Tematik eşleşmeler TMDB etiketlerine bağlıdır.</p></div></div>
   <div class="filters">
@@ -167,7 +174,7 @@ const storage=(k,fallback)=>{try{return JSON.parse(localStorage.getItem(k))??fal
 const setStorage=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));return true}catch{return false}};
 const toItem=(m,media="movie")=>({id:Number(m.id||m.tmdbId)||0,media_type:m.media_type||media,title:m.title||m.name||"Başlıksız",poster_path:m.poster_path||m.posterPath||"",backdrop_path:m.backdrop_path||m.backdropPath||"",release_date:m.release_date||m.first_air_date||m.releaseDate||"",vote_average:Number(m.vote_average??m.rating??0),overview:m.overview||m.synopsis||"",platform:m.platform||"",imdbRating:m.imdbRating||"",date:m.date||"",time:m.time||"",hook:m.hook||"",hashtag:m.hashtag||"",editorPick:m.editorPick||"none",editorNote:m.editorNote||"",editorPriority:Number(m.editorPriority||10),editorEndDate:m.editorEndDate||"",
 editorStartDate:m.editorStartDate||"",editorCollection:m.editorCollection||"",
-editorDirector:m.editorDirector||"",editorWhy:m.editorWhy||"",platformVerified:m.platformVerified===true});
+editorDirector:m.editorDirector||"",editorWhy:m.editorWhy||"",scheduleSlot:m.scheduleSlot||"none",platformVerified:m.platformVerified===true});
 let curated=[], discovery=[], currentPage=1, moreAvailable=false, currentDetail=null;
 const saveKey=(m)=>m.media_type+":"+m.id;
 function getList(type){return storage("matinee_"+type,[])}
@@ -233,9 +240,33 @@ function toggleDirector(slug){
 }
 document.querySelectorAll("[data-director-open]").forEach(btn=>btn.addEventListener("click",()=>toggleDirector(btn.dataset.directorOpen)));
 $("directorClose").addEventListener("click",()=>toggleDirector(activeDirector));
+const MATINEE_SLOTS={evening:"Akşamın Filmi",daytime:"Gündüz Matinesi",midnight:"Gece Yarısı Kuşağı"};
+function istanbulNow(){
+ const parts=new Intl.DateTimeFormat("en-GB",{timeZone:"Europe/Istanbul",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).formatToParts(new Date());
+ const d=Object.fromEntries(parts.map(p=>[p.type,p.value]));
+ return `${d.year}-${d.month}-${d.day}T${d.hour}:${d.minute}`;
+}
+function isSchedule(m){return !!MATINEE_SLOTS[m.scheduleSlot]&&/^\\d{4}-\\d{2}-\\d{2}$/.test(m.date||"")&&/^\\d{2}:\\d{2}$/.test(m.time||"")}
+function scheduleTime(m){return `${m.date}T${m.time}`}
+function renderSchedule(){
+ const now=istanbulNow();
+ const all=curated.filter(isSchedule).slice().sort((a,b)=>scheduleTime(a).localeCompare(scheduleTime(b)));
+ const live=all.filter(m=>scheduleTime(m)<=now);
+ const upcoming=all.filter(m=>scheduleTime(m)>now);
+ const latest={};
+ for(const m of live)latest[m.scheduleSlot]=m;
+ const current=Object.values(latest).sort((a,b)=>scheduleTime(b).localeCompare(scheduleTime(a)));
+ const root=$("scheduleNow");
+ root.innerHTML=current.length?current.map(m=>`<button class="schedule-entry" type="button" data-id="${esc(String(m.id))}" data-date="${esc(m.date)}"><span class="schedule-tag">${esc(MATINEE_SLOTS[m.scheduleSlot])} · ${esc(m.time)}</span><h3>${esc(m.title)}</h3><p>${esc(m.date)} · Filmi incele →</p></button>`).join(""):`<div class="empty">Henüz yayına giren planlı film yok. Reji Masası'ndan takvim oluşturabilirsiniz.</div>`;
+ root.querySelectorAll("[data-id]").forEach(b=>{const m=current.find(x=>String(x.id)===b.dataset.id&&x.date===b.dataset.date);if(m)b.onclick=()=>openDetail(m)});
+ $("scheduleUpcoming").innerHTML=upcoming.slice(0,12).map(m=>`<div class="schedule-entry"><span class="schedule-tag">${esc(MATINEE_SLOTS[m.scheduleSlot])}</span><h3>${esc(m.title)}</h3><p>${esc(m.date)} · ${esc(m.time)} (Türkiye saati)</p></div>`).join("")||'<p class="section-sub">Yaklaşan yayın planlanmadı.</p>';
+ attachCards($("scheduleArchive"),live.slice().reverse().slice(0,30));
+ $("scheduleArchiveEmpty").classList.toggle("hidden",live.length>0);
+}
 function renderCurated(){
+ renderSchedule();
  const today=new Date().toISOString().slice(0,10);
- const visible=curated.filter(m=>(!m.editorStartDate||m.editorStartDate<=today)&&(!m.editorEndDate||m.editorEndDate>=today))
+ const visible=curated.filter(m=>(!isSchedule(m)||scheduleTime(m)<=istanbulNow())&&(!m.editorStartDate||m.editorStartDate<=today)&&(!m.editorEndDate||m.editorEndDate>=today))
   .sort((x,y)=>(x.editorPriority||10)-(y.editorPriority||10)||(x.date||"").localeCompare(y.date||""));
  const weekly=visible.filter(m=>["weekly","both"].includes(m.editorPick)).slice(0,7);
  attachCards($("weeklyGrid"),weekly);
@@ -428,7 +459,7 @@ function renderDays(){
 }
 async function loadCurated(){try{let r=await fetch("yayinlar.json?ts="+Date.now(),{cache:"no-store"});if(!r.ok)throw Error("Dosya yok");let o=await r.json();curated=(Array.isArray(o)?o:o.entries||[]).filter(x=>x.status==="published"||x.published===true).map(x=>toItem(x));}catch{curated=[]}if(new URLSearchParams(location.search).get("preview")==="1"){let drafts=storage("matinee_preview_v102",storage("yayinkuyrugu",[])).map(x=>toItem(x));curated=drafts.length?drafts.filter(x=>!x.pinned):curated}renderCurated()}
 function randomMovie(){let pool=[...curated,...discovery];if(pool.length)openDetail(pool[Math.floor(Math.random()*pool.length)]);else{document.getElementById("kesfet").scrollIntoView({behavior:"smooth"});if(key())runDiscover();else {status("Şu anda canlı keşif kullanılamıyor. Editör seçkilerini inceleyebilirsiniz.","error")}}}
-$("randomBtn").onclick=randomMovie;$("favoritesBtn").onclick=()=>openLists();$("privacyBtn").onclick=openPrivacy;$("discoverBtn").onclick=()=>{activeWeek=null;runDiscover()};$("moreBtn").onclick=()=>{currentPage++;runDiscover(false)};$("navBtn").onclick=()=>$("mainNav").classList.toggle("open");$("mainNav").querySelectorAll("a").forEach(a=>a.onclick=()=>$("mainNav").classList.remove("open"));$("q").addEventListener("keydown",e=>{if(e.key==="Enter")runDiscover()});document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("overlay"))closeModal()});$("copyrightYear").textContent=new Date().getFullYear();renderDays();loadCurated();if(key())runDiscover();else status("Editör seçkileri herkese açık. Canlı TMDB katalog araması için site sahibi ayrıca güvenli API bağlantısı kurmalıdır.");
+$("randomBtn").onclick=randomMovie;$("favoritesBtn").onclick=()=>openLists();$("privacyBtn").onclick=openPrivacy;$("discoverBtn").onclick=()=>{activeWeek=null;runDiscover()};$("moreBtn").onclick=()=>{currentPage++;runDiscover(false)};$("navBtn").onclick=()=>$("mainNav").classList.toggle("open");$("mainNav").querySelectorAll("a").forEach(a=>a.onclick=()=>$("mainNav").classList.remove("open"));$("q").addEventListener("keydown",e=>{if(e.key==="Enter")runDiscover()});document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("overlay"))closeModal()});$("copyrightYear").textContent=new Date().getFullYear();renderDays();loadCurated();setInterval(renderCurated,60000);if(key())runDiscover();else status("Editör seçkileri herkese açık. Canlı TMDB katalog araması için site sahibi ayrıca güvenli API bağlantısı kurmalıdır.");
 </script>
 </body>
 </html>
