@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-10T20:27:33.075Z",
+  "updatedAt": "2026-11-11T07:49:13.146Z",
   "entries": [
     {
       "uid": "y-1794334933322-4tvivl",
@@ -160,6 +160,45 @@
       "editorWhy": "",
       "platformVerified": true,
       "scheduleSlot": "evening"
+    },
+    {
+      "uid": "y-1794383344642-3128ke",
+      "id": 1550569,
+      "media_type": "movie",
+      "title": "Aileen: Bir Kadının İnfazı",
+      "release_date": "2025-10-29",
+      "poster_path": "/iBCorGTwpXhIOeWwTA21HC5Rprx.jpg",
+      "backdrop_path": "/mrYoBknZhVI7jMsEe4nbbHLgLKa.jpg",
+      "vote_average": 7,
+      "imdbRating": "",
+      "imdbId": "tt38457052",
+      "overview": "Kadın seri katil Aileen Wuornos'un çocukken uğradığı istismardan idam koğuşundaki açıklamalarına kadar uzanan bu belgesel, onun hayatını ve suçlarını yeniden ele alıyor.",
+      "hook": "Gerçek hayattan unutulmaz bir pencere açılıyor.",
+      "platform": "Netflix",
+      "providerId": 8,
+      "availableProviders": [
+        {
+          "id": 8,
+          "name": "Netflix"
+        }
+      ],
+      "date": "2026-11-11",
+      "time": "21:00",
+      "hashtag": "#Belgesel",
+      "post1": "🎬 Aileen: Bir Kadının İnfazı (2025)\n⭐ TMDB 7.0/10 · 📅 2026-11-11 · ⏰ 21:00\n✨ Gerçek hayattan unutulmaz bir pencere açılıyor.\nKadın seri katil Aileen Wuornos'un çocukken uğradığı i\n🎥 Netflix (TMDB Türkiye abonelik verisi).\n🔗 https://izle.uzzman.com.tr/\\n#Belgesel",
+      "post2": "📝 Filmin devam eden özeti:\nstismardan idam koğuşundaki açıklamalarına kadar uzanan bu belgesel, onun hayatını ve suçlarını yeniden ele alıyor.",
+      "pinned": false,
+      "status": "published",
+      "editorPick": "weekly",
+      "editorNote": "Bazı hikâyeler bittiğinde geriye cevaplardan çok sorular kalır. Aileen’in hikâyesi de onlardan biri. Bu belgeseli izlerken ne yalnızca anlatılanlara inanmak ne de hemen hüküm vermek kolay. Akşam Matinesi olarak önerimiz, bu çetin hikâyeye merak kadar sorgulayıcı bir dikkatle yaklaşmanız.",
+      "editorPriority": 10,
+      "editorEndDate": "",
+      "editorCollection": "",
+      "editorStartDate": "",
+      "editorDirector": "",
+      "editorWhy": "Aileen Wuornos’un yaşamına uzanan bu belgesel, suçun karanlık yüzünü incelerken insanın geçmişiyle kurduğu karmaşık ilişkiyi de sorguluyor. Çocukluk yıllarında maruz kaldığı istismardan idam koğuşundaki açıklamalarına uzanan anlatı, izleyiciyi rahatsız edici sorularla baş başa bırakıyor. Bir insanın hayatını anlamaya çalışmak, işlediği suçları anlamlandırmak ya da mazur görmek midir? Aileen: Bir Kadının İnfazı, kolay yargıların ötesine geçmek isteyenler için suç, travma ve sorumluluk arasındaki gerilimi düşündüren, karanlık ve sarsıcı bir insan hikâyesi sunuyor.",
+      "platformVerified": true,
+      "scheduleSlot": "none"
     }
   ]
 }
